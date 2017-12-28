@@ -120,6 +120,12 @@ public class BlockTelescope extends BlockTileGC implements IShiftDescription, IS
 	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
 		final int angle = MathHelper.floor_double(placer.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
 		worldIn.setBlockState(pos, getStateFromMeta(EnumFacing.getHorizontal(angle).getOpposite().getHorizontalIndex()), 3);
+
+		TileEntity tile = worldIn.getTileEntity(pos);
+
+		if (tile instanceof TileEntityTelescope) {
+			((TileEntityTelescope) tile).setOwner((EntityPlayer) placer);
+		}
 	}
 
 	@Override

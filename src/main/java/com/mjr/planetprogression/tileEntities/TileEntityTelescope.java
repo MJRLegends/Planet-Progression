@@ -2,33 +2,101 @@ package com.mjr.planetprogression.tileEntities;
 
 import java.util.EnumSet;
 
+import micdoodle8.mods.galacticraft.api.galaxies.GalaxyRegistry;
+import micdoodle8.mods.galacticraft.api.galaxies.Planet;
 import micdoodle8.mods.galacticraft.core.energy.item.ItemElectricBase;
 import micdoodle8.mods.galacticraft.core.energy.tile.TileBaseElectricBlock;
 import micdoodle8.mods.galacticraft.core.inventory.IInventoryDefaults;
-import micdoodle8.mods.galacticraft.core.util.ConfigManagerCore;
 import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
+import micdoodle8.mods.miccore.Annotations.NetworkedField;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraftforge.fml.relauncher.Side;
+
+import com.mjr.planetprogression.handlers.capabilities.CapabilityStatsHandler;
+import com.mjr.planetprogression.handlers.capabilities.IStatsCapability;
 
 public class TileEntityTelescope extends TileBaseElectricBlock implements IInventoryDefaults, ISidedInventory {
+
+	public static final int PROCESS_TIME_REQUIRED_BASE = 600;
+	@NetworkedField(targetSide = Side.CLIENT)
+	public int processTimeRequired = PROCESS_TIME_REQUIRED_BASE;
+	@NetworkedField(targetSide = Side.CLIENT)
+	public int processTicks = 0;
+	@NetworkedField(targetSide = Side.CLIENT)
+	public EntityPlayer owner = null;
 
 	private ItemStack[] containingItems = new ItemStack[1];
 
 	public TileEntityTelescope() {
 		super();
-		this.storage.setMaxExtract(ConfigManagerCore.hardMode ? 115 : 50);
+		this.storage.setMaxExtract(115);
 	}
 
 	@Override
 	public void update() {
+		if (!this.worldObj.isRemote) {
+			if (this.hasEnoughEnergyToRun) {
+				if (this.canResearch()) {
+					++this.processTicks;
+
+					this.processTimeRequired = TileEntityTelescope.PROCESS_TIME_REQUIRED_BASE * 2 / (1 + this.poweredByTierGC);
+
+					if (this.processTicks >= this.processTimeRequired) {
+						this.worldObj.playSound(null, this.getPos(), SoundEvents.BLOCK_ANVIL_LAND, SoundCategory.BLOCKS, 0.3F, this.worldObj.rand.nextFloat() * 0.1F + 0.9F);
+						this.processTicks = 0;
+						this.doResearch();
+					}
+				} else {
+					this.processTicks = 0;
+				}
+			} else {
+				this.processTicks = 0;
+			}
+		}
 		super.update();
+	}
+
+	private void doResearch() {
+		IStatsCapability stats = null;
+
+		if (this.owner != null) {
+			stats = this.owner.getCapability(CapabilityStatsHandler.PP_STATS_CAPABILITY, null);
+		}
+
+		for (Planet planet : GalaxyRegistry.getRegisteredPlanets().values()) {
+			if (!stats.getUnlockedPlanets().contains(planet)) {
+				stats.addUnlockedPlanets(planet);
+				break;
+			}
+		}
+		
+		for (Planet planet : stats.getUnlockedPlanets()) {
+			System.out.println(planet.getUnlocalizedName());
+		}
+	}
+
+	private boolean canResearch() {
+		IStatsCapability stats = null;
+
+		if (this.owner != null) {
+			stats = this.owner.getCapability(CapabilityStatsHandler.PP_STATS_CAPABILITY, null);
+		}
+
+		if(stats != null)
+			if (stats.getUnlockedPlanets().size() != GalaxyRegistry.getRegisteredPlanets().size())
+				return true;
+
+		return false;
 	}
 
 	@Override
@@ -218,5 +286,13 @@ public class TileEntityTelescope extends TileBaseElectricBlock implements IInven
 	@Override
 	public EnumFacing getFront() {
 		return EnumFacing.NORTH;
+	}
+
+	public void setOwner(EntityPlayer owner) {
+		this.owner = owner;
+	}
+
+	public EntityPlayer getOwner() {
+		return this.owner;
 	}
 }

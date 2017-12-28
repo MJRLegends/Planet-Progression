@@ -19,6 +19,7 @@ public interface IStatsCapability {
 
     void setPlayer(WeakReference<EntityPlayerMP> player);
     
-	ArrayList<Planet> getunlockedPlanets();
-	void setunlockedPlanets(ArrayList<Planet> unlockedPlanets);
+	ArrayList<Planet> getUnlockedPlanets();
+	void setUnlockedPlanets(ArrayList<Planet> unlockedPlanets);
+	void addUnlockedPlanets(Planet unlockedPlanet);
 }

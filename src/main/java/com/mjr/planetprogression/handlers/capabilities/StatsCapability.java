@@ -13,19 +13,24 @@ import net.minecraft.nbt.NBTTagList;
 
 public class StatsCapability implements IStatsCapability {
 	public WeakReference<EntityPlayerMP> player;
-	public ArrayList<Planet> unlockedPlanets = new ArrayList<Planet>();
+	private ArrayList<Planet> unlockedPlanets = new ArrayList<Planet>();
 	public int buildFlags = 0;
 
 	@Override
-	public ArrayList<Planet> getunlockedPlanets() {
+	public ArrayList<Planet> getUnlockedPlanets() {
 		return this.unlockedPlanets;
 	}
 
 	@Override
-	public void setunlockedPlanets(ArrayList<Planet> unlockedPlanets) {
+	public void setUnlockedPlanets(ArrayList<Planet> unlockedPlanets) {
 		this.unlockedPlanets = unlockedPlanets;
 	}
 
+	@Override
+	public void addUnlockedPlanets(Planet unlockedPlanet) {
+		this.unlockedPlanets.add(unlockedPlanet);
+	}
+	
 	@Override
 	public void saveNBTData(NBTTagCompound nbt) {
 		Collections.sort(this.unlockedPlanets);
@@ -55,9 +60,8 @@ public class StatsCapability implements IStatsCapability {
 					final String j = nbttagcompound.getString("UnlockedPlanet");
 					this.unlockedPlanets.add(GalaxyRegistry.getRegisteredPlanets().get(j));
 				}
+				Collections.sort(this.unlockedPlanets);
 			}
-
-			Collections.sort(this.unlockedPlanets);
 
 		} catch (Exception e) {
 			GCLog.severe("Found error in saved Planet Progression player data for " + player.get().getGameProfile().getName() + " - this should fix itself next relog.");
@@ -69,7 +73,7 @@ public class StatsCapability implements IStatsCapability {
 
 	@Override
 	public void copyFrom(IStatsCapability oldData, boolean keepInv) {
-		this.unlockedPlanets = oldData.getunlockedPlanets();
+		this.unlockedPlanets = oldData.getUnlockedPlanets();
 	}
 
 	@Override
