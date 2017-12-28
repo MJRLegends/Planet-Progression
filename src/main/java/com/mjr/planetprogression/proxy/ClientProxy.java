@@ -1,7 +1,7 @@
 package com.mjr.planetprogression.proxy;
 
 import com.mjr.planetprogression.Constants;
-import com.mjr.planetprogression.client.handler.MainHandlerClient;
+import com.mjr.planetprogression.client.handlers.MainHandlerClient;
 
 import net.minecraftforge.client.model.obj.OBJLoader;
 import net.minecraftforge.common.MinecraftForge;
