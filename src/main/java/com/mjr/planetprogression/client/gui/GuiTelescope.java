@@ -87,6 +87,8 @@ public class GuiTelescope extends GuiContainerGC {
 		this.fontRendererObj.drawString(displayString, this.xSize / 2 - this.fontRendererObj.getStringWidth(displayString) / 2, 5, 4210752);
 
 		this.fontRendererObj.drawString(GCCoreUtil.translate("container.inventory"), 8, 115, 4210752);
+		this.fontRendererObj.drawString("Progress: " + (telescope.processTicks / 2) + " %", 8, 80, 4210752);
+
 	}
 
 	@Override
