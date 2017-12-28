@@ -10,7 +10,9 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 import com.mjr.planetprogression.blocks.PlanetProgression_Blocks;
+import com.mjr.planetprogression.client.handlers.capabilities.CapabilityStatsClientHandler;
 import com.mjr.planetprogression.handlers.MainHandlerServer;
+import com.mjr.planetprogression.handlers.capabilities.CapabilityStatsHandler;
 import com.mjr.planetprogression.proxy.CommonProxy;
 
 @Mod(modid = Constants.modID, name = Constants.modName, version = Constants.modVersion, dependencies = Constants.DEPENDENCIES_FORGE + Constants.DEPENDENCIES_MODS)
@@ -40,6 +42,8 @@ public class PlanetProgression {
 
 	@EventHandler
 	public void postinit(FMLPostInitializationEvent event) {
+		CapabilityStatsHandler.register();
+		CapabilityStatsClientHandler.register();
 		PlanetProgression.proxy.postInit(event);
 	}
 }

@@ -14,7 +14,7 @@ public class CapabilityStatsClientHandler
     @CapabilityInject(IStatsClientCapability.class)
     public static Capability<IStatsClientCapability> PP_STATS_CLIENT_CAPABILITY = null;
 
-    public static final ResourceLocation EP_PLAYER_CLIENT_PROP = new ResourceLocation(Constants.ASSET_PREFIX, "player_stats_client");
+    public static final ResourceLocation PP_PLAYER_CLIENT_PROP = new ResourceLocation(Constants.ASSET_PREFIX, "player_stats_client");
 
     public static void register()
     {

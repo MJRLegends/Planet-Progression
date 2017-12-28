@@ -45,7 +45,7 @@ public class MainHandlerServer {
 	@SubscribeEvent
 	public void onAttachCapability(AttachCapabilitiesEvent<Entity> event) {
 		if (event.getObject() instanceof EntityPlayerMP) {
-			event.addCapability(CapabilityStatsHandler.EP_PLAYER_PROP, new CapabilityProviderStats((EntityPlayerMP) event.getObject()));
+			event.addCapability(CapabilityStatsHandler.PP_PLAYER_PROP, new CapabilityProviderStats((EntityPlayerMP) event.getObject()));
 		} else if (event.getObject() instanceof EntityPlayer && ((EntityPlayer) event.getObject()).worldObj.isRemote) {
 			this.onAttachCapabilityClient(event);
 		}
@@ -54,7 +54,7 @@ public class MainHandlerServer {
 	@SideOnly(Side.CLIENT)
 	private void onAttachCapabilityClient(AttachCapabilitiesEvent<Entity> event) {
 		if (event.getObject() instanceof EntityPlayerSP)
-			event.addCapability(CapabilityStatsClientHandler.EP_PLAYER_CLIENT_PROP, new CapabilityProviderStatsClient((EntityPlayerSP) event.getObject()));
+			event.addCapability(CapabilityStatsClientHandler.PP_PLAYER_CLIENT_PROP, new CapabilityProviderStatsClient((EntityPlayerSP) event.getObject()));
 	}
 
 }

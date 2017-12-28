@@ -14,7 +14,7 @@ public class CapabilityStatsHandler
     @CapabilityInject(IStatsCapability.class)
     public static Capability<IStatsCapability> PP_STATS_CAPABILITY = null;
 
-    public static final ResourceLocation EP_PLAYER_PROP = new ResourceLocation(Constants.ASSET_PREFIX, "player_stats");
+    public static final ResourceLocation PP_PLAYER_PROP = new ResourceLocation(Constants.ASSET_PREFIX, "player_stats");
 
     public static void register()
     {
