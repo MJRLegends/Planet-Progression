@@ -8,8 +8,10 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
 
 import com.mjr.planetprogression.blocks.PlanetProgression_Blocks;
+import com.mjr.planetprogression.client.gui.GuiHandler;
 import com.mjr.planetprogression.client.handlers.capabilities.CapabilityStatsClientHandler;
 import com.mjr.planetprogression.handlers.MainHandlerServer;
 import com.mjr.planetprogression.handlers.capabilities.CapabilityStatsHandler;
@@ -44,6 +46,10 @@ public class PlanetProgression {
 	public void postinit(FMLPostInitializationEvent event) {
 		CapabilityStatsHandler.register();
 		CapabilityStatsClientHandler.register();
+		
+		// Register GUI Handler
+		NetworkRegistry.INSTANCE.registerGuiHandler(PlanetProgression.instance, new GuiHandler());
+		
 		PlanetProgression.proxy.postInit(event);
 	}
 }
