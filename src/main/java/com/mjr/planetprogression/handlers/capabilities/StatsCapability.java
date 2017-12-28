@@ -33,7 +33,8 @@ public class StatsCapability implements IStatsCapability {
 	
 	@Override
 	public void saveNBTData(NBTTagCompound nbt) {
-		Collections.sort(this.unlockedPlanets);
+		if(!this.unlockedPlanets.isEmpty())
+			Collections.sort(this.unlockedPlanets);
 
 		NBTTagList tagList = new NBTTagList();
 
@@ -60,7 +61,8 @@ public class StatsCapability implements IStatsCapability {
 					final String j = nbttagcompound.getString("UnlockedPlanet");
 					this.unlockedPlanets.add(GalaxyRegistry.getRegisteredPlanets().get(j));
 				}
-				Collections.sort(this.unlockedPlanets);
+				if(!this.unlockedPlanets.isEmpty())
+					Collections.sort(this.unlockedPlanets);
 			}
 
 		} catch (Exception e) {
