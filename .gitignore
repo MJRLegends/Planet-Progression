@@ -1,0 +1,31 @@
+eclipse/
+bin/
+.gradle/
+gradle/
+gradlew
+gradlew.bat
+TexturesFolder/
+*.jar
+*.exe
+.settings/org.eclipse.jdt.ui.prefs
+saves/
+logs/
+config/
+usernamecache.json
+options.txt
+.settings/
+sh.exe.stackdump
+Textures ff/
+Galacticraft Development Files/
+Wiki Textures/
+ExtraPlanets Server Test/
+*.schematic
+*.rar
+asm/
+Galacticraft Source/
+run/
+*.launch
+build/
+*.zip
+.classpath
+.project
