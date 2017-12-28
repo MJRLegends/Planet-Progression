@@ -1,6 +1,5 @@
 package com.mjr.planetprogression.tileEntities;
 
-import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.UUID;
 
@@ -102,8 +101,8 @@ public class TileEntityTelescope extends TileBaseElectricBlock implements IInven
 		if (stats != null)
 			if (stats.getUnlockedPlanets().size() != GalaxyRegistry.getRegisteredPlanets().size())
 				return true;
-//			else
-//				stats.setUnlockedPlanets(new ArrayList<Planet>()); // DEBUG Tool
+		// else
+		// stats.setUnlockedPlanets(new ArrayList<Planet>()); // DEBUG Tool
 
 		return false;
 	}
