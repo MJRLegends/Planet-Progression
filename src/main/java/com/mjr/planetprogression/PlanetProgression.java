@@ -9,6 +9,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
+import com.mjr.planetprogression.blocks.PlanetProgression_Blocks;
 import com.mjr.planetprogression.handlers.MainHandlerServer;
 import com.mjr.planetprogression.proxy.CommonProxy;
 
@@ -33,6 +34,7 @@ public class PlanetProgression {
 
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
+		PlanetProgression_Blocks.init();
 		PlanetProgression.proxy.init(event);
 	}
 
