@@ -1,6 +1,7 @@
 package com.mjr.planetprogression.tileEntities;
 
 import java.util.EnumSet;
+import java.util.UUID;
 
 import micdoodle8.mods.galacticraft.api.galaxies.GalaxyRegistry;
 import micdoodle8.mods.galacticraft.api.galaxies.Planet;
@@ -10,6 +11,7 @@ import micdoodle8.mods.galacticraft.core.inventory.IInventoryDefaults;
 import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 import micdoodle8.mods.miccore.Annotations.NetworkedField;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
@@ -20,6 +22,7 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 
 import com.mjr.planetprogression.handlers.capabilities.CapabilityStatsHandler;
@@ -27,13 +30,13 @@ import com.mjr.planetprogression.handlers.capabilities.IStatsCapability;
 
 public class TileEntityTelescope extends TileBaseElectricBlock implements IInventoryDefaults, ISidedInventory {
 
-	public static final int PROCESS_TIME_REQUIRED_BASE = 600;
+	public static final int PROCESS_TIME_REQUIRED_BASE = 200;
 	@NetworkedField(targetSide = Side.CLIENT)
 	public int processTimeRequired = PROCESS_TIME_REQUIRED_BASE;
 	@NetworkedField(targetSide = Side.CLIENT)
 	public int processTicks = 0;
 	@NetworkedField(targetSide = Side.CLIENT)
-	public EntityPlayer owner = null;
+	public String owner = "";
 
 	private ItemStack[] containingItems = new ItemStack[1];
 
@@ -69,8 +72,9 @@ public class TileEntityTelescope extends TileBaseElectricBlock implements IInven
 	private void doResearch() {
 		IStatsCapability stats = null;
 
-		if (this.owner != null) {
-			stats = this.owner.getCapability(CapabilityStatsHandler.PP_STATS_CAPABILITY, null);
+		EntityPlayerMP player = FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().getPlayerByUUID(UUID.fromString(this.owner));
+		if (player != null) {
+			stats = player.getCapability(CapabilityStatsHandler.PP_STATS_CAPABILITY, null);
 		}
 
 		for (Planet planet : GalaxyRegistry.getRegisteredPlanets().values()) {
@@ -79,7 +83,7 @@ public class TileEntityTelescope extends TileBaseElectricBlock implements IInven
 				break;
 			}
 		}
-		
+
 		for (Planet planet : stats.getUnlockedPlanets()) {
 			System.out.println(planet.getUnlocalizedName());
 		}
@@ -88,11 +92,13 @@ public class TileEntityTelescope extends TileBaseElectricBlock implements IInven
 	private boolean canResearch() {
 		IStatsCapability stats = null;
 
-		if (this.owner != null) {
-			stats = this.owner.getCapability(CapabilityStatsHandler.PP_STATS_CAPABILITY, null);
+		EntityPlayerMP player = FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().getPlayerByUUID(UUID.fromString(this.owner));
+
+		if (player != null) {
+			stats = player.getCapability(CapabilityStatsHandler.PP_STATS_CAPABILITY, null);
 		}
 
-		if(stats != null)
+		if (stats != null)
 			if (stats.getUnlockedPlanets().size() != GalaxyRegistry.getRegisteredPlanets().size())
 				return true;
 
@@ -113,6 +119,7 @@ public class TileEntityTelescope extends TileBaseElectricBlock implements IInven
 				this.containingItems[var5] = ItemStack.loadItemStackFromNBT(var4);
 			}
 		}
+		this.setOwner(nbt.getString("Owner"));
 	}
 
 	@Override
@@ -130,13 +137,9 @@ public class TileEntityTelescope extends TileBaseElectricBlock implements IInven
 		}
 
 		nbt.setTag("Items", var2);
+		nbt.setString("Owner", this.getOwner());
 
 		return nbt;
-	}
-
-	@Override
-	public double getPacketRange() {
-		return 0.0D;
 	}
 
 	@Override
@@ -288,11 +291,11 @@ public class TileEntityTelescope extends TileBaseElectricBlock implements IInven
 		return EnumFacing.NORTH;
 	}
 
-	public void setOwner(EntityPlayer owner) {
+	public void setOwner(String owner) {
 		this.owner = owner;
 	}
 
-	public EntityPlayer getOwner() {
+	public String getOwner() {
 		return this.owner;
 	}
 }

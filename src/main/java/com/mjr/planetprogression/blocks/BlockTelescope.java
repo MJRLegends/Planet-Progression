@@ -124,7 +124,7 @@ public class BlockTelescope extends BlockTileGC implements IShiftDescription, IS
 		TileEntity tile = worldIn.getTileEntity(pos);
 
 		if (tile instanceof TileEntityTelescope) {
-			((TileEntityTelescope) tile).setOwner((EntityPlayer) placer);
+			((TileEntityTelescope) tile).setOwner(((EntityPlayer) placer).getUniqueID().toString());
 		}
 	}
 
