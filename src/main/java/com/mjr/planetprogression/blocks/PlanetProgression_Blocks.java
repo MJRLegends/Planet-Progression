@@ -1,15 +1,15 @@
 package com.mjr.planetprogression.blocks;
 
-import com.mjr.planetprogression.Constants;
-import com.mjr.planetprogression.itemBlocks.ItemBlockTelescope;
-import com.mjr.planetprogression.tileEntities.TileEntityTelescope;
-import com.mjr.planetprogression.util.RegisterHelper;
-
 import net.minecraft.block.Block;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
+import com.mjr.mjrlegendslib.util.RegisterUtilities;
+import com.mjr.planetprogression.Constants;
+import com.mjr.planetprogression.itemBlocks.ItemBlockTelescope;
+import com.mjr.planetprogression.tileEntities.TileEntityTelescope;
+
 public class PlanetProgression_Blocks {
-	
+
 	public static Block TELESCOPE;
 
 	public static void init() {
@@ -28,8 +28,8 @@ public class PlanetProgression_Blocks {
 		TELESCOPE = new BlockTelescope("telescope");
 	}
 
-	private static void registerBlocks() throws NoSuchMethodException{
-		RegisterHelper.registerBlock(TELESCOPE, ItemBlockTelescope.class, TELESCOPE.getUnlocalizedName().substring(5));
+	private static void registerBlocks() throws NoSuchMethodException {
+		RegisterUtilities.registerBlock(Constants.modID, TELESCOPE, ItemBlockTelescope.class, TELESCOPE.getUnlocalizedName().substring(5));
 	}
 
 	private static void registerTileEntitys() {

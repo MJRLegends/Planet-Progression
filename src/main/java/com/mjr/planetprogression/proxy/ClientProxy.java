@@ -16,13 +16,13 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.google.common.collect.ImmutableList;
+import com.mjr.mjrlegendslib.util.ClientUtilities;
 import com.mjr.planetprogression.Constants;
 import com.mjr.planetprogression.blocks.PlanetProgression_Blocks;
 import com.mjr.planetprogression.client.handlers.MainHandlerClient;
 import com.mjr.planetprogression.client.model.ItemModelTelescope;
 import com.mjr.planetprogression.client.render.tile.TileEntityTelescopeRenderer;
 import com.mjr.planetprogression.tileEntities.TileEntityTelescope;
-import com.mjr.planetprogression.util.ClientUtilities;
 
 public class ClientProxy extends CommonProxy {
 
@@ -56,7 +56,7 @@ public class ClientProxy extends CommonProxy {
 	public void postInit(FMLPostInitializationEvent event) {
 		// Register Client Main Handler
 		MinecraftForge.EVENT_BUS.register(new MainHandlerClient());
-		
+
 		// Register TileEntity Special Renderers
 		renderBlocksTileEntitySpecialRenderers();
 
@@ -66,17 +66,8 @@ public class ClientProxy extends CommonProxy {
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	public void onModelBakeEvent(ModelBakeEvent event) {
-		ClientUtilities.replaceModelDefault(event, "telescope", "telescope.obj",
-				ImmutableList.of("Eyes_lens",
-						"first_leg_tripod",
-						"Body_Teleskope",
-						"Primary_lens",
-						"two__leg_tripod",
-						"third_leg_tripod",
-						"Stand",
-						"swivel_ground",
-						"small_gear",
-						"Big_gear"), ItemModelTelescope.class, TRSRTransformation.identity());
+		ClientUtilities.replaceModelDefault(Constants.modID, event, "telescope", "telescope.obj",
+				ImmutableList.of("Eyes_lens", "first_leg_tripod", "Body_Teleskope", "Primary_lens", "two__leg_tripod", "third_leg_tripod", "Stand", "swivel_ground", "small_gear", "Big_gear"), ItemModelTelescope.class, TRSRTransformation.identity());
 	}
 
 	private void registerCustomModel() {
