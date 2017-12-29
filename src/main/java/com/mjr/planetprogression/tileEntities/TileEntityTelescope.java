@@ -1,7 +1,6 @@
 package com.mjr.planetprogression.tileEntities;
 
 import java.util.EnumSet;
-import java.util.UUID;
 
 import micdoodle8.mods.galacticraft.api.galaxies.GalaxyRegistry;
 import micdoodle8.mods.galacticraft.api.galaxies.Planet;
@@ -22,9 +21,9 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 
+import com.mjr.mjrlegendslib.util.PlayerUtilties;
 import com.mjr.planetprogression.handlers.capabilities.CapabilityStatsHandler;
 import com.mjr.planetprogression.handlers.capabilities.IStatsCapability;
 
@@ -72,7 +71,7 @@ public class TileEntityTelescope extends TileBaseElectricBlock implements IInven
 	private void doResearch() {
 		IStatsCapability stats = null;
 
-		EntityPlayerMP player = FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().getPlayerByUUID(UUID.fromString(this.owner));
+		EntityPlayerMP player = PlayerUtilties.getPlayerFromUUID(this.owner);
 		if (player != null) {
 			stats = player.getCapability(CapabilityStatsHandler.PP_STATS_CAPABILITY, null);
 		}
@@ -92,7 +91,7 @@ public class TileEntityTelescope extends TileBaseElectricBlock implements IInven
 	private boolean canResearch() {
 		IStatsCapability stats = null;
 
-		EntityPlayerMP player = FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().getPlayerByUUID(UUID.fromString(this.owner));
+		EntityPlayerMP player = PlayerUtilties.getPlayerFromUUID(this.owner);
 
 		if (player != null) {
 			stats = player.getCapability(CapabilityStatsHandler.PP_STATS_CAPABILITY, null);
