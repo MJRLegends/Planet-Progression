@@ -50,7 +50,7 @@ public class MainHandlerServer {
 			}
 		}
 	}
-	
+
 	@SubscribeEvent
 	public void onPlayerCloned(PlayerEvent.Clone event) {
 		if (event.isWasDeath()) {

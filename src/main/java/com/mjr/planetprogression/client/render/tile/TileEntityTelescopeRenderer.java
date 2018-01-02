@@ -34,16 +34,9 @@ public class TileEntityTelescopeRenderer extends TileEntitySpecialRenderer<TileE
 				model = (OBJModel) model.process(ImmutableMap.of("flip-v", "true"));
 
 				Function<ResourceLocation, TextureAtlasSprite> spriteFunction = location -> Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(location.toString());
-				telescope = (OBJModel.OBJBakedModel) model.bake(new OBJModel.OBJState(ImmutableList.of("Eyes_lens",
-						"first_leg_tripod",
-						"Body_Teleskope",
-						"Primary_lens",
-						"two__leg_tripod",
-						"third_leg_tripod",
-						"Stand",
-						"swivel_ground",
-						"small_gear",
-						"Big_gear"), false), DefaultVertexFormats.ITEM, spriteFunction);
+				telescope = (OBJModel.OBJBakedModel) model.bake(
+						new OBJModel.OBJState(ImmutableList.of("Eyes_lens", "first_leg_tripod", "Body_Teleskope", "Primary_lens", "two__leg_tripod", "third_leg_tripod", "Stand", "swivel_ground", "small_gear", "Big_gear"), false),
+						DefaultVertexFormats.ITEM, spriteFunction);
 			} catch (Exception e) {
 				throw new RuntimeException(e);
 			}
