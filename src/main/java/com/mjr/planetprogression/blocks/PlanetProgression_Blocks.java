@@ -13,7 +13,7 @@ public class PlanetProgression_Blocks {
 	public static Block TELESCOPE;
 
 	public static void init() {
-		initializeBlocks();
+		initBlocks();
 		try {
 			registerBlocks();
 		} catch (NoSuchMethodException e) {
@@ -24,11 +24,11 @@ public class PlanetProgression_Blocks {
 		OreDictionaryRegister();
 	}
 
-	private static void initializeBlocks() {
+	public static void initBlocks() {
 		TELESCOPE = new BlockTelescope("telescope");
 	}
 
-	private static void registerBlocks() throws NoSuchMethodException {
+	public static void registerBlocks() throws NoSuchMethodException {
 		RegisterUtilities.registerBlock(Constants.modID, TELESCOPE, ItemBlockTelescope.class, TELESCOPE.getUnlocalizedName().substring(5));
 	}
 

@@ -3,6 +3,7 @@ package com.mjr.planetprogression.tileEntities;
 import java.util.EnumSet;
 
 import micdoodle8.mods.galacticraft.api.galaxies.GalaxyRegistry;
+import micdoodle8.mods.galacticraft.api.galaxies.Moon;
 import micdoodle8.mods.galacticraft.api.galaxies.Planet;
 import micdoodle8.mods.galacticraft.core.energy.item.ItemElectricBase;
 import micdoodle8.mods.galacticraft.core.energy.tile.TileBaseElectricBlock;
@@ -24,8 +25,10 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.fml.relauncher.Side;
 
 import com.mjr.mjrlegendslib.util.PlayerUtilties;
+import com.mjr.planetprogression.Config;
 import com.mjr.planetprogression.handlers.capabilities.CapabilityStatsHandler;
 import com.mjr.planetprogression.handlers.capabilities.IStatsCapability;
+import com.mjr.planetprogression.item.ResearchPaper;
 
 public class TileEntityTelescope extends TileBaseElectricBlock implements IInventoryDefaults, ISidedInventory {
 
@@ -37,7 +40,7 @@ public class TileEntityTelescope extends TileBaseElectricBlock implements IInven
 	@NetworkedField(targetSide = Side.CLIENT)
 	public String owner = "";
 
-	private ItemStack[] containingItems = new ItemStack[1];
+	private ItemStack[] containingItems = new ItemStack[2];
 
 	public TileEntityTelescope() {
 		super();
@@ -76,15 +79,33 @@ public class TileEntityTelescope extends TileBaseElectricBlock implements IInven
 			stats = player.getCapability(CapabilityStatsHandler.PP_STATS_CAPABILITY, null);
 		}
 
-		for (Planet planet : GalaxyRegistry.getRegisteredPlanets().values()) {
-			if (!stats.getUnlockedPlanets().contains(planet)) {
-				stats.addUnlockedPlanets(planet);
-				break;
+		if (Config.researchMode == 0) {
+			boolean found = false;
+			for (Planet planet : GalaxyRegistry.getRegisteredPlanets().values()) {
+				if (((ResearchPaper) this.containingItems[1].getItem()).getPlanet().equalsIgnoreCase(planet.getLocalizedName())) {
+					if (!stats.getUnlockedPlanets().contains(planet)) {
+						stats.addUnlockedPlanets(planet);
+						player.addChatMessage(new TextComponentString("Research Completed! You have unlocked " + planet.getLocalizedName()));
+						this.containingItems[1] = null;
+						found = true;
+						break;
+					}
+				}
 			}
-		}
+			if (found == false) {
+				for (Moon moon : GalaxyRegistry.getRegisteredMoons().values()) {
+					if (((ResearchPaper) this.containingItems[1].getItem()).getPlanet().equalsIgnoreCase(moon.getLocalizedName())) {
+						if (!stats.getUnlockedPlanets().contains(moon)) {
+							stats.addUnlockedPlanets(moon);
+							player.addChatMessage(new TextComponentString("Research Completed! You have unlocked " + moon.getLocalizedName()));
+							this.containingItems[1] = null;
+							break;
+						}
+					}
+				}
+			}
+		} else if (Config.researchMode == 1) {
 
-		for (Planet planet : stats.getUnlockedPlanets()) {
-			System.out.println(planet.getUnlocalizedName());
 		}
 	}
 
@@ -93,14 +114,16 @@ public class TileEntityTelescope extends TileBaseElectricBlock implements IInven
 
 		EntityPlayerMP player = PlayerUtilties.getPlayerFromUUID(this.owner);
 
-		if (player != null) {
-			stats = player.getCapability(CapabilityStatsHandler.PP_STATS_CAPABILITY, null);
+		if (this.containingItems[1] != null && this.containingItems[1].getItem() instanceof ResearchPaper) {
+			if (player != null) {
+				stats = player.getCapability(CapabilityStatsHandler.PP_STATS_CAPABILITY, null);
+			}
+
+			if (stats != null)
+				if (stats.getUnlockedPlanets().size() != GalaxyRegistry.getRegisteredPlanets().size())
+					return true;
 		}
 
-		if (stats != null)
-			if (stats.getUnlockedPlanets().size() != GalaxyRegistry.getRegisteredPlanets().size())
-				return true;
-		// else
 		// stats.setUnlockedPlanets(new ArrayList<Planet>()); // DEBUG Tool
 
 		return false;

@@ -3,7 +3,7 @@ package com.mjr.planetprogression.handlers.capabilities;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
-import micdoodle8.mods.galacticraft.api.galaxies.Planet;
+import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 
@@ -19,9 +19,9 @@ public interface IStatsCapability {
 
 	void setPlayer(WeakReference<EntityPlayerMP> player);
 
-	ArrayList<Planet> getUnlockedPlanets();
+	ArrayList<CelestialBody> getUnlockedPlanets();
 
-	void setUnlockedPlanets(ArrayList<Planet> unlockedPlanets);
+	void setUnlockedPlanets(ArrayList<CelestialBody> unlockedPlanets);
 
-	void addUnlockedPlanets(Planet unlockedPlanet);
+	void addUnlockedPlanets(CelestialBody unlockedPlanet);
 }

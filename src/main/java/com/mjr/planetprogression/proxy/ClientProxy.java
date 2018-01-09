@@ -41,6 +41,11 @@ public class ClientProxy extends CommonProxy {
 
 	@Override
 	public void init(FMLInitializationEvent event) {
+		super.init(event);
+	}
+
+	@Override
+	public void postInit(FMLPostInitializationEvent event) {
 		// Register Custom Models
 		registerCustomModel();
 
@@ -49,11 +54,7 @@ public class ClientProxy extends CommonProxy {
 
 		// Register Item Json Files
 		registerBlockJsons();
-		super.init(event);
-	}
-
-	@Override
-	public void postInit(FMLPostInitializationEvent event) {
+		
 		// Register Client Main Handler
 		MinecraftForge.EVENT_BUS.register(new MainHandlerClient());
 

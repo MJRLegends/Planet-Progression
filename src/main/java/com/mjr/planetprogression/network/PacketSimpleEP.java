@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
+import micdoodle8.mods.galacticraft.api.galaxies.GalaxyRegistry;
+import micdoodle8.mods.galacticraft.api.galaxies.Moon;
 import micdoodle8.mods.galacticraft.api.galaxies.Planet;
 import micdoodle8.mods.galacticraft.core.entities.player.GCPlayerStats;
 import micdoodle8.mods.galacticraft.core.network.NetworkUtil;
@@ -32,7 +34,7 @@ public class PacketSimpleEP extends PacketBase implements Packet {
 		// SERVER
 
 		// CLIENT
-		C_UPDATE_UNLOCKED_PLANET_LIST(Side.CLIENT, Double.class);
+		C_UPDATE_UNLOCKED_PLANET_LIST(Side.CLIENT, String[].class);
 
 		private Side targetSide;
 		private Class<?>[] decodeAs;
@@ -119,7 +121,14 @@ public class PacketSimpleEP extends PacketBase implements Packet {
 		switch (this.type) {
 		case C_UPDATE_UNLOCKED_PLANET_LIST:
 			for (Object o : this.data) {
-				stats.addUnlockedPlanets((Planet) o);
+				for (Planet planet : GalaxyRegistry.getRegisteredPlanets().values()) {
+					if(((String) o).equalsIgnoreCase(planet.getUnlocalizedName()))
+						stats.addUnlockedPlanets(planet);
+				}
+				for (Moon planet : GalaxyRegistry.getRegisteredMoons().values()) {
+					if(((String) o).equalsIgnoreCase(planet.getUnlocalizedName()))
+						stats.addUnlockedPlanets(planet);
+				}
 			}
 			break;
 		default:

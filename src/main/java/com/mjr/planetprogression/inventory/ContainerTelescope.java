@@ -18,6 +18,7 @@ public class ContainerTelescope extends Container {
 		this.tileEntity = tileEntity;
 
 		this.addSlotToContainer(new SlotSpecific(tileEntity, 0, 152, 105, IItemElectric.class));
+		this.addSlotToContainer(new Slot(tileEntity, 1, 152, 65));
 
 		int var6;
 		int var7;

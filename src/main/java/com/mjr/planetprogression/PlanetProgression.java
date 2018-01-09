@@ -15,6 +15,7 @@ import com.mjr.planetprogression.client.gui.GuiHandler;
 import com.mjr.planetprogression.client.handlers.capabilities.CapabilityStatsClientHandler;
 import com.mjr.planetprogression.handlers.MainHandlerServer;
 import com.mjr.planetprogression.handlers.capabilities.CapabilityStatsHandler;
+import com.mjr.planetprogression.item.PlanetProgression_Items;
 import com.mjr.planetprogression.network.PlanetProgressionChannelHandler;
 import com.mjr.planetprogression.proxy.CommonProxy;
 
@@ -41,9 +42,6 @@ public class PlanetProgression {
 
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
-		// Initialization/Registering Methods For Blocks
-		PlanetProgression_Blocks.init();
-
 		packetPipeline = PlanetProgressionChannelHandler.init();
 
 		PlanetProgression.proxy.init(event);
@@ -58,6 +56,10 @@ public class PlanetProgression {
 		// Register GUI Handler
 		NetworkRegistry.INSTANCE.registerGuiHandler(PlanetProgression.instance, new GuiHandler());
 
+		// Initialization/Registering Methods For Blocks/Items
+		PlanetProgression_Blocks.init();
+		PlanetProgression_Items.init();
+		
 		PlanetProgression.proxy.postInit(event);
 	}
 }

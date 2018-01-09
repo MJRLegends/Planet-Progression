@@ -2,23 +2,23 @@ package com.mjr.planetprogression.client.handlers.capabilities;
 
 import java.util.ArrayList;
 
-import micdoodle8.mods.galacticraft.api.galaxies.Planet;
+import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
 
 public class StatsClientCapability implements IStatsClientCapability {
-	private ArrayList<Planet> unlockedPlanets = new ArrayList<Planet>();
+	private ArrayList<CelestialBody> unlockedPlanets = new ArrayList<CelestialBody>();
 
 	@Override
-	public ArrayList<Planet> getUnlockedPlanets() {
+	public ArrayList<CelestialBody> getUnlockedPlanets() {
 		return this.unlockedPlanets;
 	}
 
 	@Override
-	public void setUnlockedPlanets(ArrayList<Planet> unlockedPlanets) {
+	public void setUnlockedPlanets(ArrayList<CelestialBody> unlockedPlanets) {
 		this.unlockedPlanets = unlockedPlanets;
 	}
 
 	@Override
-	public void addUnlockedPlanets(Planet unlockedPlanet) {
+	public void addUnlockedPlanets(CelestialBody unlockedPlanet) {
 		this.unlockedPlanets.add(unlockedPlanet);
 	}
 }

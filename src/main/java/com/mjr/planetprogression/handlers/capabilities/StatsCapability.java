@@ -4,8 +4,8 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
 import micdoodle8.mods.galacticraft.api.galaxies.GalaxyRegistry;
-import micdoodle8.mods.galacticraft.api.galaxies.Planet;
 import micdoodle8.mods.galacticraft.core.util.GCLog;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
@@ -13,32 +13,29 @@ import net.minecraft.nbt.NBTTagList;
 
 public class StatsCapability implements IStatsCapability {
 	public WeakReference<EntityPlayerMP> player;
-	private ArrayList<Planet> unlockedPlanets = new ArrayList<Planet>();
+	private ArrayList<CelestialBody> unlockedPlanets = new ArrayList<CelestialBody>();
 	public int buildFlags = 0;
 
 	@Override
-	public ArrayList<Planet> getUnlockedPlanets() {
+	public ArrayList<CelestialBody> getUnlockedPlanets() {
 		return this.unlockedPlanets;
 	}
 
 	@Override
-	public void setUnlockedPlanets(ArrayList<Planet> unlockedPlanets) {
+	public void setUnlockedPlanets(ArrayList<CelestialBody> unlockedPlanets) {
 		this.unlockedPlanets = unlockedPlanets;
 	}
 
 	@Override
-	public void addUnlockedPlanets(Planet unlockedPlanet) {
+	public void addUnlockedPlanets(CelestialBody unlockedPlanet) {
 		this.unlockedPlanets.add(unlockedPlanet);
 	}
 
 	@Override
 	public void saveNBTData(NBTTagCompound nbt) {
-		if (!this.unlockedPlanets.isEmpty())
-			Collections.sort(this.unlockedPlanets);
-
 		NBTTagList tagList = new NBTTagList();
 
-		for (Planet planet : this.unlockedPlanets) {
+		for (CelestialBody planet : this.unlockedPlanets) {
 			if (planet != null) {
 				final NBTTagCompound nbttagcompound = new NBTTagCompound();
 				nbttagcompound.setString("UnlockedPlanet", planet.getUnlocalizedName());
@@ -52,7 +49,7 @@ public class StatsCapability implements IStatsCapability {
 	@Override
 	public void loadNBTData(NBTTagCompound nbt) {
 		try {
-			this.unlockedPlanets = new ArrayList<Planet>();
+			this.unlockedPlanets = new ArrayList<CelestialBody>();
 
 			if (this.player.get() != null) {
 				for (int i = 0; i < nbt.getTagList("Planets", 10).tagCount(); ++i) {
