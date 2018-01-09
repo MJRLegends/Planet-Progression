@@ -20,7 +20,8 @@ public class PlanetProgression_Items {
 
 	public static void initItems() {
 		for (Planet planet : GalaxyRegistry.getRegisteredPlanets().values()){
-			researchPapers.add(new ResearchPaper(planet.getLocalizedName()));
+			if(!planet.getUnlocalizedName().contains("overworld"))
+				researchPapers.add(new ResearchPaper(planet.getLocalizedName()));
 		}
 		for (Moon moon : GalaxyRegistry.getRegisteredMoons().values()){
 			researchPapers.add(new ResearchPaper(moon.getLocalizedName()));

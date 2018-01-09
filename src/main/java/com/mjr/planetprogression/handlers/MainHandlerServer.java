@@ -2,11 +2,13 @@ package com.mjr.planetprogression.handlers;
 
 import java.util.List;
 
+import micdoodle8.mods.galacticraft.core.GalacticraftCore;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
@@ -101,6 +103,10 @@ public class MainHandlerServer {
 			IStatsCapability stats = player.getCapability(CapabilityStatsHandler.PP_STATS_CAPABILITY, null);
 			if (tick % 30 == 0) {
 				this.sendUnlockedPlanetsPacket(player, stats);
+			}
+			if(!stats.getUnlockedPlanets().contains(GalacticraftCore.planetOverworld)){
+				stats.addUnlockedPlanets(GalacticraftCore.planetOverworld);
+				player.addChatMessage(new TextComponentString("You have discovered Earth!"));
 			}
 		}
 	}
