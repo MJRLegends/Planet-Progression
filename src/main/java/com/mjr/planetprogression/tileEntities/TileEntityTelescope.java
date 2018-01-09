@@ -97,7 +97,7 @@ public class TileEntityTelescope extends TileBaseElectricBlock implements IInven
 					if (((ResearchPaper) this.containingItems[1].getItem()).getPlanet().equalsIgnoreCase(moon.getLocalizedName())) {
 						if (!stats.getUnlockedPlanets().contains(moon)) {
 							stats.addUnlockedPlanets(moon);
-							player.addChatMessage(new TextComponentString("Research Completed! You have unlocked " + moon.getLocalizedName()));
+							player.addChatMessage(new TextComponentString("Research Completed! You have discovered " + moon.getLocalizedName()));
 							this.containingItems[1] = null;
 							break;
 						}
