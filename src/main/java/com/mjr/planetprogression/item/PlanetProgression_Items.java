@@ -30,7 +30,7 @@ public class PlanetProgression_Items {
 
 	public static void registerItems() {
 		for (Item item : researchPapers){
-			RegisterUtilities.registerItem(item, item.getUnlocalizedName().substring(5));
+			RegisterUtilities.registerItem(item, item.getUnlocalizedName().substring(5) + "_"+ ((ResearchPaper)item).getPlanet().toLowerCase());
 		}
 	}
 }
