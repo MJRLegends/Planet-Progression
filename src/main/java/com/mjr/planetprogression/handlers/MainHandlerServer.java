@@ -119,7 +119,10 @@ public class MainHandlerServer {
 			int size = stats.getUnlockedPlanets().size();
 			planets = new String[size];
 			for (int i = 0; i < size; i++) {
-				planets[i] = stats.getUnlockedPlanets().get(i).getUnlocalizedName();
+				if(stats.getUnlockedPlanets().get(i) != null)
+					planets[i] = stats.getUnlockedPlanets().get(i).getUnlocalizedName();
+				else
+					planets[i] = "";
 			}
 		}
 		PlanetProgression.packetPipeline.sendTo(new PacketSimpleEP(EnumSimplePacket.C_UPDATE_UNLOCKED_PLANET_LIST, player.worldObj.provider.getDimensionType().getId(), new Object[] { planets }), player);
