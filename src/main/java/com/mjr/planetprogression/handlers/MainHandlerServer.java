@@ -8,9 +8,14 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.Item;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.WorldServer;
+import net.minecraft.world.storage.loot.LootEntryItem;
+import net.minecraft.world.storage.loot.conditions.LootCondition;
+import net.minecraft.world.storage.loot.functions.LootFunction;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
+import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -22,12 +27,15 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.google.common.collect.Lists;
+import com.mjr.planetprogression.Config;
 import com.mjr.planetprogression.PlanetProgression;
 import com.mjr.planetprogression.client.handlers.capabilities.CapabilityProviderStatsClient;
 import com.mjr.planetprogression.client.handlers.capabilities.CapabilityStatsClientHandler;
 import com.mjr.planetprogression.handlers.capabilities.CapabilityProviderStats;
 import com.mjr.planetprogression.handlers.capabilities.CapabilityStatsHandler;
 import com.mjr.planetprogression.handlers.capabilities.IStatsCapability;
+import com.mjr.planetprogression.item.PlanetProgression_Items;
+import com.mjr.planetprogression.item.ResearchPaper;
 import com.mjr.planetprogression.network.PacketSimpleEP;
 import com.mjr.planetprogression.network.PacketSimpleEP.EnumSimplePacket;
 import com.mjr.planetprogression.network.PlanetProgressionPacketHandler;
@@ -104,7 +112,7 @@ public class MainHandlerServer {
 			if (tick % 30 == 0) {
 				this.sendUnlockedPlanetsPacket(player, stats);
 			}
-			if(!stats.getUnlockedPlanets().contains(GalacticraftCore.planetOverworld)){
+			if (!stats.getUnlockedPlanets().contains(GalacticraftCore.planetOverworld)) {
 				stats.addUnlockedPlanets(GalacticraftCore.planetOverworld);
 				player.addChatMessage(new TextComponentString("You have discovered Earth!"));
 			}
@@ -119,13 +127,22 @@ public class MainHandlerServer {
 			int size = stats.getUnlockedPlanets().size();
 			planets = new String[size];
 			for (int i = 0; i < size; i++) {
-				if(stats.getUnlockedPlanets().get(i) != null)
+				if (stats.getUnlockedPlanets().get(i) != null)
 					planets[i] = stats.getUnlockedPlanets().get(i).getUnlocalizedName();
 				else
 					planets[i] = "";
 			}
 		}
 		PlanetProgression.packetPipeline.sendTo(new PacketSimpleEP(EnumSimplePacket.C_UPDATE_UNLOCKED_PLANET_LIST, player.worldObj.provider.getDimensionType().getId(), new Object[] { planets }), player);
+	}
+
+	@SubscribeEvent
+	public void lootLoad(LootTableLoadEvent event) {
+		if (event.getName().toString().equals("minecraft:chests/simple_dungeon")) {
+			if (Config.generateResearchPaperInLoot)
+				for (Item item : PlanetProgression_Items.researchPapers)
+					event.getTable().getPool("main").addEntry(new LootEntryItem(item, 50, 1, new LootFunction[0], new LootCondition[0], item.getUnlocalizedName() + "_" + ((ResearchPaper) item).getPlanet()));
+		}
 	}
 
 }
