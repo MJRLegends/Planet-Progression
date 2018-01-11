@@ -20,6 +20,8 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.INetHandler;
 import net.minecraft.network.Packet;
 import net.minecraft.network.PacketBuffer;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
@@ -27,11 +29,13 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.mjr.planetprogression.client.handlers.capabilities.CapabilityStatsClientHandler;
 import com.mjr.planetprogression.client.handlers.capabilities.IStatsClientCapability;
+import com.mjr.planetprogression.tileEntities.TileEntityTelescope;
 
 @SuppressWarnings("rawtypes")
 public class PacketSimpleEP extends PacketBase implements Packet {
 	public enum EnumSimplePacket {
 		// SERVER
+		S_UPDATE_ROTATION(Side.SERVER, BlockPos.class, Float.class),
 
 		// CLIENT
 		C_UPDATE_UNLOCKED_PLANET_LIST(Side.CLIENT, String[].class);
@@ -122,11 +126,11 @@ public class PacketSimpleEP extends PacketBase implements Packet {
 		case C_UPDATE_UNLOCKED_PLANET_LIST:
 			for (Object o : this.data) {
 				for (Planet planet : GalaxyRegistry.getRegisteredPlanets().values()) {
-					if(((String) o).equalsIgnoreCase(planet.getUnlocalizedName()))
+					if (((String) o).equalsIgnoreCase(planet.getUnlocalizedName()))
 						stats.addUnlockedPlanets(planet);
 				}
 				for (Moon planet : GalaxyRegistry.getRegisteredMoons().values()) {
-					if(((String) o).equalsIgnoreCase(planet.getUnlocalizedName()))
+					if (((String) o).equalsIgnoreCase(planet.getUnlocalizedName()))
 						stats.addUnlockedPlanets(planet);
 				}
 			}
@@ -148,6 +152,18 @@ public class PacketSimpleEP extends PacketBase implements Packet {
 		GCPlayerStats stats = GCPlayerStats.get(playerBase);
 
 		switch (this.type) {
+		case S_UPDATE_ROTATION:
+			final TileEntity tileAt = player.worldObj.getTileEntity((BlockPos) this.data.get(0));
+
+			if (tileAt instanceof TileEntityTelescope) {
+				final TileEntityTelescope machine = (TileEntityTelescope) tileAt;
+
+				if((Float)this.data.get(1) == 0)
+					machine.currentRotation += 45;
+				else if((Float)this.data.get(1) == 1)
+					machine.currentRotation -= 45;
+			}
+			break;
 		default:
 			break;
 		}

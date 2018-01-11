@@ -58,7 +58,7 @@ public class TileEntityTelescopeRenderer extends TileEntitySpecialRenderer<TileE
 		updateModels();
 
 		GL11.glTranslatef((float) x + 0.5F, (float) y + 0.1F, (float) z + 0.5F);
-
+		GL11.glRotatef(te.currentRotation, 0.0F, 1.0F, 0.0F);
 		GL11.glScalef(0.04F, 0.04F, 0.04F);
 
 		ClientUtil.drawBakedModel(telescope);

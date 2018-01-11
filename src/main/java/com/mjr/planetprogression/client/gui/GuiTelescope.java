@@ -18,7 +18,9 @@ import net.minecraftforge.fml.client.FMLClientHandler;
 import org.lwjgl.opengl.GL11;
 
 import com.mjr.planetprogression.Constants;
+import com.mjr.planetprogression.PlanetProgression;
 import com.mjr.planetprogression.inventory.ContainerTelescope;
+import com.mjr.planetprogression.network.PacketSimpleEP;
 import com.mjr.planetprogression.tileEntities.TileEntityTelescope;
 
 public class GuiTelescope extends GuiContainerGC {
@@ -27,11 +29,15 @@ public class GuiTelescope extends GuiContainerGC {
 	private TileEntityTelescope telescope;
 
 	private GuiButton enableButton;
+	private GuiButton leftButton;
+	private GuiButton rightButton;
+
 	private GuiElementInfoRegion electricInfoRegion = new GuiElementInfoRegion(0, 0, 52, 9, null, 0, 0, this);
 
 	public GuiTelescope(InventoryPlayer playerInventory, TileEntityTelescope telescope) {
 		super(new ContainerTelescope(playerInventory, telescope, FMLClientHandler.instance().getClient().thePlayer));
-		this.ySize = 209;
+		this.xSize = 400;
+		this.ySize = 300;
 		this.telescope = telescope;
 	}
 
@@ -54,8 +60,13 @@ public class GuiTelescope extends GuiContainerGC {
 		this.buttonList.clear();
 		final int var5 = (this.width - this.xSize) / 2;
 		final int var6 = (this.height - this.ySize) / 2;
-		this.enableButton = new GuiButton(0, var5 + 70 + 124 - 72, var6 + 16, 48, 20, GCCoreUtil.translate("gui.button.enable.name"));
+		this.enableButton = new GuiButton(0, var5 + 70 + 124 - 72, var6 + 16, 152, 20, GCCoreUtil.translate("gui.button.enable.name"));
+		this.leftButton = new GuiButton(1, var5 + 5, var6 + 5, 15, 20, "<");
+		this.rightButton = new GuiButton(2, var5 + 70 + 310, var6 + 5, 15, 20, ">");
+
 		this.buttonList.add(this.enableButton);
+		this.buttonList.add(this.leftButton);
+		this.buttonList.add(this.rightButton);
 		this.electricInfoRegion.tooltipStrings = new ArrayList<String>();
 		this.electricInfoRegion.xPosition = (this.width - this.xSize) / 2 + 98;
 		this.electricInfoRegion.yPosition = (this.height - this.ySize) / 2 + 113;
@@ -75,6 +86,14 @@ public class GuiTelescope extends GuiContainerGC {
 			case 0:
 				GalacticraftCore.packetPipeline.sendToServer(new PacketSimple(EnumSimplePacket.S_UPDATE_DISABLEABLE_BUTTON, GCCoreUtil.getDimensionID(mc.theWorld), new Object[] { this.telescope.getPos(), 0 }));
 				break;
+			case 1:
+				PlanetProgression.packetPipeline.sendToServer(new PacketSimpleEP(com.mjr.planetprogression.network.PacketSimpleEP.EnumSimplePacket.S_UPDATE_ROTATION, GCCoreUtil.getDimensionID(mc.theWorld),
+						new Object[] { this.telescope.getPos(), 0.0F }));
+				break;
+			case 2:
+				PlanetProgression.packetPipeline.sendToServer(new PacketSimpleEP(com.mjr.planetprogression.network.PacketSimpleEP.EnumSimplePacket.S_UPDATE_ROTATION, GCCoreUtil.getDimensionID(mc.theWorld),
+						new Object[] { this.telescope.getPos(), 1.0F }));
+				break;
 			default:
 				break;
 			}
@@ -86,8 +105,8 @@ public class GuiTelescope extends GuiContainerGC {
 		String displayString = this.telescope.getName();
 		this.fontRendererObj.drawString(displayString, this.xSize / 2 - this.fontRendererObj.getStringWidth(displayString) / 2, 5, 4210752);
 
-		this.fontRendererObj.drawString(GCCoreUtil.translate("container.inventory"), 8, 115, 4210752);
-		this.fontRendererObj.drawString("Progress: " + (telescope.processTicks / 2) + " %", 8, 80, 4210752);
+		this.fontRendererObj.drawString(GCCoreUtil.translate("container.inventory"), 8, 205, 4210752);
+		this.fontRendererObj.drawString("Progress: " + (telescope.processTicks / 2) + " %", 165, 40, 4210752);
 
 	}
 

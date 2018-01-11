@@ -39,6 +39,9 @@ public class TileEntityTelescope extends TileBaseElectricBlock implements IInven
 	public int processTicks = 0;
 	@NetworkedField(targetSide = Side.CLIENT)
 	public String owner = "";
+	
+	@NetworkedField(targetSide = Side.CLIENT)
+	public float currentRotation;
 
 	private ItemStack[] containingItems = new ItemStack[2];
 
