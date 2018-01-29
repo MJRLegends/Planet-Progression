@@ -44,7 +44,11 @@ public class PlanetProgression {
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
 		packetPipeline = PlanetProgressionChannelHandler.init();
-		PlanetProgression_Recipes.init();
+		
+		// Initialization/Registering Methods For Blocks/Items
+		PlanetProgression_Blocks.init();
+		PlanetProgression_Items.init();
+		
 		PlanetProgression.proxy.init(event);
 	}
 
@@ -57,10 +61,8 @@ public class PlanetProgression {
 		// Register GUI Handler
 		NetworkRegistry.INSTANCE.registerGuiHandler(PlanetProgression.instance, new GuiHandler());
 
-		// Initialization/Registering Methods For Blocks/Items
-		PlanetProgression_Blocks.init();
-		PlanetProgression_Items.init();
-		
+		PlanetProgression_Recipes.init();
+
 		PlanetProgression.proxy.postInit(event);
 	}
 }

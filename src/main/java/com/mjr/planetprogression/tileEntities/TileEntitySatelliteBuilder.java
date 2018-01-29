@@ -1,5 +1,7 @@
 package com.mjr.planetprogression.tileEntities;
 
+import java.util.Arrays;
+
 import micdoodle8.mods.galacticraft.core.energy.item.ItemElectricBase;
 import micdoodle8.mods.galacticraft.core.energy.tile.TileBaseElectricBlockWithInventory;
 import micdoodle8.mods.miccore.Annotations.NetworkedField;
@@ -31,7 +33,7 @@ public class TileEntitySatelliteBuilder extends TileBaseElectricBlockWithInvento
 	public void update() {
 		super.update();
 
-		this.producingStack = MachineRecipeManager.getOutputForInput(this.containingItems);
+		this.producingStack = MachineRecipeManager.getOutputForInput(Arrays.copyOfRange(this.containingItems, 1, 4));
 
 		if (!this.worldObj.isRemote) {
 			if (this.canProcess() && canOutput() && this.hasEnoughEnergyToRun) {
@@ -50,6 +52,8 @@ public class TileEntitySatelliteBuilder extends TileBaseElectricBlockWithInvento
 	}
 
 	public boolean canProcess() {
+		if(this.producingStack == null)
+			return false;
 		if (this.containingItems[1] == null)
 			return false;
 		if (this.containingItems[2] == null)
@@ -66,7 +70,7 @@ public class TileEntitySatelliteBuilder extends TileBaseElectricBlockWithInvento
 	}
 
 	public boolean hasInputs() {
-		return false;
+		return true;
 	}
 
 	public void smeltItem() {

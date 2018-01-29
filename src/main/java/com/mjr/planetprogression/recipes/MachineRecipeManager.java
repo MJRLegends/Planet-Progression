@@ -62,11 +62,9 @@ public class MachineRecipeManager {
 				if (recipeStack == null || inputStack == null) {
 					if (recipeStack != null || inputStack != null) {
 						found = false;
-						break;
 					}
 				} else if (recipeStack.getItem() != inputStack.getItem() || recipeStack.getItemDamage() != inputStack.getItemDamage()) {
 					found = false;
-					break;
 				}
 			}
 
