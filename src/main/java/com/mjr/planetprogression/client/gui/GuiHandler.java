@@ -12,7 +12,9 @@ import net.minecraftforge.fml.common.network.IGuiHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import com.mjr.planetprogression.inventory.ContainerSatelliteBuilder;
 import com.mjr.planetprogression.inventory.ContainerTelescope;
+import com.mjr.planetprogression.tileEntities.TileEntitySatelliteBuilder;
 import com.mjr.planetprogression.tileEntities.TileEntityTelescope;
 
 public class GuiHandler implements IGuiHandler {
@@ -31,6 +33,8 @@ public class GuiHandler implements IGuiHandler {
 		if (tile != null) {
 			if (tile instanceof TileEntityTelescope) {
 				return new ContainerTelescope(player.inventory, (TileEntityTelescope) tile, player);
+			} else if (tile instanceof TileEntitySatelliteBuilder) {
+				return new ContainerSatelliteBuilder(player.inventory, (TileEntitySatelliteBuilder) tile, player);
 			}
 		}
 		return null;
@@ -52,6 +56,8 @@ public class GuiHandler implements IGuiHandler {
 		if (tile != null) {
 			if (tile instanceof TileEntityTelescope) {
 				return new GuiTelescope(player.inventory, (TileEntityTelescope) world.getTileEntity(position));
+			} else if (tile instanceof TileEntitySatelliteBuilder) {
+				return new GuiSatelliteBuilder(player.inventory, (TileEntitySatelliteBuilder) world.getTileEntity(position));
 			}
 		}
 		return null;

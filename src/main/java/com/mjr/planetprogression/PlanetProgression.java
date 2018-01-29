@@ -18,6 +18,7 @@ import com.mjr.planetprogression.handlers.capabilities.CapabilityStatsHandler;
 import com.mjr.planetprogression.item.PlanetProgression_Items;
 import com.mjr.planetprogression.network.PlanetProgressionChannelHandler;
 import com.mjr.planetprogression.proxy.CommonProxy;
+import com.mjr.planetprogression.recipes.PlanetProgression_Recipes;
 
 @Mod(modid = Constants.modID, name = Constants.modName, version = Constants.modVersion, dependencies = Constants.DEPENDENCIES_FORGE + Constants.DEPENDENCIES_MODS)
 public class PlanetProgression {
@@ -43,7 +44,7 @@ public class PlanetProgression {
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
 		packetPipeline = PlanetProgressionChannelHandler.init();
-
+		PlanetProgression_Recipes.init();
 		PlanetProgression.proxy.init(event);
 	}
 
