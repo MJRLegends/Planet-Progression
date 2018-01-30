@@ -10,9 +10,11 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 
+import com.mjr.mjrlegendslib.util.RegisterUtilities;
 import com.mjr.planetprogression.blocks.PlanetProgression_Blocks;
 import com.mjr.planetprogression.client.gui.GuiHandler;
 import com.mjr.planetprogression.client.handlers.capabilities.CapabilityStatsClientHandler;
+import com.mjr.planetprogression.entities.EntitySatelliteRocket;
 import com.mjr.planetprogression.handlers.MainHandlerServer;
 import com.mjr.planetprogression.handlers.capabilities.CapabilityStatsHandler;
 import com.mjr.planetprogression.item.PlanetProgression_Items;
@@ -44,11 +46,13 @@ public class PlanetProgression {
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
 		packetPipeline = PlanetProgressionChannelHandler.init();
-		
+
 		// Initialization/Registering Methods For Blocks/Items
 		PlanetProgression_Blocks.init();
 		PlanetProgression_Items.init();
-		
+
+		registerNonMobEntities();
+
 		PlanetProgression.proxy.init(event);
 	}
 
@@ -64,5 +68,9 @@ public class PlanetProgression {
 		PlanetProgression_Recipes.init();
 
 		PlanetProgression.proxy.postInit(event);
+	}
+
+	private void registerNonMobEntities() {
+		RegisterUtilities.registerNonMobEntity(PlanetProgression.instance, EntitySatelliteRocket.class, "EntitySatelliteRocket", 150, 1, false);
 	}
 }

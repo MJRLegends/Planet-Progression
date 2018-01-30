@@ -20,6 +20,8 @@ public class PlanetProgression_Items {
 	public static Item satelliteDistance;
 	public static Item satelliteAtmosphere;
 
+	public static Item SATELLITE_ROCKET;
+
 	public static void init() {
 		initItems();
 		registerItems();
@@ -38,6 +40,7 @@ public class PlanetProgression_Items {
 			satelliteSurface = new ItemSatellite("satellite_surface", 0);
 			satelliteDistance = new ItemSatellite("satellite_distance", 1);
 			satelliteAtmosphere = new ItemSatellite("satellite_atmosphere", 2);
+			SATELLITE_ROCKET = new ItemSatelliteRocket("item_satellite_rocket");
 		}
 	}
 
@@ -50,6 +53,7 @@ public class PlanetProgression_Items {
 			RegisterUtilities.registerItem(satelliteSurface, satelliteSurface.getUnlocalizedName().substring(5));
 			RegisterUtilities.registerItem(satelliteDistance, satelliteDistance.getUnlocalizedName().substring(5));
 			RegisterUtilities.registerItem(satelliteAtmosphere, satelliteAtmosphere.getUnlocalizedName().substring(5));
+			RegisterUtilities.registerItem(SATELLITE_ROCKET, SATELLITE_ROCKET.getUnlocalizedName().substring(5));
 		}
 	}
 }
