@@ -20,7 +20,7 @@ import org.lwjgl.opengl.GL11;
 import com.mjr.planetprogression.Constants;
 import com.mjr.planetprogression.PlanetProgression;
 import com.mjr.planetprogression.inventory.ContainerTelescope;
-import com.mjr.planetprogression.network.PacketSimpleEP;
+import com.mjr.planetprogression.network.PacketSimplePP;
 import com.mjr.planetprogression.tileEntities.TileEntityTelescope;
 
 public class GuiTelescope extends GuiContainerGC {
@@ -87,11 +87,11 @@ public class GuiTelescope extends GuiContainerGC {
 				GalacticraftCore.packetPipeline.sendToServer(new PacketSimple(EnumSimplePacket.S_UPDATE_DISABLEABLE_BUTTON, GCCoreUtil.getDimensionID(mc.theWorld), new Object[] { this.telescope.getPos(), 0 }));
 				break;
 			case 1:
-				PlanetProgression.packetPipeline.sendToServer(new PacketSimpleEP(com.mjr.planetprogression.network.PacketSimpleEP.EnumSimplePacket.S_UPDATE_ROTATION, GCCoreUtil.getDimensionID(mc.theWorld), new Object[] { this.telescope.getPos(),
+				PlanetProgression.packetPipeline.sendToServer(new PacketSimplePP(com.mjr.planetprogression.network.PacketSimplePP.EnumSimplePacket.S_UPDATE_ROTATION, GCCoreUtil.getDimensionID(mc.theWorld), new Object[] { this.telescope.getPos(),
 						0.0F }));
 				break;
 			case 2:
-				PlanetProgression.packetPipeline.sendToServer(new PacketSimpleEP(com.mjr.planetprogression.network.PacketSimpleEP.EnumSimplePacket.S_UPDATE_ROTATION, GCCoreUtil.getDimensionID(mc.theWorld), new Object[] { this.telescope.getPos(),
+				PlanetProgression.packetPipeline.sendToServer(new PacketSimplePP(com.mjr.planetprogression.network.PacketSimplePP.EnumSimplePacket.S_UPDATE_ROTATION, GCCoreUtil.getDimensionID(mc.theWorld), new Object[] { this.telescope.getPos(),
 						1.0F }));
 				break;
 			default:

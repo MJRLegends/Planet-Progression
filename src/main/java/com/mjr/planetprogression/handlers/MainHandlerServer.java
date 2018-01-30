@@ -36,8 +36,8 @@ import com.mjr.planetprogression.handlers.capabilities.CapabilityStatsHandler;
 import com.mjr.planetprogression.handlers.capabilities.IStatsCapability;
 import com.mjr.planetprogression.item.PlanetProgression_Items;
 import com.mjr.planetprogression.item.ResearchPaper;
-import com.mjr.planetprogression.network.PacketSimpleEP;
-import com.mjr.planetprogression.network.PacketSimpleEP.EnumSimplePacket;
+import com.mjr.planetprogression.network.PacketSimplePP;
+import com.mjr.planetprogression.network.PacketSimplePP.EnumSimplePacket;
 import com.mjr.planetprogression.network.PlanetProgressionPacketHandler;
 
 public class MainHandlerServer {
@@ -133,7 +133,7 @@ public class MainHandlerServer {
 					planets[i] = "";
 			}
 		}
-		PlanetProgression.packetPipeline.sendTo(new PacketSimpleEP(EnumSimplePacket.C_UPDATE_UNLOCKED_PLANET_LIST, player.worldObj.provider.getDimensionType().getId(), new Object[] { planets }), player);
+		PlanetProgression.packetPipeline.sendTo(new PacketSimplePP(EnumSimplePacket.C_UPDATE_UNLOCKED_PLANET_LIST, player.worldObj.provider.getDimensionType().getId(), new Object[] { planets }), player);
 	}
 
 	@SubscribeEvent

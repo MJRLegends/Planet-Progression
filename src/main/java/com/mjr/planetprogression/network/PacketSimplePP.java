@@ -32,7 +32,7 @@ import com.mjr.planetprogression.client.handlers.capabilities.IStatsClientCapabi
 import com.mjr.planetprogression.tileEntities.TileEntityTelescope;
 
 @SuppressWarnings("rawtypes")
-public class PacketSimpleEP extends PacketBase implements Packet {
+public class PacketSimplePP extends PacketBase implements Packet {
 	public enum EnumSimplePacket {
 		// SERVER
 		S_UPDATE_ROTATION(Side.SERVER, BlockPos.class, Float.class),
@@ -62,15 +62,15 @@ public class PacketSimpleEP extends PacketBase implements Packet {
 	@SuppressWarnings("unused")
 	static private String spamCheckString;
 
-	public PacketSimpleEP() {
+	public PacketSimplePP() {
 		super();
 	}
 
-	public PacketSimpleEP(EnumSimplePacket packetType, int dimID, Object[] data) {
+	public PacketSimplePP(EnumSimplePacket packetType, int dimID, Object[] data) {
 		this(packetType, dimID, Arrays.asList(data));
 	}
 
-	public PacketSimpleEP(EnumSimplePacket packetType, int dimID, List<Object> data) {
+	public PacketSimplePP(EnumSimplePacket packetType, int dimID, List<Object> data) {
 		super(dimID);
 		if (packetType.getDecodeClasses().length != data.size()) {
 			GCLog.info("Simple Packet Core found data length different than packet type");

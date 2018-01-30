@@ -21,7 +21,7 @@ public class PlanetProgressionChannelHandler extends FMLIndexedMessageToMessageC
 	private EnumMap<Side, FMLEmbeddedChannel> channels;
 
 	private PlanetProgressionChannelHandler() {
-		this.addDiscriminator(0, PacketSimpleEP.class);
+		this.addDiscriminator(0, PacketSimplePP.class);
 	}
 
 	public static PlanetProgressionChannelHandler init() {
