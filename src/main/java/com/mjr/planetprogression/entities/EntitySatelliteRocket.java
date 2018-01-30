@@ -17,6 +17,7 @@ import micdoodle8.mods.galacticraft.core.entities.player.GCPlayerStats;
 import micdoodle8.mods.galacticraft.core.event.EventLandingPadRemoval;
 import micdoodle8.mods.galacticraft.core.tile.TileEntityLandingPad;
 import micdoodle8.mods.galacticraft.core.util.ConfigManagerCore;
+import micdoodle8.mods.galacticraft.core.util.EnumColor;
 import micdoodle8.mods.galacticraft.core.util.PlayerUtil;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
@@ -29,6 +30,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 
@@ -157,13 +159,15 @@ public class EntitySatelliteRocket extends EntityTieredRocket {
 
 					this.onTeleport(player);
 
-					for(ItemStack item: this.cargoItems){
-						if(item.getItem() instanceof ItemSatellite){
+					for (ItemStack item : this.cargoItems) {
+						if (item.getItem() instanceof ItemSatellite) {
 							IStatsCapability stats = null;
 							if (player != null) {
 								stats = player.getCapability(CapabilityStatsHandler.PP_STATS_CAPABILITY, null);
 							}
-							stats.addSatellites(new SatelliteData(((ItemSatellite)item.getItem()).getType(), UUID.randomUUID().toString()));
+							String id = UUID.randomUUID().toString();
+							stats.addSatellites(new SatelliteData(((ItemSatellite) item.getItem()).getType(), id));
+							player.addChatMessage(new TextComponentString(EnumColor.RED + "Satellite: " + id + " has been launched in to space!"));
 						}
 					}
 				}
