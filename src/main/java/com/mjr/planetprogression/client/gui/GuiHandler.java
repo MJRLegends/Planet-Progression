@@ -13,8 +13,10 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.mjr.planetprogression.inventory.ContainerSatelliteBuilder;
+import com.mjr.planetprogression.inventory.ContainerSatelliteController;
 import com.mjr.planetprogression.inventory.ContainerTelescope;
 import com.mjr.planetprogression.tileEntities.TileEntitySatelliteBuilder;
+import com.mjr.planetprogression.tileEntities.TileEntitySatelliteController;
 import com.mjr.planetprogression.tileEntities.TileEntityTelescope;
 
 public class GuiHandler implements IGuiHandler {
@@ -35,6 +37,8 @@ public class GuiHandler implements IGuiHandler {
 				return new ContainerTelescope(player.inventory, (TileEntityTelescope) tile, player);
 			} else if (tile instanceof TileEntitySatelliteBuilder) {
 				return new ContainerSatelliteBuilder(player.inventory, (TileEntitySatelliteBuilder) tile, player);
+			} else if (tile instanceof TileEntitySatelliteController) {
+				return new ContainerSatelliteController(player.inventory, (TileEntitySatelliteController) tile, player);
 			}
 		}
 		return null;
@@ -58,6 +62,8 @@ public class GuiHandler implements IGuiHandler {
 				return new GuiTelescope(player.inventory, (TileEntityTelescope) world.getTileEntity(position));
 			} else if (tile instanceof TileEntitySatelliteBuilder) {
 				return new GuiSatelliteBuilder(player.inventory, (TileEntitySatelliteBuilder) world.getTileEntity(position));
+			} else if (tile instanceof TileEntitySatelliteController) {
+				return new GuiSatelliteController(player.inventory, (TileEntitySatelliteController) world.getTileEntity(position));
 			}
 		}
 		return null;
