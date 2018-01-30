@@ -50,6 +50,7 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 			}
 			if (stats.getSatellites().size() != 0)
 				this.currentSatellite = stats.getSatellites().get(this.currentSatelliteNum);
+			this.markForSatelliteUpdate = false;
 		}
 		this.producingStack = MachineRecipeManager.getOutputForInput(Arrays.copyOfRange(this.containingItems, 1, 4));
 
