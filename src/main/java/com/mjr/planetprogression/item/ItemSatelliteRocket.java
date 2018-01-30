@@ -115,7 +115,7 @@ public class ItemSatelliteRocket extends Item implements IHoldableItem {
 
 	@Override
 	public void getSubItems(Item par1, CreativeTabs par2CreativeTabs, List<ItemStack> par3List) {
-		for (int i = 0; i < 1; i++) {
+		for (int i = 1; i < 2; i++) {
 			par3List.add(new ItemStack(par1, 1, i));
 		}
 	}

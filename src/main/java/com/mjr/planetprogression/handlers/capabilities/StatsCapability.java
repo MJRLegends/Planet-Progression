@@ -47,12 +47,25 @@ public class StatsCapability implements IStatsCapability {
 		}
 
 		nbt.setTag("Planets", tagList);
+		
+		tagList = new NBTTagList();
+		for (SatelliteData satellite : this.satellites) {
+			if (satellite != null) {
+				final NBTTagCompound nbttagcompound = new NBTTagCompound();
+				nbttagcompound.setString("uuid", satellite.getUuid());
+				nbttagcompound.setInteger("type", satellite.getType());
+				tagList.appendTag(nbttagcompound);
+			}
+		}
+
+		nbt.setTag("Satellites", tagList);
 	}
 
 	@Override
 	public void loadNBTData(NBTTagCompound nbt) {
 		try {
 			this.unlockedPlanets = new ArrayList<CelestialBody>();
+			this.satellites = new ArrayList<SatelliteData>();
 
 			if (this.player.get() != null) {
 				for (int i = 0; i < nbt.getTagList("Planets", 10).tagCount(); ++i) {
@@ -63,6 +76,14 @@ public class StatsCapability implements IStatsCapability {
 				}
 				if (!this.unlockedPlanets.isEmpty())
 					Collections.sort(this.unlockedPlanets);
+				
+				for (int i = 0; i < nbt.getTagList("Satellites", 10).tagCount(); ++i) {
+					final NBTTagCompound nbttagcompound = nbt.getTagList("Planets", 10).getCompoundTagAt(i);
+
+					final String j = nbttagcompound.getString("uuid");
+					final int k = nbttagcompound.getInteger("type");
+					this.satellites.add(new SatelliteData(k, j));
+				}
 			}
 
 		} catch (Exception e) {

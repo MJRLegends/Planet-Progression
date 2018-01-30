@@ -160,14 +160,16 @@ public class EntitySatelliteRocket extends EntityTieredRocket {
 					this.onTeleport(player);
 
 					for (ItemStack item : this.cargoItems) {
-						if (item.getItem() instanceof ItemSatellite) {
-							IStatsCapability stats = null;
-							if (player != null) {
-								stats = player.getCapability(CapabilityStatsHandler.PP_STATS_CAPABILITY, null);
+						if (item != null) {
+							if (item.getItem() instanceof ItemSatellite) {
+								IStatsCapability stats = null;
+								if (player != null) {
+									stats = player.getCapability(CapabilityStatsHandler.PP_STATS_CAPABILITY, null);
+								}
+								String id = UUID.randomUUID().toString();
+								stats.addSatellites(new SatelliteData(((ItemSatellite) item.getItem()).getType(), id));
+								player.addChatMessage(new TextComponentString(EnumColor.RED + "Satellite: " + id + " has been launched in to space!"));
 							}
-							String id = UUID.randomUUID().toString();
-							stats.addSatellites(new SatelliteData(((ItemSatellite) item.getItem()).getType(), id));
-							player.addChatMessage(new TextComponentString(EnumColor.RED + "Satellite: " + id + " has been launched in to space!"));
 						}
 					}
 				}
