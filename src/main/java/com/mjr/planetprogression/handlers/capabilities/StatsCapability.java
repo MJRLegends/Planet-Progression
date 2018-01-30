@@ -54,6 +54,7 @@ public class StatsCapability implements IStatsCapability {
 				final NBTTagCompound nbttagcompound = new NBTTagCompound();
 				nbttagcompound.setString("uuid", satellite.getUuid());
 				nbttagcompound.setInteger("type", satellite.getType());
+				nbttagcompound.setInteger("dataAmount", satellite.getDataAmount());
 				tagList.appendTag(nbttagcompound);
 			}
 		}
@@ -82,7 +83,8 @@ public class StatsCapability implements IStatsCapability {
 
 					final String j = nbttagcompound.getString("uuid");
 					final int k = nbttagcompound.getInteger("type");
-					this.satellites.add(new SatelliteData(k, j));
+					final int l = nbttagcompound.getInteger("dataAmount");
+					this.satellites.add(new SatelliteData(k, j, l));
 				}
 			}
 

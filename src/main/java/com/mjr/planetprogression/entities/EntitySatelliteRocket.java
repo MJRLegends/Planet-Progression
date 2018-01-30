@@ -167,7 +167,7 @@ public class EntitySatelliteRocket extends EntityTieredRocket {
 									stats = player.getCapability(CapabilityStatsHandler.PP_STATS_CAPABILITY, null);
 								}
 								String id = UUID.randomUUID().toString();
-								stats.addSatellites(new SatelliteData(((ItemSatellite) item.getItem()).getType(), id));
+								stats.addSatellites(new SatelliteData(((ItemSatellite) item.getItem()).getType(), id, 0));
 								player.addChatMessage(new TextComponentString(EnumColor.RED + "Satellite: " + id + " has been launched in to space!"));
 							}
 						}

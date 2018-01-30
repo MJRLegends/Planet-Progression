@@ -111,6 +111,7 @@ public class MainHandlerServer {
 			IStatsCapability stats = player.getCapability(CapabilityStatsHandler.PP_STATS_CAPABILITY, null);
 			if (tick % 30 == 0) {
 				this.sendUnlockedPlanetsPacket(player, stats);
+				this.sendSatellitePacket(player, stats);
 			}
 			if (!stats.getUnlockedPlanets().contains(GalacticraftCore.planetOverworld)) {
 				stats.addUnlockedPlanets(GalacticraftCore.planetOverworld);
@@ -134,6 +135,10 @@ public class MainHandlerServer {
 			}
 		}
 		PlanetProgression.packetPipeline.sendTo(new PacketSimplePP(EnumSimplePacket.C_UPDATE_UNLOCKED_PLANET_LIST, player.worldObj.provider.getDimensionType().getId(), new Object[] { planets }), player);
+	}
+
+	protected void sendSatellitePacket(EntityPlayerMP player, IStatsCapability stats) {
+		PlanetProgression.packetPipeline.sendTo(new PacketSimplePP(EnumSimplePacket.C_UPDATE_SATELLITE_LIST, player.worldObj.provider.getDimensionType().getId(), new Object[] { stats.getSatellites() }), player);
 	}
 
 	@SubscribeEvent
