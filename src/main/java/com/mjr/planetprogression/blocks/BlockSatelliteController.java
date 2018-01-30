@@ -28,7 +28,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import com.mjr.mjrlegendslib.util.TranslateUtilities;
 import com.mjr.planetprogression.PlanetProgression;
 import com.mjr.planetprogression.tileEntities.TileEntitySatelliteController;
-import com.mjr.planetprogression.tileEntities.TileEntityTelescope;
 
 public class BlockSatelliteController extends BlockAdvancedTile implements IShiftDescription, ISortableBlock {
 	private final Random rand = new Random();
@@ -139,8 +138,8 @@ public class BlockSatelliteController extends BlockAdvancedTile implements IShif
 
 		TileEntity tile = worldIn.getTileEntity(pos);
 
-		if (tile instanceof TileEntityTelescope) {
-			((TileEntityTelescope) tile).setOwner(((EntityPlayer) placer).getUniqueID().toString());
+		if (tile instanceof TileEntitySatelliteController) {
+			((TileEntitySatelliteController) tile).setOwner(((EntityPlayer) placer).getUniqueID().toString());
 		}
 	}
 

@@ -17,6 +17,7 @@ import net.minecraftforge.fml.client.FMLClientHandler;
 
 import org.lwjgl.opengl.GL11;
 
+import com.mjr.mjrlegendslib.util.PlayerUtilties;
 import com.mjr.planetprogression.Constants;
 import com.mjr.planetprogression.PlanetProgression;
 import com.mjr.planetprogression.inventory.ContainerSatelliteController;
@@ -106,7 +107,8 @@ public class GuiSatelliteController extends GuiContainerGC {
 		this.fontRendererObj.drawString(displayString, this.xSize / 2 - this.fontRendererObj.getStringWidth(displayString) / 2, 5, 4210752);
 
 		this.fontRendererObj.drawString(GCCoreUtil.translate("container.inventory"), 8, 155, 4210752);
-		this.fontRendererObj.drawString("Satelltie ID: " + this.tileEntity.currentSatellite != null ? this.tileEntity.currentSatellite.getUuid() : "Unknown", 25, 10, 4210752);
+		this.fontRendererObj.drawString("Satelltie ID: " + (this.tileEntity.currentSatellite != null ? this.tileEntity.currentSatellite.getUuid() : "Unknown"), 25, 10, 4210752);
+		this.fontRendererObj.drawString("Player: " + PlayerUtilties.getPlayerFromUUID(this.tileEntity.owner), 25, 30, 4210752);
 	}
 
 	@Override

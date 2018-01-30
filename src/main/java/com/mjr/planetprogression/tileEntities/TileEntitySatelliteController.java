@@ -28,12 +28,12 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 	public int processTicks = 0;
 	private ItemStack[] containingItems = new ItemStack[5];
 	@NetworkedField(targetSide = Side.CLIENT)
-	public SatelliteData currentSatellite;
+	public SatelliteData currentSatellite = null;
 	@NetworkedField(targetSide = Side.CLIENT)
 	public int currentSatelliteNum = 0;
 	public boolean markForSatelliteUpdate = false;
 	@NetworkedField(targetSide = Side.CLIENT)
-	public String owner = "";	
+	public String owner = "";
 	public ItemStack producingStack = null;
 
 	public TileEntitySatelliteController() {
@@ -43,12 +43,13 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 	public void update() {
 		super.update();
 
-		if(this.markForSatelliteUpdate){
+		if (this.markForSatelliteUpdate) {
 			IStatsCapability stats = null;
 			if (PlayerUtilties.getPlayerFromUUID(this.owner) != null) {
 				stats = PlayerUtilties.getPlayerFromUUID(this.owner).getCapability(CapabilityStatsHandler.PP_STATS_CAPABILITY, null);
 			}
-			this.currentSatellite = stats.getSatellites().get(this.currentSatelliteNum);
+			if (stats.getSatellites().size() != 0)
+				this.currentSatellite = stats.getSatellites().get(this.currentSatelliteNum);
 		}
 		this.producingStack = MachineRecipeManager.getOutputForInput(Arrays.copyOfRange(this.containingItems, 1, 4));
 
