@@ -11,9 +11,12 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 
+import com.mjr.planetprogression.data.SatelliteData;
+
 public class StatsCapability implements IStatsCapability {
 	public WeakReference<EntityPlayerMP> player;
 	private ArrayList<CelestialBody> unlockedPlanets = new ArrayList<CelestialBody>();
+	private ArrayList<SatelliteData> satellites = new ArrayList<SatelliteData>();
 	public int buildFlags = 0;
 
 	@Override
@@ -83,5 +86,20 @@ public class StatsCapability implements IStatsCapability {
 	@Override
 	public void setPlayer(WeakReference<EntityPlayerMP> player) {
 		this.player = player;
+	}
+
+	@Override
+	public ArrayList<SatelliteData> getSatellites() {
+		return this.satellites;
+	}
+
+	@Override
+	public void setSatellites(ArrayList<SatelliteData> satellites) {
+		this.satellites = satellites;
+	}
+
+	@Override
+	public void addSatellites(SatelliteData satellites) {
+		this.satellites.add(satellites);
 	}
 }

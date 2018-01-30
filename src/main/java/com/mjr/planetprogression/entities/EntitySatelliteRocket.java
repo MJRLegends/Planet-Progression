@@ -1,6 +1,7 @@
 package com.mjr.planetprogression.entities;
 
 import java.util.List;
+import java.util.UUID;
 
 import micdoodle8.mods.galacticraft.api.entity.IRocketType;
 import micdoodle8.mods.galacticraft.api.prefab.entity.EntityTieredRocket;
@@ -32,6 +33,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 
 import com.mjr.mjrlegendslib.util.TranslateUtilities;
+import com.mjr.planetprogression.data.SatelliteData;
+import com.mjr.planetprogression.handlers.capabilities.CapabilityStatsHandler;
+import com.mjr.planetprogression.handlers.capabilities.IStatsCapability;
 import com.mjr.planetprogression.item.ItemSatellite;
 import com.mjr.planetprogression.item.PlanetProgression_Items;
 
@@ -155,7 +159,11 @@ public class EntitySatelliteRocket extends EntityTieredRocket {
 
 					for(ItemStack item: this.cargoItems){
 						if(item.getItem() instanceof ItemSatellite){
-							
+							IStatsCapability stats = null;
+							if (player != null) {
+								stats = player.getCapability(CapabilityStatsHandler.PP_STATS_CAPABILITY, null);
+							}
+							stats.addSatellites(new SatelliteData(((ItemSatellite)item.getItem()).getType(), UUID.randomUUID().toString()));
 						}
 					}
 				}
