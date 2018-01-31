@@ -59,21 +59,6 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 					this.markForSatelliteUpdate = false;
 				}
 			}
-			boolean found = false;
-			for (Item item : PlanetProgression_Items.researchPapers) {
-				if (item == null)
-					continue;
-				for (CelestialBody body : stats.getUnlockedPlanets()) {
-					if (body == null)
-						continue;
-					if (((ResearchPaper) item).getPlanet().equalsIgnoreCase(body.getUnlocalizedName()))
-						found = true;
-				}
-				if (!found) {
-					this.producingStack = new ItemStack(item);
-					break;
-				}
-			}
 		}
 		if (!this.worldObj.isRemote) {
 			if (this.currentSatellite != null && this.canProcess() && canOutput() && this.hasEnoughEnergyToRun) {
@@ -92,8 +77,6 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 	}
 
 	public boolean canProcess() {
-		if (this.producingStack == null)
-			return false;
 		return !this.getDisabled(0);
 	}
 
@@ -108,6 +91,29 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 	}
 
 	public void smeltItem() {
+		IStatsCapability stats = null;
+		if (PlayerUtilties.getPlayerFromUUID(this.owner) != null) {
+			stats = PlayerUtilties.getPlayerFromUUID(this.owner).getCapability(CapabilityStatsHandler.PP_STATS_CAPABILITY, null);
+		}
+		if(this.producingStack == null){
+			boolean found = false;
+			int i = 0;
+			for (Item item : PlanetProgression_Items.researchPapers) {
+				if (item == null)
+					continue;
+				for (CelestialBody body : stats.getUnlockedPlanets()) {
+					if (body == null)
+						continue;
+					if (((ResearchPaper) item).getPlanet().equalsIgnoreCase(body.getName()))
+						found = true;
+					if (!found) {
+						this.producingStack = new ItemStack(item, 1, i);
+						break;
+					}
+				}
+				i++;
+			}
+		}
 		ItemStack resultItemStack = this.producingStack;
 		if (this.canProcess() && canOutput() && hasInputs()) {
 			if (this.containingItems[1] == null) {
@@ -129,6 +135,7 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 				}
 			}
 			this.currentSatellite.dataAmount = 0;
+			this.producingStack = null;
 		}
 	}
 

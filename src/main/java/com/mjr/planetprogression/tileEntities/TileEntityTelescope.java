@@ -82,7 +82,7 @@ public class TileEntityTelescope extends TileBaseElectricBlock implements IInven
 			stats = player.getCapability(CapabilityStatsHandler.PP_STATS_CAPABILITY, null);
 		}
 
-		if (Config.researchMode == 0) {
+		if (Config.researchMode == 0 || Config.researchMode == 3) {
 			boolean found = false;
 			for (Planet planet : GalaxyRegistry.getRegisteredPlanets().values()) {
 				if (((ResearchPaper) this.containingItems[1].getItem()).getPlanet().equalsIgnoreCase(planet.getLocalizedName())) {
