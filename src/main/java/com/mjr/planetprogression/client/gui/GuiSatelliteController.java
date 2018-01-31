@@ -63,7 +63,7 @@ public class GuiSatelliteController extends GuiContainerGC {
 		final int var6 = (this.height - this.ySize) / 2;
 		this.enableButton = new GuiButton(0, var5 + 10, var6 + 110, 60, 20, GCCoreUtil.translate("gui.button.enable.name"));
 		this.leftButton = new GuiButton(1, var5 + 5, var6 + 75, 15, 20, "<");
-		this.rightButton = new GuiButton(2, var5 + 70 + 160, var6 + 75, 15, 20, ">");
+		this.rightButton = new GuiButton(2, var5 + 70 + 158, var6 + 75, 15, 20, ">");
 
 		this.buttonList.add(this.enableButton);
 		this.buttonList.add(this.leftButton);
@@ -103,7 +103,7 @@ public class GuiSatelliteController extends GuiContainerGC {
 
 	@Override
 	protected void drawGuiContainerForegroundLayer(int par1, int par2) {
-		String displayString = this.tileEntity.getName();
+		String displayString = "Satellite Controller";
 		this.fontRendererObj.drawString(displayString, this.xSize / 2 - this.fontRendererObj.getStringWidth(displayString) / 2, 5, 4210752);
 
 		this.fontRendererObj.drawString(GCCoreUtil.translate("container.inventory"), 8, 135, 4210752);
