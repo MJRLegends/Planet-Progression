@@ -71,6 +71,7 @@ public class PlanetProgression {
 	}
 
 	private void registerNonMobEntities() {
-		RegisterUtilities.registerNonMobEntity(PlanetProgression.instance, EntitySatelliteRocket.class, "EntitySatelliteRocket", 150, 1, false);
+		if (Config.researchMode == 2 || Config.researchMode == 3)
+			RegisterUtilities.registerNonMobEntity(PlanetProgression.instance, EntitySatelliteRocket.class, "EntitySatelliteRocket", 150, 1, false);
 	}
 }

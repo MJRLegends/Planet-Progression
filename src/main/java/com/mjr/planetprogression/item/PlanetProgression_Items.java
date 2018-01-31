@@ -16,6 +16,7 @@ public class PlanetProgression_Items {
 
 	public static Item satelliteModules;
 
+	public static Item satelliteBasic;
 	public static Item satelliteSurface;
 	public static Item satelliteDistance;
 	public static Item satelliteAtmosphere;
@@ -35,12 +36,17 @@ public class PlanetProgression_Items {
 		for (Moon moon : GalaxyRegistry.getRegisteredMoons().values()) {
 			researchPapers.add(new ResearchPaper(moon.getLocalizedName()));
 		}
+		if (Config.researchMode == 2 || Config.researchMode == 3)
+			SATELLITE_ROCKET = new ItemSatelliteRocket("item_satellite_rocket");
+		if (Config.researchMode == 2) {
+			satelliteModules = new SatelliteModuleBasic("satellite_module");
+			satelliteBasic = new ItemSatellite("satellite_basic", 0);
+		}
 		if (Config.researchMode == 3) {
 			satelliteModules = new SatelliteModule("satellite_module");
-			satelliteSurface = new ItemSatellite("satellite_surface", 0);
-			satelliteDistance = new ItemSatellite("satellite_distance", 1);
-			satelliteAtmosphere = new ItemSatellite("satellite_atmosphere", 2);
-			SATELLITE_ROCKET = new ItemSatelliteRocket("item_satellite_rocket");
+			satelliteSurface = new ItemSatellite("satellite_surface", 1);
+			satelliteDistance = new ItemSatellite("satellite_distance", 2);
+			satelliteAtmosphere = new ItemSatellite("satellite_atmosphere", 3);
 		}
 	}
 
@@ -48,12 +54,13 @@ public class PlanetProgression_Items {
 		for (Item item : researchPapers) {
 			RegisterUtilities.registerItem(item, item.getUnlocalizedName().substring(5) + "_" + ((ResearchPaper) item).getPlanet().toLowerCase());
 		}
+		if (Config.researchMode == 2 || Config.researchMode == 3)
+			RegisterUtilities.registerItem(SATELLITE_ROCKET, SATELLITE_ROCKET.getUnlocalizedName().substring(5));
 		if (Config.researchMode == 3) {
 			RegisterUtilities.registerItem(satelliteModules, satelliteModules.getUnlocalizedName().substring(5));
 			RegisterUtilities.registerItem(satelliteSurface, satelliteSurface.getUnlocalizedName().substring(5));
 			RegisterUtilities.registerItem(satelliteDistance, satelliteDistance.getUnlocalizedName().substring(5));
 			RegisterUtilities.registerItem(satelliteAtmosphere, satelliteAtmosphere.getUnlocalizedName().substring(5));
-			RegisterUtilities.registerItem(SATELLITE_ROCKET, SATELLITE_ROCKET.getUnlocalizedName().substring(5));
 		}
 	}
 }

@@ -31,7 +31,7 @@ public class PlanetProgression_Blocks {
 
 	public static void initBlocks() {
 		TELESCOPE = new BlockTelescope("telescope");
-		if (Config.researchMode == 3) {
+		if (Config.researchMode == 2 || Config.researchMode == 3) {
 			SATTLLITE_BUILDER = new BlockSatelliteBuilder("satellite_builder");
 			SATTLLITE_CONTROLLER = new BlockSatelliteController("satellite_controller");
 		}
@@ -39,7 +39,7 @@ public class PlanetProgression_Blocks {
 
 	public static void registerBlocks() throws NoSuchMethodException {
 		RegisterUtilities.registerBlock(Constants.modID, TELESCOPE, ItemBlockTelescope.class, TELESCOPE.getUnlocalizedName().substring(5));
-		if (Config.researchMode == 3) {
+		if (Config.researchMode == 2 || Config.researchMode == 3) {
 			RegisterUtilities.registerBlock(Constants.modID, SATTLLITE_BUILDER, ItemBlockTelescope.class, SATTLLITE_BUILDER.getUnlocalizedName().substring(5));
 			RegisterUtilities.registerBlock(Constants.modID, SATTLLITE_CONTROLLER, ItemBlockTelescope.class, SATTLLITE_CONTROLLER.getUnlocalizedName().substring(5));
 		}
@@ -47,7 +47,7 @@ public class PlanetProgression_Blocks {
 
 	private static void registerTileEntitys() {
 		GameRegistry.registerTileEntity(TileEntityTelescope.class, Constants.modName + "Telescope");
-		if (Config.researchMode == 3) {
+		if (Config.researchMode == 2 || Config.researchMode == 3) {
 			GameRegistry.registerTileEntity(TileEntitySatelliteBuilder.class, Constants.modName + "SatelliteBuilder");
 			GameRegistry.registerTileEntity(TileEntitySatelliteController.class, Constants.modName + "SatelliteController");
 		}
