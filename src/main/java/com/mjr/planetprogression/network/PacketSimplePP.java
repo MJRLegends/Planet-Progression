@@ -3,7 +3,6 @@ package com.mjr.planetprogression.network;
 import io.netty.buffer.ByteBuf;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -40,10 +39,12 @@ import com.mjr.planetprogression.tileEntities.TileEntityTelescope;
 public class PacketSimplePP extends PacketBase implements Packet {
 	public enum EnumSimplePacket {
 		// SERVER
-		S_UPDATE_ROTATION(Side.SERVER, BlockPos.class, Float.class), S_UPDATE_CONTROLLER_SATLLITE_CHANGE(Side.SERVER, BlockPos.class, Float.class),
+		S_UPDATE_ROTATION(Side.SERVER, BlockPos.class, Float.class), 
+		S_UPDATE_CONTROLLER_SATLLITE_CHANGE(Side.SERVER, BlockPos.class, Float.class),
 
 		// CLIENT
-		C_UPDATE_UNLOCKED_PLANET_LIST(Side.CLIENT, String[].class), C_UPDATE_SATELLITE_LIST(Side.CLIENT, ArrayList[].class);
+		C_UPDATE_UNLOCKED_PLANET_LIST(Side.CLIENT, String[].class), 
+		C_UPDATE_SATELLITE_LIST(Side.CLIENT, Integer.class, String.class, Integer.class);
 
 		private Side targetSide;
 		private Class<?>[] decodeAs;
@@ -141,9 +142,7 @@ public class PacketSimplePP extends PacketBase implements Packet {
 			}
 			break;
 		case C_UPDATE_SATELLITE_LIST:
-			for (Object o : this.data) {
-				stats.addSatellites((SatelliteData) o);
-			}
+			stats.addSatellites(new SatelliteData((int)this.data.get(0), (String)this.data.get(1), (int)this.data.get(2)));
 			break;
 		default:
 			break;
@@ -184,15 +183,14 @@ public class PacketSimplePP extends PacketBase implements Packet {
 				if (playerBase != null) {
 					statsPP = player.getCapability(CapabilityStatsHandler.PP_STATS_CAPABILITY, null);
 				}
-				if ((Float) this.data.get(1) == 0){
-					if(machine.currentSatelliteNum >= statsPP.getSatellites().size())
+				if ((Float) this.data.get(1) == 0) {
+					if (machine.currentSatelliteNum >= statsPP.getSatellites().size())
 						machine.currentSatelliteNum = statsPP.getSatellites().size();
 					else
 						machine.currentSatelliteNum += 1;
 					machine.markForSatelliteUpdate = true;
-				}
-				else if ((Float) this.data.get(1) == 1){
-					if(machine.currentSatelliteNum <= 0)
+				} else if ((Float) this.data.get(1) == 1) {
+					if (machine.currentSatelliteNum <= 0)
 						machine.currentSatelliteNum = 0;
 					else
 						machine.currentSatelliteNum -= 1;

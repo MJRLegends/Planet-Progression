@@ -31,6 +31,7 @@ import com.mjr.planetprogression.Config;
 import com.mjr.planetprogression.PlanetProgression;
 import com.mjr.planetprogression.client.handlers.capabilities.CapabilityProviderStatsClient;
 import com.mjr.planetprogression.client.handlers.capabilities.CapabilityStatsClientHandler;
+import com.mjr.planetprogression.data.SatelliteData;
 import com.mjr.planetprogression.handlers.capabilities.CapabilityProviderStats;
 import com.mjr.planetprogression.handlers.capabilities.CapabilityStatsHandler;
 import com.mjr.planetprogression.handlers.capabilities.IStatsCapability;
@@ -138,7 +139,12 @@ public class MainHandlerServer {
 	}
 
 	protected void sendSatellitePacket(EntityPlayerMP player, IStatsCapability stats) {
-		PlanetProgression.packetPipeline.sendTo(new PacketSimplePP(EnumSimplePacket.C_UPDATE_SATELLITE_LIST, player.worldObj.provider.getDimensionType().getId(), new Object[] { stats.getSatellites() }), player);
+		for(SatelliteData sat : stats.getSatellites()){
+			int type = sat.getType();
+			String uuid = sat.getUuid();
+			int dataAmount = sat.dataAmount;
+			PlanetProgression.packetPipeline.sendTo(new PacketSimplePP(EnumSimplePacket.C_UPDATE_SATELLITE_LIST, player.worldObj.provider.getDimensionType().getId(), new Object[] {  type, uuid, dataAmount }), player);
+		}
 	}
 
 	@SubscribeEvent
