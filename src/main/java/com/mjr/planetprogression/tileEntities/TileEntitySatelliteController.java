@@ -1,15 +1,16 @@
 package com.mjr.planetprogression.tileEntities;
 
-import java.util.Arrays;
-
+import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
 import micdoodle8.mods.galacticraft.core.energy.item.ItemElectricBase;
 import micdoodle8.mods.galacticraft.core.energy.tile.TileBaseElectricBlockWithInventory;
 import micdoodle8.mods.miccore.Annotations.NetworkedField;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.inventory.ISidedInventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.fml.relauncher.Side;
@@ -20,18 +21,18 @@ import com.mjr.planetprogression.blocks.BlockSatelliteController;
 import com.mjr.planetprogression.data.SatelliteData;
 import com.mjr.planetprogression.handlers.capabilities.CapabilityStatsHandler;
 import com.mjr.planetprogression.handlers.capabilities.IStatsCapability;
-import com.mjr.planetprogression.recipes.MachineRecipeManager;
+import com.mjr.planetprogression.item.PlanetProgression_Items;
+import com.mjr.planetprogression.item.ResearchPaper;
 
 public class TileEntitySatelliteController extends TileBaseElectricBlockWithInventory implements ISidedInventory {
-	public static final int PROCESS_TIME_REQUIRED = 100;
+	public static final int PROCESS_TIME_REQUIRED = SatelliteData.MAX_DATA * 4;
 	@NetworkedField(targetSide = Side.CLIENT)
 	public int processTicks = 0;
-	private ItemStack[] containingItems = new ItemStack[5];
-	@NetworkedField(targetSide = Side.CLIENT)
+	private ItemStack[] containingItems = new ItemStack[2];
 	public SatelliteData currentSatellite = null;
 	@NetworkedField(targetSide = Side.CLIENT)
 	public int currentSatelliteNum = 0;
-	public boolean markForSatelliteUpdate = false;
+	public boolean markForSatelliteUpdate = true;
 	@NetworkedField(targetSide = Side.CLIENT)
 	public String owner = "";
 	public ItemStack producingStack = null;
@@ -42,18 +43,38 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 	@Override
 	public void update() {
 		super.update();
-
-		if (this.markForSatelliteUpdate) {
-			IStatsCapability stats = null;
-			if (PlayerUtilties.getPlayerFromUUID(this.owner) != null) {
-				stats = PlayerUtilties.getPlayerFromUUID(this.owner).getCapability(CapabilityStatsHandler.PP_STATS_CAPABILITY, null);
-			}
-			if (stats.getSatellites().size() != 0)
-				this.currentSatellite = stats.getSatellites().get(this.currentSatelliteNum);
-			this.markForSatelliteUpdate = false;
+		IStatsCapability stats = null;
+		if (PlayerUtilties.getPlayerFromUUID(this.owner) != null) {
+			stats = PlayerUtilties.getPlayerFromUUID(this.owner).getCapability(CapabilityStatsHandler.PP_STATS_CAPABILITY, null);
 		}
-		this.producingStack = MachineRecipeManager.getOutputForInput(Arrays.copyOfRange(this.containingItems, 1, 4));
-
+		if (stats != null) {
+			if (this.markForSatelliteUpdate) {
+				if (this.currentSatellite != null)
+					this.currentSatellite.dataAmount = this.processTicks;
+				if (this.currentSatelliteNum > (stats.getSatellites().size() - 1))
+					this.currentSatelliteNum = (stats.getSatellites().size() - 1);
+				if (stats.getSatellites() != null && stats.getSatellites().size() != 0) {
+					this.currentSatellite = stats.getSatellites().get(this.currentSatelliteNum);
+					this.processTicks = this.currentSatellite.dataAmount;
+					this.markForSatelliteUpdate = false;
+				}
+			}
+			boolean found = false;
+			for (Item item : PlanetProgression_Items.researchPapers) {
+				if (item == null)
+					continue;
+				for (CelestialBody body : stats.getUnlockedPlanets()) {
+					if (body == null)
+						continue;
+					if (((ResearchPaper) item).getPlanet().equalsIgnoreCase(body.getUnlocalizedName()))
+						found = true;
+				}
+				if (!found) {
+					this.producingStack = new ItemStack(item);
+					break;
+				}
+			}
+		}
 		if (!this.worldObj.isRemote) {
 			if (this.currentSatellite != null && this.canProcess() && canOutput() && this.hasEnoughEnergyToRun) {
 				if (this.processTicks == 0) {
@@ -73,18 +94,12 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 	public boolean canProcess() {
 		if (this.producingStack == null)
 			return false;
-		if (this.containingItems[1] == null)
-			return false;
-		if (this.containingItems[2] == null)
-			return false;
-		if (this.containingItems[1].stackSize < 3)
-			return false;
-		if (this.containingItems[2].stackSize < 6)
-			return false;
 		return !this.getDisabled(0);
 	}
 
 	public boolean canOutput() {
+		if (this.containingItems[1] != null)
+			return false;
 		return true;
 	}
 
@@ -95,11 +110,11 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 	public void smeltItem() {
 		ItemStack resultItemStack = this.producingStack;
 		if (this.canProcess() && canOutput() && hasInputs()) {
-			if (this.containingItems[4] == null) {
-				this.containingItems[4] = resultItemStack.copy();
-			} else if (this.containingItems[4].isItemEqual(resultItemStack)) {
-				if (this.containingItems[4].stackSize + resultItemStack.stackSize > 64) {
-					for (int i = 0; i < this.containingItems[3].stackSize + resultItemStack.stackSize - 64; i++) {
+			if (this.containingItems[1] == null) {
+				this.containingItems[1] = resultItemStack.copy();
+			} else if (this.containingItems[1].isItemEqual(resultItemStack)) {
+				if (this.containingItems[1].stackSize + resultItemStack.stackSize > 64) {
+					for (int i = 0; i < this.containingItems[1].stackSize + resultItemStack.stackSize - 64; i++) {
 						float var = 0.7F;
 						double dx = this.worldObj.rand.nextFloat() * var + (1.0F - var) * 0.5D;
 						double dy = this.worldObj.rand.nextFloat() * var + (1.0F - var) * 0.5D;
@@ -108,28 +123,55 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 						entityitem.setPickupDelay(10);
 						this.worldObj.spawnEntityInWorld(entityitem);
 					}
-					this.containingItems[4].stackSize = 64;
+					this.containingItems[1].stackSize = 64;
 				} else {
-					this.containingItems[4].stackSize += resultItemStack.stackSize;
+					this.containingItems[1].stackSize += resultItemStack.stackSize;
 				}
 			}
-			this.decrStackSize(1, 12);
-			this.decrStackSize(2, 12);
-			this.decrStackSize(3, 1);
+			this.currentSatellite.dataAmount = 0;
 		}
 	}
 
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
 		super.readFromNBT(nbt);
+		NBTTagList var2 = nbt.getTagList("Items", 10);
+		this.containingItems = new ItemStack[this.getSizeInventory()];
+
+		for (int var3 = 0; var3 < var2.tagCount(); ++var3) {
+			NBTTagCompound var4 = var2.getCompoundTagAt(var3);
+			int var5 = var4.getByte("Slot") & 255;
+
+			if (var5 < this.containingItems.length) {
+				this.containingItems[var5] = ItemStack.loadItemStackFromNBT(var4);
+			}
+		}
 		this.processTicks = nbt.getInteger("smeltingTicks");
+		this.currentSatelliteNum = nbt.getInteger("currentSatelliteNum");
+		this.markForSatelliteUpdate = nbt.getBoolean("markForSatelliteUpdate");
+		this.setOwner(nbt.getString("Owner"));
 		this.containingItems = this.readStandardItemsFromNBT(nbt);
 	}
 
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
 		super.writeToNBT(nbt);
+		NBTTagList var2 = new NBTTagList();
+
+		for (int var3 = 0; var3 < this.containingItems.length; ++var3) {
+			if (this.containingItems[var3] != null) {
+				NBTTagCompound var4 = new NBTTagCompound();
+				var4.setByte("Slot", (byte) var3);
+				this.containingItems[var3].writeToNBT(var4);
+				var2.appendTag(var4);
+			}
+		}
+
+		nbt.setTag("Items", var2);
 		nbt.setInteger("smeltingTicks", this.processTicks);
+		nbt.setInteger("currentSatelliteNum", this.currentSatelliteNum);
+		nbt.setBoolean("markForSatelliteUpdate", true);
+		nbt.setString("Owner", this.getOwner());
 		this.writeStandardItemsToNBT(nbt);
 		return nbt;
 	}
@@ -141,7 +183,7 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 
 	@Override
 	public String getName() {
-		return TranslateUtilities.translate("container.satellite.builder.name");
+		return TranslateUtilities.translate("container.satellite.controller.name");
 	}
 
 	@Override
