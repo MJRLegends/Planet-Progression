@@ -36,8 +36,8 @@ public class GuiTelescope extends GuiContainerGC {
 
 	public GuiTelescope(InventoryPlayer playerInventory, TileEntityTelescope telescope) {
 		super(new ContainerTelescope(playerInventory, telescope, FMLClientHandler.instance().getClient().thePlayer));
-		this.xSize = 350;
-		this.ySize = 250;
+		this.xSize = 250;
+		this.ySize = 230;
 		this.telescope = telescope;
 	}
 
@@ -60,9 +60,9 @@ public class GuiTelescope extends GuiContainerGC {
 		this.buttonList.clear();
 		final int var5 = (this.width - this.xSize) / 2;
 		final int var6 = (this.height - this.ySize) / 2;
-		this.enableButton = new GuiButton(0, var5 + 250, var6 + 5, 75, 20, GCCoreUtil.translate("gui.button.enable.name"));
-		this.leftButton = new GuiButton(1, var5 + 5, var6 + 55, 15, 20, "<");
-		this.rightButton = new GuiButton(2, var5 + 70 + 260, var6 + 55, 15, 20, ">");
+		this.enableButton = new GuiButton(0, var5 + 10, var6 + 110, 60, 20, GCCoreUtil.translate("gui.button.enable.name"));
+		this.leftButton = new GuiButton(1, var5 + 5, var6 + 75, 15, 20, "<");
+		this.rightButton = new GuiButton(2, var5 + 70 + 158, var6 + 75, 15, 20, ">");
 
 		this.buttonList.add(this.enableButton);
 		this.buttonList.add(this.leftButton);
@@ -105,8 +105,8 @@ public class GuiTelescope extends GuiContainerGC {
 		String displayString = this.telescope.getName();
 		this.fontRendererObj.drawString(displayString, this.xSize / 2 - this.fontRendererObj.getStringWidth(displayString) / 2, 5, 4210752);
 
-		this.fontRendererObj.drawString(GCCoreUtil.translate("container.inventory"), 8, 155, 4210752);
-		this.fontRendererObj.drawString("Progress: " + (telescope.processTicks / 2) + " %", 25, 10, 4210752);
+		this.fontRendererObj.drawString(GCCoreUtil.translate("container.inventory"), 8, 135, 4210752);
+		this.fontRendererObj.drawString("Progress: " + (telescope.processTicks / 2) + " %", 5, 20, 4210752);
 
 	}
 
@@ -128,7 +128,7 @@ public class GuiTelescope extends GuiContainerGC {
 
 		if (this.telescope.getEnergyStoredGC() > 0) {
 			int scale = this.telescope.getScaledElecticalLevel(54);
-			this.drawTexturedModalRect(var5 + 99, var6 + 114, 176, 0, Math.min(scale, 54), 7);
+			this.drawTexturedModalRect(var5 + 92, var6 + 111, 0, 249, Math.min(scale, 54), 7);
 		}
 
 		GL11.glPopMatrix();

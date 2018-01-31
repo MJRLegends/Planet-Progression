@@ -17,20 +17,20 @@ public class ContainerTelescope extends Container {
 	public ContainerTelescope(InventoryPlayer par1InventoryPlayer, TileEntityTelescope tileEntity, EntityPlayer player) {
 		this.tileEntity = tileEntity;
 
-		this.addSlotToContainer(new SlotSpecific(tileEntity, 0, 152, 105, IItemElectric.class));
-		this.addSlotToContainer(new Slot(tileEntity, 1, 152, 65));
+		this.addSlotToContainer(new SlotSpecific(tileEntity, 0, 151, 104, IItemElectric.class));
+		this.addSlotToContainer(new Slot(tileEntity, 1, 151, 66));
 
 		int var6;
 		int var7;
 
 		for (var6 = 0; var6 < 3; ++var6) {
 			for (var7 = 0; var7 < 9; ++var7) {
-				this.addSlotToContainer(new Slot(par1InventoryPlayer, var7 + var6 * 9 + 9, 8 + var7 * 18, (220 - 50) + var6 * 18));
+				this.addSlotToContainer(new Slot(par1InventoryPlayer, var7 + var6 * 9 + 9, 8 + var7 * 18, (220 - 71) + var6 * 18));
 			}
 		}
 
 		for (var6 = 0; var6 < 9; ++var6) {
-			this.addSlotToContainer(new Slot(par1InventoryPlayer, var6, 8 + var6 * 18, 280 - 50));
+			this.addSlotToContainer(new Slot(par1InventoryPlayer, var6, 8 + var6 * 18, 280 - 73));
 		}
 
 		tileEntity.openInventory(player);
