@@ -4,7 +4,7 @@ public class SatelliteData {
 	public int type;
 	public String uuid;
 	public int dataAmount;
-	public final int MAX_DATA = 250;
+	public static final int MAX_DATA = 1000;
 	
 	public SatelliteData(int type, String uuid, int dataAmount) {
 		super();
