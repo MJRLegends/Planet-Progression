@@ -37,7 +37,7 @@ public class GuiSatelliteController extends GuiContainerGC {
 
 	public GuiSatelliteController(InventoryPlayer playerInventory, TileEntitySatelliteController tileEntity) {
 		super(new ContainerSatelliteController(playerInventory, tileEntity, FMLClientHandler.instance().getClient().thePlayer));
-		this.xSize = 350;
+		this.xSize = 250;
 		this.ySize = 250;
 		this.tileEntity = tileEntity;
 	}
@@ -61,9 +61,9 @@ public class GuiSatelliteController extends GuiContainerGC {
 		this.buttonList.clear();
 		final int var5 = (this.width - this.xSize) / 2;
 		final int var6 = (this.height - this.ySize) / 2;
-		this.enableButton = new GuiButton(0, var5 + 250, var6 + 5, 75, 20, GCCoreUtil.translate("gui.button.enable.name"));
-		this.leftButton = new GuiButton(1, var5 + 5, var6 + 55, 15, 20, "<");
-		this.rightButton = new GuiButton(2, var5 + 70 + 260, var6 + 55, 15, 20, ">");
+		this.enableButton = new GuiButton(0, var5 + 10, var6 + 130, 75, 20, GCCoreUtil.translate("gui.button.enable.name"));
+		this.leftButton = new GuiButton(1, var5 + 5, var6 + 95, 15, 20, "<");
+		this.rightButton = new GuiButton(2, var5 + 70 + 160, var6 + 95, 15, 20, ">");
 
 		this.buttonList.add(this.enableButton);
 		this.buttonList.add(this.leftButton);
@@ -107,8 +107,10 @@ public class GuiSatelliteController extends GuiContainerGC {
 		this.fontRendererObj.drawString(displayString, this.xSize / 2 - this.fontRendererObj.getStringWidth(displayString) / 2, 5, 4210752);
 
 		this.fontRendererObj.drawString(GCCoreUtil.translate("container.inventory"), 8, 155, 4210752);
-		this.fontRendererObj.drawString("Satelltie ID: " + (this.tileEntity.currentSatellite != null ? this.tileEntity.currentSatellite.getUuid() : "Unknown"), 25, 20, 4210752);
-		this.fontRendererObj.drawString("Player: " + (this.tileEntity.owner != "" ? PlayerUtilties.getPlayerFromUUID(this.tileEntity.owner).getGameProfile().getName() : "Unknown") , 25, 30, 4210752);
+		this.fontRendererObj.drawString("Satelltie ID: ", 5, 20, 4210752);
+		this.fontRendererObj.drawString((this.tileEntity.currentSatellite != null ? this.tileEntity.currentSatellite.getUuid() : "Unknown"), 30, 30, 4210752);
+		this.fontRendererObj.drawString("Player: " + (this.tileEntity.owner != "" ? PlayerUtilties.getPlayerFromUUID(this.tileEntity.owner).getGameProfile().getName() : "Unknown") , 5, 45, 4210752);
+		this.fontRendererObj.drawString("Research Progress: " + (100 - ((this.tileEntity.processTicks / 4)/10)) + " %", 5, 55, 4210752);
 	}
 
 	@Override
