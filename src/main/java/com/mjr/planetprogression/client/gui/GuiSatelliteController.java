@@ -38,7 +38,7 @@ public class GuiSatelliteController extends GuiContainerGC {
 	public GuiSatelliteController(InventoryPlayer playerInventory, TileEntitySatelliteController tileEntity) {
 		super(new ContainerSatelliteController(playerInventory, tileEntity, FMLClientHandler.instance().getClient().thePlayer));
 		this.xSize = 250;
-		this.ySize = 250;
+		this.ySize = 230;
 		this.tileEntity = tileEntity;
 	}
 
@@ -61,9 +61,9 @@ public class GuiSatelliteController extends GuiContainerGC {
 		this.buttonList.clear();
 		final int var5 = (this.width - this.xSize) / 2;
 		final int var6 = (this.height - this.ySize) / 2;
-		this.enableButton = new GuiButton(0, var5 + 10, var6 + 130, 75, 20, GCCoreUtil.translate("gui.button.enable.name"));
-		this.leftButton = new GuiButton(1, var5 + 5, var6 + 95, 15, 20, "<");
-		this.rightButton = new GuiButton(2, var5 + 70 + 160, var6 + 95, 15, 20, ">");
+		this.enableButton = new GuiButton(0, var5 + 10, var6 + 110, 60, 20, GCCoreUtil.translate("gui.button.enable.name"));
+		this.leftButton = new GuiButton(1, var5 + 5, var6 + 75, 15, 20, "<");
+		this.rightButton = new GuiButton(2, var5 + 70 + 160, var6 + 75, 15, 20, ">");
 
 		this.buttonList.add(this.enableButton);
 		this.buttonList.add(this.leftButton);
@@ -106,7 +106,7 @@ public class GuiSatelliteController extends GuiContainerGC {
 		String displayString = this.tileEntity.getName();
 		this.fontRendererObj.drawString(displayString, this.xSize / 2 - this.fontRendererObj.getStringWidth(displayString) / 2, 5, 4210752);
 
-		this.fontRendererObj.drawString(GCCoreUtil.translate("container.inventory"), 8, 155, 4210752);
+		this.fontRendererObj.drawString(GCCoreUtil.translate("container.inventory"), 8, 135, 4210752);
 		this.fontRendererObj.drawString("Satelltie ID: ", 5, 20, 4210752);
 		this.fontRendererObj.drawString((this.tileEntity.currentSatellite != null ? this.tileEntity.currentSatellite.getUuid() : "Unknown"), 30, 30, 4210752);
 		this.fontRendererObj.drawString("Player: " + (this.tileEntity.owner != "" ? PlayerUtilties.getPlayerFromUUID(this.tileEntity.owner).getGameProfile().getName() : "Unknown") , 5, 45, 4210752);
@@ -131,7 +131,7 @@ public class GuiSatelliteController extends GuiContainerGC {
 
 		if (this.tileEntity.getEnergyStoredGC() > 0) {
 			int scale = this.tileEntity.getScaledElecticalLevel(54);
-			this.drawTexturedModalRect(var5 + 99, var6 + 114, 176, 0, Math.min(scale, 54), 7);
+			this.drawTexturedModalRect(var5 + 92, var6 + 111, 0, 249, Math.min(scale, 54), 7);
 		}
 
 		GL11.glPopMatrix();
