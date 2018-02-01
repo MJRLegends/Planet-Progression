@@ -13,6 +13,10 @@ public class PlanetProgression_Recipes {
 	}
 
 	private static void registerMachineRecipes() {
+		if(Config.researchMode == 2){
+			MachineRecipeManager.addRecipe(new ItemStack(PlanetProgression_Items.satelliteBasic), new ItemStack[] { new ItemStack(GCItems.basicItem, 1, 1), new ItemStack(GCItems.basicItem, 1, 1),
+				new ItemStack(PlanetProgression_Items.satelliteBasicModule, 1, 0) });
+		}
 		if (Config.researchMode == 3) {
 			MachineRecipeManager.addRecipe(new ItemStack(PlanetProgression_Items.satelliteSurface), new ItemStack[] { new ItemStack(GCItems.basicItem, 1, 1), new ItemStack(GCItems.basicItem, 1, 1),
 					new ItemStack(PlanetProgression_Items.satelliteModules, 1, 0) });
