@@ -25,7 +25,7 @@ import com.mjr.planetprogression.item.PlanetProgression_Items;
 import com.mjr.planetprogression.item.ResearchPaper;
 
 public class TileEntitySatelliteController extends TileBaseElectricBlockWithInventory implements ISidedInventory {
-	public static final int PROCESS_TIME_REQUIRED = SatelliteData.MAX_DATA * 4;
+	public static final int PROCESS_TIME_REQUIRED = SatelliteData.MAX_DATA;
 	@NetworkedField(targetSide = Side.CLIENT)
 	public int processTicks = 0;
 	private ItemStack[] containingItems = new ItemStack[2];
