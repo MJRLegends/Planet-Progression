@@ -2,7 +2,6 @@ package com.mjr.planetprogression.item;
 
 import java.util.List;
 
-import micdoodle8.mods.galacticraft.core.items.ItemBasic;
 import micdoodle8.mods.galacticraft.core.proxy.ClientProxyCore;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
@@ -10,7 +9,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class SatelliteModuleBasic extends ItemBasic {
+import com.mjr.mjrlegendslib.item.BasicItem;
+
+public class SatelliteModuleBasic extends BasicItem {
 
 	public SatelliteModuleBasic(String assetName) {
 		super(assetName);
