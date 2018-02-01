@@ -53,6 +53,9 @@ public class PlanetProgression {
 
 		// Register Non Mob Entities
 		registerNonMobEntities();
+		
+		PlanetProgression_Items.initResearchPaperItems();
+		PlanetProgression_Items.registerResearchPaperItems();
 
 		PlanetProgression.proxy.init(event);
 	}

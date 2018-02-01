@@ -16,7 +16,7 @@ public class PlanetProgression_Items {
 
 	public static Item satelliteModules;
 	public static Item satelliteBasicModule;
-	
+
 	public static Item satelliteBasic;
 	public static Item satelliteSurface;
 	public static Item satelliteDistance;
@@ -29,7 +29,7 @@ public class PlanetProgression_Items {
 		registerItems();
 	}
 
-	public static void initItems() {
+	public static void initResearchPaperItems() {
 		for (Planet planet : GalaxyRegistry.getRegisteredPlanets().values()) {
 			if (!planet.getUnlocalizedName().contains("overworld"))
 				researchPapers.add(new ResearchPaper(planet.getLocalizedName()));
@@ -37,6 +37,9 @@ public class PlanetProgression_Items {
 		for (Moon moon : GalaxyRegistry.getRegisteredMoons().values()) {
 			researchPapers.add(new ResearchPaper(moon.getLocalizedName()));
 		}
+	}
+
+	public static void initItems() {
 		if (Config.researchMode == 2 || Config.researchMode == 3)
 			SATELLITE_ROCKET = new ItemSatelliteRocket("item_satellite_rocket");
 		if (Config.researchMode == 2) {
@@ -51,10 +54,13 @@ public class PlanetProgression_Items {
 		}
 	}
 
-	public static void registerItems() {
+	public static void registerResearchPaperItems() {
 		for (Item item : researchPapers) {
 			RegisterUtilities.registerItem(item, item.getUnlocalizedName().substring(5) + "_" + ((ResearchPaper) item).getPlanet().toLowerCase());
 		}
+	}
+
+	public static void registerItems() {
 		if (Config.researchMode == 2 || Config.researchMode == 3)
 			RegisterUtilities.registerItem(SATELLITE_ROCKET, SATELLITE_ROCKET.getUnlocalizedName().substring(5));
 		if (Config.researchMode == 2) {
