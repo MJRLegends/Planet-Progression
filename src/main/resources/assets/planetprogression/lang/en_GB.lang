@@ -1,0 +1,15 @@
+#Items
+item.research_paper.name=Research Paper
+item.item_satellite_rocket.rocket.name=Satellite Rocket
+
+#Entities
+
+#GUI Messages
+container.satellite.controller.name=Satellite Controller
+container.satellite.builder.name=Satellite Builder
+container.telescope.name=Telescope
+
+#Blocks
+tile.satellite_builder.name=Satellite Builder
+tile.satellite_controller.name=Satellite Controller
+tile.telescope.name=Telescope
