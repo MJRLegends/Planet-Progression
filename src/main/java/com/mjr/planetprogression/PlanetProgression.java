@@ -39,6 +39,10 @@ public class PlanetProgression {
 
 		// Main Events
 		MinecraftForge.EVENT_BUS.register(new MainHandlerServer());
+		
+		// Initialization/Registering Methods For Blocks/Items
+		PlanetProgression_Blocks.init();
+		PlanetProgression_Items.init();
 
 		PlanetProgression.proxy.preInit(event);
 	}
@@ -47,10 +51,7 @@ public class PlanetProgression {
 	public void init(FMLInitializationEvent event) {
 		packetPipeline = PlanetProgressionChannelHandler.init();
 
-		// Initialization/Registering Methods For Blocks/Items
-		PlanetProgression_Blocks.init();
-		PlanetProgression_Items.init();
-
+		// Register Non Mob Entities
 		registerNonMobEntities();
 
 		PlanetProgression.proxy.init(event);
