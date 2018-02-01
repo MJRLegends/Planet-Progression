@@ -15,7 +15,8 @@ public class PlanetProgression_Items {
 	public static List<Item> researchPapers = new ArrayList<>();
 
 	public static Item satelliteModules;
-
+	public static Item satelliteBasicModule;
+	
 	public static Item satelliteBasic;
 	public static Item satelliteSurface;
 	public static Item satelliteDistance;
@@ -39,7 +40,7 @@ public class PlanetProgression_Items {
 		if (Config.researchMode == 2 || Config.researchMode == 3)
 			SATELLITE_ROCKET = new ItemSatelliteRocket("item_satellite_rocket");
 		if (Config.researchMode == 2) {
-			satelliteModules = new SatelliteModuleBasic("satellite_module");
+			satelliteBasicModule = new SatelliteModuleBasic("satellite_module_basic");
 			satelliteBasic = new ItemSatellite("satellite_basic", 0);
 		}
 		if (Config.researchMode == 3) {
@@ -56,6 +57,10 @@ public class PlanetProgression_Items {
 		}
 		if (Config.researchMode == 2 || Config.researchMode == 3)
 			RegisterUtilities.registerItem(SATELLITE_ROCKET, SATELLITE_ROCKET.getUnlocalizedName().substring(5));
+		if (Config.researchMode == 2) {
+			RegisterUtilities.registerItem(satelliteBasicModule, satelliteBasicModule.getUnlocalizedName().substring(5));
+			RegisterUtilities.registerItem(satelliteBasic, satelliteBasic.getUnlocalizedName().substring(5));
+		}
 		if (Config.researchMode == 3) {
 			RegisterUtilities.registerItem(satelliteModules, satelliteModules.getUnlocalizedName().substring(5));
 			RegisterUtilities.registerItem(satelliteSurface, satelliteSurface.getUnlocalizedName().substring(5));
