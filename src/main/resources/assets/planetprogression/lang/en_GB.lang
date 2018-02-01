@@ -1,6 +1,8 @@
 #Items
 item.research_paper.name=Research Paper
 item.item_satellite_rocket.rocket.name=Satellite Rocket
+item.satellite_module_basic.name=Basic Satellite Module
+item.satellite_basic.name=Basic Satellite
 
 #Entities
 
