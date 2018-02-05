@@ -1,7 +1,7 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "planetprogression:blocks/telescope"
+        "layer0": "galacticraftcore:blocks/buggy_pad_full"
     },
     "display": {
         "thirdperson": {
