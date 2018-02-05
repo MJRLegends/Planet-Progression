@@ -52,20 +52,30 @@ public class TileEntitySatelliteBuilder extends TileBaseElectricBlockWithInvento
 	}
 
 	public boolean canProcess() {
-		if(this.producingStack == null)
-			return false;
-		if (this.containingItems[1] == null)
-			return false;
-		if (this.containingItems[2] == null)
+		if (this.producingStack == null)
 			return false;
 		return !this.getDisabled(0);
 	}
 
 	public boolean canOutput() {
+		if (this.containingItems[4] != null)
+			return false;
 		return true;
 	}
 
 	public boolean hasInputs() {
+		if (this.containingItems[1] == null)
+			return false;
+		if (this.containingItems[2] == null)
+			return false;
+		if (this.containingItems[3] == null)
+			return false;
+		if (this.containingItems[1].stackSize > 12)
+			return false;
+		if (this.containingItems[2].stackSize > 12)
+			return false;
+		if (this.containingItems[3].stackSize > 12)
+			return false;
 		return true;
 	}
 
@@ -130,50 +140,22 @@ public class TileEntitySatelliteBuilder extends TileBaseElectricBlockWithInvento
 
 	@Override
 	public int[] getSlotsForFace(EnumFacing side) {
-		if (side == EnumFacing.WEST) {
-			return new int[] { 1 };
-		} else if (side == EnumFacing.EAST) {
-			return new int[] { 2 };
-		} else if (side == EnumFacing.DOWN) {
-			return new int[] { 3 };
-		}
 		return new int[] { 0, 1, 2, 3 };
 	}
 
 	@Override
-	public boolean canInsertItem(int slotID, ItemStack itemstack, EnumFacing side) {
-		if (itemstack != null && this.isItemValidForSlot(slotID, itemstack)) {
-			switch (slotID) {
-			case 0:
-				return ItemElectricBase.isElectricItemCharged(itemstack);
-			default:
-				return false;
-			}
-		}
-		return false;
+	public boolean isItemValidForSlot(int slotID, ItemStack itemStack) {
+		return slotID == 0 && ItemElectricBase.isElectricItem(itemStack.getItem());
 	}
 
 	@Override
-	public boolean canExtractItem(int slotID, ItemStack itemstack, EnumFacing side) {
-		if (itemstack != null && this.isItemValidForSlot(slotID, itemstack)) {
-			switch (slotID) {
-			case 0:
-				return ItemElectricBase.isElectricItemEmpty(itemstack) || !this.shouldPullEnergy();
-			default:
-				return false;
-			}
-		}
-		return false;
+	public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction) {
+		return index == 0;
 	}
 
 	@Override
-	public boolean isItemValidForSlot(int slotID, ItemStack itemstack) {
-		switch (slotID) {
-		case 0:
-			return itemstack != null && ItemElectricBase.isElectricItem(itemstack.getItem());
-		}
-
-		return false;
+	public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
+		return this.isItemValidForSlot(index, itemStackIn);
 	}
 
 	@Override

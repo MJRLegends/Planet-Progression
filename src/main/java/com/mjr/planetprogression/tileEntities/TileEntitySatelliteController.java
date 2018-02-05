@@ -163,18 +163,6 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
 		super.writeToNBT(nbt);
-		NBTTagList var2 = new NBTTagList();
-
-		for (int var3 = 0; var3 < this.containingItems.length; ++var3) {
-			if (this.containingItems[var3] != null) {
-				NBTTagCompound var4 = new NBTTagCompound();
-				var4.setByte("Slot", (byte) var3);
-				this.containingItems[var3].writeToNBT(var4);
-				var2.appendTag(var4);
-			}
-		}
-
-		nbt.setTag("Items", var2);
 		nbt.setInteger("smeltingTicks", this.processTicks);
 		nbt.setInteger("currentSatelliteNum", this.currentSatelliteNum);
 		nbt.setBoolean("markForSatelliteUpdate", true);
@@ -202,50 +190,22 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 
 	@Override
 	public int[] getSlotsForFace(EnumFacing side) {
-		if (side == EnumFacing.WEST) {
-			return new int[] { 1 };
-		} else if (side == EnumFacing.EAST) {
-			return new int[] { 2 };
-		} else if (side == EnumFacing.DOWN) {
-			return new int[] { 3 };
-		}
 		return new int[] { 0, 1, 2, 3 };
 	}
 
 	@Override
-	public boolean canInsertItem(int slotID, ItemStack itemstack, EnumFacing side) {
-		if (itemstack != null && this.isItemValidForSlot(slotID, itemstack)) {
-			switch (slotID) {
-			case 0:
-				return ItemElectricBase.isElectricItemCharged(itemstack);
-			default:
-				return false;
-			}
-		}
-		return false;
+	public boolean isItemValidForSlot(int slotID, ItemStack itemStack) {
+		return slotID == 0 && ItemElectricBase.isElectricItem(itemStack.getItem());
 	}
 
 	@Override
-	public boolean canExtractItem(int slotID, ItemStack itemstack, EnumFacing side) {
-		if (itemstack != null && this.isItemValidForSlot(slotID, itemstack)) {
-			switch (slotID) {
-			case 0:
-				return ItemElectricBase.isElectricItemEmpty(itemstack) || !this.shouldPullEnergy();
-			default:
-				return false;
-			}
-		}
-		return false;
+	public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction) {
+		return index == 0;
 	}
 
 	@Override
-	public boolean isItemValidForSlot(int slotID, ItemStack itemstack) {
-		switch (slotID) {
-		case 0:
-			return itemstack != null && ItemElectricBase.isElectricItem(itemstack.getItem());
-		}
-
-		return false;
+	public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
+		return this.isItemValidForSlot(index, itemStackIn);
 	}
 
 	@Override
