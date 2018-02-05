@@ -19,10 +19,10 @@ public class ContainerSatelliteBuilder extends Container {
 
 		// Electric Input Slot
 		this.addSlotToContainer(new SlotSpecific(tileEntity, 0, 153, 7, IItemElectric.class));
-		this.addSlotToContainer(new Slot(tileEntity, 1, 20, 30)); // Solar Panel Part
-		this.addSlotToContainer(new Slot(tileEntity, 2, 40, 30)); // Solar Panel Part
-		this.addSlotToContainer(new Slot(tileEntity, 3, 60, 30)); // Satellite Module
-		this.addSlotToContainer(new Slot(tileEntity, 4, 115, 30)); // Output
+		this.addSlotToContainer(new Slot(tileEntity, 1, 20, 31)); // Solar Panel Part
+		this.addSlotToContainer(new Slot(tileEntity, 2, 47, 31)); // Solar Panel Part
+		this.addSlotToContainer(new Slot(tileEntity, 3, 74, 31)); // Satellite Module
+		this.addSlotToContainer(new Slot(tileEntity, 4, 115, 31)); // Output
 		
 		int var3;
 

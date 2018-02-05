@@ -16,14 +16,14 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import org.lwjgl.opengl.GL11;
 
-import com.mjr.mjrlegendslib.Constants;
 import com.mjr.mjrlegendslib.util.TranslateUtilities;
+import com.mjr.planetprogression.Constants;
 import com.mjr.planetprogression.inventory.ContainerSatelliteBuilder;
 import com.mjr.planetprogression.tileEntities.TileEntitySatelliteBuilder;
 
 @SideOnly(Side.CLIENT)
 public class GuiSatelliteBuilder extends GuiContainerGC {
-	private static final ResourceLocation chemicalInjectorTexture = new ResourceLocation(Constants.ASSET_PREFIX, "textures/gui/chemical_injector.png");
+	private static final ResourceLocation guiTexture = new ResourceLocation(Constants.ASSET_PREFIX, "textures/gui/satellite_builder.png");
 
 	private final TileEntitySatelliteBuilder tileEntity;
 
@@ -80,7 +80,7 @@ public class GuiSatelliteBuilder extends GuiContainerGC {
 
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float par1, int par2, int par3) {
-		this.mc.renderEngine.bindTexture(GuiSatelliteBuilder.chemicalInjectorTexture);
+		this.mc.renderEngine.bindTexture(GuiSatelliteBuilder.guiTexture);
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 
 		int containerWidth = (this.width - this.xSize) / 2;
