@@ -13,6 +13,7 @@ public class PlanetProgression_Recipes {
 
 	public static void init() {
 		registerMachineRecipes();
+		SatelliteRocketRecipes.registerRocketCraftingRecipe();
 	}
 
 	private static void registerMachineRecipes() {
