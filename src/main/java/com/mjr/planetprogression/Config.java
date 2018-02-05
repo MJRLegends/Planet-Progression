@@ -14,5 +14,7 @@ public class Config {
 		researchMode = config.get(Constants.CONFIG_CATEGORY_GENERAL_SETTINGS, "Research Mode", 2, "Research Modes: 1 - Basic Research Paper Method | 2 - Basic Satellite Research Method").getInt(2);
 		generateResearchPaperInLoot = config.get(Constants.CONFIG_CATEGORY_GENERAL_SETTINGS, "Add Research Papers to Dungeon Loot", true, "Will add the Research Papers to spawn in Vanilla Dungeon Loot").getBoolean(true);
 		config.save();
+		if(researchMode != 1 && researchMode != 2)
+			researchMode = 2;
 	}
 }
