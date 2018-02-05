@@ -108,9 +108,9 @@ public class GuiSatelliteController extends GuiContainerGC {
 
 		this.fontRendererObj.drawString(GCCoreUtil.translate("container.inventory"), 8, 135, 4210752);
 		this.fontRendererObj.drawString("Satelltie ID: ", 5, 20, 4210752);
-		this.fontRendererObj.drawString((this.tileEntity.currentSatellite != null ? this.tileEntity.currentSatellite.getUuid() : "Unknown"), 30, 30, 4210752);
-		this.fontRendererObj.drawString("Player: " + (this.tileEntity.owner != "" ? PlayerUtilties.getPlayerFromUUID(this.tileEntity.owner).getGameProfile().getName() : "Unknown") , 5, 45, 4210752);
-		this.fontRendererObj.drawString("Research Progress: " + (100 - ((this.tileEntity.processTicks / 4)/10)) + " %", 5, 55, 4210752);
+		this.fontRendererObj.drawString((this.tileEntity.currentSatellite != null ? this.tileEntity.currentSatellite.getUuid() : "No Satellites Found!"), 30, 30, 4210752);
+		this.fontRendererObj.drawString("Player: " + (this.tileEntity.owner != "" ? PlayerUtilties.getPlayerFromUUID(this.tileEntity.owner).getGameProfile().getName() : "Player is not online!") , 5, 45, 4210752);
+		this.fontRendererObj.drawString("Research Progress: " + (0 + ((this.tileEntity.processTicks / 4)/10)) + " %", 5, 55, 4210752);
 	}
 
 	@Override
