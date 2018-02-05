@@ -13,7 +13,8 @@ public class PlanetProgression_Recipes {
 
 	public static void init() {
 		registerMachineRecipes();
-		SatelliteRocketRecipes.registerRocketCraftingRecipe();
+		if (Config.researchMode == 2 || Config.researchMode == 3)
+			SatelliteRocketRecipes.registerRocketCraftingRecipe();
 	}
 
 	private static void registerMachineRecipes() {
