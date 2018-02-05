@@ -102,7 +102,8 @@ public class ClientProxy extends CommonProxy {
 	}
 
 	private void registerBlockJsons() {
-
+		ClientUtilities.registerBlockJson(Constants.TEXTURE_PREFIX, PlanetProgression_Blocks.SATTLLITE_BUILDER);
+		ClientUtilities.registerBlockJson(Constants.TEXTURE_PREFIX, PlanetProgression_Blocks.SATTLLITE_CONTROLLER);
 	}
 
 	private void registerItemJsons() {

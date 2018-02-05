@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "facing=north": { "model": "planetprogression:satellite_builder_model" },
+        "facing=east":  { "model": "planetprogression:satellite_builder_model", "y": 90 },
+        "facing=west":  { "model": "planetprogression:satellite_builder_model", "y": 270 },
+        "facing=south": { "model": "planetprogression:satellite_builder_model", "y": 180 }
+    }
+}
