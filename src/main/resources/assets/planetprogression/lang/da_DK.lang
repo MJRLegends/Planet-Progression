@@ -1,0 +1,20 @@
+#Items
+item.research_paper.name=Forsknings note
+item.item_satellite_rocket.rocket.name=Satellit Raket
+item.satellite_module_basic.name=Basal Satellit Modul
+item.satellite_basic.name=Basal Satellit 
+
+#Entities
+entity.planetprogression.EntitySatelliteRocket.name=Satellit Raket
+
+#GUI Messages
+container.satellite.controller.name=Kontrolenhed for Satellit
+container.satellite.builder.name=Satellit Bygger
+container.telescope.name=Teleskop
+
+#Blocks
+tile.satellite_builder.name=Satellit Bygger
+tile.satellite_controller.name=Kontrolenhed for Satellit
+tile.telescope.name=Teleskop
+gui.status.missing.inputs.name=Mangler Genstande/Væsker
+gui.status.missing.power.name=Mangler Strøm
