@@ -58,10 +58,6 @@ public class TileEntitySatelliteBuilder extends TileBaseElectricBlockWithInvento
 			return false;
 		if (this.containingItems[2] == null)
 			return false;
-		if (this.containingItems[1].stackSize < 3)
-			return false;
-		if (this.containingItems[2].stackSize < 6)
-			return false;
 		return !this.getDisabled(0);
 	}
 
