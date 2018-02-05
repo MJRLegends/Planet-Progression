@@ -1,6 +1,5 @@
 package com.mjr.planetprogression;
 
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -8,8 +7,8 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.network.NetworkRegistry;
 
+import com.mjr.mjrlegendslib.util.NetworkUtilities;
 import com.mjr.mjrlegendslib.util.RegisterUtilities;
 import com.mjr.planetprogression.blocks.PlanetProgression_Blocks;
 import com.mjr.planetprogression.client.gui.GuiHandler;
@@ -38,8 +37,8 @@ public class PlanetProgression {
 		Config.load();
 
 		// Main Events
-		MinecraftForge.EVENT_BUS.register(new MainHandlerServer());
-		
+		RegisterUtilities.registerEventHandler(new MainHandlerServer());
+
 		// Initialization/Registering Methods For Blocks/Items
 		PlanetProgression_Blocks.init();
 		PlanetProgression_Items.init();
@@ -53,7 +52,7 @@ public class PlanetProgression {
 
 		// Register Non Mob Entities
 		registerNonMobEntities();
-		
+
 		PlanetProgression_Items.initResearchPaperItems();
 		PlanetProgression_Items.registerResearchPaperItems();
 
@@ -67,7 +66,7 @@ public class PlanetProgression {
 		CapabilityStatsClientHandler.register();
 
 		// Register GUI Handler
-		NetworkRegistry.INSTANCE.registerGuiHandler(PlanetProgression.instance, new GuiHandler());
+		NetworkUtilities.registerGuiHandler(PlanetProgression.instance, new GuiHandler());
 
 		PlanetProgression_Recipes.init();
 
