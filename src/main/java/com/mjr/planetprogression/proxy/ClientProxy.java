@@ -2,14 +2,9 @@ package com.mjr.planetprogression.proxy;
 
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.item.Item;
 import net.minecraftforge.client.event.ModelBakeEvent;
-import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.client.model.obj.OBJLoader;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.model.TRSRTransformation;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -19,6 +14,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.google.common.collect.ImmutableList;
 import com.mjr.mjrlegendslib.util.ClientUtilities;
+import com.mjr.mjrlegendslib.util.RegisterUtilities;
 import com.mjr.planetprogression.Config;
 import com.mjr.planetprogression.Constants;
 import com.mjr.planetprogression.blocks.PlanetProgression_Blocks;
@@ -38,14 +34,14 @@ public class ClientProxy extends CommonProxy {
 	public void preInit(FMLPreInitializationEvent event) {
 		MinecraftForge.EVENT_BUS.register(this);
 		// Register OBJ Domain
-		OBJLoader.INSTANCE.addDomain(Constants.ASSET_PREFIX);
+		ClientUtilities.registerOBJInstance(Constants.ASSET_PREFIX);
 
 		// Register Variants
 		registerVariants();
 
 		// Register Entity Renders
 		registerEntityRenders();
-		
+
 		// Register Custom Models
 		registerCustomModel();
 
@@ -63,10 +59,10 @@ public class ClientProxy extends CommonProxy {
 		registerBlockJsons();
 
 		// Register Item Json Files
-		registerBlockJsons();
+		registerItemJsons();
 
 		// Register Client Main Handler
-		MinecraftForge.EVENT_BUS.register(new MainHandlerClient());
+		RegisterUtilities.registerEventHandler(new MainHandlerClient());
 
 		// Register TileEntity Special Renderers
 		renderBlocksTileEntitySpecialRenderers();
@@ -75,7 +71,7 @@ public class ClientProxy extends CommonProxy {
 	}
 
 	private void registerEntityRenders() {
-		RenderingRegistry.registerEntityRenderingHandler(EntitySatelliteRocket.class, (RenderManager manager) -> new RenderSatelliteRocket(manager));
+		ClientUtilities.registerEntityRenderer(EntitySatelliteRocket.class, (RenderManager manager) -> new RenderSatelliteRocket(manager));
 	}
 
 	@SubscribeEvent
@@ -91,12 +87,10 @@ public class ClientProxy extends CommonProxy {
 	}
 
 	private void registerCustomModel() {
-		Item teleporter = Item.getItemFromBlock(PlanetProgression_Blocks.TELESCOPE);
-		ModelResourceLocation modelResourceLocation = new ModelResourceLocation(Constants.TEXTURE_PREFIX + "telescope", "inventory");
-		ModelLoader.setCustomModelResourceLocation(teleporter, 0, modelResourceLocation);
+		ClientUtilities.registerCustomModel(Constants.TEXTURE_PREFIX, PlanetProgression_Blocks.TELESCOPE, "telescope");
 
 		if (Config.researchMode == 2 || Config.researchMode == 3) {
-			modelResourceLocation = new ModelResourceLocation(Constants.TEXTURE_PREFIX + "satellite_rocket", "inventory");
+			ModelResourceLocation modelResourceLocation = new ModelResourceLocation(Constants.TEXTURE_PREFIX + "satellite_rocket", "inventory");
 			for (int i = 1; i < 2; ++i) {
 				ClientUtilities.registerModel(PlanetProgression_Items.SATELLITE_ROCKET, i, modelResourceLocation);
 			}
@@ -111,7 +105,11 @@ public class ClientProxy extends CommonProxy {
 
 	}
 
+	private void registerItemJsons() {
+		ClientUtilities.registerItemJson(Constants.TEXTURE_PREFIX, PlanetProgression_Items.researchPapers, "research_paper");
+	}
+
 	private void renderBlocksTileEntitySpecialRenderers() {
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityTelescope.class, new TileEntityTelescopeRenderer());
+		ClientUtilities.registerTileEntityRenderer(TileEntityTelescope.class, new TileEntityTelescopeRenderer());
 	}
 }
