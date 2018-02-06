@@ -56,9 +56,10 @@ public class SatelliteBuilderRecipeCategory extends BlankRecipeCategory<IRecipeW
 	public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull IRecipeWrapper recipeWrapper) {
 		IGuiItemStackGroup itemstacks = recipeLayout.getItemStacks();
 
-		itemstacks.init(0, true, 26, 30);
-		itemstacks.init(1, true, 66, 30);
-		itemstacks.init(2, false, 116, 30);
+		itemstacks.init(0, true, 16, 26);
+		itemstacks.init(1, true, 43, 26);
+		itemstacks.init(2, true, 70, 26);
+		itemstacks.init(3, false, 111, 26);
 
 		if (recipeWrapper instanceof SatelliteBuilderRecipeWrapper) {
 			SatelliteBuilderRecipeWrapper circuitFabricatorRecipeWrapper = (SatelliteBuilderRecipeWrapper) recipeWrapper;
@@ -70,7 +71,7 @@ public class SatelliteBuilderRecipeCategory extends BlankRecipeCategory<IRecipeW
 					itemstacks.setFromRecipe(i, o);
 				}
 			}
-			itemstacks.setFromRecipe(2, circuitFabricatorRecipeWrapper.getOutputs());
+			itemstacks.setFromRecipe(3, circuitFabricatorRecipeWrapper.getOutputs());
 		}
 	}
 
