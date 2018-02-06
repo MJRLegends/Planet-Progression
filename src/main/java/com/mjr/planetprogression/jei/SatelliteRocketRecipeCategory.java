@@ -34,7 +34,7 @@ public class SatelliteRocketRecipeCategory extends BlankRecipeCategory<IRecipeWr
 	@Nonnull
 	@Override
 	public String getUid() {
-		return RecipeCategories.ROCKET_T4_ID;
+		return RecipeCategories.SATELLITE_ROCKET_ID;
 	}
 
 	@Nonnull

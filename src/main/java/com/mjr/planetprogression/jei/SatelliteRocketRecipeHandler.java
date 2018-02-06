@@ -16,7 +16,7 @@ public class SatelliteRocketRecipeHandler implements IRecipeHandler<SatelliteRoc
 	@Nonnull
 	@Override
 	public String getRecipeCategoryUid() {
-		return RecipeCategories.ROCKET_T4_ID;
+		return RecipeCategories.SATELLITE_ROCKET_ID;
 	}
 
 	@Override
