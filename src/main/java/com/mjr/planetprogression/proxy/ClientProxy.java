@@ -19,6 +19,7 @@ import com.mjr.planetprogression.Config;
 import com.mjr.planetprogression.Constants;
 import com.mjr.planetprogression.blocks.PlanetProgression_Blocks;
 import com.mjr.planetprogression.client.handlers.MainHandlerClient;
+import com.mjr.planetprogression.client.model.ItemModelSatellite;
 import com.mjr.planetprogression.client.model.ItemModelSatelliteRocket;
 import com.mjr.planetprogression.client.model.ItemModelTelescope;
 import com.mjr.planetprogression.client.render.entities.RenderSatelliteRocket;
@@ -84,10 +85,18 @@ public class ClientProxy extends CommonProxy {
 			ClientUtilities.replaceModelDefault(Constants.modID, event, "satellite_rocket", "satellite_rocket.obj",
 					ImmutableList.of("launch_vehicle", "flang2", "flang1", "Body_Satellite", "Antenn", "solar_panel4", "satellite_dish2", "solar_panel2", "joint1", "solar_panel1", "joint3", "solar_panel3", "joint2", "satellite_dish1"),
 					ItemModelSatelliteRocket.class, TRSRTransformation.identity());
+
+		if (Config.researchMode == 2)
+			ClientUtilities.replaceModelDefault(Constants.modID, event, "basic_satellite", "basic_satellite.obj", ImmutableList.of("solar_panel1.001", "satellite_dish1.001", "joint2.001", "solar_panel_side_1.001", "solar_panel_side_003.001",
+					"antenn.001", "joint4.001", "body_satellite.001", "solar_panel_side_002.001", "solar_panel2.001", "solar_panel3.001", "satellite_dish2.001", "solar_panel4.001", "joint3.001", "joint1.001", "solar_panel_side_004.001",
+					"solar_panel1", "satellite_dish1", "joint2", "solar_panel_side_1", "solar_panel_side_003", "antenn", "joint4", "body_satellite", "solar_panel_side_002", "solar_panel2", "solar_panel3", "satellite_dish2", "solar_panel4", "joint3",
+					"joint1", "solar_panel_side_004"), ItemModelSatellite.class, TRSRTransformation.identity());
 	}
 
 	private void registerCustomModel() {
 		ClientUtilities.registerCustomModel(Constants.TEXTURE_PREFIX, PlanetProgression_Blocks.TELESCOPE, "telescope");
+		if (Config.researchMode == 2)
+			ClientUtilities.registerCustomModel(Constants.TEXTURE_PREFIX, PlanetProgression_Items.satelliteBasic, "basic_satellite");
 
 		if (Config.researchMode == 2 || Config.researchMode == 3) {
 			ModelResourceLocation modelResourceLocation = new ModelResourceLocation(Constants.TEXTURE_PREFIX + "satellite_rocket", "inventory");
@@ -107,7 +116,7 @@ public class ClientProxy extends CommonProxy {
 	}
 
 	private void registerItemJsons() {
-		ClientUtilities.registerItemJson(Constants.TEXTURE_PREFIX, PlanetProgression_Items.researchPapers, "research_paper");
+		ClientUtilities.registerModel(PlanetProgression_Items.researchPapers.get(0), 0, new ModelResourceLocation(Constants.TEXTURE_PREFIX + "research_paper", "inventory"));
 	}
 
 	private void renderBlocksTileEntitySpecialRenderers() {
