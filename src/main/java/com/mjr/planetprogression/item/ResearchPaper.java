@@ -9,6 +9,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.mjr.mjrlegendslib.item.BasicItem;
+import com.mjr.mjrlegendslib.util.TranslateUtilities;
+import com.mjr.planetprogression.Config;
 
 public class ResearchPaper extends BasicItem {
 
@@ -32,6 +34,15 @@ public class ResearchPaper extends BasicItem {
 	public void addInformation(ItemStack itemStack, EntityPlayer player, List<String> list, boolean par4) {
 		if (player.worldObj.isRemote) {
 			list.add(EnumColor.AQUA + planet);
+			
+			if(Config.researchMode == 1){
+				if(Config.generateResearchPaperInLoot)
+					list.add(EnumColor.AQUA + TranslateUtilities.translate("research.paper.loot.desc"));
+				else
+					list.add(EnumColor.AQUA + TranslateUtilities.translate("research.paper.woldgen.desc"));
+			}
+			else
+				list.add(EnumColor.AQUA + TranslateUtilities.translate("research.paper.satellite.controller.desc"));
 		}
 	}
 }

@@ -3,9 +3,7 @@ package com.mjr.planetprogression.blocks;
 import micdoodle8.mods.galacticraft.core.blocks.BlockTileGC;
 import micdoodle8.mods.galacticraft.core.blocks.ISortableBlock;
 import micdoodle8.mods.galacticraft.core.energy.tile.TileBaseUniversalElectrical;
-import micdoodle8.mods.galacticraft.core.items.IShiftDescription;
 import micdoodle8.mods.galacticraft.core.util.EnumSortCategoryBlock;
-import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
@@ -24,7 +22,7 @@ import net.minecraft.world.World;
 import com.mjr.planetprogression.PlanetProgression;
 import com.mjr.planetprogression.tileEntities.TileEntityTelescope;
 
-public class BlockTelescope extends BlockTileGC implements IShiftDescription, ISortableBlock {
+public class BlockTelescope extends BlockTileGC implements ISortableBlock {
 	// private final Random rand = new Random();
 
 	public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
@@ -126,16 +124,6 @@ public class BlockTelescope extends BlockTileGC implements IShiftDescription, IS
 		if (tile instanceof TileEntityTelescope) {
 			((TileEntityTelescope) tile).setOwner(((EntityPlayer) placer).getUniqueID().toString());
 		}
-	}
-
-	@Override
-	public String getShiftDescription(int meta) {
-		return GCCoreUtil.translate(this.getUnlocalizedName() + ".description");
-	}
-
-	@Override
-	public boolean showDescription(int meta) {
-		return true;
 	}
 
 	@Override

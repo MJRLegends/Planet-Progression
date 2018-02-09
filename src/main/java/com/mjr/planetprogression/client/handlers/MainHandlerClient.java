@@ -4,10 +4,13 @@ import java.util.List;
 
 import micdoodle8.mods.galacticraft.core.Constants;
 import micdoodle8.mods.galacticraft.core.client.gui.screen.GuiCelestialSelection;
+import micdoodle8.mods.galacticraft.core.util.EnumColor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.settings.GameSettings;
+import net.minecraft.item.Item;
 import net.minecraftforge.client.event.GuiOpenEvent;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -19,6 +22,8 @@ import net.minecraftforge.server.permission.PermissionAPI;
 
 import com.google.common.collect.Lists;
 import com.mjr.mjrlegendslib.util.MCUtilities;
+import com.mjr.mjrlegendslib.util.TranslateUtilities;
+import com.mjr.planetprogression.blocks.PlanetProgression_Blocks;
 import com.mjr.planetprogression.client.gui.screen.CustomGuiCelestialSelection;
 import com.mjr.planetprogression.network.PlanetProgressionPacketHandler;
 
@@ -61,4 +66,18 @@ public class MainHandlerClient {
 			}
 		}
 	}
+	
+	@SubscribeEvent
+	@SideOnly(Side.CLIENT)
+	public void onItemTooltip(ItemTooltipEvent event){
+		if(event.getItemStack().getItem().equals(Item.getItemFromBlock(PlanetProgression_Blocks.SATTLLITE_BUILDER)))
+			event.getToolTip().add(EnumColor.AQUA + TranslateUtilities.translate("satellite.builder.use.desc"));
+		else if(event.getItemStack().getItem().equals(Item.getItemFromBlock(PlanetProgression_Blocks.SATTLLITE_CONTROLLER))){
+			event.getToolTip().add(EnumColor.AQUA + TranslateUtilities.translate("satellite.controller.use.desc"));
+			event.getToolTip().add(EnumColor.AQUA + TranslateUtilities.translate("satellite.controller.use.2.desc"));
+		}
+		else if(event.getItemStack().getItem().equals(Item.getItemFromBlock(PlanetProgression_Blocks.TELESCOPE)))
+			event.getToolTip().add(EnumColor.AQUA + TranslateUtilities.translate("telescope.use.desc"));
+	}
+	
 }

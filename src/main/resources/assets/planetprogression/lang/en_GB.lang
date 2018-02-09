@@ -3,6 +3,10 @@ item.research_paper.name=Research Paper
 item.item_satellite_rocket.rocket.name=Satellite Rocket
 item.satellite_module_basic.name=Basic Satellite Module
 item.satellite_basic.name=Basic Satellite
+satellite.use.desc=Place in Cargo of Satellite Rocket
+research.paper.loot.desc=Obtainable from Dungeon Loot
+research.paper.woldgen.desc=Obtainable from a World Gen Structure
+research.paper.satellite.controller.desc=Obtainable from Satellite Controller
 
 #Entities
 entity.planetprogression.EntitySatelliteRocket.name=Satellite Rocket
@@ -19,3 +23,7 @@ tile.telescope.name=Telescope
 gui.status.missing.inputs.name=Missing Items/Fluids
 gui.status.missing.power.name=Missing Power
 gui.status.building.name=Building Satellite
+satellite.builder.use.desc=Used to Build Satellites
+satellite.controller.use.desc=Used to Control Satellites &
+satellite.controller.use.2.desc=to use them for research
+telescope.use.desc=Used to discover space objects from Research Papers

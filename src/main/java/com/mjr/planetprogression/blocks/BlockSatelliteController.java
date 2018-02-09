@@ -5,7 +5,6 @@ import java.util.Random;
 import micdoodle8.mods.galacticraft.core.blocks.BlockAdvancedTile;
 import micdoodle8.mods.galacticraft.core.blocks.ISortableBlock;
 import micdoodle8.mods.galacticraft.core.energy.tile.TileBaseUniversalElectrical;
-import micdoodle8.mods.galacticraft.core.items.IShiftDescription;
 import micdoodle8.mods.galacticraft.core.util.EnumSortCategoryBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyDirection;
@@ -25,11 +24,10 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import com.mjr.mjrlegendslib.util.TranslateUtilities;
 import com.mjr.planetprogression.PlanetProgression;
 import com.mjr.planetprogression.tileEntities.TileEntitySatelliteController;
 
-public class BlockSatelliteController extends BlockAdvancedTile implements IShiftDescription, ISortableBlock {
+public class BlockSatelliteController extends BlockAdvancedTile implements ISortableBlock {
 	private final Random rand = new Random();
 
 	public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
@@ -141,16 +139,6 @@ public class BlockSatelliteController extends BlockAdvancedTile implements IShif
 		if (tile instanceof TileEntitySatelliteController) {
 			((TileEntitySatelliteController) tile).setOwner(((EntityPlayer) placer).getUniqueID().toString());
 		}
-	}
-
-	@Override
-	public String getShiftDescription(int meta) {
-		return TranslateUtilities.translate(this.getUnlocalizedName() + ".description");
-	}
-
-	@Override
-	public boolean showDescription(int meta) {
-		return true;
 	}
 
 	@Override
