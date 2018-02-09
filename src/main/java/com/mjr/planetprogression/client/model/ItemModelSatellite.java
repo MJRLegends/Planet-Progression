@@ -27,7 +27,7 @@ public class ItemModelSatellite extends ModelTransformWrapper {
 			ret.setIdentity();
 			Matrix4f mul = new Matrix4f();
 			mul.setIdentity();
-			mul.setTranslation(new Vector3f(0.12F, -0.45F, 0.34F));
+			mul.setTranslation(new Vector3f(0F, -0.49F, 0.34F));
 			ret.mul(mul);
 			mul.setIdentity();
 			mul.rotX((float) Math.PI / 12.0F);
@@ -36,7 +36,7 @@ public class ItemModelSatellite extends ModelTransformWrapper {
 			mul.rotY((float) Math.PI / 5.0F);
 			ret.mul(mul);
 			mul.setIdentity();
-			mul.setScale(0.025F);
+			mul.setScale(0.020F);
 			ret.mul(mul);
 			return ret;
 		}
