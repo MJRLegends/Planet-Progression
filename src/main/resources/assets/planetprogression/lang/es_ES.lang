@@ -1,0 +1,29 @@
+#Items
+item.research_paper.name=Papel de Investigación
+item.item_satellite_rocket.rocket.name=Cohete de Satélite
+item.satellite_module_basic.name=Módulo Básico de Satélite
+item.satellite_basic.name=Satélite
+satellite.use.desc=Place in Cargo of Satellite Rocket
+research.paper.loot.desc=Obtainable from Dungeon Loot
+research.paper.woldgen.desc=Obtainable from a World Gen Structure
+research.paper.satellite.controller.desc=Obtainable from Satellite Controller
+
+#Entities
+entity.planetprogression.EntitySatelliteRocket.name=Cohete de Satélite
+
+#GUI Messages
+container.satellite.controller.name=Controlador de Satélite
+container.satellite.builder.name=Constructor de Satélite
+container.telescope.name=Telescopio
+
+#Blocks
+tile.satellite_builder.name=Constructor de Satélite
+tile.satellite_controller.name=Controlador de Satélite
+tile.telescope.name=Telescopio
+gui.status.missing.inputs.name=Faltan Items o Líquidos
+gui.status.missing.power.name=Falta Energía
+gui.status.building.name=Building Satellite
+satellite.builder.use.desc=Used to Build Satellites
+satellite.controller.use.desc=Used to Control Satellites &
+satellite.controller.use.2.desc=to use them for research
+telescope.use.desc=Used to discover space objects from Research Papers
