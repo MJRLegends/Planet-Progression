@@ -10,6 +10,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.storage.loot.LootEntryItem;
@@ -29,6 +30,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.google.common.collect.Lists;
 import com.mjr.planetprogression.Config;
+import com.mjr.planetprogression.Constants;
 import com.mjr.planetprogression.PlanetProgression;
 import com.mjr.planetprogression.client.handlers.capabilities.CapabilityProviderStatsClient;
 import com.mjr.planetprogression.client.handlers.capabilities.CapabilityStatsClientHandler;
@@ -145,8 +147,10 @@ public class MainHandlerServer {
 		for (SatelliteData sat : stats.getSatellites()) {
 			int type = sat.getType();
 			String uuid = sat.getUuid();
-			int dataAmount = sat.dataAmount;
-			PlanetProgression.packetPipeline.sendTo(new PacketSimplePP(EnumSimplePacket.C_UPDATE_SATELLITE_LIST, player.worldObj.provider.getDimensionType().getId(), new Object[] { type, uuid, dataAmount }), player);
+			int dataAmount = sat.getDataAmount();
+			ItemStack item = sat.getCurrentResearchItem();
+			PlanetProgression.packetPipeline.sendTo(new PacketSimplePP(EnumSimplePacket.C_UPDATE_SATELLITE_LIST, player.worldObj.provider.getDimensionType().getId(), new Object[] { type, uuid, dataAmount,
+					(item == null ? "null" : (Constants.modID + ":" + item.getUnlocalizedName().substring(5) + "_" + (((ResearchPaper) item.getItem()).getPlanet().toLowerCase()) + ":" + item.getMetadata())) }), player);
 		}
 	}
 

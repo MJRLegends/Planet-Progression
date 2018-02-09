@@ -1,16 +1,20 @@
 package com.mjr.planetprogression.data;
 
+import net.minecraft.item.ItemStack;
+
 public class SatelliteData {
-	public int type;
-	public String uuid;
-	public int dataAmount;
-	public static final int MAX_DATA = 10000;
-	
-	public SatelliteData(int type, String uuid, int dataAmount) {
+	private int type;
+	private String uuid;
+	private int dataAmount;
+	private static final int MAX_DATA = 20000;
+	private ItemStack currentResearchItem = null;
+
+	public SatelliteData(int type, String uuid, int dataAmount, ItemStack currentResearchItem) {
 		super();
 		this.type = type;
 		this.uuid = uuid;
 		this.dataAmount = dataAmount;
+		this.currentResearchItem = currentResearchItem;
 	}
 	
 	public int getType() {
@@ -37,7 +41,15 @@ public class SatelliteData {
 		this.dataAmount = dataAmount;
 	}
 
-	public int getMAX_DATA() {
+	public static int getMAX_DATA() {
 		return MAX_DATA;
+	}
+
+	public ItemStack getCurrentResearchItem() {
+		return currentResearchItem;
+	}
+
+	public void setCurrentResearchItem(ItemStack currentResearchItem) {
+		this.currentResearchItem = currentResearchItem;
 	}
 }

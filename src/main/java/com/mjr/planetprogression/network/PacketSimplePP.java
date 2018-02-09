@@ -27,6 +27,8 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import com.mjr.mjrlegendslib.util.ItemUtilities;
+import com.mjr.planetprogression.Constants;
 import com.mjr.planetprogression.client.handlers.capabilities.CapabilityStatsClientHandler;
 import com.mjr.planetprogression.client.handlers.capabilities.IStatsClientCapability;
 import com.mjr.planetprogression.data.SatelliteData;
@@ -44,7 +46,7 @@ public class PacketSimplePP extends PacketBase implements Packet {
 
 		// CLIENT
 		C_UPDATE_UNLOCKED_PLANET_LIST(Side.CLIENT, String[].class), 
-		C_UPDATE_SATELLITE_LIST(Side.CLIENT, Integer.class, String.class, Integer.class);
+		C_UPDATE_SATELLITE_LIST(Side.CLIENT, Integer.class, String.class, Integer.class, String.class);
 
 		private Side targetSide;
 		private Class<?>[] decodeAs;
@@ -142,7 +144,9 @@ public class PacketSimplePP extends PacketBase implements Packet {
 			}
 			break;
 		case C_UPDATE_SATELLITE_LIST:
-			stats.addSatellites(new SatelliteData((int)this.data.get(0), (String)this.data.get(1), (int)this.data.get(2)));
+			String item = (String) this.data.get(3);
+			stats.addSatellites(new SatelliteData((int) this.data.get(0), (String) this.data.get(1), (int) this.data.get(2),
+					(item.equalsIgnoreCase("null") ? null : ItemUtilities.stringToItemStack(item, Constants.modID + ":UpdateSatellieList", true))));
 			break;
 		default:
 			break;
@@ -183,14 +187,14 @@ public class PacketSimplePP extends PacketBase implements Packet {
 				if (playerBase != null) {
 					statsPP = player.getCapability(CapabilityStatsHandler.PP_STATS_CAPABILITY, null);
 				}
-				if ((Float) this.data.get(1) == 0) {
-					if (machine.currentSatelliteNum >= statsPP.getSatellites().size())
+				if ((Float) this.data.get(1) == 1) {
+					if (machine.currentSatelliteNum <= statsPP.getSatellites().size())
 						machine.currentSatelliteNum = statsPP.getSatellites().size();
 					else
 						machine.currentSatelliteNum += 1;
 					machine.markForSatelliteUpdate = true;
-				} else if ((Float) this.data.get(1) == 1) {
-					if (machine.currentSatelliteNum <= 0)
+				} else if ((Float) this.data.get(1) == 0) {
+					if (machine.currentSatelliteNum >= 0)
 						machine.currentSatelliteNum = 0;
 					else
 						machine.currentSatelliteNum -= 1;

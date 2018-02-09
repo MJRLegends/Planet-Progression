@@ -9,6 +9,7 @@ import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
 import micdoodle8.mods.galacticraft.api.galaxies.GalaxyRegistry;
 import micdoodle8.mods.galacticraft.core.util.GCLog;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 
@@ -48,7 +49,7 @@ public class StatsCapability implements IStatsCapability {
 		}
 
 		nbt.setTag("Planets", tagList);
-		
+
 		tagList = new NBTTagList();
 		for (SatelliteData satellite : this.satellites) {
 			if (satellite != null) {
@@ -56,6 +57,8 @@ public class StatsCapability implements IStatsCapability {
 				nbttagcompound.setString("uuid", satellite.getUuid());
 				nbttagcompound.setInteger("type", satellite.getType());
 				nbttagcompound.setInteger("dataAmount", satellite.getDataAmount());
+				if (satellite.getCurrentResearchItem() != null)
+					nbttagcompound.setTag("currentResearchItem", satellite.getCurrentResearchItem().writeToNBT(new NBTTagCompound()));
 				tagList.appendTag(nbttagcompound);
 			}
 		}
@@ -78,16 +81,16 @@ public class StatsCapability implements IStatsCapability {
 				}
 				if (!this.unlockedPlanets.isEmpty())
 					Collections.sort(this.unlockedPlanets);
-				
+
 				for (int i = 0; i < nbt.getTagList("Satellites", 10).tagCount(); ++i) {
-					final NBTTagCompound nbttagcompound = nbt.getTagList("Planets", 10).getCompoundTagAt(i);
+					final NBTTagCompound nbttagcompound = nbt.getTagList("Satellites", 10).getCompoundTagAt(i);
 
 					String j = nbttagcompound.getString("uuid");
 					int k = nbttagcompound.getInteger("type");
 					int l = nbttagcompound.getInteger("dataAmount");
-					if(j == "")
+					if (j == "")
 						j = UUID.randomUUID().toString();
-					this.satellites.add(new SatelliteData(k, j, l));
+					this.satellites.add(new SatelliteData(k, j, l, ItemStack.loadItemStackFromNBT(nbt.getCompoundTag("currentResearchItem"))));
 				}
 			}
 

@@ -25,13 +25,17 @@ import com.mjr.planetprogression.item.PlanetProgression_Items;
 import com.mjr.planetprogression.item.ResearchPaper;
 
 public class TileEntitySatelliteController extends TileBaseElectricBlockWithInventory implements ISidedInventory {
-	public static final int PROCESS_TIME_REQUIRED = SatelliteData.MAX_DATA;
+	public static final int PROCESS_TIME_REQUIRED = SatelliteData.getMAX_DATA();
 	@NetworkedField(targetSide = Side.CLIENT)
 	public int processTicks = 0;
 	private ItemStack[] containingItems = new ItemStack[2];
 	public SatelliteData currentSatellite = null;
 	@NetworkedField(targetSide = Side.CLIENT)
 	public int currentSatelliteNum = 0;
+	@NetworkedField(targetSide = Side.CLIENT)
+	public String currentSatelliteID = "";
+	@NetworkedField(targetSide = Side.CLIENT)
+	public String currentSatelliteResearchBody = "";
 	public boolean markForSatelliteUpdate = true;
 	@NetworkedField(targetSide = Side.CLIENT)
 	public String owner = "";
@@ -50,18 +54,49 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 		if (stats != null) {
 			if (this.markForSatelliteUpdate) {
 				if (this.currentSatellite != null)
-					this.currentSatellite.dataAmount = this.processTicks;
+					this.currentSatellite.setDataAmount(this.processTicks);
 				if (this.currentSatelliteNum > (stats.getSatellites().size() - 1))
 					this.currentSatelliteNum = (stats.getSatellites().size() - 1);
 				if (stats.getSatellites() != null && stats.getSatellites().size() != 0) {
 					this.currentSatellite = stats.getSatellites().get(this.currentSatelliteNum);
-					this.processTicks = this.currentSatellite.dataAmount;
+					this.processTicks = this.currentSatellite.getDataAmount();
 					this.markForSatelliteUpdate = false;
 				}
 			}
 		}
 		if (!this.worldObj.isRemote) {
-			if (this.currentSatellite != null && this.canProcess() && canOutput() && this.hasEnoughEnergyToRun) {
+			this.currentSatelliteID = (this.currentSatellite != null ? this.currentSatellite.getUuid() : "No Satellites Found!");
+			this.currentSatelliteResearchBody = (this.currentSatellite != null ? "" + ((ResearchPaper)this.currentSatellite.getCurrentResearchItem().getItem()).getPlanet() : "Currently not Researching!");
+			if (this.currentSatellite != null) {
+				if (this.currentSatellite.getCurrentResearchItem() != null)
+					this.producingStack = this.currentSatellite.getCurrentResearchItem();
+				else if (this.currentSatellite.getCurrentResearchItem() == null) {
+					boolean found = false;
+					int i = 0;
+					for (Item item : PlanetProgression_Items.researchPapers) {
+						if (item == null)
+							continue;
+						for (CelestialBody body : stats.getUnlockedPlanets()) {
+							for (SatelliteData sat : stats.getSatellites()) {
+								if (body == null)
+									continue;
+								if (sat.getCurrentResearchItem() != new ItemStack(item) && ((ResearchPaper) item).getPlanet().equalsIgnoreCase(body.getName()))
+									found = true;
+								if (sat.getCurrentResearchItem() == new ItemStack(item))
+									found = false;
+							}
+							if (!found) {
+								this.producingStack = new ItemStack(item, 1, i);
+								this.currentSatellite.setCurrentResearchItem(this.producingStack);
+								break;
+							}
+						}
+						i++;
+					}
+				}
+			}
+			if (this.canProcess() && canOutput() && this.hasEnoughEnergyToRun) {
+				System.out.println(this.producingStack);
 				if (this.processTicks == 0) {
 					this.processTicks = TileEntitySatelliteController.PROCESS_TIME_REQUIRED;
 				} else {
@@ -83,6 +118,8 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 	public boolean canOutput() {
 		if (this.containingItems[1] != null)
 			return false;
+		if (this.producingStack == null || this.currentSatellite.getCurrentResearchItem() == null)
+			return false;
 		return true;
 	}
 
@@ -91,29 +128,6 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 	}
 
 	public void smeltItem() {
-		IStatsCapability stats = null;
-		if (PlayerUtilties.getPlayerFromUUID(this.owner) != null) {
-			stats = PlayerUtilties.getPlayerFromUUID(this.owner).getCapability(CapabilityStatsHandler.PP_STATS_CAPABILITY, null);
-		}
-		if(this.producingStack == null){
-			boolean found = false;
-			int i = 0;
-			for (Item item : PlanetProgression_Items.researchPapers) {
-				if (item == null)
-					continue;
-				for (CelestialBody body : stats.getUnlockedPlanets()) {
-					if (body == null)
-						continue;
-					if (((ResearchPaper) item).getPlanet().equalsIgnoreCase(body.getName()))
-						found = true;
-					if (!found) {
-						this.producingStack = new ItemStack(item, 1, i);
-						break;
-					}
-				}
-				i++;
-			}
-		}
 		ItemStack resultItemStack = this.producingStack;
 		if (this.canProcess() && canOutput() && hasInputs()) {
 			if (this.containingItems[1] == null) {
@@ -134,7 +148,7 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 					this.containingItems[1].stackSize += resultItemStack.stackSize;
 				}
 			}
-			this.currentSatellite.dataAmount = 0;
+			this.currentSatellite.setDataAmount(0);
 			this.producingStack = null;
 		}
 	}
