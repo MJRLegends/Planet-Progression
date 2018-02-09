@@ -87,10 +87,9 @@ public class ClientProxy extends CommonProxy {
 					.identity());
 
 		if (Config.researchMode == 2)
-			ClientUtilities.replaceModelDefault(Constants.modID, event, "basic_satellite", "basic_satellite.obj", ImmutableList.of("solar_panel1.001", "satellite_dish1.001", "joint2.001", "solar_panel_side_1.001", "solar_panel_side_003.001",
-					"antenn.001", "joint4.001", "body_satellite.001", "solar_panel_side_002.001", "solar_panel2.001", "solar_panel3.001", "satellite_dish2.001", "solar_panel4.001", "joint3.001", "joint1.001", "solar_panel_side_004.001",
-					"solar_panel1", "satellite_dish1", "joint2", "solar_panel_side_1", "solar_panel_side_003", "antenn", "joint4", "body_satellite", "solar_panel_side_002", "solar_panel2", "solar_panel3", "satellite_dish2", "solar_panel4", "joint3",
-					"joint1", "solar_panel_side_004"), ItemModelSatellite.class, TRSRTransformation.identity());
+			ClientUtilities.replaceModelDefault(Constants.modID, event, "basic_satellite", "basic_satellite.obj", ImmutableList.of("solar_panel3", "solar_panel_side_007", "solar_panel_side_004", "joint3", "body_satellite", "solar_panel_side_002",
+					"joint1", "joint2", "solar_panel_side_006", "solar_panel1", "solar_panel2", "solar_panel4", "solar_panel_side_005", "solar_panel_side_003", "antenn", "solar_panel_side_008", "satellite_dish2", "joint4", "solar_panel_side_1",
+					"satellite_dish1"), ItemModelSatellite.class, TRSRTransformation.identity());
 	}
 
 	private void registerCustomModel() {
@@ -116,6 +115,7 @@ public class ClientProxy extends CommonProxy {
 	}
 
 	private void registerItemJsons() {
+		ClientUtilities.registerItemJson(Constants.TEXTURE_PREFIX, PlanetProgression_Items.satelliteBasicModule);
 		ClientUtilities.registerModel(PlanetProgression_Items.researchPapers.get(0), 0, new ModelResourceLocation(Constants.TEXTURE_PREFIX + "research_paper", "inventory"));
 	}
 
