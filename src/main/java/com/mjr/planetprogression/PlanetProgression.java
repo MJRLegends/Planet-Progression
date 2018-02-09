@@ -1,5 +1,6 @@
 package com.mjr.planetprogression;
 
+import micdoodle8.mods.galacticraft.api.recipe.SchematicRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -17,6 +18,7 @@ import com.mjr.planetprogression.entities.EntitySatelliteRocket;
 import com.mjr.planetprogression.handlers.MainHandlerServer;
 import com.mjr.planetprogression.handlers.capabilities.CapabilityStatsHandler;
 import com.mjr.planetprogression.item.PlanetProgression_Items;
+import com.mjr.planetprogression.item.SchematicSatelliteRocket;
 import com.mjr.planetprogression.network.PlanetProgressionChannelHandler;
 import com.mjr.planetprogression.proxy.CommonProxy;
 import com.mjr.planetprogression.recipes.PlanetProgression_Recipes;
@@ -69,6 +71,8 @@ public class PlanetProgression {
 		NetworkUtilities.registerGuiHandler(PlanetProgression.instance, new GuiHandler());
 
 		PlanetProgression_Recipes.init();
+
+		SchematicRegistry.registerSchematicRecipe(new SchematicSatelliteRocket());
 
 		PlanetProgression.proxy.postInit(event);
 	}

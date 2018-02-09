@@ -2,6 +2,7 @@ package com.mjr.planetprogression.handlers;
 
 import java.util.List;
 
+import micdoodle8.mods.galacticraft.api.recipe.SchematicRegistry;
 import micdoodle8.mods.galacticraft.core.GalacticraftCore;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.Entity;
@@ -109,10 +110,12 @@ public class MainHandlerServer {
 		if (event.getEntityLiving() instanceof EntityPlayerMP) {
 			final EntityPlayerMP player = (EntityPlayerMP) event.getEntityLiving();
 			int tick = player.ticksExisted - 1;
+
 			IStatsCapability stats = player.getCapability(CapabilityStatsHandler.PP_STATS_CAPABILITY, null);
 			if (tick % 30 == 0) {
 				this.sendUnlockedPlanetsPacket(player, stats);
 				this.sendSatellitePacket(player, stats);
+				SchematicRegistry.addUnlockedPage(player, SchematicRegistry.getMatchingRecipeForID(2535));
 			}
 			if (!stats.getUnlockedPlanets().contains(GalacticraftCore.planetOverworld)) {
 				stats.addUnlockedPlanets(GalacticraftCore.planetOverworld);
@@ -139,11 +142,11 @@ public class MainHandlerServer {
 	}
 
 	protected void sendSatellitePacket(EntityPlayerMP player, IStatsCapability stats) {
-		for(SatelliteData sat : stats.getSatellites()){
+		for (SatelliteData sat : stats.getSatellites()) {
 			int type = sat.getType();
 			String uuid = sat.getUuid();
 			int dataAmount = sat.dataAmount;
-			PlanetProgression.packetPipeline.sendTo(new PacketSimplePP(EnumSimplePacket.C_UPDATE_SATELLITE_LIST, player.worldObj.provider.getDimensionType().getId(), new Object[] {  type, uuid, dataAmount }), player);
+			PlanetProgression.packetPipeline.sendTo(new PacketSimplePP(EnumSimplePacket.C_UPDATE_SATELLITE_LIST, player.worldObj.provider.getDimensionType().getId(), new Object[] { type, uuid, dataAmount }), player);
 		}
 	}
 
