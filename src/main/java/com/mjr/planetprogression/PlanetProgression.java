@@ -22,6 +22,7 @@ import com.mjr.planetprogression.item.SchematicSatelliteRocket;
 import com.mjr.planetprogression.network.PlanetProgressionChannelHandler;
 import com.mjr.planetprogression.proxy.CommonProxy;
 import com.mjr.planetprogression.recipes.PlanetProgression_Recipes;
+import com.mjr.planetprogression.world.WorldGenerater;
 
 @Mod(modid = Constants.modID, name = Constants.modName, version = Constants.modVersion, dependencies = Constants.DEPENDENCIES_FORGE + Constants.DEPENDENCIES_MODS)
 public class PlanetProgression {
@@ -70,9 +71,12 @@ public class PlanetProgression {
 		PlanetProgression_Recipes.init();
 
 		SchematicRegistry.registerSchematicRecipe(new SchematicSatelliteRocket());
-		
+
 		PlanetProgression_Items.initResearchPaperItems();
 		PlanetProgression_Items.registerResearchPaperItems();
+
+		if (Config.generateResearchPaperInStructure)
+			RegisterUtilities.registerWorldGenerator(new WorldGenerater());
 
 		PlanetProgression.proxy.postInit(event);
 	}

@@ -34,14 +34,16 @@ public class ResearchPaper extends BasicItem {
 	public void addInformation(ItemStack itemStack, EntityPlayer player, List<String> list, boolean par4) {
 		if (player.worldObj.isRemote) {
 			list.add(EnumColor.YELLOW + planet.substring(0, 1).toUpperCase() + planet.substring(1));
-			
-			if(Config.researchMode == 1){
-				if(Config.generateResearchPaperInLoot)
+
+			if (Config.researchMode == 1) {
+				if (Config.generateResearchPaperInLoot && Config.generateResearchPaperInStructure) {
 					list.add(EnumColor.AQUA + TranslateUtilities.translate("research.paper.loot.desc"));
-				else
 					list.add(EnumColor.AQUA + TranslateUtilities.translate("research.paper.woldgen.desc"));
-			}
-			else
+				} else if (Config.generateResearchPaperInLoot)
+					list.add(EnumColor.AQUA + TranslateUtilities.translate("research.paper.loot.desc"));
+				else if (Config.generateResearchPaperInStructure)
+					list.add(EnumColor.AQUA + TranslateUtilities.translate("research.paper.woldgen.desc"));
+			} else
 				list.add(EnumColor.AQUA + TranslateUtilities.translate("research.paper.satellite.controller.desc"));
 		}
 	}
