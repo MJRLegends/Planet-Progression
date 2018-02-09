@@ -116,7 +116,7 @@ public class MainHandlerServer {
 			IStatsCapability stats = player.getCapability(CapabilityStatsHandler.PP_STATS_CAPABILITY, null);
 			if (tick % 30 == 0) {
 				this.sendUnlockedPlanetsPacket(player, stats);
-				this.sendSatellitePacket(player, stats);
+				MainHandlerServer.sendSatellitePacket(player, stats);
 				SchematicRegistry.addUnlockedPage(player, SchematicRegistry.getMatchingRecipeForID(2535));
 			}
 			if (!stats.getUnlockedPlanets().contains(GalacticraftCore.planetOverworld)) {
@@ -143,7 +143,7 @@ public class MainHandlerServer {
 		PlanetProgression.packetPipeline.sendTo(new PacketSimplePP(EnumSimplePacket.C_UPDATE_UNLOCKED_PLANET_LIST, player.worldObj.provider.getDimensionType().getId(), new Object[] { planets }), player);
 	}
 
-	protected void sendSatellitePacket(EntityPlayerMP player, IStatsCapability stats) {
+	public static void sendSatellitePacket(EntityPlayerMP player, IStatsCapability stats) {
 		for (SatelliteData sat : stats.getSatellites()) {
 			int type = sat.getType();
 			String uuid = sat.getUuid();

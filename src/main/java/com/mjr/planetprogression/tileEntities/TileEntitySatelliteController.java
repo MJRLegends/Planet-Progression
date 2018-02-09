@@ -1,13 +1,14 @@
 package com.mjr.planetprogression.tileEntities;
 
-import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
+import java.util.ArrayList;
+import java.util.List;
+
 import micdoodle8.mods.galacticraft.core.energy.item.ItemElectricBase;
 import micdoodle8.mods.galacticraft.core.energy.tile.TileBaseElectricBlockWithInventory;
 import micdoodle8.mods.miccore.Annotations.NetworkedField;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.inventory.ISidedInventory;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -47,84 +48,94 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 	@Override
 	public void update() {
 		super.update();
-		IStatsCapability stats = null;
-		if (PlayerUtilties.getPlayerFromUUID(this.owner) != null) {
-			stats = PlayerUtilties.getPlayerFromUUID(this.owner).getCapability(CapabilityStatsHandler.PP_STATS_CAPABILITY, null);
-		}
-
-		// Check player is online
-		if (this.owner != null && stats != null) {
-			// Update Controller for new Satellite (Triggers: onBlockPlaced, onWorldLoad, onDisplayedSatelliteChanged)
-			if (this.markForSatelliteUpdate) {
-				if (this.currentSatellite != null)
-					this.currentSatellite.setDataAmount(this.processTicks);
-				if (this.currentSatelliteNum > (stats.getSatellites().size() - 1))
-					this.currentSatelliteNum = (stats.getSatellites().size() - 1);
-				if (stats.getSatellites() != null && stats.getSatellites().size() != 0) {
-					this.currentSatellite = stats.getSatellites().get(this.currentSatelliteNum);
-					this.processTicks = this.currentSatellite.getDataAmount();
-					this.markForSatelliteUpdate = false;
-				}
+		if (!this.worldObj.isRemote) {
+			IStatsCapability stats = null;
+			if (PlayerUtilties.getPlayerFromUUID(this.owner) != null) {
+				stats = PlayerUtilties.getPlayerFromUUID(this.owner).getCapability(CapabilityStatsHandler.PP_STATS_CAPABILITY, null);
 			}
 
-			//Check Satellite does exist
-			if (this.currentSatellite != null) {
-				if (!this.worldObj.isRemote) {
+			// Check player is online
+			if (this.owner != null && stats != null) {
+				// Update Controller for new Satellite (Triggers: onBlockPlaced, onWorldLoad, onDisplayedSatelliteChanged)
+				if (this.markForSatelliteUpdate) {
+					if (this.currentSatellite != null)
+						this.currentSatellite.setDataAmount(this.processTicks);
+					if (this.currentSatelliteNum > (stats.getSatellites().size() - 1))
+						this.currentSatelliteNum = (stats.getSatellites().size() - 1);
+					if (stats.getSatellites() != null && stats.getSatellites().size() != 0) {
+						this.currentSatellite = stats.getSatellites().get(this.currentSatelliteNum);
+						this.processTicks = this.currentSatellite.getDataAmount();
+						this.markForSatelliteUpdate = false;
+					}
+					this.currentSatelliteResearchBody = "";
+				}
+
+				// Check Satellite does exist
+				if (this.currentSatellite != null) {
 					// Update Satellite ID for ClientSide
 					this.currentSatelliteID = (this.currentSatellite != null ? this.currentSatellite.getUuid() : "No Satellites Found!");
 
 					// Update Current Research Body for Client Side
+					if (this.currentSatelliteResearchBody.equals("") || this.currentSatelliteResearchBody.equals("Nothing!")) {
+						if (this.currentSatellite.getCurrentResearchItem() == null || this.currentSatellite.getCurrentResearchItem().getItem() == null)
+							this.currentSatelliteResearchBody = "Nothing!";
+						else
+							this.currentSatelliteResearchBody = ((ResearchPaper) this.currentSatellite.getCurrentResearchItem().getItem()).getPlanet();
+					}
 
-					if (this.currentSatellite.getCurrentResearchItem() == null || this.currentSatellite.getCurrentResearchItem().getItem() == null)
-						this.currentSatelliteResearchBody = "Nothing!";
-					else
-						this.currentSatelliteResearchBody = ((ResearchPaper) this.currentSatellite.getCurrentResearchItem().getItem()).getPlanet();
-				} else {
-					this.currentSatelliteResearchBody = "Nothing!";
-				}
-
-				// Server side
-				// Check if has research item
-				if (this.currentSatellite.getCurrentResearchItem() != null)
-					this.producingStack = this.currentSatellite.getCurrentResearchItem();
-				else if (this.currentSatellite.getCurrentResearchItem() == null) {
-					boolean found = false;
-					int i = 0;
-					for (Item item : PlanetProgression_Items.researchPapers) {
-						if (item == null)
-							continue;
-						for (CelestialBody body : stats.getUnlockedPlanets()) {
-							for (SatelliteData sat : stats.getSatellites()) {
-								if (body == null)
-									continue;
-								if (sat.getCurrentResearchItem() != new ItemStack(item) && ((ResearchPaper) item).getPlanet().equalsIgnoreCase(body.getName()))
-									found = true;
-								if (sat.getCurrentResearchItem() == new ItemStack(item))
-									found = false;
-							}
-							if (!found) {
-								this.producingStack = new ItemStack(item, 1, i);
-								this.currentSatellite.setCurrentResearchItem(this.producingStack);
-								break;
+					// Check if has research item
+					if (this.currentSatellite.getCurrentResearchItem() != null)
+						this.producingStack = this.currentSatellite.getCurrentResearchItem();
+					else if (this.currentSatellite.getCurrentResearchItem() == null) {
+						List<ItemStack> temp = new ArrayList<ItemStack>();
+						for (SatelliteData sat : stats.getSatellites()) {
+							if (sat.getCurrentResearchItem() != null)
+								temp.add(sat.getCurrentResearchItem());
+						}
+						if (temp.size() != PlanetProgression_Items.researchPapers.size()) {
+							boolean match = false;
+							for (int i = 0; i < PlanetProgression_Items.researchPapers.size(); i++) {
+								match = false;
+								ItemStack newItem = new ItemStack(PlanetProgression_Items.researchPapers.get(i), 1, i);
+								if (temp.size() == 0) {
+									this.producingStack = newItem;
+									this.currentSatellite.setCurrentResearchItem(this.producingStack);
+									return;
+								} else {
+									for (ItemStack oldItem : temp) {
+										if (!match) {
+											if (oldItem.getMetadata() != newItem.getMetadata()) {
+												match = false;
+											} else {
+												match = true;
+												break;
+											}
+										}
+									}
+									if (!match) {
+										this.producingStack = newItem;
+										this.currentSatellite.setCurrentResearchItem(this.producingStack);
+										return;
+									}
+									match = false;
+								}
 							}
 						}
-						i++;
 					}
-				}
 
-				// Processing Code
-				if (this.canProcess() && canOutput() && this.hasEnoughEnergyToRun) {
-					System.out.println(this.producingStack);
-					if (this.processTicks == 0) {
-						this.processTicks = TileEntitySatelliteController.PROCESS_TIME_REQUIRED;
+					// Processing Code
+					if (this.canProcess() && canOutput() && this.hasEnoughEnergyToRun) {
+						if (this.processTicks == 0) {
+							this.processTicks = TileEntitySatelliteController.PROCESS_TIME_REQUIRED;
+						} else {
+							if (--this.processTicks <= 0) {
+								this.smeltItem();
+								this.processTicks = this.canProcess() ? TileEntitySatelliteController.PROCESS_TIME_REQUIRED : 0;
+							}
+						}
 					} else {
-						if (--this.processTicks <= 0) {
-							this.smeltItem();
-							this.processTicks = this.canProcess() ? TileEntitySatelliteController.PROCESS_TIME_REQUIRED : 0;
-						}
+						this.processTicks = 0;
 					}
-				} else {
-					this.processTicks = 0;
 				}
 			}
 		}
@@ -169,6 +180,7 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 			}
 			this.currentSatellite.setDataAmount(0);
 			this.producingStack = null;
+			this.currentSatelliteResearchBody = "";
 		}
 	}
 
