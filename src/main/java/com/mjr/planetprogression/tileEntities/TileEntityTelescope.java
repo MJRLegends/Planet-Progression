@@ -32,7 +32,7 @@ import com.mjr.planetprogression.item.ResearchPaper;
 
 public class TileEntityTelescope extends TileBaseElectricBlock implements IInventoryDefaults, ISidedInventory {
 
-	public static final int PROCESS_TIME_REQUIRED_BASE = 200;
+	public static final int PROCESS_TIME_REQUIRED_BASE = (int) (200 * Config.telescopeTimeModifier);
 	@NetworkedField(targetSide = Side.CLIENT)
 	public int processTimeRequired = PROCESS_TIME_REQUIRED_BASE;
 	@NetworkedField(targetSide = Side.CLIENT)

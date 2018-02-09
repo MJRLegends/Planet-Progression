@@ -18,6 +18,7 @@ import net.minecraftforge.fml.relauncher.Side;
 
 import com.mjr.mjrlegendslib.util.PlayerUtilties;
 import com.mjr.mjrlegendslib.util.TranslateUtilities;
+import com.mjr.planetprogression.Config;
 import com.mjr.planetprogression.blocks.BlockSatelliteController;
 import com.mjr.planetprogression.data.SatelliteData;
 import com.mjr.planetprogression.handlers.capabilities.CapabilityStatsHandler;
@@ -26,7 +27,7 @@ import com.mjr.planetprogression.item.PlanetProgression_Items;
 import com.mjr.planetprogression.item.ResearchPaper;
 
 public class TileEntitySatelliteController extends TileBaseElectricBlockWithInventory implements ISidedInventory {
-	public static final int PROCESS_TIME_REQUIRED = SatelliteData.getMAX_DATA();
+	public static final int PROCESS_TIME_REQUIRED = (int) (SatelliteData.getMAX_DATA() * Config.satelliteControllerModifier);
 	@NetworkedField(targetSide = Side.CLIENT)
 	public int processTicks = 0;
 	private ItemStack[] containingItems = new ItemStack[2];
