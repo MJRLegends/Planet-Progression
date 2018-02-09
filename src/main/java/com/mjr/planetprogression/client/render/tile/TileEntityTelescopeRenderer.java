@@ -25,6 +25,7 @@ import com.mjr.planetprogression.tileEntities.TileEntityTelescope;
 @SideOnly(Side.CLIENT)
 public class TileEntityTelescopeRenderer extends TileEntitySpecialRenderer<TileEntityTelescope> {
 	private static OBJModel.OBJBakedModel telescope;
+	private static OBJModel.OBJBakedModel telescopeLens;
 
 	@SuppressWarnings("deprecation")
 	private void updateModels() {
@@ -34,9 +35,9 @@ public class TileEntityTelescopeRenderer extends TileEntitySpecialRenderer<TileE
 				model = (OBJModel) model.process(ImmutableMap.of("flip-v", "true"));
 
 				Function<ResourceLocation, TextureAtlasSprite> spriteFunction = location -> Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(location.toString());
-				telescope = (OBJModel.OBJBakedModel) model.bake(
-						new OBJModel.OBJState(ImmutableList.of("Eyes_lens", "first_leg_tripod", "Body_Teleskope", "Primary_lens", "two__leg_tripod", "third_leg_tripod", "Stand", "swivel_ground", "small_gear", "Big_gear"), false),
+				telescope = (OBJModel.OBJBakedModel) model.bake(new OBJModel.OBJState(ImmutableList.of("first_leg_tripod", "Body_Teleskope", "two__leg_tripod", "third_leg_tripod", "Stand", "swivel_ground", "small_gear", "Big_gear"), false),
 						DefaultVertexFormats.ITEM, spriteFunction);
+				telescopeLens = (OBJModel.OBJBakedModel) model.bake(new OBJModel.OBJState(ImmutableList.of("Eyes_lens", "Primary_lens"), false), DefaultVertexFormats.ITEM, spriteFunction);
 			} catch (Exception e) {
 				throw new RuntimeException(e);
 			}
@@ -63,6 +64,11 @@ public class TileEntityTelescopeRenderer extends TileEntitySpecialRenderer<TileE
 
 		ClientUtil.drawBakedModel(telescope);
 
+		GL11.glEnable(GL11.GL_BLEND);
+		GL11.glBlendFunc(GL11.GL_ONE, GL11.GL_ONE);
+		ClientUtil.drawBakedModel(telescopeLens);
+		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+		GL11.glDisable(GL11.GL_BLEND);
 		GL11.glPopMatrix();
 	}
 }
