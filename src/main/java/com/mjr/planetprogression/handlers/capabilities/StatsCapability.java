@@ -2,7 +2,6 @@ package com.mjr.planetprogression.handlers.capabilities;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.UUID;
 
 import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
@@ -79,9 +78,6 @@ public class StatsCapability implements IStatsCapability {
 					final String j = nbttagcompound.getString("UnlockedPlanet");
 					this.unlockedPlanets.add(GalaxyRegistry.getRegisteredPlanets().get(j));
 				}
-				if (!this.unlockedPlanets.isEmpty())
-					Collections.sort(this.unlockedPlanets);
-
 				for (int i = 0; i < nbt.getTagList("Satellites", 10).tagCount(); ++i) {
 					final NBTTagCompound nbttagcompound = nbt.getTagList("Satellites", 10).getCompoundTagAt(i);
 
