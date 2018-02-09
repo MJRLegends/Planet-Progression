@@ -82,9 +82,9 @@ public class ClientProxy extends CommonProxy {
 				ImmutableList.of("Eyes_lens", "first_leg_tripod", "Body_Teleskope", "Primary_lens", "two__leg_tripod", "third_leg_tripod", "Stand", "swivel_ground", "small_gear", "Big_gear"), ItemModelTelescope.class, TRSRTransformation.identity());
 
 		if (Config.researchMode == 2 || Config.researchMode == 3)
-			ClientUtilities.replaceModelDefault(Constants.modID, event, "satellite_rocket", "satellite_rocket.obj", ImmutableList.of("solar_panel3", "solar_panel_side1", "satellite_dish1", "solar_panel4", "flang1", "flang2", "joint3", "joint1",
-					"Antenn", "satellite_dish2", "joint2", "Body_Satellite", "solar_panel2", "solar_panel_side004", "solar_panel_side003", "solar_panel1", "launch_vehicle", "solar_panel_side002"), ItemModelSatelliteRocket.class, TRSRTransformation
-					.identity());
+			ClientUtilities.replaceModelDefault(Constants.modID, event, "satellite_rocket", "satellite_rocket.obj", ImmutableList.of("Body_Satellite", "solar_panel_side007", "solar_panel_side1", "solar_panel_side002", "satellite_dish2",
+					"solar_panel_side004", "solar_panel_side006", "flang2", "joint3", "solar_panel4", "satellite_dish1", "solar_panel3", "solar_panel_side003", "flang1", "solar_panel2", "joint2", "solar_panel1", "launch_vehicle", "Antenn",
+					"solar_panel_side005", "joint1", "solar_panel_side008"), ItemModelSatelliteRocket.class, TRSRTransformation.identity());
 
 		if (Config.researchMode == 2)
 			ClientUtilities.replaceModelDefault(Constants.modID, event, "basic_satellite", "basic_satellite.obj", ImmutableList.of("solar_panel3", "solar_panel_side_007", "solar_panel_side_004", "joint3", "body_satellite", "solar_panel_side_002",
