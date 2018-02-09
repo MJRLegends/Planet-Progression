@@ -18,3 +18,4 @@ tile.satellite_controller.name=Kontrolenhed for Satellit
 tile.telescope.name=Teleskop
 gui.status.missing.inputs.name=Mangler Genstande/Væsker
 gui.status.missing.power.name=Mangler Strøm
+gui.status.building.name=Building Satellite

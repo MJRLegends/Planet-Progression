@@ -69,7 +69,7 @@ public class GuiSatelliteBuilder extends GuiContainerGC {
 				progress = 100 - this.tileEntity.processTicks;
 			else
 				progress = 0;
-			displayText = EnumColor.BRIGHT_GREEN + TranslateUtilities.translate("gui.status.injecting.name") + " " + progress + "%";
+			displayText = EnumColor.BRIGHT_GREEN + TranslateUtilities.translate("gui.status.building.name") + " " + progress + "%";
 		} else {
 			displayText = EnumColor.AQUA + TranslateUtilities.translate("gui.status.idle.name");
 		}

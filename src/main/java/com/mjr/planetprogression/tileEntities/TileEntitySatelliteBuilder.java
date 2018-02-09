@@ -1,6 +1,7 @@
 package com.mjr.planetprogression.tileEntities;
 
 import java.util.Arrays;
+import java.util.Map.Entry;
 
 import micdoodle8.mods.galacticraft.core.energy.item.ItemElectricBase;
 import micdoodle8.mods.galacticraft.core.energy.tile.TileBaseElectricBlockWithInventory;
@@ -70,12 +71,20 @@ public class TileEntitySatelliteBuilder extends TileBaseElectricBlockWithInvento
 			return false;
 		if (this.containingItems[3] == null)
 			return false;
-		if (this.containingItems[1].stackSize > 12)
-			return false;
-		if (this.containingItems[2].stackSize > 12)
-			return false;
-		if (this.containingItems[3].stackSize > 12)
-			return false;
+
+		for (Entry<ItemStack[], ItemStack> recipe : MachineRecipeManager.getRecipes().entrySet()) {
+			int i = 0;
+			if (recipe.getValue().equals(this.producingStack)) {
+				if (this.containingItems[1].stackSize < recipe.getKey()[i].stackSize)
+					return false;
+				i++;
+				if (this.containingItems[2].stackSize < recipe.getKey()[i].stackSize)
+					return false;
+				i++;
+				if (this.containingItems[3].stackSize < recipe.getKey()[i].stackSize)
+					return false;
+			}
+		}
 		return true;
 	}
 
