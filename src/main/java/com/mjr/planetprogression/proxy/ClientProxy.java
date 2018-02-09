@@ -82,9 +82,9 @@ public class ClientProxy extends CommonProxy {
 				ImmutableList.of("Eyes_lens", "first_leg_tripod", "Body_Teleskope", "Primary_lens", "two__leg_tripod", "third_leg_tripod", "Stand", "swivel_ground", "small_gear", "Big_gear"), ItemModelTelescope.class, TRSRTransformation.identity());
 
 		if (Config.researchMode == 2 || Config.researchMode == 3)
-			ClientUtilities.replaceModelDefault(Constants.modID, event, "satellite_rocket", "satellite_rocket.obj",
-					ImmutableList.of("launch_vehicle", "flang2", "flang1", "Body_Satellite", "Antenn", "solar_panel4", "satellite_dish2", "solar_panel2", "joint1", "solar_panel1", "joint3", "solar_panel3", "joint2", "satellite_dish1"),
-					ItemModelSatelliteRocket.class, TRSRTransformation.identity());
+			ClientUtilities.replaceModelDefault(Constants.modID, event, "satellite_rocket", "satellite_rocket.obj", ImmutableList.of("solar_panel3", "solar_panel_side1", "satellite_dish1", "solar_panel4", "flang1", "flang2", "joint3", "joint1",
+					"Antenn", "satellite_dish2", "joint2", "Body_Satellite", "solar_panel2", "solar_panel_side004", "solar_panel_side003", "solar_panel1", "launch_vehicle", "solar_panel_side002"), ItemModelSatelliteRocket.class, TRSRTransformation
+					.identity());
 
 		if (Config.researchMode == 2)
 			ClientUtilities.replaceModelDefault(Constants.modID, event, "basic_satellite", "basic_satellite.obj", ImmutableList.of("solar_panel1.001", "satellite_dish1.001", "joint2.001", "solar_panel_side_1.001", "solar_panel_side_003.001",
