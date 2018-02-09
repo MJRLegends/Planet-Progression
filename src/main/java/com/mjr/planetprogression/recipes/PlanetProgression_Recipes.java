@@ -2,6 +2,7 @@ package com.mjr.planetprogression.recipes;
 
 import micdoodle8.mods.galacticraft.core.GCBlocks;
 import micdoodle8.mods.galacticraft.core.GCItems;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
 import com.mjr.mjrlegendslib.util.RecipeUtilities;
@@ -21,11 +22,13 @@ public class PlanetProgression_Recipes {
 		if (Config.researchMode == 2) {
 			MachineRecipeManager.addRecipe(new ItemStack(PlanetProgression_Items.satelliteBasic), new ItemStack[] { new ItemStack(GCItems.basicItem, 12, 1), new ItemStack(GCItems.basicItem, 12, 1),
 					new ItemStack(PlanetProgression_Items.satelliteBasicModule, 6, 0) });
+			RecipeUtilities.addShapedRecipe(new ItemStack(PlanetProgression_Items.satelliteBasicModule), new Object[] { "WAW", "CGC", "WAW", 'G', new ItemStack(Items.DYE, 1, 2), 'C', new ItemStack(GCItems.basicItem, 1, 10), 'A', new ItemStack(GCItems.basicItem, 1, 14), 'W',
+				new ItemStack(GCBlocks.aluminumWire, 1, 1) });
 		}
 		if (Config.researchMode == 2 || Config.researchMode == 3) {
-			RecipeUtilities.addOreRecipe(new ItemStack(PlanetProgression_Blocks.SATTLLITE_BUILDER), new Object[] { "SSS", "WAW", "SSS", 'S', new ItemStack(GCItems.basicItem, 1, 8), 'A', new ItemStack(GCItems.basicItem, 1, 14), 'W',
+			RecipeUtilities.addShapedRecipe(new ItemStack(PlanetProgression_Blocks.SATTLLITE_BUILDER), new Object[] { "SSS", "WAW", "SSS", 'S', new ItemStack(GCItems.basicItem, 1, 8), 'A', new ItemStack(GCItems.basicItem, 1, 14), 'W',
 					new ItemStack(GCBlocks.aluminumWire, 1, 1) });
-			RecipeUtilities.addOreRecipe(new ItemStack(PlanetProgression_Blocks.SATTLLITE_CONTROLLER), new Object[] { "STS", "WAW", "STS", 'S', new ItemStack(GCItems.basicItem, 1, 8), 'A', new ItemStack(GCItems.basicItem, 1, 14), 'W',
+			RecipeUtilities.addShapedRecipe(new ItemStack(PlanetProgression_Blocks.SATTLLITE_CONTROLLER), new Object[] { "STS", "WAW", "STS", 'S', new ItemStack(GCItems.basicItem, 1, 8), 'A', new ItemStack(GCItems.basicItem, 1, 14), 'W',
 					new ItemStack(GCBlocks.aluminumWire, 1, 1), 'T', new ItemStack(PlanetProgression_Items.satelliteBasic, 1) });
 		}
 		if (Config.researchMode == 3) {
