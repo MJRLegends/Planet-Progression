@@ -25,5 +25,5 @@ gui.status.missing.power.name=Falta Energía
 gui.status.building.name=Construyendo Satélite
 satellite.builder.use.desc=Sirve para contruir Satélites
 satellite.controller.use.desc=Sirve para controlar Satélites y
-satellite.controller.use.2.desc=y usarlos para Investigación
+satellite.controller.use.2.desc=usarlos para Investigación
 telescope.use.desc=Sirve para descubrir objetos espaciales de los Papeles de Investigación
