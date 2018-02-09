@@ -51,7 +51,10 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 		if (PlayerUtilties.getPlayerFromUUID(this.owner) != null) {
 			stats = PlayerUtilties.getPlayerFromUUID(this.owner).getCapability(CapabilityStatsHandler.PP_STATS_CAPABILITY, null);
 		}
-		if (stats != null) {
+
+		// Check player is online
+		if (this.owner != null && stats != null) {
+			// Update Controller for new Satellite (Triggers: onBlockPlaced, onWorldLoad, onDisplayedSatelliteChanged)
 			if (this.markForSatelliteUpdate) {
 				if (this.currentSatellite != null)
 					this.currentSatellite.setDataAmount(this.processTicks);
@@ -63,12 +66,25 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 					this.markForSatelliteUpdate = false;
 				}
 			}
-		}
-		if (!this.worldObj.isRemote) {
-			this.currentSatelliteID = (this.currentSatellite != null ? this.currentSatellite.getUuid() : "No Satellites Found!");
-			this.currentSatelliteResearchBody = (this.currentSatellite != null ? "" + this.currentSatellite.getCurrentResearchItem() == null ? "Currently not Researching!" : ((ResearchPaper) this.currentSatellite.getCurrentResearchItem().getItem())
-					.getPlanet() : "Currently not Researching!");
+
+			//Check Satellite does exist
 			if (this.currentSatellite != null) {
+				if (!this.worldObj.isRemote) {
+					// Update Satellite ID for ClientSide
+					this.currentSatelliteID = (this.currentSatellite != null ? this.currentSatellite.getUuid() : "No Satellites Found!");
+
+					// Update Current Research Body for Client Side
+
+					if (this.currentSatellite.getCurrentResearchItem() == null || this.currentSatellite.getCurrentResearchItem().getItem() == null)
+						this.currentSatelliteResearchBody = "Nothing!";
+					else
+						this.currentSatelliteResearchBody = ((ResearchPaper) this.currentSatellite.getCurrentResearchItem().getItem()).getPlanet();
+				} else {
+					this.currentSatelliteResearchBody = "Nothing!";
+				}
+
+				// Server side
+				// Check if has research item
 				if (this.currentSatellite.getCurrentResearchItem() != null)
 					this.producingStack = this.currentSatellite.getCurrentResearchItem();
 				else if (this.currentSatellite.getCurrentResearchItem() == null) {
@@ -95,19 +111,21 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 						i++;
 					}
 				}
-			}
-			if (this.canProcess() && canOutput() && this.hasEnoughEnergyToRun) {
-				System.out.println(this.producingStack);
-				if (this.processTicks == 0) {
-					this.processTicks = TileEntitySatelliteController.PROCESS_TIME_REQUIRED;
-				} else {
-					if (--this.processTicks <= 0) {
-						this.smeltItem();
-						this.processTicks = this.canProcess() ? TileEntitySatelliteController.PROCESS_TIME_REQUIRED : 0;
+
+				// Processing Code
+				if (this.canProcess() && canOutput() && this.hasEnoughEnergyToRun) {
+					System.out.println(this.producingStack);
+					if (this.processTicks == 0) {
+						this.processTicks = TileEntitySatelliteController.PROCESS_TIME_REQUIRED;
+					} else {
+						if (--this.processTicks <= 0) {
+							this.smeltItem();
+							this.processTicks = this.canProcess() ? TileEntitySatelliteController.PROCESS_TIME_REQUIRED : 0;
+						}
 					}
+				} else {
+					this.processTicks = 0;
 				}
-			} else {
-				this.processTicks = 0;
 			}
 		}
 	}
@@ -180,7 +198,7 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 		super.writeToNBT(nbt);
 		nbt.setInteger("smeltingTicks", this.processTicks);
 		nbt.setInteger("currentSatelliteNum", this.currentSatelliteNum);
-		nbt.setBoolean("markForSatelliteUpdate", true);
+		nbt.setBoolean("markForSatelliteUpdate", true); // Mark for Update on Load
 		nbt.setString("Owner", this.getOwner());
 		this.writeStandardItemsToNBT(nbt);
 		return nbt;

@@ -187,17 +187,17 @@ public class PacketSimplePP extends PacketBase implements Packet {
 				if (playerBase != null) {
 					statsPP = player.getCapability(CapabilityStatsHandler.PP_STATS_CAPABILITY, null);
 				}
-				if ((Float) this.data.get(1) == 1) {
-					if (machine.currentSatelliteNum <= statsPP.getSatellites().size())
-						machine.currentSatelliteNum = statsPP.getSatellites().size();
-					else
-						machine.currentSatelliteNum += 1;
-					machine.markForSatelliteUpdate = true;
-				} else if ((Float) this.data.get(1) == 0) {
-					if (machine.currentSatelliteNum >= 0)
+				if ((Float) this.data.get(1) == 0) {
+					if(machine.currentSatelliteNum == 0)
 						machine.currentSatelliteNum = 0;
 					else
 						machine.currentSatelliteNum -= 1;
+					machine.markForSatelliteUpdate = true;
+				} else if ((Float) this.data.get(1) == 1) {
+					if(machine.currentSatelliteNum == statsPP.getSatellites().size())
+						machine.currentSatelliteNum = statsPP.getSatellites().size();
+					else
+						machine.currentSatelliteNum += 1;
 					machine.markForSatelliteUpdate = true;
 				}
 			}
