@@ -82,7 +82,7 @@ public class TileEntityTelescope extends TileBaseElectricBlock implements IInven
 			stats = player.getCapability(CapabilityStatsHandler.PP_STATS_CAPABILITY, null);
 		}
 
-		if (Config.researchMode == 0 || Config.researchMode == 3) {
+		if (Config.researchMode == 0 || Config.researchMode == 1 || Config.researchMode == 2 || Config.researchMode == 3) {
 			boolean found = false;
 			for (Planet planet : GalaxyRegistry.getRegisteredPlanets().values()) {
 				if (((ResearchPaper) this.containingItems[1].getItem()).getPlanet().equalsIgnoreCase(planet.getLocalizedName())) {
@@ -107,8 +107,6 @@ public class TileEntityTelescope extends TileBaseElectricBlock implements IInven
 					}
 				}
 			}
-		} else if (Config.researchMode == 1) {
-
 		}
 	}
 
