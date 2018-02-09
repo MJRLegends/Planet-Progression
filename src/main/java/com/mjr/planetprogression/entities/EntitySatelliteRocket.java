@@ -398,6 +398,6 @@ public class EntitySatelliteRocket extends EntityTieredRocket {
 
 	@Override
 	public String getName() {
-		return TranslateUtilities.translate("entity.extraplanets.EntityTier4Rocket.name");
+		return TranslateUtilities.translate("entity.planetprogression.EntitySatelliteRocket.name", false);
 	}
 }
