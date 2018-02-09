@@ -66,7 +66,8 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 		}
 		if (!this.worldObj.isRemote) {
 			this.currentSatelliteID = (this.currentSatellite != null ? this.currentSatellite.getUuid() : "No Satellites Found!");
-			this.currentSatelliteResearchBody = (this.currentSatellite != null ? "" + ((ResearchPaper)this.currentSatellite.getCurrentResearchItem().getItem()).getPlanet() : "Currently not Researching!");
+			this.currentSatelliteResearchBody = (this.currentSatellite != null ? "" + this.currentSatellite.getCurrentResearchItem() == null ? "Currently not Researching!" : ((ResearchPaper) this.currentSatellite.getCurrentResearchItem().getItem())
+					.getPlanet() : "Currently not Researching!");
 			if (this.currentSatellite != null) {
 				if (this.currentSatellite.getCurrentResearchItem() != null)
 					this.producingStack = this.currentSatellite.getCurrentResearchItem();
