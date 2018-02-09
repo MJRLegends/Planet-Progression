@@ -30,12 +30,13 @@ public class PlanetProgression_Items {
 	}
 
 	public static void initResearchPaperItems() {
+		int temp = 0;
 		for (Planet planet : GalaxyRegistry.getRegisteredPlanets().values()) {
 			if (!planet.getUnlocalizedName().contains("overworld"))
-				researchPapers.add(new ResearchPaper(planet.getLocalizedName()));
+				researchPapers.add(new ResearchPaper(planet.getLocalizedName(), temp++));
 		}
 		for (Moon moon : GalaxyRegistry.getRegisteredMoons().values()) {
-			researchPapers.add(new ResearchPaper(moon.getLocalizedName()));
+			researchPapers.add(new ResearchPaper(moon.getLocalizedName(), temp++));
 		}
 	}
 
@@ -56,7 +57,7 @@ public class PlanetProgression_Items {
 
 	public static void registerResearchPaperItems() {
 		for (Item item : researchPapers) {
-			RegisterUtilities.registerItem(item, item.getUnlocalizedName().substring(5) + "_" + ((ResearchPaper) item).getPlanet().toLowerCase());
+			RegisterUtilities.registerItem(item, item.getUnlocalizedName().substring(5));
 		}
 	}
 

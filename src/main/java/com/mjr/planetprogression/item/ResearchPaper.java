@@ -16,8 +16,8 @@ public class ResearchPaper extends BasicItem {
 
 	private String planet;
 
-	public ResearchPaper(String name) {
-		super("research_paper");
+	public ResearchPaper(String name, int number) {
+		super("research_paper_" + number);
 		this.planet = name.toLowerCase();
 	}
 
@@ -33,7 +33,7 @@ public class ResearchPaper extends BasicItem {
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack itemStack, EntityPlayer player, List<String> list, boolean par4) {
 		if (player.worldObj.isRemote) {
-			list.add(EnumColor.AQUA + planet);
+			list.add(EnumColor.YELLOW + planet.substring(0, 1).toUpperCase() + planet.substring(1));
 			
 			if(Config.researchMode == 1){
 				if(Config.generateResearchPaperInLoot)

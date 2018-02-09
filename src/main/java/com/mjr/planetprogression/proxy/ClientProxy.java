@@ -116,7 +116,7 @@ public class ClientProxy extends CommonProxy {
 
 	private void registerItemJsons() {
 		ClientUtilities.registerItemJson(Constants.TEXTURE_PREFIX, PlanetProgression_Items.satelliteBasicModule);
-		ClientUtilities.registerModel(PlanetProgression_Items.researchPapers.get(0), 0, new ModelResourceLocation(Constants.TEXTURE_PREFIX + "research_paper", "inventory"));
+		ClientUtilities.registerItemJson(Constants.TEXTURE_PREFIX, PlanetProgression_Items.researchPapers);
 	}
 
 	private void renderBlocksTileEntitySpecialRenderers() {

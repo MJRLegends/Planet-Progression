@@ -55,9 +55,6 @@ public class PlanetProgression {
 		// Register Non Mob Entities
 		registerNonMobEntities();
 
-		PlanetProgression_Items.initResearchPaperItems();
-		PlanetProgression_Items.registerResearchPaperItems();
-
 		PlanetProgression.proxy.init(event);
 	}
 
@@ -73,6 +70,9 @@ public class PlanetProgression {
 		PlanetProgression_Recipes.init();
 
 		SchematicRegistry.registerSchematicRecipe(new SchematicSatelliteRocket());
+		
+		PlanetProgression_Items.initResearchPaperItems();
+		PlanetProgression_Items.registerResearchPaperItems();
 
 		PlanetProgression.proxy.postInit(event);
 	}
