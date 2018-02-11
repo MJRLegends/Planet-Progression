@@ -150,7 +150,7 @@ public class MainHandlerServer {
 			int dataAmount = sat.getDataAmount();
 			ItemStack item = sat.getCurrentResearchItem();
 			PlanetProgression.packetPipeline.sendTo(new PacketSimplePP(EnumSimplePacket.C_UPDATE_SATELLITE_LIST, player.worldObj.provider.getDimensionType().getId(), new Object[] { type, uuid, dataAmount,
-					(item == null ? "null" : (Constants.modID + ":" + item.getUnlocalizedName().substring(5) + "_" + (((ResearchPaper) item.getItem()).getPlanet().toLowerCase()) + ":" + item.getMetadata())) }), player);
+					(item == null ? "null" : (Constants.modID + ":" + item.getUnlocalizedName().substring(5) + ":" + item.getMetadata())) }), player);
 		}
 	}
 

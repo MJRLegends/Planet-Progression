@@ -69,8 +69,9 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 					if (this.markForSatelliteUpdate) {
 						if (this.currentSatellite != null)
 							this.currentSatellite.setDataAmount(this.processTicks);
-						if (this.currentSatelliteNum > (stats.getSatellites().size() - 1))
-							this.currentSatelliteNum = (stats.getSatellites().size() - 1);
+						int size = stats.getSatellites().size() == 0 ? 0 : (stats.getSatellites().size() - 1);
+						if (this.currentSatelliteNum > size)
+							this.currentSatelliteNum = size;
 						if (stats.getSatellites() != null && stats.getSatellites().size() != 0) {
 							this.currentSatellite = stats.getSatellites().get(this.currentSatelliteNum);
 							this.processTicks = this.currentSatellite.getDataAmount();
