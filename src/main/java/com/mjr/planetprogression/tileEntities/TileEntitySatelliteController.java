@@ -11,9 +11,7 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.fml.relauncher.Side;
 
 import com.mjr.mjrlegendslib.util.PlayerUtilties;
@@ -32,15 +30,21 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 	public int processTicks = 0;
 	private ItemStack[] containingItems = new ItemStack[2];
 	public SatelliteData currentSatellite = null;
+	public boolean markForSatelliteUpdate = true;
+
 	@NetworkedField(targetSide = Side.CLIENT)
 	public int currentSatelliteNum = 0;
 	@NetworkedField(targetSide = Side.CLIENT)
 	public String currentSatelliteID = "";
 	@NetworkedField(targetSide = Side.CLIENT)
 	public String currentSatelliteResearchBody = "";
-	public boolean markForSatelliteUpdate = true;
 	@NetworkedField(targetSide = Side.CLIENT)
 	public String owner = "";
+	@NetworkedField(targetSide = Side.CLIENT)
+	public boolean ownerOnline = false;
+	@NetworkedField(targetSide = Side.CLIENT)
+	public String ownerUsername = "";
+
 	public ItemStack producingStack = null;
 
 	public TileEntitySatelliteController() {
@@ -50,92 +54,97 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 	public void update() {
 		super.update();
 		if (!this.worldObj.isRemote) {
-			IStatsCapability stats = null;
-			if (PlayerUtilties.getPlayerFromUUID(this.owner) != null) {
-				stats = PlayerUtilties.getPlayerFromUUID(this.owner).getCapability(CapabilityStatsHandler.PP_STATS_CAPABILITY, null);
-			}
-
-			// Check player is online
-			if (this.owner != null && stats != null) {
-				// Update Controller for new Satellite (Triggers: onBlockPlaced, onWorldLoad, onDisplayedSatelliteChanged)
-				if (this.markForSatelliteUpdate) {
-					if (this.currentSatellite != null)
-						this.currentSatellite.setDataAmount(this.processTicks);
-					if (this.currentSatelliteNum > (stats.getSatellites().size() - 1))
-						this.currentSatelliteNum = (stats.getSatellites().size() - 1);
-					if (stats.getSatellites() != null && stats.getSatellites().size() != 0) {
-						this.currentSatellite = stats.getSatellites().get(this.currentSatelliteNum);
-						this.processTicks = this.currentSatellite.getDataAmount();
-						this.markForSatelliteUpdate = false;
-					}
-					this.currentSatelliteResearchBody = "";
+			if (this.owner != "") {
+				if (ownerOnline)
+					this.ownerUsername = PlayerUtilties.getUsernameFromUUID(this.owner);
+				this.ownerOnline = PlayerUtilties.isPlayerOnlineByUUID(this.owner);
+				IStatsCapability stats = null;
+				if (ownerOnline && PlayerUtilties.getPlayerFromUUID(this.owner) != null) {
+					stats = PlayerUtilties.getPlayerFromUUID(this.owner).getCapability(CapabilityStatsHandler.PP_STATS_CAPABILITY, null);
 				}
 
-				// Check Satellite does exist
-				if (this.currentSatellite != null) {
-					// Update Satellite ID for ClientSide
-					this.currentSatelliteID = (this.currentSatellite != null ? this.currentSatellite.getUuid() : "No Satellites Found!");
-
-					// Update Current Research Body for Client Side
-					if (this.currentSatelliteResearchBody.equals("") || this.currentSatelliteResearchBody.equals("Nothing!")) {
-						if (this.currentSatellite.getCurrentResearchItem() == null || this.currentSatellite.getCurrentResearchItem().getItem() == null)
-							this.currentSatelliteResearchBody = "Nothing!";
-						else
-							this.currentSatelliteResearchBody = ((ResearchPaper) this.currentSatellite.getCurrentResearchItem().getItem()).getPlanet();
+				// Check player is online
+				if (ownerOnline && stats != null) {
+					// Update Controller for new Satellite (Triggers: onBlockPlaced, onWorldLoad, onDisplayedSatelliteChanged)
+					if (this.markForSatelliteUpdate) {
+						if (this.currentSatellite != null)
+							this.currentSatellite.setDataAmount(this.processTicks);
+						if (this.currentSatelliteNum > (stats.getSatellites().size() - 1))
+							this.currentSatelliteNum = (stats.getSatellites().size() - 1);
+						if (stats.getSatellites() != null && stats.getSatellites().size() != 0) {
+							this.currentSatellite = stats.getSatellites().get(this.currentSatelliteNum);
+							this.processTicks = this.currentSatellite.getDataAmount();
+							this.markForSatelliteUpdate = false;
+						}
+						this.currentSatelliteResearchBody = "";
 					}
 
-					// Check if has research item
-					if (this.currentSatellite.getCurrentResearchItem() != null)
-						this.producingStack = this.currentSatellite.getCurrentResearchItem();
-					else if (this.currentSatellite.getCurrentResearchItem() == null) {
-						List<ItemStack> temp = new ArrayList<ItemStack>();
-						for (SatelliteData sat : stats.getSatellites()) {
-							if (sat.getCurrentResearchItem() != null)
-								temp.add(sat.getCurrentResearchItem());
+					// Check Satellite does exist
+					if (this.currentSatellite != null) {
+						// Update Satellite ID for ClientSide
+						this.currentSatelliteID = (this.currentSatellite != null ? this.currentSatellite.getUuid() : "No Satellites Found!");
+
+						// Update Current Research Body for Client Side
+						if (this.currentSatelliteResearchBody.equals("") || this.currentSatelliteResearchBody.equals("Nothing!")) {
+							if (this.currentSatellite.getCurrentResearchItem() == null || this.currentSatellite.getCurrentResearchItem().getItem() == null)
+								this.currentSatelliteResearchBody = "Nothing!";
+							else
+								this.currentSatelliteResearchBody = ((ResearchPaper) this.currentSatellite.getCurrentResearchItem().getItem()).getPlanet();
 						}
-						if (temp.size() != PlanetProgression_Items.researchPapers.size()) {
-							boolean match = false;
-							for (int i = 0; i < PlanetProgression_Items.researchPapers.size(); i++) {
-								match = false;
-								ItemStack newItem = new ItemStack(PlanetProgression_Items.researchPapers.get(i), 1, i);
-								if (temp.size() == 0) {
-									this.producingStack = newItem;
-									this.currentSatellite.setCurrentResearchItem(this.producingStack);
-									return;
-								} else {
-									for (ItemStack oldItem : temp) {
-										if (!match) {
-											if (oldItem.getMetadata() != newItem.getMetadata()) {
-												match = false;
-											} else {
-												match = true;
-												break;
-											}
-										}
-									}
-									if (!match) {
+
+						// Check if has research item
+						if (this.currentSatellite.getCurrentResearchItem() != null)
+							this.producingStack = this.currentSatellite.getCurrentResearchItem();
+						else if (this.currentSatellite.getCurrentResearchItem() == null) {
+							List<ItemStack> temp = new ArrayList<ItemStack>();
+							for (SatelliteData sat : stats.getSatellites()) {
+								if (sat.getCurrentResearchItem() != null)
+									temp.add(sat.getCurrentResearchItem());
+							}
+							if (temp.size() != PlanetProgression_Items.researchPapers.size()) {
+								boolean match = false;
+								for (int i = 0; i < PlanetProgression_Items.researchPapers.size(); i++) {
+									match = false;
+									ItemStack newItem = new ItemStack(PlanetProgression_Items.researchPapers.get(i), 1, i);
+									if (temp.size() == 0) {
 										this.producingStack = newItem;
 										this.currentSatellite.setCurrentResearchItem(this.producingStack);
 										return;
+									} else {
+										for (ItemStack oldItem : temp) {
+											if (!match) {
+												if (oldItem.getMetadata() != newItem.getMetadata()) {
+													match = false;
+												} else {
+													match = true;
+													break;
+												}
+											}
+										}
+										if (!match) {
+											this.producingStack = newItem;
+											this.currentSatellite.setCurrentResearchItem(this.producingStack);
+											return;
+										}
+										match = false;
 									}
-									match = false;
 								}
 							}
 						}
-					}
 
-					// Processing Code
-					if (this.canProcess() && canOutput() && this.hasEnoughEnergyToRun) {
-						if (this.processTicks == 0) {
-							this.processTicks = TileEntitySatelliteController.PROCESS_TIME_REQUIRED;
-						} else {
-							if (--this.processTicks <= 0) {
-								this.smeltItem();
-								this.processTicks = this.canProcess() ? TileEntitySatelliteController.PROCESS_TIME_REQUIRED : 0;
+						// Processing Code
+						if (this.canProcess() && canOutput() && this.hasEnoughEnergyToRun) {
+							if (this.processTicks == 0) {
+								this.processTicks = TileEntitySatelliteController.PROCESS_TIME_REQUIRED;
+							} else {
+								if (--this.processTicks <= 0) {
+									this.smeltItem();
+									this.processTicks = this.canProcess() ? TileEntitySatelliteController.PROCESS_TIME_REQUIRED : 0;
+								}
 							}
+						} else {
+							this.processTicks = 0;
 						}
-					} else {
-						this.processTicks = 0;
 					}
 				}
 			}
@@ -188,32 +197,30 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
 		super.readFromNBT(nbt);
-		NBTTagList var2 = nbt.getTagList("Items", 10);
-		this.containingItems = new ItemStack[this.getSizeInventory()];
-
-		for (int var3 = 0; var3 < var2.tagCount(); ++var3) {
-			NBTTagCompound var4 = var2.getCompoundTagAt(var3);
-			int var5 = var4.getByte("Slot") & 255;
-
-			if (var5 < this.containingItems.length) {
-				this.containingItems[var5] = ItemStack.loadItemStackFromNBT(var4);
-			}
-		}
+		this.containingItems = this.readStandardItemsFromNBT(nbt);
 		this.processTicks = nbt.getInteger("smeltingTicks");
 		this.currentSatelliteNum = nbt.getInteger("currentSatelliteNum");
+		this.currentSatelliteID = nbt.getString("currentSatelliteID");
+		this.currentSatelliteResearchBody = nbt.getString("currentSatelliteResearchBody");
 		this.markForSatelliteUpdate = nbt.getBoolean("markForSatelliteUpdate");
-		this.setOwner(nbt.getString("Owner"));
+		this.setOwner(nbt.getString("owner"));
+		this.ownerUsername = nbt.getString("ownerUsername");
 		this.containingItems = this.readStandardItemsFromNBT(nbt);
+		this.ownerOnline = nbt.getBoolean("ownerOnline");
 	}
 
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
 		super.writeToNBT(nbt);
 		nbt.setInteger("smeltingTicks", this.processTicks);
-		nbt.setInteger("currentSatelliteNum", this.currentSatelliteNum);
-		nbt.setBoolean("markForSatelliteUpdate", true); // Mark for Update on Load
-		nbt.setString("Owner", this.getOwner());
 		this.writeStandardItemsToNBT(nbt);
+		nbt.setInteger("currentSatelliteNum", this.currentSatelliteNum);
+		nbt.setString("currentSatelliteID", this.currentSatelliteID);
+		nbt.setString("currentSatelliteResearchBody", this.currentSatelliteResearchBody);
+		nbt.setBoolean("markForSatelliteUpdate", true); // Mark for Update on Load
+		nbt.setString("owner", this.getOwner());
+		nbt.setString("ownerUsername", this.ownerUsername);
+		nbt.setBoolean("ownerOnline", false); // False to trigger for Update on Load
 		return nbt;
 	}
 
@@ -271,11 +278,6 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 			return (state.getValue(BlockSatelliteController.FACING));
 		}
 		return EnumFacing.NORTH;
-	}
-
-	@Override
-	public ITextComponent getDisplayName() {
-		return null;
 	}
 
 	public void setOwner(String owner) {

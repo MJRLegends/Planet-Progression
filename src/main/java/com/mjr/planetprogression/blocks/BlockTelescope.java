@@ -122,7 +122,7 @@ public class BlockTelescope extends BlockTileGC implements ISortableBlock {
 		TileEntity tile = worldIn.getTileEntity(pos);
 
 		if (tile instanceof TileEntityTelescope) {
-			((TileEntityTelescope) tile).setOwner(((EntityPlayer) placer).getUniqueID().toString());
+			((TileEntityTelescope) tile).owner = ((EntityPlayer) placer).getUniqueID().toString();
 		}
 	}
 

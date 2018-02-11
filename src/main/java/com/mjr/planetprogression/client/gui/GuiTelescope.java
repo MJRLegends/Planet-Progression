@@ -17,7 +17,6 @@ import net.minecraftforge.fml.client.FMLClientHandler;
 
 import org.lwjgl.opengl.GL11;
 
-import com.mjr.mjrlegendslib.util.PlayerUtilties;
 import com.mjr.planetprogression.Constants;
 import com.mjr.planetprogression.PlanetProgression;
 import com.mjr.planetprogression.inventory.ContainerTelescope;
@@ -27,7 +26,7 @@ import com.mjr.planetprogression.tileEntities.TileEntityTelescope;
 public class GuiTelescope extends GuiContainerGC {
 	private static final ResourceLocation gui = new ResourceLocation(Constants.ASSET_PREFIX, "textures/gui/telescope.png");
 
-	private TileEntityTelescope telescope;
+	private TileEntityTelescope tileEntity;
 
 	private GuiButton enableButton;
 	private GuiButton leftButton;
@@ -35,22 +34,22 @@ public class GuiTelescope extends GuiContainerGC {
 
 	private GuiElementInfoRegion electricInfoRegion = new GuiElementInfoRegion(0, 0, 52, 9, null, 0, 0, this);
 
-	public GuiTelescope(InventoryPlayer playerInventory, TileEntityTelescope telescope) {
-		super(new ContainerTelescope(playerInventory, telescope, FMLClientHandler.instance().getClient().thePlayer));
+	public GuiTelescope(InventoryPlayer playerInventory, TileEntityTelescope tileEntity) {
+		super(new ContainerTelescope(playerInventory, tileEntity, FMLClientHandler.instance().getClient().thePlayer));
 		this.xSize = 250;
 		this.ySize = 230;
-		this.telescope = telescope;
+		this.tileEntity = tileEntity;
 	}
 
 	@Override
 	public void drawScreen(int par1, int par2, float par3) {
-		if (this.telescope.disableCooldown > 0) {
+		if (this.tileEntity.disableCooldown > 0) {
 			this.enableButton.enabled = false;
 		} else {
 			this.enableButton.enabled = true;
 		}
 
-		this.enableButton.displayString = this.telescope.getDisabled(0) ? GCCoreUtil.translate("gui.button.enable.name") : GCCoreUtil.translate("gui.button.disable.name");
+		this.enableButton.displayString = this.tileEntity.getDisabled(0) ? GCCoreUtil.translate("gui.button.enable.name") : GCCoreUtil.translate("gui.button.disable.name");
 
 		super.drawScreen(par1, par2, par3);
 	}
@@ -85,14 +84,14 @@ public class GuiTelescope extends GuiContainerGC {
 		if (par1GuiButton.enabled) {
 			switch (par1GuiButton.id) {
 			case 0:
-				GalacticraftCore.packetPipeline.sendToServer(new PacketSimple(EnumSimplePacket.S_UPDATE_DISABLEABLE_BUTTON, GCCoreUtil.getDimensionID(mc.theWorld), new Object[] { this.telescope.getPos(), 0 }));
+				GalacticraftCore.packetPipeline.sendToServer(new PacketSimple(EnumSimplePacket.S_UPDATE_DISABLEABLE_BUTTON, GCCoreUtil.getDimensionID(mc.theWorld), new Object[] { this.tileEntity.getPos(), 0 }));
 				break;
 			case 1:
-				PlanetProgression.packetPipeline.sendToServer(new PacketSimplePP(com.mjr.planetprogression.network.PacketSimplePP.EnumSimplePacket.S_UPDATE_ROTATION, GCCoreUtil.getDimensionID(mc.theWorld), new Object[] { this.telescope.getPos(),
+				PlanetProgression.packetPipeline.sendToServer(new PacketSimplePP(com.mjr.planetprogression.network.PacketSimplePP.EnumSimplePacket.S_UPDATE_ROTATION, GCCoreUtil.getDimensionID(mc.theWorld), new Object[] { this.tileEntity.getPos(),
 						0.0F }));
 				break;
 			case 2:
-				PlanetProgression.packetPipeline.sendToServer(new PacketSimplePP(com.mjr.planetprogression.network.PacketSimplePP.EnumSimplePacket.S_UPDATE_ROTATION, GCCoreUtil.getDimensionID(mc.theWorld), new Object[] { this.telescope.getPos(),
+				PlanetProgression.packetPipeline.sendToServer(new PacketSimplePP(com.mjr.planetprogression.network.PacketSimplePP.EnumSimplePacket.S_UPDATE_ROTATION, GCCoreUtil.getDimensionID(mc.theWorld), new Object[] { this.tileEntity.getPos(),
 						1.0F }));
 				break;
 			default:
@@ -103,12 +102,12 @@ public class GuiTelescope extends GuiContainerGC {
 
 	@Override
 	protected void drawGuiContainerForegroundLayer(int par1, int par2) {
-		String displayString = this.telescope.getName();
+		String displayString = this.tileEntity.getName();
 		this.fontRendererObj.drawString(displayString, this.xSize / 2 - this.fontRendererObj.getStringWidth(displayString) / 2, 5, 4210752);
 
 		this.fontRendererObj.drawString(GCCoreUtil.translate("container.inventory"), 8, 135, 4210752);
-		this.fontRendererObj.drawString("Progress: " + (this.telescope.processTicks / 2) + " %", 5, 20, 4210752);
-		this.fontRendererObj.drawString("Player: " + (this.telescope.owner != "" ? PlayerUtilties.getPlayerFromUUID(this.telescope.owner).getGameProfile().getName() : "Player is not online!") , 5, 35, 4210752);
+		this.fontRendererObj.drawString("Progress: " + (this.tileEntity.processTicks / 2) + " %", 5, 20, 4210752);
+		this.fontRendererObj.drawString("Player: " + ((this.tileEntity.owner != "" && this.tileEntity.ownerOnline) ? this.tileEntity.ownerUsername : "Player is not online!"), 5, 45, 4210752);
 
 	}
 
@@ -123,13 +122,13 @@ public class GuiTelescope extends GuiContainerGC {
 
 		List<String> electricityDesc = new ArrayList<String>();
 		electricityDesc.add(GCCoreUtil.translate("gui.energy_storage.desc.0"));
-		EnergyDisplayHelper.getEnergyDisplayTooltip(this.telescope.getEnergyStoredGC(), this.telescope.getMaxEnergyStoredGC(), electricityDesc);
+		EnergyDisplayHelper.getEnergyDisplayTooltip(this.tileEntity.getEnergyStoredGC(), this.tileEntity.getMaxEnergyStoredGC(), electricityDesc);
 		this.electricInfoRegion.tooltipStrings = electricityDesc;
 
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 
-		if (this.telescope.getEnergyStoredGC() > 0) {
-			int scale = this.telescope.getScaledElecticalLevel(54);
+		if (this.tileEntity.getEnergyStoredGC() > 0) {
+			int scale = this.tileEntity.getScaledElecticalLevel(54);
 			this.drawTexturedModalRect(var5 + 92, var6 + 111, 0, 249, Math.min(scale, 54), 7);
 		}
 
