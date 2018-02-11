@@ -3,6 +3,7 @@ package com.mjr.planetprogression.item;
 import java.util.List;
 
 import micdoodle8.mods.galacticraft.core.proxy.ClientProxyCore;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemStack;
@@ -14,7 +15,7 @@ import com.mjr.mjrlegendslib.item.ItemBasicMeta;
 public class SatelliteModule extends ItemBasicMeta {
 
 	public SatelliteModule(String assetName) {
-		super(assetName);
+		super(assetName, CreativeTabs.MISC, getItemList());
 	}
 
 	@Override
@@ -32,8 +33,7 @@ public class SatelliteModule extends ItemBasicMeta {
 		}
 	}
 
-	@Override
-	public String[] getItemList() {
+	public static String[] getItemList() {
 		return new String[] { "surface", "distance", "atmosphere" };
 	}
 

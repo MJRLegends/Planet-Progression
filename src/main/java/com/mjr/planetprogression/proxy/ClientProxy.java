@@ -3,8 +3,6 @@ package com.mjr.planetprogression.proxy;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraftforge.client.event.ModelBakeEvent;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.model.TRSRTransformation;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -33,7 +31,7 @@ public class ClientProxy extends CommonProxy {
 	// Event Methods
 	@Override
 	public void preInit(FMLPreInitializationEvent event) {
-		MinecraftForge.EVENT_BUS.register(this);
+		RegisterUtilities.registerEventHandler(this);
 		// Register OBJ Domain
 		ClientUtilities.registerOBJInstance(Constants.ASSET_PREFIX);
 
@@ -78,24 +76,24 @@ public class ClientProxy extends CommonProxy {
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	public void onModelBakeEvent(ModelBakeEvent event) {
-		ClientUtilities.replaceModelDefault(Constants.modID, event, "telescope", "telescope.obj",
-				ImmutableList.of("Eyes_lens", "first_leg_tripod", "Body_Teleskope", "Primary_lens", "two__leg_tripod", "third_leg_tripod", "Stand", "swivel_ground", "small_gear", "Big_gear"), ItemModelTelescope.class, TRSRTransformation.identity());
+		ClientUtilities.replaceModelDefault(Constants.modID, event, "telescope",
+				ImmutableList.of("Eyes_lens", "first_leg_tripod", "Body_Teleskope", "Primary_lens", "two__leg_tripod", "third_leg_tripod", "Stand", "swivel_ground", "small_gear", "Big_gear"), ItemModelTelescope.class);
 
 		if (Config.researchMode == 2 || Config.researchMode == 3)
-			ClientUtilities.replaceModelDefault(Constants.modID, event, "satellite_rocket", "satellite_rocket.obj", ImmutableList.of("Body_Satellite", "solar_panel_side007", "solar_panel_side1", "solar_panel_side002", "satellite_dish2",
-					"solar_panel_side004", "solar_panel_side006", "flang2", "joint3", "solar_panel4", "satellite_dish1", "solar_panel3", "solar_panel_side003", "flang1", "solar_panel2", "joint2", "solar_panel1", "launch_vehicle", "Antenn",
-					"solar_panel_side005", "joint1", "solar_panel_side008"), ItemModelSatelliteRocket.class, TRSRTransformation.identity());
+			ClientUtilities.replaceModelDefault(Constants.modID, event, "satellite_rocket", ImmutableList.of("Body_Satellite", "solar_panel_side007", "solar_panel_side1", "solar_panel_side002", "satellite_dish2", "solar_panel_side004",
+					"solar_panel_side006", "flang2", "joint3", "solar_panel4", "satellite_dish1", "solar_panel3", "solar_panel_side003", "flang1", "solar_panel2", "joint2", "solar_panel1", "launch_vehicle", "Antenn", "solar_panel_side005", "joint1",
+					"solar_panel_side008"), ItemModelSatelliteRocket.class);
 
 		if (Config.researchMode == 2)
-			ClientUtilities.replaceModelDefault(Constants.modID, event, "basic_satellite", "basic_satellite.obj", ImmutableList.of("solar_panel3", "solar_panel_side_007", "solar_panel_side_004", "joint3", "body_satellite", "solar_panel_side_002",
-					"joint1", "joint2", "solar_panel_side_006", "solar_panel1", "solar_panel2", "solar_panel4", "solar_panel_side_005", "solar_panel_side_003", "antenn", "solar_panel_side_008", "satellite_dish2", "joint4", "solar_panel_side_1",
-					"satellite_dish1"), ItemModelSatellite.class, TRSRTransformation.identity());
+			ClientUtilities.replaceModelDefault(Constants.modID, event, "basic_satellite", ImmutableList.of("solar_panel3", "solar_panel_side_007", "solar_panel_side_004", "joint3", "body_satellite", "solar_panel_side_002", "joint1", "joint2",
+					"solar_panel_side_006", "solar_panel1", "solar_panel2", "solar_panel4", "solar_panel_side_005", "solar_panel_side_003", "antenn", "solar_panel_side_008", "satellite_dish2", "joint4", "solar_panel_side_1", "satellite_dish1"),
+					ItemModelSatellite.class);
 	}
 
 	private void registerCustomModel() {
-		ClientUtilities.registerCustomModel(Constants.TEXTURE_PREFIX, PlanetProgression_Blocks.TELESCOPE, "telescope");
+		ClientUtilities.registerModel(Constants.TEXTURE_PREFIX, PlanetProgression_Blocks.TELESCOPE, "telescope");
 		if (Config.researchMode == 2)
-			ClientUtilities.registerCustomModel(Constants.TEXTURE_PREFIX, PlanetProgression_Items.satelliteBasic, "basic_satellite");
+			ClientUtilities.registerModel(Constants.TEXTURE_PREFIX, PlanetProgression_Items.satelliteBasic, "basic_satellite");
 
 		if (Config.researchMode == 2 || Config.researchMode == 3) {
 			ModelResourceLocation modelResourceLocation = new ModelResourceLocation(Constants.TEXTURE_PREFIX + "satellite_rocket", "inventory");
