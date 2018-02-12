@@ -36,6 +36,7 @@ public class BlockSatelliteBuilder extends BlockAdvancedTile implements ISortabl
 		super(Material.ROCK);
 		this.setHardness(1.0F);
 		this.setUnlocalizedName(assetName);
+		this.setCreativeTab(PlanetProgression.tab);
 	}
 
 	@Override

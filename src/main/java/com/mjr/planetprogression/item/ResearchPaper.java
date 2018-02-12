@@ -11,6 +11,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import com.mjr.mjrlegendslib.item.BasicItem;
 import com.mjr.mjrlegendslib.util.TranslateUtilities;
 import com.mjr.planetprogression.Config;
+import com.mjr.planetprogression.PlanetProgression;
 
 public class ResearchPaper extends BasicItem {
 
@@ -19,6 +20,7 @@ public class ResearchPaper extends BasicItem {
 	public ResearchPaper(String name, int number) {
 		super("research_paper_" + number);
 		this.planet = name.toLowerCase();
+		this.setCreativeTab(PlanetProgression.tab);
 	}
 
 	public String getPlanet() {

@@ -97,3 +97,5 @@ satellite.builder.use.desc=Bruges til at bygge Satellit
 satellite.controller.use.desc=Bruges til at kontroler Satelliter &
 satellite.controller.use.2.desc= Bruge dem til forskning
 telescope.use.desc=Bruges til at opdage objekter i rummet fra Forsknings noter
+
+itemGroup.PlanetProgressionTab=Planet Progression

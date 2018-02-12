@@ -10,11 +10,13 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.mjr.mjrlegendslib.item.BasicItem;
+import com.mjr.planetprogression.PlanetProgression;
 
 public class SatelliteModuleBasic extends BasicItem {
 
 	public SatelliteModuleBasic(String assetName) {
 		super(assetName);
+		this.setCreativeTab(PlanetProgression.tab);
 	}
 
 	@Override

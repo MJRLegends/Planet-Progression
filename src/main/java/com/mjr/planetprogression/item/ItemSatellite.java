@@ -10,6 +10,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.mjr.mjrlegendslib.item.BasicItem;
 import com.mjr.mjrlegendslib.util.TranslateUtilities;
+import com.mjr.planetprogression.PlanetProgression;
 
 public class ItemSatellite extends BasicItem {
 
@@ -18,6 +19,7 @@ public class ItemSatellite extends BasicItem {
 	public ItemSatellite(String name, int type) {
 		super(name);
 		this.type = type;
+		this.setCreativeTab(PlanetProgression.tab);
 	}
 
 	public int getType() {

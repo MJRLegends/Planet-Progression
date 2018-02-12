@@ -1,6 +1,8 @@
 package com.mjr.planetprogression;
 
 import micdoodle8.mods.galacticraft.api.recipe.SchematicRegistry;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -36,6 +38,17 @@ public class PlanetProgression {
 	public static PlanetProgression instance;
 
 	public static PlanetProgressionChannelHandler packetPipeline;
+
+	// Blocks Creative Tab
+	public static CreativeTabs tab = new CreativeTabs("PlanetProgressionTab") {
+		@Override
+		public Item getTabIconItem() {
+			if (Config.researchMode == 2)
+				return PlanetProgression_Items.satelliteBasic;
+			else
+				return PlanetProgression_Items.researchPapers.get(0);
+		}
+	};
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {

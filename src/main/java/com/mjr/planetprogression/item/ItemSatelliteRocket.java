@@ -28,6 +28,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.mjr.mjrlegendslib.util.TranslateUtilities;
+import com.mjr.planetprogression.PlanetProgression;
 import com.mjr.planetprogression.entities.EntitySatelliteRocket;
 
 public class ItemSatelliteRocket extends Item implements IHoldableItem {
@@ -37,6 +38,7 @@ public class ItemSatelliteRocket extends Item implements IHoldableItem {
 		this.setHasSubtypes(true);
 		this.setMaxStackSize(1);
 		this.setUnlocalizedName(assetName);
+		this.setCreativeTab(PlanetProgression.tab);
 	}
 
 	@Override
