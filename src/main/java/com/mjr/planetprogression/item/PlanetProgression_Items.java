@@ -8,8 +8,8 @@ import micdoodle8.mods.galacticraft.api.galaxies.Moon;
 import micdoodle8.mods.galacticraft.api.galaxies.Planet;
 import net.minecraft.item.Item;
 
-import com.mjr.mjrlegendslib.util.RegisterUtilities;
 import com.mjr.planetprogression.Config;
+import com.mjr.planetprogression.PlanetProgression;
 
 public class PlanetProgression_Items {
 	public static List<Item> researchPapers = new ArrayList<>();
@@ -27,6 +27,13 @@ public class PlanetProgression_Items {
 	public static void init() {
 		initItems();
 		registerItems();
+	}
+
+	public static void registerItem(Item item, String name) {
+		if (item.getRegistryName() == null) {
+			item.setRegistryName(name);
+		}
+		PlanetProgression.itemList.add(item);
 	}
 
 	public static void initResearchPaperItems() {
@@ -57,22 +64,22 @@ public class PlanetProgression_Items {
 
 	public static void registerResearchPaperItems() {
 		for (Item item : researchPapers) {
-			RegisterUtilities.registerItem(item, item.getUnlocalizedName().substring(5));
+			registerItem(item, item.getUnlocalizedName().substring(5));
 		}
 	}
 
 	public static void registerItems() {
 		if (Config.researchMode == 2 || Config.researchMode == 3)
-			RegisterUtilities.registerItem(SATELLITE_ROCKET, SATELLITE_ROCKET.getUnlocalizedName().substring(5));
+			registerItem(SATELLITE_ROCKET, SATELLITE_ROCKET.getUnlocalizedName().substring(5));
 		if (Config.researchMode == 2) {
-			RegisterUtilities.registerItem(satelliteBasicModule, satelliteBasicModule.getUnlocalizedName().substring(5));
-			RegisterUtilities.registerItem(satelliteBasic, satelliteBasic.getUnlocalizedName().substring(5));
+			registerItem(satelliteBasicModule, satelliteBasicModule.getUnlocalizedName().substring(5));
+			registerItem(satelliteBasic, satelliteBasic.getUnlocalizedName().substring(5));
 		}
 		if (Config.researchMode == 3) {
-			RegisterUtilities.registerItem(satelliteModules, satelliteModules.getUnlocalizedName().substring(5));
-			RegisterUtilities.registerItem(satelliteSurface, satelliteSurface.getUnlocalizedName().substring(5));
-			RegisterUtilities.registerItem(satelliteDistance, satelliteDistance.getUnlocalizedName().substring(5));
-			RegisterUtilities.registerItem(satelliteAtmosphere, satelliteAtmosphere.getUnlocalizedName().substring(5));
+			registerItem(satelliteModules, satelliteModules.getUnlocalizedName().substring(5));
+			registerItem(satelliteSurface, satelliteSurface.getUnlocalizedName().substring(5));
+			registerItem(satelliteDistance, satelliteDistance.getUnlocalizedName().substring(5));
+			registerItem(satelliteAtmosphere, satelliteAtmosphere.getUnlocalizedName().substring(5));
 		}
 	}
 }

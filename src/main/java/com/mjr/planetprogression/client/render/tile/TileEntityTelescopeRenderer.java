@@ -45,7 +45,7 @@ public class TileEntityTelescopeRenderer extends TileEntitySpecialRenderer<TileE
 	}
 
 	@Override
-	public void renderTileEntityAt(TileEntityTelescope te, double x, double y, double z, float partialTicks, int destroyStage) {
+	public void render(TileEntityTelescope te, double x, double y, double z, float partialTickTime, int par9, float alpha) {
 		GL11.glPushMatrix();
 
 		RenderHelper.enableStandardItemLighting();

@@ -1,11 +1,15 @@
 package com.mjr.planetprogression.blocks;
 
+import java.lang.reflect.Constructor;
+
 import net.minecraft.block.Block;
+import net.minecraft.item.ItemBlock;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
-import com.mjr.mjrlegendslib.util.RegisterUtilities;
+import com.google.common.collect.ObjectArrays;
 import com.mjr.planetprogression.Config;
 import com.mjr.planetprogression.Constants;
+import com.mjr.planetprogression.PlanetProgression;
 import com.mjr.planetprogression.itemBlocks.ItemBlockTelescope;
 import com.mjr.planetprogression.tileEntities.TileEntitySatelliteBuilder;
 import com.mjr.planetprogression.tileEntities.TileEntitySatelliteController;
@@ -29,6 +33,32 @@ public class PlanetProgression_Blocks {
 		OreDictionaryRegister();
 	}
 
+	public static void registerBlock(Block block, Class<? extends ItemBlock> itemclass, String name, Object... itemCtorArgs) throws NoSuchMethodException {
+		if (block.getRegistryName() == null) {
+			block.setRegistryName(name);
+		}
+		PlanetProgression.blocksList.add(block);
+		if (itemclass != null) {
+			ItemBlock item = null;
+			Class<?>[] ctorArgClasses = new Class<?>[itemCtorArgs.length + 1];
+			ctorArgClasses[0] = Block.class;
+			for (int idx = 1; idx < ctorArgClasses.length; idx++) {
+				ctorArgClasses[idx] = itemCtorArgs[idx - 1].getClass();
+			}
+
+			try {
+				Constructor<? extends ItemBlock> constructor = itemclass.getConstructor(ctorArgClasses);
+				item = constructor.newInstance(ObjectArrays.concat(block, itemCtorArgs));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			PlanetProgression.itemList.add(item);
+			if (item.getRegistryName() == null) {
+				item.setRegistryName(name);
+			}
+		}
+	}
+
 	public static void initBlocks() {
 		TELESCOPE = new BlockTelescope("telescope");
 		if (Config.researchMode == 2 || Config.researchMode == 3) {
@@ -38,10 +68,10 @@ public class PlanetProgression_Blocks {
 	}
 
 	public static void registerBlocks() throws NoSuchMethodException {
-		RegisterUtilities.registerBlock(Constants.modID, TELESCOPE, ItemBlockTelescope.class, TELESCOPE.getUnlocalizedName().substring(5));
+		registerBlock(TELESCOPE, ItemBlockTelescope.class, TELESCOPE.getUnlocalizedName().substring(5));
 		if (Config.researchMode == 2 || Config.researchMode == 3) {
-			RegisterUtilities.registerBlock(Constants.modID, SATTLLITE_BUILDER, ItemBlockTelescope.class, SATTLLITE_BUILDER.getUnlocalizedName().substring(5));
-			RegisterUtilities.registerBlock(Constants.modID, SATTLLITE_CONTROLLER, ItemBlockTelescope.class, SATTLLITE_CONTROLLER.getUnlocalizedName().substring(5));
+			registerBlock(SATTLLITE_BUILDER, ItemBlockTelescope.class, SATTLLITE_BUILDER.getUnlocalizedName().substring(5));
+			registerBlock(SATTLLITE_CONTROLLER, ItemBlockTelescope.class, SATTLLITE_CONTROLLER.getUnlocalizedName().substring(5));
 		}
 	}
 

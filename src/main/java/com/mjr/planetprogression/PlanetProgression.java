@@ -1,8 +1,15 @@
 package com.mjr.planetprogression;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import micdoodle8.mods.galacticraft.api.recipe.SchematicRegistry;
+import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
+import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -11,6 +18,8 @@ import net.minecraftforge.fml.common.event.FMLFingerprintViolationEvent;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import com.mjr.mjrlegendslib.util.MessageUtilities;
 import com.mjr.mjrlegendslib.util.NetworkUtilities;
@@ -25,6 +34,7 @@ import com.mjr.planetprogression.item.PlanetProgression_Items;
 import com.mjr.planetprogression.item.SchematicSatelliteRocket;
 import com.mjr.planetprogression.network.PlanetProgressionChannelHandler;
 import com.mjr.planetprogression.proxy.CommonProxy;
+import com.mjr.planetprogression.recipes.PlanetProgression_RecipeGeneration;
 import com.mjr.planetprogression.recipes.PlanetProgression_Recipes;
 import com.mjr.planetprogression.world.WorldGenerater;
 
@@ -36,8 +46,14 @@ public class PlanetProgression {
 
 	@Instance(Constants.modID)
 	public static PlanetProgression instance;
-
 	public static PlanetProgressionChannelHandler packetPipeline;
+
+	// Generate recipe JSON's (For use in Dev Workspace Only)
+	public static boolean generateRecipes = true;
+
+	// Block/Item/Biome Events Registering Lists
+	public static List<Item> itemList = new ArrayList<>();
+	public static List<Block> blocksList = new ArrayList<>();
 
 	// Blocks Creative Tab
 	public static CreativeTabs tab = new CreativeTabs("PlanetProgressionTab") {
@@ -93,12 +109,40 @@ public class PlanetProgression {
 		if (Config.generateResearchPaperInStructure)
 			RegisterUtilities.registerWorldGenerator(new WorldGenerater());
 
+		// Generate recipe JSON's (For use in Dev Workspace Only)
+		if (generateRecipes) {
+			PlanetProgression_RecipeGeneration.generate();
+			PlanetProgression_RecipeGeneration.generateConstants();
+		}
+
 		PlanetProgression.proxy.postInit(event);
 	}
 
 	private void registerNonMobEntities() {
 		if (Config.researchMode == 2 || Config.researchMode == 3)
 			RegisterUtilities.registerNonMobEntity(Constants.modID, PlanetProgression.instance, EntitySatelliteRocket.class, "EntitySatelliteRocket", 150, 1, false);
+	}
+
+	@Mod.EventBusSubscriber(modid = Constants.modID)
+	public static class RegistrationHandler {
+		@SubscribeEvent
+		public static void registerBlocksEvent(RegistryEvent.Register<Block> event) {
+			for (Block block : PlanetProgression.blocksList) {
+				event.getRegistry().register(block);
+			}
+		}
+
+		@SubscribeEvent
+		public static void registerItemsEvent(RegistryEvent.Register<Item> event) {
+			for (Item item : PlanetProgression.itemList) {
+				event.getRegistry().register(item);
+			}
+
+		}
+
+		@SubscribeEvent(priority = EventPriority.LOWEST)
+		public static void registerRecipesEvent(RegistryEvent.Register<IRecipe> event) {
+		}
 	}
 
 	@EventHandler
