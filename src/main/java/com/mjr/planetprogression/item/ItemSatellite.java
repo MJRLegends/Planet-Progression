@@ -2,9 +2,12 @@ package com.mjr.planetprogression.item;
 
 import java.util.List;
 
+import javax.annotation.Nullable;
+
 import micdoodle8.mods.galacticraft.core.util.EnumColor;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -33,7 +36,7 @@ public class ItemSatellite extends BasicItem {
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void addInformation(ItemStack par1ItemStack, EntityPlayer player, List<String> par2List, boolean b) {
+	public void addInformation(ItemStack itemStack, @Nullable World worldIn, List<String> par2List, ITooltipFlag flagIn) {
 		par2List.add(EnumColor.AQUA + TranslateUtilities.translate("satellite.use.desc"));
 	}
 }

@@ -47,8 +47,8 @@ public class GuiSchematicSatelliteRocket extends GuiPositionedContainer implemen
 
 	@Override
 	protected void drawGuiContainerForegroundLayer(int par1, int par2) {
-		this.fontRendererObj.drawString(TranslateUtilities.translate("item.item_satellite_rocket.rocket.name"), 7, -20 + 27, 4210752);
-		this.fontRendererObj.drawString(TranslateUtilities.translate("container.inventory"), 8, 220 - 104 + 2 + 27, 4210752);
+		this.fontRenderer.drawString(TranslateUtilities.translate("item.item_satellite_rocket.rocket.name"), 7, -20 + 27, 4210752);
+		this.fontRenderer.drawString(TranslateUtilities.translate("container.inventory"), 8, 220 - 104 + 2 + 27, 4210752);
 	}
 
 	@Override

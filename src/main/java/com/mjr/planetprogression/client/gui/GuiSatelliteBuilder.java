@@ -55,7 +55,7 @@ public class GuiSatelliteBuilder extends GuiContainerGC {
 
 	@Override
 	protected void drawGuiContainerForegroundLayer(int par1, int par2) {
-		GCCoreUtil.drawStringCentered(this.tileEntity.getName(), this.xSize / 2, 5, 4210752, this.fontRendererObj);
+		GCCoreUtil.drawStringCentered(this.tileEntity.getName(), this.xSize / 2, 5, 4210752, this.fontRenderer);
 		String displayText = "";
 		int yOffset = -10;
 
@@ -74,8 +74,8 @@ public class GuiSatelliteBuilder extends GuiContainerGC {
 			displayText = EnumColor.AQUA + TranslateUtilities.translate("gui.status.idle.name");
 		}
 
-		this.fontRendererObj.drawString(TranslateUtilities.translate("gui.message.status.name") + ": " + displayText, 65 - (displayText.length() * 2), 45 + 23 + yOffset, 4210752);
-		this.fontRendererObj.drawString(TranslateUtilities.translate("container.inventory"), 8, this.ySize - 118 + 2 + 23, 4210752);
+		this.fontRenderer.drawString(TranslateUtilities.translate("gui.message.status.name") + ": " + displayText, 65 - (displayText.length() * 2), 45 + 23 + yOffset, 4210752);
+		this.fontRenderer.drawString(TranslateUtilities.translate("container.inventory"), 8, this.ySize - 118 + 2 + 23, 4210752);
 	}
 
 	@Override

@@ -1,7 +1,6 @@
-def minecraft_version="1.11.2"
-def jei_version="4.5.0.294"
-def nei_version="2.3.0.227"
-def ccl_version="3.0.0.328"
+def minecraft_version="1.12.2"
+def jei_version="4.8.5.144"
+def version_minetweaker="4.0.8.277"
 
 buildscript {
     repositories {
@@ -9,7 +8,7 @@ buildscript {
         maven { url = "http://files.minecraftforge.net/maven" }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
     }
 }
 
@@ -18,15 +17,15 @@ repositories {
         name 'DVS1 Maven FS'
         url 'http://dvs1.progwml6.com/files/maven'
     }
-	maven {
-        name 'CB Maven FS'
-        url "http://chickenbones.net/maven/"
+    maven {
+	    name 'Blame Jared Maven'
+        url 'http://maven.blamejared.com'
     }
 }
 
 apply plugin: 'net.minecraftforge.gradle.forge'
 
-version = "1.11.2-0.1.0"
+version = "1.12.2-0.1.0"
 group= "com.mjr.planetprogression" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "PlanetProgression"
 
@@ -34,26 +33,22 @@ sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
 
 minecraft {
-    version = "1.11.2-13.20.1.2513"
+    version = "1.12.2-14.23.1.2555"
     runDir = "run"
-    mappings = "snapshot_20161220"
+    mappings = "snapshot_20171003"
     makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
 }
 
 dependencies {
     compile "mezz.jei:jei_${minecraft_version}:${jei_version}:api"
-    compile "codechicken:NotEnoughItems:${minecraft_version}-${nei_version}:deobf"
-    compile "codechicken:CodeChickenLib:${minecraft_version}-${ccl_version}:deobf"
 	compile files (
-		"Galacticraft-API-1.11.2-4.0.1.132.jar",
-		"GalacticraftCore-Dev-1.11.2-4.0.1.132.jar",
-		"Galacticraft-Planets-Dev-1.11.2-4.0.1.132.jar",
-		"MicdoodleCore-Dev-1.11.2-4.0.1.132.jar",
-		"MJRLegendsLib-1.11.2-1.0.4-dev.jar"
+		"Galacticraft-API-1.12.2-4.0.1.132.jar",
+		"GalacticraftCore-Dev-1.12.2-4.0.1.132.jar",
+		"Galacticraft-Planets-Dev-1.12.2-4.0.1.132.jar",
+		"MicdoodleCore-Dev-1.12.2-4.0.1.132.jar",
+		"MJRLegendsLib-1.12.2-1.0.7-dev.jar"
 	)
 	runtime "mezz.jei:jei_${minecraft_version}:${jei_version}"
-    runtime "codechicken:NotEnoughItems:${minecraft_version}-${nei_version}:deobf"
-    runtime "codechicken:CodeChickenLib:${minecraft_version}-${ccl_version}:deobf"
 }
 
 processResources

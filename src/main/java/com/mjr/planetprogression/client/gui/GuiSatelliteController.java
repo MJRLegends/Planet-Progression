@@ -103,14 +103,14 @@ public class GuiSatelliteController extends GuiContainerGC {
 	@Override
 	protected void drawGuiContainerForegroundLayer(int par1, int par2) {
 		String displayString = this.tileEntity.getName();
-		this.fontRendererObj.drawString(displayString, this.xSize / 2 - this.fontRendererObj.getStringWidth(displayString) / 2, 5, 4210752);
+		this.fontRenderer.drawString(displayString, this.xSize / 2 - this.fontRenderer.getStringWidth(displayString) / 2, 5, 4210752);
 
-		this.fontRendererObj.drawString(GCCoreUtil.translate("container.inventory"), 8, 135, 4210752);
-		this.fontRendererObj.drawString("Satelltie ID: ", 5, 20, 4210752);
-		this.fontRendererObj.drawString(this.tileEntity.currentSatelliteID, 30, 30, 4210752);
-		this.fontRendererObj.drawString("Player: " + ((this.tileEntity.owner != "" && this.tileEntity.ownerOnline) ? this.tileEntity.ownerUsername : "Player is not online!"), 5, 45, 4210752);
-		this.fontRendererObj.drawString("Research Progress: " + ((100 - this.tileEntity.processTicks / 2 / 100) == 100 ? 0 : (100 - this.tileEntity.processTicks / 2 / 100)) + " %", 5, 55, 4210752);
-		this.fontRendererObj.drawString("Researching : " + this.tileEntity.currentSatelliteResearchBody, 5, 65, 4210752);
+		this.fontRenderer.drawString(GCCoreUtil.translate("container.inventory"), 8, 135, 4210752);
+		this.fontRenderer.drawString("Satelltie ID: ", 5, 20, 4210752);
+		this.fontRenderer.drawString(this.tileEntity.currentSatelliteID, 30, 30, 4210752);
+		this.fontRenderer.drawString("Player: " + ((this.tileEntity.owner != "" && this.tileEntity.ownerOnline) ? this.tileEntity.ownerUsername : "Player is not online!"), 5, 45, 4210752);
+		this.fontRenderer.drawString("Research Progress: " + ((100 - this.tileEntity.processTicks / 2 / 100) == 100 ? 0 : (100 - this.tileEntity.processTicks / 2 / 100)) + " %", 5, 55, 4210752);
+		this.fontRenderer.drawString("Researching : " + this.tileEntity.currentSatelliteResearchBody, 5, 65, 4210752);
 	}
 
 	@Override

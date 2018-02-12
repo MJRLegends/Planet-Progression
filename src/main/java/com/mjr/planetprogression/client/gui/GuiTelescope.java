@@ -103,11 +103,11 @@ public class GuiTelescope extends GuiContainerGC {
 	@Override
 	protected void drawGuiContainerForegroundLayer(int par1, int par2) {
 		String displayString = this.tileEntity.getName();
-		this.fontRendererObj.drawString(displayString, this.xSize / 2 - this.fontRendererObj.getStringWidth(displayString) / 2, 5, 4210752);
+		this.fontRenderer.drawString(displayString, this.xSize / 2 - this.fontRenderer.getStringWidth(displayString) / 2, 5, 4210752);
 
-		this.fontRendererObj.drawString(GCCoreUtil.translate("container.inventory"), 8, 135, 4210752);
-		this.fontRendererObj.drawString("Progress: " + (this.tileEntity.processTicks / 2) + " %", 5, 20, 4210752);
-		this.fontRendererObj.drawString("Player: " + ((this.tileEntity.owner != "" && this.tileEntity.ownerOnline) ? this.tileEntity.ownerUsername : "Player is not online!"), 5, 45, 4210752);
+		this.fontRenderer.drawString(GCCoreUtil.translate("container.inventory"), 8, 135, 4210752);
+		this.fontRenderer.drawString("Progress: " + (this.tileEntity.processTicks / 2) + " %", 5, 20, 4210752);
+		this.fontRenderer.drawString("Player: " + ((this.tileEntity.owner != "" && this.tileEntity.ownerOnline) ? this.tileEntity.ownerUsername : "Player is not online!"), 5, 45, 4210752);
 
 	}
 
