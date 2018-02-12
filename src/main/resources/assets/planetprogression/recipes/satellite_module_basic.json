@@ -1,0 +1,35 @@
+{
+  "result": {
+    "item": "planetprogression:satellite_module_basic"
+  },
+  "pattern": [
+    "WAW",
+    "CGC",
+    "WAW"
+  ],
+  "conditions": [
+    {
+      "type": "planetprogression:recipe_enabled",
+      "value": "research_mode_2"
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "A": {
+      "item": "galacticraftcore:basic_item",
+      "data": 14
+    },
+    "C": {
+      "item": "galacticraftcore:basic_item",
+      "data": 10
+    },
+    "G": {
+      "item": "minecraft:dye",
+      "data": 2
+    },
+    "W": {
+      "item": "galacticraftcore:aluminum_wire",
+      "data": 1
+    }
+  }
+}

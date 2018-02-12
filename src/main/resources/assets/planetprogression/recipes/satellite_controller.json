@@ -1,0 +1,34 @@
+{
+  "result": {
+    "item": "planetprogression:satellite_controller"
+  },
+  "pattern": [
+    "STS",
+    "WAW",
+    "STS"
+  ],
+  "conditions": [
+    {
+      "type": "planetprogression:recipe_enabled",
+      "value": "research_mode_2"
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "A": {
+      "item": "galacticraftcore:basic_item",
+      "data": 14
+    },
+    "S": {
+      "item": "galacticraftcore:basic_item",
+      "data": 8
+    },
+    "T": {
+      "item": "planetprogression:satellite_basic"
+    },
+    "W": {
+      "item": "galacticraftcore:aluminum_wire",
+      "data": 1
+    }
+  }
+}

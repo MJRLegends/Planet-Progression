@@ -1,0 +1,27 @@
+{
+  "result": {
+    "item": "planetprogression:telescope"
+  },
+  "pattern": [
+    "TDT",
+    "SGS",
+    "TDT"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "S": {
+      "item": "galacticraftcore:basic_item",
+      "data": 8
+    },
+    "T": {
+      "item": "galacticraftcore:basic_item",
+      "data": 7
+    },
+    "D": {
+      "item": "minecraft:diamond_block"
+    },
+    "G": {
+      "item": "minecraft:glass_pane"
+    }
+  }
+}
