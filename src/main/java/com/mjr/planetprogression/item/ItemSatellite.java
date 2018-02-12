@@ -20,6 +20,7 @@ public class ItemSatellite extends BasicItem {
 		super(name);
 		this.type = type;
 		this.setCreativeTab(PlanetProgression.tab);
+		this.setMaxStackSize(1);
 	}
 
 	public int getType() {
