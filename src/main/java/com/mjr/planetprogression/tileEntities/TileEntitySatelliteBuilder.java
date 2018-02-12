@@ -22,7 +22,7 @@ public class TileEntitySatelliteBuilder extends TileBaseElectricBlockWithInvento
 	public static final int PROCESS_TIME_REQUIRED = 100;
 	@NetworkedField(targetSide = Side.CLIENT)
 	public int processTicks = 0;
-	private NonNullList<ItemStack> stacks = NonNullList.withSize(4, ItemStack.EMPTY);
+	private NonNullList<ItemStack> stacks = NonNullList.withSize(5, ItemStack.EMPTY);
 
 	public ItemStack producingStack = null;
 
