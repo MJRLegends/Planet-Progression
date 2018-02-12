@@ -9,7 +9,6 @@ import micdoodle8.mods.galacticraft.core.energy.item.ItemElectricBase;
 import micdoodle8.mods.galacticraft.core.energy.tile.TileBaseElectricBlockWithInventory;
 import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 import micdoodle8.mods.miccore.Annotations.NetworkedField;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.ISidedInventory;
@@ -174,16 +173,6 @@ public class TileEntityTelescope extends TileBaseElectricBlockWithInventory impl
 	}
 
 	@Override
-	public int getInventoryStackLimit() {
-		return 64;
-	}
-
-	@Override
-	public boolean isUseableByPlayer(EntityPlayer par1EntityPlayer) {
-		return this.worldObj.getTileEntity(getPos()) == this && par1EntityPlayer.getDistanceSq(this.getPos().getX() + 0.5D, this.getPos().getY() + 0.5D, this.getPos().getZ() + 0.5D) <= 64.0D;
-	}
-
-	@Override
 	public boolean isItemValidForSlot(int slotID, ItemStack itemStack) {
 		return slotID == 0 && ItemElectricBase.isElectricItem(itemStack.getItem());
 	}
@@ -214,11 +203,6 @@ public class TileEntityTelescope extends TileBaseElectricBlockWithInventory impl
 	}
 
 	@Override
-	public ItemStack getBatteryInSlot() {
-		return this.getStackInSlot(0);
-	}
-
-	@Override
 	public void setDisabled(int index, boolean disabled) {
 		if (this.disableCooldown == 0) {
 			switch (index) {
@@ -242,59 +226,6 @@ public class TileEntityTelescope extends TileBaseElectricBlockWithInventory impl
 		}
 
 		return true;
-	}
-
-	@Override
-	public int getSizeInventory() {
-		return this.containingItems.length;
-	}
-
-	@Override
-	public ItemStack getStackInSlot(int par1) {
-		return this.containingItems[par1];
-	}
-
-	@Override
-	public ItemStack decrStackSize(int par1, int par2) {
-		if (this.containingItems[par1] != null) {
-			ItemStack var3;
-
-			if (this.containingItems[par1].stackSize <= par2) {
-				var3 = this.containingItems[par1];
-				this.containingItems[par1] = null;
-				return var3;
-			} else {
-				var3 = this.containingItems[par1].splitStack(par2);
-
-				if (this.containingItems[par1].stackSize == 0) {
-					this.containingItems[par1] = null;
-				}
-
-				return var3;
-			}
-		} else {
-			return null;
-		}
-	}
-
-	@Override
-	public ItemStack removeStackFromSlot(int par1) {
-		if (this.containingItems[par1] != null) {
-			ItemStack var2 = this.containingItems[par1];
-			this.containingItems[par1] = null;
-			return var2;
-		} else {
-			return null;
-		}
-	}
-
-	@Override
-	public void setInventorySlotContents(int par1, ItemStack par2ItemStack) {
-		this.containingItems[par1] = par2ItemStack;
-
-		if (par2ItemStack != null && par2ItemStack.stackSize > this.getInventoryStackLimit()) {
-			par2ItemStack.stackSize = this.getInventoryStackLimit();
-		}
 	}
 
 	@Override
