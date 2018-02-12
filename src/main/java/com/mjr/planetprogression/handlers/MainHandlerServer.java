@@ -96,7 +96,7 @@ public class MainHandlerServer {
 	public void onAttachCapability(AttachCapabilitiesEvent<Entity> event) {
 		if (event.getObject() instanceof EntityPlayerMP) {
 			event.addCapability(CapabilityStatsHandler.PP_PLAYER_PROP, new CapabilityProviderStats((EntityPlayerMP) event.getObject()));
-		} else if (event.getObject() instanceof EntityPlayer && ((EntityPlayer) event.getObject()).worldObj.isRemote) {
+		} else if (event.getObject() instanceof EntityPlayer && ((EntityPlayer) event.getObject()).world.isRemote) {
 			this.onAttachCapabilityClient(event);
 		}
 	}
@@ -121,7 +121,7 @@ public class MainHandlerServer {
 			}
 			if (!stats.getUnlockedPlanets().contains(GalacticraftCore.planetOverworld)) {
 				stats.addUnlockedPlanets(GalacticraftCore.planetOverworld);
-				player.addChatMessage(new TextComponentString("You have discovered Earth!"));
+				player.sendMessage(new TextComponentString("You have discovered Earth!"));
 			}
 		}
 	}
@@ -140,7 +140,7 @@ public class MainHandlerServer {
 					planets[i] = "";
 			}
 		}
-		PlanetProgression.packetPipeline.sendTo(new PacketSimplePP(EnumSimplePacket.C_UPDATE_UNLOCKED_PLANET_LIST, player.worldObj.provider.getDimensionType().getId(), new Object[] { planets }), player);
+		PlanetProgression.packetPipeline.sendTo(new PacketSimplePP(EnumSimplePacket.C_UPDATE_UNLOCKED_PLANET_LIST, player.world.provider.getDimensionType().getId(), new Object[] { planets }), player);
 	}
 
 	public static void sendSatellitePacket(EntityPlayerMP player, IStatsCapability stats) {
@@ -149,7 +149,7 @@ public class MainHandlerServer {
 			String uuid = sat.getUuid();
 			int dataAmount = sat.getDataAmount();
 			ItemStack item = sat.getCurrentResearchItem();
-			PlanetProgression.packetPipeline.sendTo(new PacketSimplePP(EnumSimplePacket.C_UPDATE_SATELLITE_LIST, player.worldObj.provider.getDimensionType().getId(), new Object[] { type, uuid, dataAmount,
+			PlanetProgression.packetPipeline.sendTo(new PacketSimplePP(EnumSimplePacket.C_UPDATE_SATELLITE_LIST, player.world.provider.getDimensionType().getId(), new Object[] { type, uuid, dataAmount,
 					(item == null ? "null" : (Constants.modID + ":" + item.getUnlocalizedName().substring(5) + ":" + item.getMetadata())) }), player);
 		}
 	}

@@ -12,6 +12,7 @@ import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.relauncher.Side;
 
 import com.mjr.mjrlegendslib.util.PlayerUtilties;
@@ -28,7 +29,7 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 	public static final int PROCESS_TIME_REQUIRED = (int) (SatelliteData.getMAX_DATA() * Config.satelliteControllerModifier);
 	@NetworkedField(targetSide = Side.CLIENT)
 	public int processTicks = 0;
-	private ItemStack[] containingItems = new ItemStack[2];
+	private NonNullList<ItemStack> stacks = NonNullList.withSize(2, ItemStack.EMPTY);
 	public SatelliteData currentSatellite = null;
 	public boolean markForSatelliteUpdate = true;
 
@@ -53,7 +54,7 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 	@Override
 	public void update() {
 		super.update();
-		if (!this.worldObj.isRemote) {
+		if (!this.world.isRemote) {
 			if (this.owner != "") {
 				if (ownerOnline)
 					this.ownerUsername = PlayerUtilties.getUsernameFromUUID(this.owner);
@@ -157,7 +158,7 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 	}
 
 	public boolean canOutput() {
-		if (this.containingItems[1] != null)
+		if (!this.stacks.get(1).isEmpty())
 			return false;
 		if (this.producingStack == null || this.currentSatellite.getCurrentResearchItem() == null)
 			return false;
@@ -171,22 +172,22 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 	public void smeltItem() {
 		ItemStack resultItemStack = this.producingStack;
 		if (this.canProcess() && canOutput() && hasInputs()) {
-			if (this.containingItems[1] == null) {
-				this.containingItems[1] = resultItemStack.copy();
-			} else if (this.containingItems[1].isItemEqual(resultItemStack)) {
-				if (this.containingItems[1].stackSize + resultItemStack.stackSize > 64) {
-					for (int i = 0; i < this.containingItems[1].stackSize + resultItemStack.stackSize - 64; i++) {
+			if (this.stacks.get(1) == null) {
+				this.stacks.set(1, resultItemStack.copy());
+			} else if (this.stacks.get(1).isItemEqual(resultItemStack)) {
+				if (this.stacks.get(1).getCount() + resultItemStack.getCount() > 64) {
+					for (int i = 0; i < this.stacks.get(1).getCount() + resultItemStack.getCount() - 64; i++) {
 						float var = 0.7F;
-						double dx = this.worldObj.rand.nextFloat() * var + (1.0F - var) * 0.5D;
-						double dy = this.worldObj.rand.nextFloat() * var + (1.0F - var) * 0.5D;
-						double dz = this.worldObj.rand.nextFloat() * var + (1.0F - var) * 0.5D;
-						EntityItem entityitem = new EntityItem(this.worldObj, this.getPos().getX() + dx, this.getPos().getY() + dy, this.getPos().getZ() + dz, new ItemStack(resultItemStack.getItem(), 1, resultItemStack.getItemDamage()));
+						double dx = this.world.rand.nextFloat() * var + (1.0F - var) * 0.5D;
+						double dy = this.world.rand.nextFloat() * var + (1.0F - var) * 0.5D;
+						double dz = this.world.rand.nextFloat() * var + (1.0F - var) * 0.5D;
+						EntityItem entityitem = new EntityItem(this.world, this.getPos().getX() + dx, this.getPos().getY() + dy, this.getPos().getZ() + dz, new ItemStack(resultItemStack.getItem(), 1, resultItemStack.getItemDamage()));
 						entityitem.setPickupDelay(10);
-						this.worldObj.spawnEntityInWorld(entityitem);
+						this.world.spawnEntity(entityitem);
 					}
-					this.containingItems[1].stackSize = 64;
+					this.stacks.get(1).setCount(64);
 				} else {
-					this.containingItems[1].stackSize += resultItemStack.stackSize;
+					this.stacks.get(1).grow(resultItemStack.getCount());
 				}
 			}
 			this.currentSatellite.setDataAmount(0);
@@ -198,7 +199,7 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
 		super.readFromNBT(nbt);
-		this.containingItems = this.readStandardItemsFromNBT(nbt);
+		this.stacks = this.readStandardItemsFromNBT(nbt);
 		this.processTicks = nbt.getInteger("smeltingTicks");
 		this.currentSatelliteNum = nbt.getInteger("currentSatelliteNum");
 		this.currentSatelliteID = nbt.getString("currentSatelliteID");
@@ -206,7 +207,7 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 		this.markForSatelliteUpdate = nbt.getBoolean("markForSatelliteUpdate");
 		this.setOwner(nbt.getString("owner"));
 		this.ownerUsername = nbt.getString("ownerUsername");
-		this.containingItems = this.readStandardItemsFromNBT(nbt);
+		this.stacks = this.readStandardItemsFromNBT(nbt);
 		this.ownerOnline = nbt.getBoolean("ownerOnline");
 	}
 
@@ -214,7 +215,7 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 	public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
 		super.writeToNBT(nbt);
 		nbt.setInteger("smeltingTicks", this.processTicks);
-		this.writeStandardItemsToNBT(nbt);
+		this.writeStandardItemsToNBT(nbt, this.stacks);
 		nbt.setInteger("currentSatelliteNum", this.currentSatelliteNum);
 		nbt.setString("currentSatelliteID", this.currentSatelliteID);
 		nbt.setString("currentSatelliteResearchBody", this.currentSatelliteResearchBody);
@@ -226,8 +227,8 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 	}
 
 	@Override
-	protected ItemStack[] getContainingItems() {
-		return this.containingItems;
+	protected NonNullList<ItemStack> getContainingItems() {
+		return this.stacks;
 	}
 
 	@Override
@@ -274,7 +275,7 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 
 	@Override
 	public EnumFacing getFront() {
-		IBlockState state = this.worldObj.getBlockState(getPos());
+		IBlockState state = this.world.getBlockState(getPos());
 		if (state.getBlock() instanceof BlockSatelliteController) {
 			return (state.getValue(BlockSatelliteController.FACING));
 		}

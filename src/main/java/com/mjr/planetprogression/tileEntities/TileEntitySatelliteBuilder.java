@@ -1,6 +1,5 @@
 package com.mjr.planetprogression.tileEntities;
 
-import java.util.Arrays;
 import java.util.Map.Entry;
 
 import micdoodle8.mods.galacticraft.core.energy.item.ItemElectricBase;
@@ -12,6 +11,7 @@ import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.relauncher.Side;
 
 import com.mjr.mjrlegendslib.util.TranslateUtilities;
@@ -22,7 +22,7 @@ public class TileEntitySatelliteBuilder extends TileBaseElectricBlockWithInvento
 	public static final int PROCESS_TIME_REQUIRED = 100;
 	@NetworkedField(targetSide = Side.CLIENT)
 	public int processTicks = 0;
-	private ItemStack[] containingItems = new ItemStack[5];
+	private NonNullList<ItemStack> stacks = NonNullList.withSize(4, ItemStack.EMPTY);
 
 	public ItemStack producingStack = null;
 
@@ -33,9 +33,9 @@ public class TileEntitySatelliteBuilder extends TileBaseElectricBlockWithInvento
 	public void update() {
 		super.update();
 
-		this.producingStack = MachineRecipeManager.getOutputForInput(Arrays.copyOfRange(this.containingItems, 1, 4));
+		this.producingStack = MachineRecipeManager.getOutputForInput(this.stacks.subList(1, 4));
 
-		if (!this.worldObj.isRemote) {
+		if (!this.world.isRemote) {
 			if (this.canProcess() && canOutput() && this.hasEnoughEnergyToRun) {
 				if (this.processTicks == 0) {
 					this.processTicks = TileEntitySatelliteBuilder.PROCESS_TIME_REQUIRED;
@@ -58,29 +58,29 @@ public class TileEntitySatelliteBuilder extends TileBaseElectricBlockWithInvento
 	}
 
 	public boolean canOutput() {
-		if (this.containingItems[4] != null)
+		if (this.stacks.get(4) != null)
 			return false;
 		return true;
 	}
 
 	public boolean hasInputs() {
-		if (this.containingItems[1] == null)
+		if (this.stacks.get(1).isEmpty())
 			return false;
-		if (this.containingItems[2] == null)
+		if (this.stacks.get(2).isEmpty())
 			return false;
-		if (this.containingItems[3] == null)
+		if (this.stacks.get(3).isEmpty())
 			return false;
 
-		for (Entry<ItemStack[], ItemStack> recipe : MachineRecipeManager.getRecipes().entrySet()) {
+		for (Entry<NonNullList<ItemStack>, ItemStack> recipe : MachineRecipeManager.getRecipes().entrySet()) {
 			int i = 0;
 			if (recipe.getValue().equals(this.producingStack)) {
-				if (this.containingItems[1].stackSize < recipe.getKey()[i].stackSize)
+				if (this.stacks.get(1).getCount() < recipe.getKey().get(i).getCount())
 					return false;
 				i++;
-				if (this.containingItems[2].stackSize < recipe.getKey()[i].stackSize)
+				if (this.stacks.get(2).getCount() < recipe.getKey().get(i).getCount())
 					return false;
 				i++;
-				if (this.containingItems[3].stackSize < recipe.getKey()[i].stackSize)
+				if (this.stacks.get(3).getCount() < recipe.getKey().get(i).getCount())
 					return false;
 			}
 		}
@@ -90,22 +90,22 @@ public class TileEntitySatelliteBuilder extends TileBaseElectricBlockWithInvento
 	public void smeltItem() {
 		ItemStack resultItemStack = this.producingStack;
 		if (this.canProcess() && canOutput() && hasInputs()) {
-			if (this.containingItems[4] == null) {
-				this.containingItems[4] = resultItemStack.copy();
-			} else if (this.containingItems[4].isItemEqual(resultItemStack)) {
-				if (this.containingItems[4].stackSize + resultItemStack.stackSize > 64) {
-					for (int i = 0; i < this.containingItems[3].stackSize + resultItemStack.stackSize - 64; i++) {
+			if (this.stacks.get(4) == null) {
+				this.stacks.set(4, resultItemStack.copy());
+			} else if (this.stacks.get(4).isItemEqual(resultItemStack)) {
+				if (this.stacks.get(4).getCount() + resultItemStack.getCount() > 64) {
+					for (int i = 0; i < this.stacks.get(3).getCount() + resultItemStack.getCount() - 64; i++) {
 						float var = 0.7F;
-						double dx = this.worldObj.rand.nextFloat() * var + (1.0F - var) * 0.5D;
-						double dy = this.worldObj.rand.nextFloat() * var + (1.0F - var) * 0.5D;
-						double dz = this.worldObj.rand.nextFloat() * var + (1.0F - var) * 0.5D;
-						EntityItem entityitem = new EntityItem(this.worldObj, this.getPos().getX() + dx, this.getPos().getY() + dy, this.getPos().getZ() + dz, new ItemStack(resultItemStack.getItem(), 1, resultItemStack.getItemDamage()));
+						double dx = this.world.rand.nextFloat() * var + (1.0F - var) * 0.5D;
+						double dy = this.world.rand.nextFloat() * var + (1.0F - var) * 0.5D;
+						double dz = this.world.rand.nextFloat() * var + (1.0F - var) * 0.5D;
+						EntityItem entityitem = new EntityItem(this.world, this.getPos().getX() + dx, this.getPos().getY() + dy, this.getPos().getZ() + dz, new ItemStack(resultItemStack.getItem(), 1, resultItemStack.getItemDamage()));
 						entityitem.setPickupDelay(10);
-						this.worldObj.spawnEntityInWorld(entityitem);
+						this.world.spawnEntity(entityitem);
 					}
-					this.containingItems[4].stackSize = 64;
+					this.stacks.get(4).setCount(64);
 				} else {
-					this.containingItems[4].stackSize += resultItemStack.stackSize;
+					this.stacks.get(4).grow(resultItemStack.getCount());
 				}
 			}
 			this.decrStackSize(1, 12);
@@ -118,20 +118,20 @@ public class TileEntitySatelliteBuilder extends TileBaseElectricBlockWithInvento
 	public void readFromNBT(NBTTagCompound nbt) {
 		super.readFromNBT(nbt);
 		this.processTicks = nbt.getInteger("smeltingTicks");
-		this.containingItems = this.readStandardItemsFromNBT(nbt);
+		this.stacks = this.readStandardItemsFromNBT(nbt);
 	}
 
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
 		super.writeToNBT(nbt);
 		nbt.setInteger("smeltingTicks", this.processTicks);
-		this.writeStandardItemsToNBT(nbt);
+		this.writeStandardItemsToNBT(nbt, this.stacks);
 		return nbt;
 	}
 
 	@Override
-	protected ItemStack[] getContainingItems() {
-		return this.containingItems;
+	protected NonNullList<ItemStack> getContainingItems() {
+		return this.stacks;
 	}
 
 	@Override
@@ -178,7 +178,7 @@ public class TileEntitySatelliteBuilder extends TileBaseElectricBlockWithInvento
 
 	@Override
 	public EnumFacing getFront() {
-		IBlockState state = this.worldObj.getBlockState(getPos());
+		IBlockState state = this.world.getBlockState(getPos());
 		if (state.getBlock() instanceof BlockSatelliteBuilder) {
 			return (state.getValue(BlockSatelliteBuilder.FACING));
 		}

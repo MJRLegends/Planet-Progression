@@ -9,13 +9,13 @@ import micdoodle8.mods.galacticraft.core.energy.item.ItemElectricBase;
 import micdoodle8.mods.galacticraft.core.energy.tile.TileBaseElectricBlockWithInventory;
 import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 import micdoodle8.mods.miccore.Annotations.NetworkedField;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.fml.relauncher.Side;
@@ -42,8 +42,7 @@ public class TileEntityTelescope extends TileBaseElectricBlockWithInventory impl
 
 	@NetworkedField(targetSide = Side.CLIENT)
 	public float currentRotation;
-
-	private ItemStack[] containingItems = new ItemStack[2];
+	private NonNullList<ItemStack> stacks = NonNullList.withSize(2, ItemStack.EMPTY);
 
 	public TileEntityTelescope() {
 		super();
@@ -52,7 +51,7 @@ public class TileEntityTelescope extends TileBaseElectricBlockWithInventory impl
 
 	@Override
 	public void update() {
-		if (!this.worldObj.isRemote) {
+		if (!this.world.isRemote) {
 			if (this.owner != "") {
 				if (ownerOnline)
 					this.ownerUsername = PlayerUtilties.getUsernameFromUUID(this.owner);
@@ -64,7 +63,7 @@ public class TileEntityTelescope extends TileBaseElectricBlockWithInventory impl
 						this.processTimeRequired = TileEntityTelescope.PROCESS_TIME_REQUIRED_BASE * 2 / (1 + this.poweredByTierGC);
 
 						if (this.processTicks >= this.processTimeRequired) {
-							this.worldObj.playSound(null, this.getPos(), SoundEvents.BLOCK_ANVIL_LAND, SoundCategory.BLOCKS, 0.3F, this.worldObj.rand.nextFloat() * 0.1F + 0.9F);
+							this.world.playSound(null, this.getPos(), SoundEvents.BLOCK_ANVIL_LAND, SoundCategory.BLOCKS, 0.3F, this.world.rand.nextFloat() * 0.1F + 0.9F);
 							this.processTicks = 0;
 							this.doResearch();
 						}
@@ -90,11 +89,11 @@ public class TileEntityTelescope extends TileBaseElectricBlockWithInventory impl
 		if (Config.researchMode == 0 || Config.researchMode == 1 || Config.researchMode == 2 || Config.researchMode == 3) {
 			boolean found = false;
 			for (Planet planet : GalaxyRegistry.getRegisteredPlanets().values()) {
-				if (((ResearchPaper) this.containingItems[1].getItem()).getPlanet().equalsIgnoreCase(planet.getLocalizedName())) {
+				if (((ResearchPaper) this.stacks.get(1).getItem()).getPlanet().equalsIgnoreCase(planet.getLocalizedName())) {
 					if (!stats.getUnlockedPlanets().contains(planet)) {
 						stats.addUnlockedPlanets(planet);
-						player.addChatMessage(new TextComponentString("Research Completed! You have unlocked " + planet.getLocalizedName()));
-						this.containingItems[1] = null;
+						player.sendMessage(new TextComponentString("Research Completed! You have unlocked " + planet.getLocalizedName()));
+						this.stacks.set(1, ItemStack.EMPTY);
 						found = true;
 						break;
 					}
@@ -102,11 +101,11 @@ public class TileEntityTelescope extends TileBaseElectricBlockWithInventory impl
 			}
 			if (found == false) {
 				for (Moon moon : GalaxyRegistry.getRegisteredMoons().values()) {
-					if (((ResearchPaper) this.containingItems[1].getItem()).getPlanet().equalsIgnoreCase(moon.getLocalizedName())) {
+					if (((ResearchPaper) this.stacks.get(1).getItem()).getPlanet().equalsIgnoreCase(moon.getLocalizedName())) {
 						if (!stats.getUnlockedPlanets().contains(moon)) {
 							stats.addUnlockedPlanets(moon);
-							player.addChatMessage(new TextComponentString("Research Completed! You have discovered " + moon.getLocalizedName()));
-							this.containingItems[1] = null;
+							player.sendMessage(new TextComponentString("Research Completed! You have discovered " + moon.getLocalizedName()));
+							this.stacks.set(1, ItemStack.EMPTY);
 							break;
 						}
 					}
@@ -120,7 +119,7 @@ public class TileEntityTelescope extends TileBaseElectricBlockWithInventory impl
 
 		EntityPlayerMP player = PlayerUtilties.getPlayerFromUUID(this.owner);
 
-		if (this.containingItems[1] != null && this.containingItems[1].getItem() instanceof ResearchPaper) {
+		if (this.stacks.get(1) != null && this.stacks.get(1).getItem() instanceof ResearchPaper) {
 			if (player != null) {
 				stats = player.getCapability(CapabilityStatsHandler.PP_STATS_CAPABILITY, null);
 			}
@@ -138,7 +137,7 @@ public class TileEntityTelescope extends TileBaseElectricBlockWithInventory impl
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
 		super.readFromNBT(nbt);
-		this.containingItems = this.readStandardItemsFromNBT(nbt);
+		this.stacks = this.readStandardItemsFromNBT(nbt);
 		this.processTicks = nbt.getInteger("smeltingTicks");
 		this.owner = nbt.getString("owner");
 		this.ownerUsername = nbt.getString("ownerUsername");
@@ -150,12 +149,17 @@ public class TileEntityTelescope extends TileBaseElectricBlockWithInventory impl
 	public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
 		super.writeToNBT(nbt);
 		nbt.setInteger("smeltingTicks", this.processTicks);
-		this.writeStandardItemsToNBT(nbt);
+		this.writeStandardItemsToNBT(nbt, this.stacks);
 		nbt.setString("owner", this.owner);
 		nbt.setString("ownerUsername", this.ownerUsername);
 		nbt.setFloat("currentRotation", this.currentRotation);
 		nbt.setBoolean("ownerOnline", false); // False to trigger for Update on Load
 		return nbt;
+	}
+
+	@Override
+	protected NonNullList<ItemStack> getContainingItems() {
+		return this.stacks;
 	}
 
 	@Override
@@ -171,16 +175,6 @@ public class TileEntityTelescope extends TileBaseElectricBlockWithInventory impl
 	@Override
 	public boolean hasCustomName() {
 		return true;
-	}
-
-	@Override
-	public int getInventoryStackLimit() {
-		return 64;
-	}
-
-	@Override
-	public boolean isUseableByPlayer(EntityPlayer par1EntityPlayer) {
-		return this.worldObj.getTileEntity(getPos()) == this && par1EntityPlayer.getDistanceSq(this.getPos().getX() + 0.5D, this.getPos().getY() + 0.5D, this.getPos().getZ() + 0.5D) <= 64.0D;
 	}
 
 	@Override
@@ -214,11 +208,6 @@ public class TileEntityTelescope extends TileBaseElectricBlockWithInventory impl
 	}
 
 	@Override
-	public ItemStack getBatteryInSlot() {
-		return this.getStackInSlot(0);
-	}
-
-	@Override
 	public void setDisabled(int index, boolean disabled) {
 		if (this.disableCooldown == 0) {
 			switch (index) {
@@ -245,65 +234,7 @@ public class TileEntityTelescope extends TileBaseElectricBlockWithInventory impl
 	}
 
 	@Override
-	public int getSizeInventory() {
-		return this.containingItems.length;
-	}
-
-	@Override
-	public ItemStack getStackInSlot(int par1) {
-		return this.containingItems[par1];
-	}
-
-	@Override
-	public ItemStack decrStackSize(int par1, int par2) {
-		if (this.containingItems[par1] != null) {
-			ItemStack var3;
-
-			if (this.containingItems[par1].stackSize <= par2) {
-				var3 = this.containingItems[par1];
-				this.containingItems[par1] = null;
-				return var3;
-			} else {
-				var3 = this.containingItems[par1].splitStack(par2);
-
-				if (this.containingItems[par1].stackSize == 0) {
-					this.containingItems[par1] = null;
-				}
-
-				return var3;
-			}
-		} else {
-			return null;
-		}
-	}
-
-	@Override
-	public ItemStack removeStackFromSlot(int par1) {
-		if (this.containingItems[par1] != null) {
-			ItemStack var2 = this.containingItems[par1];
-			this.containingItems[par1] = null;
-			return var2;
-		} else {
-			return null;
-		}
-	}
-
-	@Override
-	public void setInventorySlotContents(int par1, ItemStack par2ItemStack) {
-		this.containingItems[par1] = par2ItemStack;
-
-		if (par2ItemStack != null && par2ItemStack.stackSize > this.getInventoryStackLimit()) {
-			par2ItemStack.stackSize = this.getInventoryStackLimit();
-		}
-	}
-
-	@Override
 	public EnumFacing getFront() {
 		return EnumFacing.NORTH;
-	}
-
-	@Override
-	protected ItemStack[] getContainingItems() {
-		return this.containingItems;
 	}
 }

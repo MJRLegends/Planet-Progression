@@ -54,7 +54,7 @@ public class RenderSatelliteRocket extends Render<EntitySatelliteRocket> {
 		final float var28 = entity.rollAmplitude / 3 - partialTicks;
 
 		if (var28 > 0.0F) {
-			final float i = entity.getLaunched() ? (5 - MathHelper.floor_double(entity.timeUntilLaunch / 85)) / 10F : 0.3F;
+			final float i = entity.getLaunched() ? (5 - MathHelper.floor(entity.timeUntilLaunch / 85)) / 10F : 0.3F;
 			GlStateManager.rotate(MathHelper.sin(var28) * var28 * i * partialTicks, 1.0F, 0.0F, 0.0F);
 			GlStateManager.rotate(MathHelper.sin(var28) * var28 * i * partialTicks, 1.0F, 0.0F, 1.0F);
 		}

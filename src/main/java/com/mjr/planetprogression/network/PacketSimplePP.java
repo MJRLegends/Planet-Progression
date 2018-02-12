@@ -166,7 +166,7 @@ public class PacketSimplePP extends PacketBase implements Packet {
 
 		switch (this.type) {
 		case S_UPDATE_ROTATION:
-			TileEntity tileAt = player.worldObj.getTileEntity((BlockPos) this.data.get(0));
+			TileEntity tileAt = player.world.getTileEntity((BlockPos) this.data.get(0));
 
 			if (tileAt instanceof TileEntityTelescope) {
 				final TileEntityTelescope machine = (TileEntityTelescope) tileAt;
@@ -178,7 +178,7 @@ public class PacketSimplePP extends PacketBase implements Packet {
 			}
 			break;
 		case S_UPDATE_CONTROLLER_SATLLITE_CHANGE:
-			tileAt = player.worldObj.getTileEntity((BlockPos) this.data.get(0));
+			tileAt = player.world.getTileEntity((BlockPos) this.data.get(0));
 
 			if (tileAt instanceof TileEntitySatelliteController) {
 				final TileEntitySatelliteController machine = (TileEntitySatelliteController) tileAt;

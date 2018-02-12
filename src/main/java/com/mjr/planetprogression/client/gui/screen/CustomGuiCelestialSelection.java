@@ -40,7 +40,7 @@ public class CustomGuiCelestialSelection extends GuiCelestialSelection {
 	@Override
 	public void drawCircles() {
 		final Minecraft minecraft = FMLClientHandler.instance().getClient();
-		final EntityPlayerSP player = minecraft.thePlayer;
+		final EntityPlayerSP player = minecraft.player;
 		final EntityPlayerSP playerBaseClient = PlayerUtil.getPlayerBaseClientFromPlayer(player, false);
 
 		IStatsClientCapability stats = null;
@@ -213,7 +213,7 @@ public class CustomGuiCelestialSelection extends GuiCelestialSelection {
 	protected List<CelestialBody> getChildren(Object object) {
 		List<CelestialBody> bodyList = Lists.newArrayList();
 		final Minecraft minecraft = FMLClientHandler.instance().getClient();
-		final EntityPlayerSP player = minecraft.thePlayer;
+		final EntityPlayerSP player = minecraft.player;
 		final EntityPlayerSP playerBaseClient = PlayerUtil.getPlayerBaseClientFromPlayer(player, false);
 
 		IStatsClientCapability stats = null;
@@ -242,7 +242,7 @@ public class CustomGuiCelestialSelection extends GuiCelestialSelection {
 	@Override
 	public HashMap<CelestialBody, Matrix4f> drawCelestialBodies(Matrix4f worldMatrix) {
 		final Minecraft minecraft = FMLClientHandler.instance().getClient();
-		final EntityPlayerSP player = minecraft.thePlayer;
+		final EntityPlayerSP player = minecraft.player;
 		final EntityPlayerSP playerBaseClient = PlayerUtil.getPlayerBaseClientFromPlayer(player, false);
 
 		IStatsClientCapability stats = null;

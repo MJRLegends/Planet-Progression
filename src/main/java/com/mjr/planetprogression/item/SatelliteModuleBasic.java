@@ -29,7 +29,7 @@ public class SatelliteModuleBasic extends BasicItem {
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack itemStack, EntityPlayer player, List<String> list, boolean par4) {
 		if (itemStack != null && itemStack.getItemDamage() == 3) {
-			if (player.worldObj.isRemote) {
+			if (player.world.isRemote) {
 			}
 		}
 	}

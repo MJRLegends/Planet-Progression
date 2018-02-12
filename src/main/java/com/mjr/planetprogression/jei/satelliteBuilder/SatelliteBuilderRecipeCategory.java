@@ -1,12 +1,6 @@
 package com.mjr.planetprogression.jei.satelliteBuilder;
 
-import java.util.List;
-
 import javax.annotation.Nonnull;
-
-import com.mjr.mjrlegendslib.util.TranslateUtilities;
-import com.mjr.planetprogression.Constants;
-import com.mjr.planetprogression.jei.RecipeCategories;
 
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.IDrawable;
@@ -15,9 +9,11 @@ import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.BlankRecipeCategory;
 import mezz.jei.api.recipe.IRecipeWrapper;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
+import com.mjr.mjrlegendslib.util.TranslateUtilities;
+import com.mjr.planetprogression.Constants;
+import com.mjr.planetprogression.jei.RecipeCategories;
 
 public class SatelliteBuilderRecipeCategory extends BlankRecipeCategory<IRecipeWrapper> {
 	private static final ResourceLocation guiTexture = new ResourceLocation(Constants.ASSET_PREFIX, "textures/gui/satellite_builder.png");
@@ -51,9 +47,8 @@ public class SatelliteBuilderRecipeCategory extends BlankRecipeCategory<IRecipeW
 		return this.background;
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
-	public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull IRecipeWrapper recipeWrapper) {
+	public void setRecipe(IRecipeLayout recipeLayout, IRecipeWrapper recipeWrapper, IIngredients ingredients) {
 		IGuiItemStackGroup itemstacks = recipeLayout.getItemStacks();
 
 		itemstacks.init(0, true, 16, 26);
@@ -61,22 +56,12 @@ public class SatelliteBuilderRecipeCategory extends BlankRecipeCategory<IRecipeW
 		itemstacks.init(2, true, 70, 26);
 		itemstacks.init(3, false, 111, 26);
 
-		if (recipeWrapper instanceof SatelliteBuilderRecipeWrapper) {
-			SatelliteBuilderRecipeWrapper circuitFabricatorRecipeWrapper = (SatelliteBuilderRecipeWrapper) recipeWrapper;
-			List<ItemStack> inputs = circuitFabricatorRecipeWrapper.getInputs();
+		itemstacks.set(ingredients);
 
-			for (int i = 0; i < inputs.size(); ++i) {
-				Object o = inputs.get(i);
-				if (o != null) {
-					itemstacks.setFromRecipe(i, o);
-				}
-			}
-			itemstacks.setFromRecipe(3, circuitFabricatorRecipeWrapper.getOutputs());
-		}
 	}
 
 	@Override
-	public void setRecipe(IRecipeLayout recipeLayout, IRecipeWrapper recipeWrapper, IIngredients ingredients) {
-		this.setRecipe(recipeLayout, recipeWrapper);
+	public String getModName() {
+		return Constants.modName;
 	}
 }

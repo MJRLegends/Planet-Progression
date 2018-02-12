@@ -2,7 +2,7 @@ package com.mjr.planetprogression;
 
 import micdoodle8.mods.galacticraft.api.recipe.SchematicRegistry;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -42,11 +42,11 @@ public class PlanetProgression {
 	// Blocks Creative Tab
 	public static CreativeTabs tab = new CreativeTabs("PlanetProgressionTab") {
 		@Override
-		public Item getTabIconItem() {
+		public ItemStack getTabIconItem() {
 			if (Config.researchMode == 2)
-				return PlanetProgression_Items.satelliteBasic;
+				return new ItemStack(PlanetProgression_Items.satelliteBasic);
 			else
-				return PlanetProgression_Items.researchPapers.get(0);
+				return new ItemStack(PlanetProgression_Items.researchPapers.get(0));
 		}
 	};
 
@@ -98,7 +98,7 @@ public class PlanetProgression {
 
 	private void registerNonMobEntities() {
 		if (Config.researchMode == 2 || Config.researchMode == 3)
-			RegisterUtilities.registerNonMobEntity(PlanetProgression.instance, EntitySatelliteRocket.class, "EntitySatelliteRocket", 150, 1, false);
+			RegisterUtilities.registerNonMobEntity(Constants.modID, PlanetProgression.instance, EntitySatelliteRocket.class, "EntitySatelliteRocket", 150, 1, false);
 	}
 
 	@EventHandler

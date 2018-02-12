@@ -44,7 +44,7 @@ public class MainHandlerClient {
 	@SubscribeEvent
 	public void onClientTick(ClientTickEvent event) {
 		final Minecraft minecraft = FMLClientHandler.instance().getClient();
-		final WorldClient world = minecraft.theWorld;
+		final WorldClient world = minecraft.world;
 
 		if (event.phase == Phase.END) {
 			if (world != null) {
@@ -60,9 +60,9 @@ public class MainHandlerClient {
 	public void onGuiOpenEvent(GuiOpenEvent event) {
 		if (((event.getGui() instanceof GuiCelestialSelection))) {
 			if (GameSettings.isKeyDown(micdoodle8.mods.galacticraft.core.tick.KeyHandlerClient.galaxyMap)) {
-				event.setGui(new CustomGuiCelestialSelection(true, null, PermissionAPI.hasPermission(MCUtilities.getMinecraft().thePlayer, Constants.PERMISSION_CREATE_STATION)));
+				event.setGui(new CustomGuiCelestialSelection(true, null, PermissionAPI.hasPermission(MCUtilities.getMinecraft().player, Constants.PERMISSION_CREATE_STATION)));
 			} else {
-				event.setGui(new CustomGuiCelestialSelection(false, null, PermissionAPI.hasPermission(MCUtilities.getMinecraft().thePlayer, Constants.PERMISSION_CREATE_STATION)));
+				event.setGui(new CustomGuiCelestialSelection(false, null, PermissionAPI.hasPermission(MCUtilities.getMinecraft().player, Constants.PERMISSION_CREATE_STATION)));
 			}
 		}
 	}

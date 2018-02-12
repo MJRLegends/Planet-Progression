@@ -22,7 +22,7 @@ public class ContainerSchematicSatelliteRocket extends Container {
 
 	public ContainerSchematicSatelliteRocket(InventoryPlayer par1InventoryPlayer, BlockPos pos) {
 		final int change = 27;
-		this.worldObj = par1InventoryPlayer.player.worldObj;
+		this.worldObj = par1InventoryPlayer.player.world;
 		this.addSlotToContainer(new SlotRocketBenchResult(par1InventoryPlayer.player, this.craftMatrix, this.craftResult, 0, 142, 18 + 69 + change));
 		int var6;
 		int var7;
@@ -110,7 +110,7 @@ public class ContainerSchematicSatelliteRocket extends Container {
 			boolean done = false;
 			if (par1 <= 21) {
 				if (!this.mergeItemStack(var4, 22, 58, false)) {
-					return null;
+					return ItemStack.EMPTY;
 				}
 
 				var3.onSlotChange(var4, var2);
@@ -119,7 +119,7 @@ public class ContainerSchematicSatelliteRocket extends Container {
 					Slot testSlot = this.inventorySlots.get(i);
 					if (!testSlot.getHasStack() && testSlot.isItemValid(var2)) {
 						if (!this.mergeItemStack(var4, i, i + 1, false)) {
-							return null;
+							return ItemStack.EMPTY;
 						}
 						done = true;
 						break;
@@ -129,43 +129,42 @@ public class ContainerSchematicSatelliteRocket extends Container {
 				if (!done) {
 					if (var2.getItem() == Item.getItemFromBlock(Blocks.CHEST) && !this.inventorySlots.get(19).getHasStack()) {
 						if (!this.mergeItemStack(var4, 19, 20, false)) {
-							return null;
+							return ItemStack.EMPTY;
 						}
 					} else if (var2.getItem() == Item.getItemFromBlock(Blocks.CHEST) && !this.inventorySlots.get(20).getHasStack()) {
 						if (!this.mergeItemStack(var4, 20, 21, false)) {
-							return null;
+							return ItemStack.EMPTY;
 						}
 					} else if (var2.getItem() == Item.getItemFromBlock(Blocks.CHEST) && !this.inventorySlots.get(21).getHasStack()) {
 						if (!this.mergeItemStack(var4, 21, 22, false)) {
-							return null;
+							return ItemStack.EMPTY;
 						}
 					} else if (par1 >= 22 && par1 < 49) {
 						if (!this.mergeItemStack(var4, 49, 58, false)) {
-							return null;
+							return ItemStack.EMPTY;
 						}
 					} else if (par1 >= 49 && par1 < 58) {
 						if (!this.mergeItemStack(var4, 22, 49, false)) {
-							return null;
+							return ItemStack.EMPTY;
 						}
 					} else if (!this.mergeItemStack(var4, 22, 58, false)) {
-						return null;
+						return ItemStack.EMPTY;
 					}
 				}
 			}
 
-			if (var4.stackSize == 0) {
-				var3.putStack((ItemStack) null);
+			if (var4.getCount() == 0) {
+				var3.putStack(ItemStack.EMPTY);
 			} else {
 				var3.onSlotChanged();
 			}
 
-			if (var4.stackSize == var2.stackSize) {
-				return null;
+			if (var4.getCount() == var2.getCount()) {
+				return ItemStack.EMPTY;
 			}
 
-			var3.onPickupFromSlot(par1EntityPlayer, var4);
+			var3.onTake(par1EntityPlayer, var4);
 		}
-
 		return var2;
 	}
 }

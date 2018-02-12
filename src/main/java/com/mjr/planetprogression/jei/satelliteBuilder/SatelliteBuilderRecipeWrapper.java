@@ -1,8 +1,5 @@
 package com.mjr.planetprogression.jei.satelliteBuilder;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.Nonnull;
@@ -15,32 +12,18 @@ import net.minecraft.item.ItemStack;
 @SuppressWarnings("deprecation")
 public class SatelliteBuilderRecipeWrapper extends BlankRecipeWrapper implements ICraftingRecipeWrapper {
 	@Nonnull
-	private final ItemStack[] input;
+	private final List<ItemStack> input;
 	@Nonnull
 	private final ItemStack output;
 
-	public SatelliteBuilderRecipeWrapper(@Nonnull ItemStack[] input, @Nonnull ItemStack output) {
+	public SatelliteBuilderRecipeWrapper(@Nonnull List<ItemStack> input, @Nonnull ItemStack output) {
 		this.input = input;
 		this.output = output;
 	}
 
-	@Nonnull
-	@Override
-	public List<ItemStack> getInputs() {
-		List<ItemStack> list = new ArrayList<>();
-		list.addAll(Arrays.asList(this.input));
-		return list;
-	}
-
-	@Nonnull
-	@Override
-	public List<ItemStack> getOutputs() {
-		return Collections.singletonList(this.output);
-	}
-
 	@Override
 	public void getIngredients(IIngredients ingredients) {
-		ingredients.setInputs(ItemStack.class, this.getInputs());
+		ingredients.setInputs(ItemStack.class, this.input);
 		ingredients.setOutput(ItemStack.class, this.output);
 	}
 }

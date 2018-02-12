@@ -47,7 +47,7 @@ public class ContainerSatelliteBuilder extends Container {
 
 	@Override
 	public boolean canInteractWith(EntityPlayer par1EntityPlayer) {
-		return this.tileEntity.isUseableByPlayer(par1EntityPlayer);
+		return this.tileEntity.isUsableByPlayer(par1EntityPlayer);
 	}
 
 	/**
@@ -64,7 +64,7 @@ public class ContainerSatelliteBuilder extends Container {
 
 			if (par1 < 3) {
 				if (!this.mergeItemStack(var4, 3, 39, true)) {
-					return null;
+					return ItemStack.EMPTY;
 				}
 
 				if (par1 == 2) {
@@ -73,32 +73,31 @@ public class ContainerSatelliteBuilder extends Container {
 			} else {
 				if (EnergyUtil.isElectricItem(var4.getItem())) {
 					if (!this.mergeItemStack(var4, 0, 1, false)) {
-						return null;
+						return ItemStack.EMPTY;
 					}
 				} else {
 					if (par1 < 30) {
 						if (!this.mergeItemStack(var4, 30, 39, false)) {
-							return null;
+							return ItemStack.EMPTY;
 						}
 					} else if (!this.mergeItemStack(var4, 3, 30, false)) {
-						return null;
+						return ItemStack.EMPTY;
 					}
 				}
 			}
 
-			if (var4.stackSize == 0) {
-				slot.putStack((ItemStack) null);
+			if (var4.getCount() == 0) {
+				slot.putStack(ItemStack.EMPTY);
 			} else {
 				slot.onSlotChanged();
 			}
 
-			if (var4.stackSize == var2.stackSize) {
-				return null;
+			if (var4.getCount() == var2.getCount()) {
+				return ItemStack.EMPTY;
 			}
 
-			slot.onPickupFromSlot(par1EntityPlayer, var4);
+			slot.onTake(par1EntityPlayer, var4);
 		}
-
 		return var2;
 	}
 }

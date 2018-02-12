@@ -25,7 +25,7 @@ public class GuiHandler implements IGuiHandler {
 		EntityPlayerMP playerBase = PlayerUtil.getPlayerBaseServerFromPlayer(player, false);
 
 		if (playerBase == null) {
-			player.addChatMessage(new TextComponentString("Planet Progression player instance null server-side. This is a bug."));
+			player.sendMessage(new TextComponentString("Planet Progression player instance null server-side. This is a bug."));
 			return null;
 		}
 

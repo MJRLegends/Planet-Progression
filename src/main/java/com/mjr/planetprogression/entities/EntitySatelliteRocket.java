@@ -27,6 +27,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
@@ -50,14 +51,8 @@ public class EntitySatelliteRocket extends EntityTieredRocket {
 	public EntitySatelliteRocket(World world, double x, double y, double z, IRocketType.EnumRocketType type) {
 		super(world, x, y, z);
 		this.rocketType = type;
-		this.cargoItems = new ItemStack[this.getSizeInventory()];
+		this.stacks = NonNullList.withSize(this.getSizeInventory(), ItemStack.EMPTY);
 	}
-
-	public EntitySatelliteRocket(World world, double x, double y, double z, IRocketType.EnumRocketType type, ItemStack[] inv) {
-		this(world, x, y, z, type);
-		this.cargoItems = inv;
-	}
-
 	@Override
 	public double getYOffset() {
 		return 1.5F;
@@ -85,7 +80,7 @@ public class EntitySatelliteRocket extends EntityTieredRocket {
 
 	@Override
 	public void onLaunch() {
-		if (!(this.worldObj.provider.getDimension() == GalacticraftCore.planetOverworld.getDimensionID() || this.worldObj.provider instanceof IGalacticraftWorldProvider)) {
+		if (!(this.world.provider.getDimension() == GalacticraftCore.planetOverworld.getDimensionID() || this.world.provider instanceof IGalacticraftWorldProvider)) {
 			if (ConfigManagerCore.disableRocketLaunchAllNonGC) {
 				this.cancelLaunch();
 				return;
@@ -93,7 +88,7 @@ public class EntitySatelliteRocket extends EntityTieredRocket {
 
 			// No rocket flight in the Nether, the End etc
 			for (int i = ConfigManagerCore.disableRocketLaunchDimensions.length - 1; i >= 0; i--) {
-				if (ConfigManagerCore.disableRocketLaunchDimensions[i] == this.worldObj.provider.getDimension()) {
+				if (ConfigManagerCore.disableRocketLaunchDimensions[i] == this.world.provider.getDimension()) {
 					this.cancelLaunch();
 					return;
 				}
@@ -103,14 +98,14 @@ public class EntitySatelliteRocket extends EntityTieredRocket {
 
 		super.onLaunch();
 
-		if (!this.worldObj.isRemote) {
+		if (!this.world.isRemote) {
 			GCPlayerStats stats = null;
 
 			if (!this.getPassengers().isEmpty() && this.getPassengers().get(0) instanceof EntityPlayerMP) {
 				EntityPlayerMP player = (EntityPlayerMP) this.getPassengers().get(0);
 				stats = GCPlayerStats.get(player);
 
-				if (!(this.worldObj.provider instanceof IOrbitDimension)) {
+				if (!(this.world.provider instanceof IOrbitDimension)) {
 					stats.setCoordsTeleportedFromX(player.posX);
 					stats.setCoordsTeleportedFromZ(player.posZ);
 				}
@@ -118,19 +113,19 @@ public class EntitySatelliteRocket extends EntityTieredRocket {
 
 			int amountRemoved = 0;
 
-			PADSEARCH: for (int x = MathHelper.floor_double(this.posX) - 1; x <= MathHelper.floor_double(this.posX) + 1; x++) {
-				for (int y = MathHelper.floor_double(this.posY) - 3; y <= MathHelper.floor_double(this.posY) + 1; y++) {
-					for (int z = MathHelper.floor_double(this.posZ) - 1; z <= MathHelper.floor_double(this.posZ) + 1; z++) {
+			PADSEARCH: for (int x = MathHelper.floor(this.posX) - 1; x <= MathHelper.floor(this.posX) + 1; x++) {
+				for (int y = MathHelper.floor(this.posY) - 3; y <= MathHelper.floor(this.posY) + 1; y++) {
+					for (int z = MathHelper.floor(this.posZ) - 1; z <= MathHelper.floor(this.posZ) + 1; z++) {
 						BlockPos pos = new BlockPos(x, y, z);
-						final Block block = this.worldObj.getBlockState(pos).getBlock();
+						final Block block = this.world.getBlockState(pos).getBlock();
 
 						if (block != null && block instanceof BlockLandingPadFull) {
 							if (amountRemoved < 9) {
-								EventLandingPadRemoval event = new EventLandingPadRemoval(this.worldObj, pos);
+								EventLandingPadRemoval event = new EventLandingPadRemoval(this.world, pos);
 								MinecraftForge.EVENT_BUS.post(event);
 
 								if (event.allow) {
-									this.worldObj.setBlockToAir(pos);
+									this.world.setBlockToAir(pos);
 									amountRemoved = 9;
 								}
 								break PADSEARCH;
@@ -152,14 +147,14 @@ public class EntitySatelliteRocket extends EntityTieredRocket {
 	@Override
 	public void onReachAtmosphere() {
 		// Not launch controlled
-		if (!this.worldObj.isRemote) {
+		if (!this.world.isRemote) {
 			for (Entity e : this.getPassengers()) {
 				if (e instanceof EntityPlayerMP) {
 					EntityPlayerMP player = (EntityPlayerMP) e;
 
 					this.onTeleport(player);
 
-					for (ItemStack item : this.cargoItems) {
+					for (ItemStack item : this.stacks) {
 						if (item != null) {
 							if (item.getItem() instanceof ItemSatellite) {
 								IStatsCapability stats = null;
@@ -168,7 +163,7 @@ public class EntitySatelliteRocket extends EntityTieredRocket {
 								}
 								String id = UUID.randomUUID().toString();
 								stats.addSatellites(new SatelliteData(((ItemSatellite) item.getItem()).getType(), id, 0, null));
-								player.addChatMessage(new TextComponentString(EnumColor.RED + "Satellite: " + id + " has been launched in to space!"));
+								player.sendMessage(new TextComponentString(EnumColor.RED + "Satellite: " + id + " has been launched in to space!"));
 							}
 						}
 					}
@@ -195,7 +190,7 @@ public class EntitySatelliteRocket extends EntityTieredRocket {
 		}
 
 		if ((this.getLaunched() || this.launchPhase == EnumLaunchPhase.IGNITED.ordinal() && this.rand.nextInt(i) == 0) && !ConfigManagerCore.disableSpaceshipParticles && this.hasValidFuel()) {
-			if (this.worldObj.isRemote) {
+			if (this.world.isRemote) {
 				this.spawnParticles(this.getLaunched());
 			}
 		}
@@ -215,21 +210,21 @@ public class EntitySatelliteRocket extends EntityTieredRocket {
 
 			double multiplier = 1.0D;
 
-			if (this.worldObj.provider instanceof IGalacticraftWorldProvider) {
-				multiplier = ((IGalacticraftWorldProvider) this.worldObj.provider).getFuelUsageMultiplier();
+			if (this.world.provider instanceof IGalacticraftWorldProvider) {
+				multiplier = ((IGalacticraftWorldProvider) this.world.provider).getFuelUsageMultiplier();
 
 				if (multiplier <= 0) {
 					multiplier = 1;
 				}
 			}
 
-			if (this.timeSinceLaunch % MathHelper.floor_double(2 * (1 / multiplier)) == 0) {
+			if (this.timeSinceLaunch % MathHelper.floor(2 * (1 / multiplier)) == 0) {
 				this.removeFuel(1);
 				if (!this.hasValidFuel()) {
 					this.stopRocketSound();
 				}
 			}
-		} else if (!this.hasValidFuel() && this.getLaunched() && !this.worldObj.isRemote) {
+		} else if (!this.hasValidFuel() && this.getLaunched() && !this.world.isRemote) {
 			if (Math.abs(Math.sin(this.timeSinceLaunch / 1000)) / 10 != 0.0) {
 				this.motionY -= Math.abs(Math.sin(this.timeSinceLaunch / 1000)) / 20;
 			}
@@ -243,10 +238,10 @@ public class EntitySatelliteRocket extends EntityTieredRocket {
 		if (playerBase != null) {
 			GCPlayerStats stats = playerBase.getCapability(GCCapabilities.GC_STATS_CAPABILITY, null);
 
-			if (this.cargoItems == null || this.cargoItems.length == 0) {
-				stats.setRocketStacks(new ItemStack[2]);
+			if (this.stacks == null || this.stacks.isEmpty()) {
+				stats.setRocketStacks(NonNullList.withSize(2, ItemStack.EMPTY));
 			} else {
-				stats.setRocketStacks(this.cargoItems);
+				stats.setRocketStacks(this.stacks);
 			}
 
 			stats.setRocketType(this.rocketType.getIndex());
@@ -319,7 +314,7 @@ public class EntitySatelliteRocket extends EntityTieredRocket {
 	}
 
 	@Override
-	public boolean isUseableByPlayer(EntityPlayer par1EntityPlayer) {
+	public boolean isUsableByPlayer(EntityPlayer par1EntityPlayer) {
 		return !this.isDead && par1EntityPlayer.getDistanceSqToEntity(this) <= 64.0D;
 	}
 

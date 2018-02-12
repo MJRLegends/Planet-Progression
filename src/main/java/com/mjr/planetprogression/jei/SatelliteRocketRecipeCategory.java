@@ -1,7 +1,5 @@
 package com.mjr.planetprogression.jei;
 
-import java.util.List;
-
 import javax.annotation.Nonnull;
 
 import mezz.jei.api.IGuiHelper;
@@ -12,10 +10,10 @@ import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.BlankRecipeCategory;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import micdoodle8.mods.galacticraft.planets.GalacticraftPlanets;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
 import com.mjr.mjrlegendslib.util.TranslateUtilities;
+import com.mjr.planetprogression.Constants;
 
 public class SatelliteRocketRecipeCategory extends BlankRecipeCategory<IRecipeWrapper> {
 	private static final ResourceLocation rocketGuiTexture = new ResourceLocation(GalacticraftPlanets.ASSET_PREFIX, "textures/gui/schematic_rocket_t3_recipe.png");
@@ -49,9 +47,8 @@ public class SatelliteRocketRecipeCategory extends BlankRecipeCategory<IRecipeWr
 		return this.background;
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
-	public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull IRecipeWrapper recipeWrapper) {
+	public void setRecipe(IRecipeLayout recipeLayout, IRecipeWrapper recipeWrapper, IIngredients ingredients) {
 		IGuiItemStackGroup itemstacks = recipeLayout.getItemStacks();
 
 		itemstacks.init(0, true, 44, 0);
@@ -77,22 +74,11 @@ public class SatelliteRocketRecipeCategory extends BlankRecipeCategory<IRecipeWr
 		itemstacks.init(20, true, 141, 7);
 		itemstacks.init(21, false, 138, 95);
 
-		if (recipeWrapper instanceof SatelliteRocketRecipeWrapper) {
-			SatelliteRocketRecipeWrapper rocketRecipeWrapper = (SatelliteRocketRecipeWrapper) recipeWrapper;
-			List<ItemStack> inputs = rocketRecipeWrapper.getInputs();
-
-			for (int i = 0; i < inputs.size(); ++i) {
-				Object o = inputs.get(i);
-				if (o != null) {
-					itemstacks.setFromRecipe(i, o);
-				}
-			}
-			itemstacks.setFromRecipe(21, rocketRecipeWrapper.getOutputs());
-		}
+		itemstacks.set(ingredients);
 	}
 
 	@Override
-	public void setRecipe(IRecipeLayout recipeLayout, IRecipeWrapper recipeWrapper, IIngredients ingredients) {
-		this.setRecipe(recipeLayout, recipeWrapper);
+	public String getModName() {
+		return Constants.modName;
 	}
 }

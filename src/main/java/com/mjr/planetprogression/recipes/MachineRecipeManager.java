@@ -2,20 +2,20 @@ package com.mjr.planetprogression.recipes;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.List;
 import java.util.Map.Entry;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 
 import com.google.common.collect.ImmutableMap;
 
 public class MachineRecipeManager {
-	private static HashMap<ItemStack[], ItemStack> satelliteBuilderRecipes = new HashMap<ItemStack[], ItemStack>();
+	private static HashMap<NonNullList<ItemStack>, ItemStack> satelliteBuilderRecipes = new HashMap<>();
 	public static ArrayList<ArrayList<ItemStack>> satelliteBuilderSlotValidItems = new ArrayList<ArrayList<ItemStack>>(3);
 
-	public static void addRecipe(ItemStack output, ItemStack[] inputList) {
-		if (inputList.length != 3) {
+	public static void addRecipe(ItemStack output, NonNullList<ItemStack> inputList) {
+		if (inputList.size() != 3) {
 			throw new RuntimeException("Invalid recipe!");
 		}
 
@@ -27,7 +27,7 @@ public class MachineRecipeManager {
 			}
 		}
 		for (int i = 0; i < 3; i++) {
-			ItemStack inputStack = inputList[i];
+			ItemStack inputStack = inputList.get(i);
 			if (inputStack == null) {
 				continue;
 			}
@@ -47,17 +47,17 @@ public class MachineRecipeManager {
 		}
 	}
 
-	public static ItemStack getOutputForInput(ItemStack[] inputList) {
-		if (inputList.length != 3) {
+	public static ItemStack getOutputForInput(List<ItemStack> list) {
+		if (list.size() != 3) {
 			return null;
 		}
 
-		for (Entry<ItemStack[], ItemStack> recipe : MachineRecipeManager.satelliteBuilderRecipes.entrySet()) {
+		for (Entry<NonNullList<ItemStack>, ItemStack> recipe : MachineRecipeManager.satelliteBuilderRecipes.entrySet()) {
 			boolean found = true;
 
 			for (int i = 0; i < 3; i++) {
-				ItemStack recipeStack = recipe.getKey()[i];
-				ItemStack inputStack = inputList[i];
+				ItemStack recipeStack = recipe.getKey().get(i);
+				ItemStack inputStack = list.get(i);
 
 				if (recipeStack == null || inputStack == null) {
 					if (recipeStack != null || inputStack != null) {
@@ -75,18 +75,14 @@ public class MachineRecipeManager {
 			return recipe.getValue();
 		}
 
-		return MachineRecipeManager.satelliteBuilderRecipes.get(inputList);
+		return MachineRecipeManager.satelliteBuilderRecipes.get(list);
 	}
 
 	public static void removeRecipe(ItemStack match) {
-		for (Iterator<Map.Entry<ItemStack[], ItemStack>> it = MachineRecipeManager.satelliteBuilderRecipes.entrySet().iterator(); it.hasNext();) {
-			Map.Entry<ItemStack[], ItemStack> recipe = it.next();
-			if (ItemStack.areItemStacksEqual(match, recipe.getValue()))
-				it.remove();
-		}
+		MachineRecipeManager.satelliteBuilderRecipes.entrySet().removeIf(recipe -> ItemStack.areItemStacksEqual(match, recipe.getValue()));
 	}
 
-	public static ImmutableMap<ItemStack[], ItemStack> getRecipes() {
+	public static ImmutableMap<NonNullList<ItemStack>, ItemStack> getRecipes() {
 		return ImmutableMap.copyOf(satelliteBuilderRecipes);
 	}
 }

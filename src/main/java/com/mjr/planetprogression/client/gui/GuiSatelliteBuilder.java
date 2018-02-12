@@ -30,7 +30,7 @@ public class GuiSatelliteBuilder extends GuiContainerGC {
 	private GuiElementInfoRegion electricInfoRegion = new GuiElementInfoRegion((this.width - this.xSize) / 2 + 62, (this.height - this.ySize) / 2 + 16, 56, 9, new ArrayList<String>(), this.width, this.height, this);
 
 	public GuiSatelliteBuilder(InventoryPlayer par1InventoryPlayer, TileEntitySatelliteBuilder tileEntity) {
-		super(new ContainerSatelliteBuilder(par1InventoryPlayer, tileEntity, FMLClientHandler.instance().getClient().thePlayer));
+		super(new ContainerSatelliteBuilder(par1InventoryPlayer, tileEntity, FMLClientHandler.instance().getClient().player));
 		this.tileEntity = tileEntity;
 		this.ySize = 168;
 	}

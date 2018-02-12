@@ -35,7 +35,7 @@ public class GuiTelescope extends GuiContainerGC {
 	private GuiElementInfoRegion electricInfoRegion = new GuiElementInfoRegion(0, 0, 52, 9, null, 0, 0, this);
 
 	public GuiTelescope(InventoryPlayer playerInventory, TileEntityTelescope tileEntity) {
-		super(new ContainerTelescope(playerInventory, tileEntity, FMLClientHandler.instance().getClient().thePlayer));
+		super(new ContainerTelescope(playerInventory, tileEntity, FMLClientHandler.instance().getClient().player));
 		this.xSize = 250;
 		this.ySize = 230;
 		this.tileEntity = tileEntity;
@@ -84,14 +84,14 @@ public class GuiTelescope extends GuiContainerGC {
 		if (par1GuiButton.enabled) {
 			switch (par1GuiButton.id) {
 			case 0:
-				GalacticraftCore.packetPipeline.sendToServer(new PacketSimple(EnumSimplePacket.S_UPDATE_DISABLEABLE_BUTTON, GCCoreUtil.getDimensionID(mc.theWorld), new Object[] { this.tileEntity.getPos(), 0 }));
+				GalacticraftCore.packetPipeline.sendToServer(new PacketSimple(EnumSimplePacket.S_UPDATE_DISABLEABLE_BUTTON, GCCoreUtil.getDimensionID(mc.world), new Object[] { this.tileEntity.getPos(), 0 }));
 				break;
 			case 1:
-				PlanetProgression.packetPipeline.sendToServer(new PacketSimplePP(com.mjr.planetprogression.network.PacketSimplePP.EnumSimplePacket.S_UPDATE_ROTATION, GCCoreUtil.getDimensionID(mc.theWorld), new Object[] { this.tileEntity.getPos(),
+				PlanetProgression.packetPipeline.sendToServer(new PacketSimplePP(com.mjr.planetprogression.network.PacketSimplePP.EnumSimplePacket.S_UPDATE_ROTATION, GCCoreUtil.getDimensionID(mc.world), new Object[] { this.tileEntity.getPos(),
 						0.0F }));
 				break;
 			case 2:
-				PlanetProgression.packetPipeline.sendToServer(new PacketSimplePP(com.mjr.planetprogression.network.PacketSimplePP.EnumSimplePacket.S_UPDATE_ROTATION, GCCoreUtil.getDimensionID(mc.theWorld), new Object[] { this.tileEntity.getPos(),
+				PlanetProgression.packetPipeline.sendToServer(new PacketSimplePP(com.mjr.planetprogression.network.PacketSimplePP.EnumSimplePacket.S_UPDATE_ROTATION, GCCoreUtil.getDimensionID(mc.world), new Object[] { this.tileEntity.getPos(),
 						1.0F }));
 				break;
 			default:
