@@ -58,7 +58,7 @@ public class TileEntitySatelliteBuilder extends TileBaseElectricBlockWithInvento
 	}
 
 	public boolean canOutput() {
-		if (this.stacks.get(4) != null)
+		if (!this.stacks.get(4).isEmpty())
 			return false;
 		return true;
 	}
@@ -90,7 +90,7 @@ public class TileEntitySatelliteBuilder extends TileBaseElectricBlockWithInvento
 	public void smeltItem() {
 		ItemStack resultItemStack = this.producingStack;
 		if (this.canProcess() && canOutput() && hasInputs()) {
-			if (this.stacks.get(4) == null) {
+			if (this.stacks.get(4).isEmpty()) {
 				this.stacks.set(4, resultItemStack.copy());
 			} else if (this.stacks.get(4).isItemEqual(resultItemStack)) {
 				if (this.stacks.get(4).getCount() + resultItemStack.getCount() > 64) {
