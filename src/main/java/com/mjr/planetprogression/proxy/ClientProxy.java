@@ -3,6 +3,7 @@ package com.mjr.planetprogression.proxy;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -82,12 +83,15 @@ public class ClientProxy extends CommonProxy {
 		}
 	}
 
+	@Override
 	public void registerItemJsons() {
 		if (Config.researchMode == 2)
 			ClientUtilities.registerItemJson(Constants.TEXTURE_PREFIX, PlanetProgression_Items.satelliteBasicModule);
 		ClientUtilities.registerItemJson(Constants.TEXTURE_PREFIX, PlanetProgression_Items.researchPapers);
 	}
 
+	@Override
+	@SideOnly(Side.CLIENT)
 	public void renderBlocksTileEntitySpecialRenderers() {
 		ClientUtilities.registerTileEntityRenderer(TileEntityTelescope.class, new TileEntityTelescopeRenderer());
 	}
@@ -109,6 +113,23 @@ public class ClientProxy extends CommonProxy {
 					ItemModelSatellite.class);
 	}
 
+	@SubscribeEvent
+	@SideOnly(Side.CLIENT)
+	public void loadTextures(TextureStitchEvent.Pre event) {
+		ClientUtilities.registerTexture(Constants.TEXTURE_PREFIX, event, "blank_rocket");
+		ClientUtilities.registerTexture(Constants.TEXTURE_PREFIX, event, "blank_rocket_black");
+		ClientUtilities.registerTexture(Constants.TEXTURE_PREFIX, event, "blank_rocket_blue_textured");
+		ClientUtilities.registerTexture(Constants.TEXTURE_PREFIX, event, "blank_rocket_dark_grey");
+		ClientUtilities.registerTexture(Constants.TEXTURE_PREFIX, event, "blank_rocket_dark_red");
+		ClientUtilities.registerTexture(Constants.TEXTURE_PREFIX, event, "blank_rocket_grey");
+		ClientUtilities.registerTexture(Constants.TEXTURE_PREFIX, event, "blank_rocket_light_blue_textured");
+		ClientUtilities.registerTexture(Constants.TEXTURE_PREFIX, event, "blank_rocket_orange_textured");
+		ClientUtilities.registerTexture(Constants.TEXTURE_PREFIX, event, "blank_rocket_textured");
+		ClientUtilities.registerTexture(Constants.TEXTURE_PREFIX, event, "blank_rocket_white");
+		ClientUtilities.registerTexture(Constants.TEXTURE_PREFIX, event, "blank_rocket_yellow");
+		ClientUtilities.registerTexture(Constants.TEXTURE_PREFIX, event, "solar_panel");
+	}
+	
 	@SubscribeEvent
 	public void registerModels(ModelRegistryEvent event) {
 		// Register Variants
