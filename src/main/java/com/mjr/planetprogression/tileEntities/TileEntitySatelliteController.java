@@ -172,7 +172,7 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 	public void smeltItem() {
 		ItemStack resultItemStack = this.producingStack;
 		if (this.canProcess() && canOutput() && hasInputs()) {
-			if (this.stacks.get(1) == null) {
+			if (this.stacks.get(1).isEmpty()) {
 				this.stacks.set(1, resultItemStack.copy());
 			} else if (this.stacks.get(1).isItemEqual(resultItemStack)) {
 				if (this.stacks.get(1).getCount() + resultItemStack.getCount() > 64) {
