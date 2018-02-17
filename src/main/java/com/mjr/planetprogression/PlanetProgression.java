@@ -103,9 +103,6 @@ public class PlanetProgression {
 
 		SchematicRegistry.registerSchematicRecipe(new SchematicSatelliteRocket());
 
-		PlanetProgression_Items.initResearchPaperItems();
-		PlanetProgression_Items.registerResearchPaperItems();
-
 		if (Config.generateResearchPaperInStructure)
 			RegisterUtilities.registerWorldGenerator(new WorldGenerater());
 
@@ -134,10 +131,11 @@ public class PlanetProgression {
 
 		@SubscribeEvent
 		public static void registerItemsEvent(RegistryEvent.Register<Item> event) {
+			PlanetProgression_Items.initResearchPaperItems();
+			PlanetProgression_Items.registerResearchPaperItems();
 			for (Item item : PlanetProgression.itemList) {
 				event.getRegistry().register(item);
 			}
-
 		}
 
 		@SubscribeEvent(priority = EventPriority.LOWEST)
