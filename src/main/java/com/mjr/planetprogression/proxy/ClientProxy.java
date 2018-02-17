@@ -1,8 +1,8 @@
 package com.mjr.planetprogression.proxy;
 
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraftforge.client.event.ModelBakeEvent;
+import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -90,16 +90,30 @@ public class ClientProxy extends CommonProxy {
 					ItemModelSatellite.class);
 	}
 
+	@SubscribeEvent
+	@SideOnly(Side.CLIENT)
+	public void loadTextures(TextureStitchEvent.Pre event) {
+		ClientUtilities.registerTexture(Constants.TEXTURE_PREFIX, event, "blank_rocket");
+		ClientUtilities.registerTexture(Constants.TEXTURE_PREFIX, event, "blank_rocket_black");
+		ClientUtilities.registerTexture(Constants.TEXTURE_PREFIX, event, "blank_rocket_blue_textured");
+		ClientUtilities.registerTexture(Constants.TEXTURE_PREFIX, event, "blank_rocket_dark_grey");
+		ClientUtilities.registerTexture(Constants.TEXTURE_PREFIX, event, "blank_rocket_dark_red");
+		ClientUtilities.registerTexture(Constants.TEXTURE_PREFIX, event, "blank_rocket_grey");
+		ClientUtilities.registerTexture(Constants.TEXTURE_PREFIX, event, "blank_rocket_light_blue_textured");
+		ClientUtilities.registerTexture(Constants.TEXTURE_PREFIX, event, "blank_rocket_orange_textured");
+		ClientUtilities.registerTexture(Constants.TEXTURE_PREFIX, event, "blank_rocket_textured");
+		ClientUtilities.registerTexture(Constants.TEXTURE_PREFIX, event, "blank_rocket_white");
+		ClientUtilities.registerTexture(Constants.TEXTURE_PREFIX, event, "blank_rocket_yellow");
+		ClientUtilities.registerTexture(Constants.TEXTURE_PREFIX, event, "solar_panel");
+	}
+
 	private void registerCustomModel() {
 		ClientUtilities.registerModel(Constants.TEXTURE_PREFIX, PlanetProgression_Blocks.TELESCOPE, "telescope");
 		if (Config.researchMode == 2)
 			ClientUtilities.registerModel(Constants.TEXTURE_PREFIX, PlanetProgression_Items.satelliteBasic, "basic_satellite");
 
 		if (Config.researchMode == 2 || Config.researchMode == 3) {
-			ModelResourceLocation modelResourceLocation = new ModelResourceLocation(Constants.TEXTURE_PREFIX + "satellite_rocket", "inventory");
-			for (int i = 1; i < 2; ++i) {
-				ClientUtilities.registerModel(PlanetProgression_Items.SATELLITE_ROCKET, i, modelResourceLocation);
-			}
+			ClientUtilities.registerModel(Constants.TEXTURE_PREFIX, PlanetProgression_Items.SATELLITE_ROCKET, 1, "satellite_rocket");
 		}
 	}
 

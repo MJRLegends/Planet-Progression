@@ -1,6 +1,5 @@
 package com.mjr.planetprogression.client.render.tile;
 
-import micdoodle8.mods.galacticraft.core.util.ClientUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
@@ -19,6 +18,7 @@ import org.lwjgl.opengl.GL11;
 import com.google.common.base.Function;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import com.mjr.mjrlegendslib.util.ModelUtilities;
 import com.mjr.planetprogression.Constants;
 import com.mjr.planetprogression.tileEntities.TileEntityTelescope;
 
@@ -62,11 +62,11 @@ public class TileEntityTelescopeRenderer extends TileEntitySpecialRenderer<TileE
 		GL11.glRotatef(te.currentRotation, 0.0F, 1.0F, 0.0F);
 		GL11.glScalef(0.04F, 0.04F, 0.04F);
 
-		ClientUtil.drawBakedModel(telescope);
+		ModelUtilities.drawBakedModel(telescope);
 
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glBlendFunc(GL11.GL_ONE, GL11.GL_ONE);
-		ClientUtil.drawBakedModel(telescopeLens);
+		ModelUtilities.drawBakedModel(telescopeLens);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		GL11.glDisable(GL11.GL_BLEND);
 		GL11.glPopMatrix();
