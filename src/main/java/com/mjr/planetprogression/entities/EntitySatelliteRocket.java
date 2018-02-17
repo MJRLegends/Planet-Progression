@@ -53,6 +53,7 @@ public class EntitySatelliteRocket extends EntityTieredRocket {
 		this.rocketType = type;
 		this.stacks = NonNullList.withSize(this.getSizeInventory(), ItemStack.EMPTY);
 	}
+
 	@Override
 	public double getYOffset() {
 		return 1.5F;

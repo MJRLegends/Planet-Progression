@@ -36,7 +36,7 @@ public class SatelliteRocketRecipes {
 	public static List<INasaWorkbenchRecipe> getSatelliteRocketRecipes() {
 		return satelliteRocketRecipes;
 	}
-    
+
 	public static void registerRocketCraftingRecipe() {
 		HashMap<Integer, ItemStack> input = new HashMap<Integer, ItemStack>();
 		input.put(1, new ItemStack(GCItems.partNoseCone)); // Cone

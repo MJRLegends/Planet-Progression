@@ -40,7 +40,7 @@ public class ItemModelSatellite extends ModelTransformWrapper {
 			ret.mul(mul);
 			return ret;
 		}
-		
+
 		if (cameraTransformType == TransformType.FIRST_PERSON_RIGHT_HAND) {
 			if (Minecraft.isAmbientOcclusionEnabled()) {
 				GlStateManager.shadeModel(GL11.GL_SMOOTH);
@@ -72,7 +72,7 @@ public class ItemModelSatellite extends ModelTransformWrapper {
 			ret.mul(mul);
 			return ret;
 		}
-		
+
 		if (cameraTransformType == TransformType.THIRD_PERSON_RIGHT_HAND || cameraTransformType == TransformType.THIRD_PERSON_LEFT_HAND) {
 			if (Minecraft.isAmbientOcclusionEnabled()) {
 				GlStateManager.shadeModel(GL11.GL_SMOOTH);

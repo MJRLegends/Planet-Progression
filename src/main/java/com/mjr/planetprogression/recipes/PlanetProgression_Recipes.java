@@ -43,7 +43,7 @@ public class PlanetProgression_Recipes {
 			input1.add(new ItemStack(GCItems.basicItem, 1, 1));
 			input1.add(new ItemStack(GCItems.basicItem, 1, 1));
 			input1.add(new ItemStack(PlanetProgression_Items.satelliteModules, 1, 0));
-			
+
 			MachineRecipeManager.addRecipe(new ItemStack(PlanetProgression_Items.satelliteSurface), input1);
 			input1 = NonNullList.create();
 			input1.add(new ItemStack(GCItems.basicItem, 1, 1));

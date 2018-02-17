@@ -26,7 +26,7 @@ public interface IStatsCapability {
 	void setUnlockedPlanets(ArrayList<CelestialBody> unlockedPlanets);
 
 	void addUnlockedPlanets(CelestialBody unlockedPlanet);
-	
+
 	ArrayList<SatelliteData> getSatellites();
 
 	void setSatellites(ArrayList<SatelliteData> satellites);

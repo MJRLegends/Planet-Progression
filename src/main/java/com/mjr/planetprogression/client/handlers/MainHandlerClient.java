@@ -66,18 +66,17 @@ public class MainHandlerClient {
 			}
 		}
 	}
-	
+
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
-	public void onItemTooltip(ItemTooltipEvent event){
-		if(event.getItemStack().getItem().equals(Item.getItemFromBlock(PlanetProgression_Blocks.SATTLLITE_BUILDER)))
+	public void onItemTooltip(ItemTooltipEvent event) {
+		if (event.getItemStack().getItem().equals(Item.getItemFromBlock(PlanetProgression_Blocks.SATTLLITE_BUILDER)))
 			event.getToolTip().add(EnumColor.AQUA + TranslateUtilities.translate("satellite.builder.use.desc"));
-		else if(event.getItemStack().getItem().equals(Item.getItemFromBlock(PlanetProgression_Blocks.SATTLLITE_CONTROLLER))){
+		else if (event.getItemStack().getItem().equals(Item.getItemFromBlock(PlanetProgression_Blocks.SATTLLITE_CONTROLLER))) {
 			event.getToolTip().add(EnumColor.AQUA + TranslateUtilities.translate("satellite.controller.use.desc"));
 			event.getToolTip().add(EnumColor.AQUA + TranslateUtilities.translate("satellite.controller.use.2.desc"));
-		}
-		else if(event.getItemStack().getItem().equals(Item.getItemFromBlock(PlanetProgression_Blocks.TELESCOPE)))
+		} else if (event.getItemStack().getItem().equals(Item.getItemFromBlock(PlanetProgression_Blocks.TELESCOPE)))
 			event.getToolTip().add(EnumColor.AQUA + TranslateUtilities.translate("telescope.use.desc"));
 	}
-	
+
 }

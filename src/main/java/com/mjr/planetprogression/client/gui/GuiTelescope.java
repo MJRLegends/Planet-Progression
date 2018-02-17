@@ -87,12 +87,12 @@ public class GuiTelescope extends GuiContainerGC {
 				GalacticraftCore.packetPipeline.sendToServer(new PacketSimple(EnumSimplePacket.S_UPDATE_DISABLEABLE_BUTTON, GCCoreUtil.getDimensionID(mc.world), new Object[] { this.tileEntity.getPos(), 0 }));
 				break;
 			case 1:
-				PlanetProgression.packetPipeline.sendToServer(new PacketSimplePP(com.mjr.planetprogression.network.PacketSimplePP.EnumSimplePacket.S_UPDATE_ROTATION, GCCoreUtil.getDimensionID(mc.world), new Object[] { this.tileEntity.getPos(),
-						0.0F }));
+				PlanetProgression.packetPipeline.sendToServer(new PacketSimplePP(com.mjr.planetprogression.network.PacketSimplePP.EnumSimplePacket.S_UPDATE_ROTATION, GCCoreUtil.getDimensionID(mc.world),
+						new Object[] { this.tileEntity.getPos(), 0.0F }));
 				break;
 			case 2:
-				PlanetProgression.packetPipeline.sendToServer(new PacketSimplePP(com.mjr.planetprogression.network.PacketSimplePP.EnumSimplePacket.S_UPDATE_ROTATION, GCCoreUtil.getDimensionID(mc.world), new Object[] { this.tileEntity.getPos(),
-						1.0F }));
+				PlanetProgression.packetPipeline.sendToServer(new PacketSimplePP(com.mjr.planetprogression.network.PacketSimplePP.EnumSimplePacket.S_UPDATE_ROTATION, GCCoreUtil.getDimensionID(mc.world),
+						new Object[] { this.tileEntity.getPos(), 1.0F }));
 				break;
 			default:
 				break;

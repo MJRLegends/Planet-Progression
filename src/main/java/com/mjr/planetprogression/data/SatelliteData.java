@@ -16,7 +16,7 @@ public class SatelliteData {
 		this.dataAmount = dataAmount;
 		this.currentResearchItem = currentResearchItem;
 	}
-	
+
 	public int getType() {
 		return type;
 	}

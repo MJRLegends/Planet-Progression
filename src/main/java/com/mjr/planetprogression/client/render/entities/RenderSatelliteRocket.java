@@ -70,11 +70,11 @@ public class RenderSatelliteRocket extends Render<EntitySatelliteRocket> {
 
 		GlStateManager.scale(-1.0F, -1.0F, 1.0F);
 		GlStateManager.scale(0.3F, 0.3F, 0.3F);
-        GlStateManager.pushMatrix();
-        GlStateManager.rotate(-60.0F, 1.0F, 1.0F, 1.0F);
-        GlStateManager.rotate(165.0F, -14.0F, 0.0F, 0.0F);
-        RenderHelper.enableStandardItemLighting();
-        GlStateManager.popMatrix();
+		GlStateManager.pushMatrix();
+		GlStateManager.rotate(-60.0F, 1.0F, 1.0F, 1.0F);
+		GlStateManager.rotate(165.0F, -14.0F, 0.0F, 0.0F);
+		RenderHelper.enableStandardItemLighting();
+		GlStateManager.popMatrix();
 
 		ModelUtilities.drawBakedModel(this.rocketModel);
 		GlStateManager.popMatrix();
