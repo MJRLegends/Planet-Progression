@@ -77,6 +77,9 @@ public class PlanetProgression {
 		PlanetProgression_Blocks.init();
 		PlanetProgression_Items.init();
 
+		// Register RegistrationHandler
+		RegisterUtilities.registerEventHandler(new RegistrationHandler());
+
 		PlanetProgression.proxy.preInit(event);
 	}
 

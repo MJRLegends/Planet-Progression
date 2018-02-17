@@ -1,8 +1,8 @@
 package com.mjr.planetprogression.proxy;
 
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraftforge.client.event.ModelBakeEvent;
+import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -33,16 +33,10 @@ public class ClientProxy extends CommonProxy {
 	public void preInit(FMLPreInitializationEvent event) {
 		RegisterUtilities.registerEventHandler(this);
 		// Register OBJ Domain
-		ClientUtilities.registerOBJInstance(Constants.ASSET_PREFIX);
-
-		// Register Variants
-		registerVariants();
+		ClientUtilities.registerOBJInstance(Constants.modID);
 
 		// Register Entity Renders
 		registerEntityRenders();
-
-		// Register Custom Models
-		registerCustomModel();
 
 		super.preInit(event);
 	}
@@ -54,17 +48,8 @@ public class ClientProxy extends CommonProxy {
 
 	@Override
 	public void postInit(FMLPostInitializationEvent event) {
-		// Register Block Json Files
-		registerBlockJsons();
-
-		// Register Item Json Files
-		registerItemJsons();
-
 		// Register Client Main Handler
 		RegisterUtilities.registerEventHandler(new MainHandlerClient());
-
-		// Register TileEntity Special Renderers
-		renderBlocksTileEntitySpecialRenderers();
 
 		super.postInit(event);
 	}
@@ -73,10 +58,44 @@ public class ClientProxy extends CommonProxy {
 		ClientUtilities.registerEntityRenderer(EntitySatelliteRocket.class, (RenderManager manager) -> new RenderSatelliteRocket(manager));
 	}
 
+	@Override
+	public void registerCustomModel() {
+		ClientUtilities.registerModel(Constants.TEXTURE_PREFIX, PlanetProgression_Blocks.TELESCOPE, "telescope");
+		if (Config.researchMode == 2)
+			ClientUtilities.registerModel(Constants.TEXTURE_PREFIX, PlanetProgression_Items.satelliteBasic, "basic_satellite");
+
+		if (Config.researchMode == 2 || Config.researchMode == 3) {
+			ClientUtilities.registerModel(Constants.TEXTURE_PREFIX, PlanetProgression_Items.SATELLITE_ROCKET, 1, "satellite_rocket");
+		}
+	}
+
+	@Override
+	public void registerVariants() {
+
+	}
+
+	@Override
+	public void registerBlockJsons() {
+		if (Config.researchMode == 2 || Config.researchMode == 3) {
+			ClientUtilities.registerBlockJson(Constants.TEXTURE_PREFIX, PlanetProgression_Blocks.SATTLLITE_BUILDER);
+			ClientUtilities.registerBlockJson(Constants.TEXTURE_PREFIX, PlanetProgression_Blocks.SATTLLITE_CONTROLLER);
+		}
+	}
+
+	public void registerItemJsons() {
+		if (Config.researchMode == 2)
+			ClientUtilities.registerItemJson(Constants.TEXTURE_PREFIX, PlanetProgression_Items.satelliteBasicModule);
+		ClientUtilities.registerItemJson(Constants.TEXTURE_PREFIX, PlanetProgression_Items.researchPapers);
+	}
+
+	public void renderBlocksTileEntitySpecialRenderers() {
+		ClientUtilities.registerTileEntityRenderer(TileEntityTelescope.class, new TileEntityTelescopeRenderer());
+	}
+
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	public void onModelBakeEvent(ModelBakeEvent event) {
-		ClientUtilities.replaceModelDefault(Constants.modID, event, "telescope",
+		ClientUtilities.replaceModelDefaultBlock(Constants.modID, event, "telescope",
 				ImmutableList.of("Eyes_lens", "first_leg_tripod", "Body_Teleskope", "Primary_lens", "two__leg_tripod", "third_leg_tripod", "Stand", "swivel_ground", "small_gear", "Big_gear"), ItemModelTelescope.class);
 
 		if (Config.researchMode == 2 || Config.researchMode == 3)
@@ -90,37 +109,21 @@ public class ClientProxy extends CommonProxy {
 					ItemModelSatellite.class);
 	}
 
-	private void registerCustomModel() {
-		ClientUtilities.registerModel(Constants.TEXTURE_PREFIX, PlanetProgression_Blocks.TELESCOPE, "telescope");
-		if (Config.researchMode == 2)
-			ClientUtilities.registerModel(Constants.TEXTURE_PREFIX, PlanetProgression_Items.satelliteBasic, "basic_satellite");
+	@SubscribeEvent
+	public void registerModels(ModelRegistryEvent event) {
+		// Register Variants
+		registerVariants();
 
-		if (Config.researchMode == 2 || Config.researchMode == 3) {
-			ModelResourceLocation modelResourceLocation = new ModelResourceLocation(Constants.TEXTURE_PREFIX + "satellite_rocket", "inventory");
-			for (int i = 1; i < 2; ++i) {
-				ClientUtilities.registerModel(PlanetProgression_Items.SATELLITE_ROCKET, i, modelResourceLocation);
-			}
-		}
-	}
+		// Register Custom Models
+		registerCustomModel();
 
-	private void registerVariants() {
+		// Register TileEntity Special Renderers
+		renderBlocksTileEntitySpecialRenderers();
 
-	}
+		// Register Block Json Files
+		registerBlockJsons();
 
-	private void registerBlockJsons() {
-		if (Config.researchMode == 2 || Config.researchMode == 3) {
-			ClientUtilities.registerBlockJson(Constants.TEXTURE_PREFIX, PlanetProgression_Blocks.SATTLLITE_BUILDER);
-			ClientUtilities.registerBlockJson(Constants.TEXTURE_PREFIX, PlanetProgression_Blocks.SATTLLITE_CONTROLLER);
-		}
-	}
-
-	private void registerItemJsons() {
-		if (Config.researchMode == 2)
-			ClientUtilities.registerItemJson(Constants.TEXTURE_PREFIX, PlanetProgression_Items.satelliteBasicModule);
-		ClientUtilities.registerItemJson(Constants.TEXTURE_PREFIX, PlanetProgression_Items.researchPapers);
-	}
-
-	private void renderBlocksTileEntitySpecialRenderers() {
-		ClientUtilities.registerTileEntityRenderer(TileEntityTelescope.class, new TileEntityTelescopeRenderer());
+		// Register Item Json Files
+		registerItemJsons();
 	}
 }
