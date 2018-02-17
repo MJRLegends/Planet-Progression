@@ -1,7 +1,5 @@
 package com.mjr.planetprogression.inventory;
 
-import com.mjr.planetprogression.recipes.SatelliteRocketRecipes;
-
 import micdoodle8.mods.galacticraft.core.inventory.SlotRocketBenchResult;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -14,6 +12,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+
+import com.mjr.planetprogression.recipes.SatelliteRocketRecipes;
 
 public class ContainerSchematicSatelliteRocket extends Container {
 	public InventorySchematicSatelliteRocket craftMatrix = new InventorySchematicSatelliteRocket(this);
