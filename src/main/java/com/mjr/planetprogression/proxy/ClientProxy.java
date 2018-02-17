@@ -3,6 +3,7 @@ package com.mjr.planetprogression.proxy;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraftforge.client.event.ModelBakeEvent;
+import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -88,6 +89,23 @@ public class ClientProxy extends CommonProxy {
 			ClientUtilities.replaceModelDefault(Constants.modID, event, "basic_satellite", ImmutableList.of("solar_panel3", "solar_panel_side_007", "solar_panel_side_004", "joint3", "body_satellite", "solar_panel_side_002", "joint1", "joint2",
 					"solar_panel_side_006", "solar_panel1", "solar_panel2", "solar_panel4", "solar_panel_side_005", "solar_panel_side_003", "antenn", "solar_panel_side_008", "satellite_dish2", "joint4", "solar_panel_side_1", "satellite_dish1"),
 					ItemModelSatellite.class);
+	}
+
+	@SubscribeEvent
+	@SideOnly(Side.CLIENT)
+	public void loadTextures(TextureStitchEvent.Pre event) {
+		ClientUtilities.registerTexture(Constants.TEXTURE_PREFIX, event, "blank_rocket");
+		ClientUtilities.registerTexture(Constants.TEXTURE_PREFIX, event, "blank_rocket_black");
+		ClientUtilities.registerTexture(Constants.TEXTURE_PREFIX, event, "blank_rocket_blue_textured");
+		ClientUtilities.registerTexture(Constants.TEXTURE_PREFIX, event, "blank_rocket_dark_grey");
+		ClientUtilities.registerTexture(Constants.TEXTURE_PREFIX, event, "blank_rocket_dark_red");
+		ClientUtilities.registerTexture(Constants.TEXTURE_PREFIX, event, "blank_rocket_grey");
+		ClientUtilities.registerTexture(Constants.TEXTURE_PREFIX, event, "blank_rocket_light_blue_textured");
+		ClientUtilities.registerTexture(Constants.TEXTURE_PREFIX, event, "blank_rocket_orange_textured");
+		ClientUtilities.registerTexture(Constants.TEXTURE_PREFIX, event, "blank_rocket_textured");
+		ClientUtilities.registerTexture(Constants.TEXTURE_PREFIX, event, "blank_rocket_white");
+		ClientUtilities.registerTexture(Constants.TEXTURE_PREFIX, event, "blank_rocket_yellow");
+		ClientUtilities.registerTexture(Constants.TEXTURE_PREFIX, event, "solar_panel");
 	}
 
 	private void registerCustomModel() {
