@@ -153,7 +153,7 @@ public class CustomGuiCelestialSelection extends GuiCelestialSelection {
 		GL11.glLineWidth(1);
 	}
 
-	private boolean drawCircle(CelestialBody body, int count, float sin, float cos) {
+	protected boolean drawCircle(CelestialBody body, int count, float sin, float cos) {
 		float x = this.getScale(body);
 		float y = 0;
 
@@ -462,9 +462,5 @@ public class CustomGuiCelestialSelection extends GuiCelestialSelection {
 		}
 
 		return matrixMap;
-	}
-
-	private boolean isZoomed() {
-		return this.selectionState == EnumSelection.ZOOMED;
 	}
 }
