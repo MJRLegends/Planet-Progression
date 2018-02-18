@@ -3,13 +3,12 @@ package com.mjr.planetprogression.client.render.entities;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
-import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -17,12 +16,11 @@ import org.lwjgl.opengl.GL11;
 
 import com.mjr.mjrlegendslib.util.ModelUtilities;
 import com.mjr.planetprogression.Constants;
-import com.mjr.planetprogression.client.model.ItemModelSatelliteRocket;
 import com.mjr.planetprogression.entities.EntitySatelliteRocket;
 
 @SideOnly(Side.CLIENT)
 public class RenderSatelliteRocket extends Render<EntitySatelliteRocket> {
-	private ItemModelSatelliteRocket rocketModel;
+	private IBakedModel rocketModel;
 
 	public RenderSatelliteRocket(RenderManager manager) {
 		super(manager);
@@ -31,8 +29,7 @@ public class RenderSatelliteRocket extends Render<EntitySatelliteRocket> {
 
 	private void updateModel() {
 		if (this.rocketModel == null) {
-			ModelResourceLocation modelResourceLocation = new ModelResourceLocation(Constants.TEXTURE_PREFIX + "satellite_rocket", "inventory");
-			this.rocketModel = (ItemModelSatelliteRocket) FMLClientHandler.instance().getClient().getRenderItem().getItemModelMesher().getModelManager().getModel(modelResourceLocation);
+			this.rocketModel = ModelUtilities.getModelFromRegistry(Constants.TEXTURE_PREFIX, "satellite_rocket");
 		}
 	}
 
@@ -70,11 +67,11 @@ public class RenderSatelliteRocket extends Render<EntitySatelliteRocket> {
 
 		GlStateManager.scale(-1.0F, -1.0F, 1.0F);
 		GlStateManager.scale(0.3F, 0.3F, 0.3F);
-        GlStateManager.pushMatrix();
-        GlStateManager.rotate(-60.0F, 1.0F, 1.0F, 1.0F);
-        GlStateManager.rotate(165.0F, -14.0F, 0.0F, 0.0F);
-        RenderHelper.enableStandardItemLighting();
-        GlStateManager.popMatrix();
+		GlStateManager.pushMatrix();
+		GlStateManager.rotate(-60.0F, 1.0F, 1.0F, 1.0F);
+		GlStateManager.rotate(165.0F, -14.0F, 0.0F, 0.0F);
+		RenderHelper.enableStandardItemLighting();
+		GlStateManager.popMatrix();
 
 		ModelUtilities.drawBakedModel(this.rocketModel);
 		GlStateManager.popMatrix();

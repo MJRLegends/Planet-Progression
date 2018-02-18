@@ -3,41 +3,31 @@ package com.mjr.planetprogression.client.render.tile;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.model.ModelLoaderRegistry;
-import net.minecraftforge.client.model.obj.OBJModel;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import org.lwjgl.opengl.GL11;
 
-import com.google.common.base.Function;
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
 import com.mjr.mjrlegendslib.util.ModelUtilities;
 import com.mjr.planetprogression.Constants;
 import com.mjr.planetprogression.tileEntities.TileEntityTelescope;
 
 @SideOnly(Side.CLIENT)
 public class TileEntityTelescopeRenderer extends TileEntitySpecialRenderer<TileEntityTelescope> {
-	private static OBJModel.OBJBakedModel telescope;
-	private static OBJModel.OBJBakedModel telescopeLens;
+	private IBakedModel telescope;
+	private IBakedModel telescopeLens;
 
-	@SuppressWarnings("deprecation")
 	private void updateModels() {
 		if (telescope == null) {
 			try {
-				OBJModel model = (OBJModel) ModelLoaderRegistry.getModel(new ResourceLocation(Constants.ASSET_PREFIX, "telescope.obj"));
-				model = (OBJModel) model.process(ImmutableMap.of("flip-v", "true"));
-
-				Function<ResourceLocation, TextureAtlasSprite> spriteFunction = location -> Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(location.toString());
-				telescope = (OBJModel.OBJBakedModel) model.bake(new OBJModel.OBJState(ImmutableList.of("first_leg_tripod", "Body_Teleskope", "two__leg_tripod", "third_leg_tripod", "Stand", "swivel_ground", "small_gear", "Big_gear"), false),
-						DefaultVertexFormats.ITEM, spriteFunction);
-				telescopeLens = (OBJModel.OBJBakedModel) model.bake(new OBJModel.OBJState(ImmutableList.of("Eyes_lens", "Primary_lens"), false), DefaultVertexFormats.ITEM, spriteFunction);
+				this.telescope = ModelUtilities.modelFromOBJForge(new ResourceLocation(Constants.ASSET_PREFIX, "telescope.obj"),
+						ImmutableList.of("first_leg_tripod", "Body_Teleskope", "two__leg_tripod", "third_leg_tripod", "Stand", "swivel_ground", "small_gear", "Big_gear"));
+				this.telescopeLens = ModelUtilities.modelFromOBJForge(new ResourceLocation(Constants.ASSET_PREFIX, "telescope.obj"), ImmutableList.of("Eyes_lens", "Primary_lens"));
 			} catch (Exception e) {
 				throw new RuntimeException(e);
 			}
@@ -62,11 +52,11 @@ public class TileEntityTelescopeRenderer extends TileEntitySpecialRenderer<TileE
 		GL11.glRotatef(te.currentRotation, 0.0F, 1.0F, 0.0F);
 		GL11.glScalef(0.04F, 0.04F, 0.04F);
 
-		ModelUtilities.drawBakedModel(telescope);
+		ModelUtilities.drawBakedModel(this.telescope);
 
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glBlendFunc(GL11.GL_ONE, GL11.GL_ONE);
-		ModelUtilities.drawBakedModel(telescopeLens);
+		ModelUtilities.drawBakedModel(this.telescopeLens);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		GL11.glDisable(GL11.GL_BLEND);
 		GL11.glPopMatrix();
