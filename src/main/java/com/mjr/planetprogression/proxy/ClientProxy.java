@@ -129,7 +129,7 @@ public class ClientProxy extends CommonProxy {
 		ClientUtilities.registerTexture(Constants.TEXTURE_PREFIX, event, "blank_rocket_yellow");
 		ClientUtilities.registerTexture(Constants.TEXTURE_PREFIX, event, "solar_panel");
 	}
-	
+
 	@SubscribeEvent
 	public void registerModels(ModelRegistryEvent event) {
 		// Register Variants

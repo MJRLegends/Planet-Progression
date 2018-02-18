@@ -153,6 +153,7 @@ public class CustomGuiCelestialSelection extends GuiCelestialSelection {
 		GL11.glLineWidth(1);
 	}
 
+	@Override
 	protected boolean drawCircle(CelestialBody body, int count, float sin, float cos) {
 		float x = this.getScale(body);
 		float y = 0;
