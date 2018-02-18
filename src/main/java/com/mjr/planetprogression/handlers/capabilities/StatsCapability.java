@@ -86,7 +86,8 @@ public class StatsCapability implements IStatsCapability {
 					int l = nbttagcompound.getInteger("dataAmount");
 					if (j == "")
 						j = UUID.randomUUID().toString();
-					this.satellites.add(new SatelliteData(k, j, l, new ItemStack(nbt.getCompoundTag("currentResearchItem"))));
+					NBTTagCompound tag = nbt.getCompoundTag("currentResearchItem");
+					this.satellites.add(new SatelliteData(k, j, l, new ItemStack(tag).getUnlocalizedName().contains("air") ? null : new ItemStack(tag)));
 				}
 			}
 
