@@ -3,11 +3,11 @@ package com.mjr.planetprogression.handlers.capabilities;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
-import com.mjr.planetprogression.data.SatelliteData;
-
 import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
+
+import com.mjr.planetprogression.data.SatelliteData;
 
 public interface IStatsCapability {
 
@@ -26,7 +26,7 @@ public interface IStatsCapability {
 	void setUnlockedPlanets(ArrayList<CelestialBody> unlockedPlanets);
 
 	void addUnlockedPlanets(CelestialBody unlockedPlanet);
-	
+
 	ArrayList<SatelliteData> getSatellites();
 
 	void setSatellites(ArrayList<SatelliteData> satellites);

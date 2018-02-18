@@ -18,10 +18,9 @@ public class WorldGenStructure extends WorldGenerator {
 
 	@Override
 	public boolean generate(World world, Random rand, BlockPos position) {
-		if (WorldGenUtilities.checkValidSpawn(world, position, 14) == false){
+		if (WorldGenUtilities.checkValidSpawn(world, position, 14) == false) {
 			return false;
-		}
-		else {
+		} else {
 			generateStructure(world, rand, position);
 			fillChests(world, rand, position);
 		}

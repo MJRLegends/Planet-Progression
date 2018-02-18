@@ -23,7 +23,7 @@ public class ContainerSatelliteBuilder extends Container {
 		this.addSlotToContainer(new Slot(tileEntity, 2, 47, 31)); // Solar Panel Part
 		this.addSlotToContainer(new Slot(tileEntity, 3, 74, 31)); // Satellite Module
 		this.addSlotToContainer(new Slot(tileEntity, 4, 115, 31)); // Output
-		
+
 		int var3;
 
 		for (var3 = 0; var3 < 3; ++var3) {
