@@ -99,7 +99,7 @@ public class ClientProxy extends CommonProxy {
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	public void onModelBakeEvent(ModelBakeEvent event) {
-		ClientUtilities.replaceModelDefaultBlock(Constants.modID, event, "telescope",
+		ClientUtilities.replaceModelDefault(Constants.modID, event, "telescope",
 				ImmutableList.of("Eyes_lens", "first_leg_tripod", "Body_Teleskope", "Primary_lens", "two__leg_tripod", "third_leg_tripod", "Stand", "swivel_ground", "small_gear", "Big_gear"), ItemModelTelescope.class);
 
 		if (Config.researchMode == 2 || Config.researchMode == 3)
