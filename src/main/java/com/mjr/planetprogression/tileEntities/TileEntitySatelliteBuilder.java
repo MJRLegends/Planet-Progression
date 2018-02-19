@@ -110,7 +110,7 @@ public class TileEntitySatelliteBuilder extends TileBaseElectricBlockWithInvento
 			}
 			this.decrStackSize(1, 12);
 			this.decrStackSize(2, 12);
-			this.decrStackSize(3, 1);
+			this.decrStackSize(3, 6);
 		}
 	}
 
