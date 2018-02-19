@@ -5,6 +5,11 @@
 
 
 ===========================================Released Updates===========================================
+v0.1.2
+*Fixed issue #2
+*Fixed issue #3
+*Fixed issue #4
+
 v0.1.1
 *Tweaks to Custom Celestial Selection screen to match GC changes
 *Fixed issue #1
