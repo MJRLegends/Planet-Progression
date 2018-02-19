@@ -5,6 +5,10 @@
 
 
 ===========================================Released Updates===========================================
+v0.1.2
+*Fixed issue #2
+*Fixed issue #3
+
 v0.1.1
 *Tweaks/Clean up for rendering models
 *Tweaks to Custom Celestial Selection screen to match GC changes
