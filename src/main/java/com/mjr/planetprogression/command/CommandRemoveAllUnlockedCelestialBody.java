@@ -22,8 +22,8 @@ import com.mojang.authlib.GameProfile;
 public class CommandRemoveAllUnlockedCelestialBody extends CommandBase {
 
 	@Override
-	public String getUsage(ICommandSender var1) {
-		return "/" + this.getName() + " <player>";
+	public String getCommandUsage(ICommandSender sender) {
+		return "/" + this.getCommandName() + " <player>";
 	}
 
 	@Override
@@ -32,7 +32,7 @@ public class CommandRemoveAllUnlockedCelestialBody extends CommandBase {
 	}
 
 	@Override
-	public String getName() {
+	public String getCommandName() {
 		return "removeAllUnlockedCelestialBody";
 	}
 
@@ -52,8 +52,8 @@ public class CommandRemoveAllUnlockedCelestialBody extends CommandBase {
 					stats = playerToAddFor.getCapability(CapabilityStatsHandler.PP_STATS_CAPABILITY, null);
 				}
 				stats.setUnlockedPlanets(new ArrayList<CelestialBody>());
-				playerToAddFor.sendMessage(new TextComponentString("All your all Planets & Moons have been removed from your discovered list!"));
-				playerBase.sendMessage(new TextComponentString(EnumColor.AQUA + "You have removeed all Planets & Moons! from the discovered list for: " + gameprofile.getName()));
+				playerToAddFor.addChatMessage(new TextComponentString("All your all Planets & Moons have been removed from your discovered list!"));
+				playerBase.addChatMessage(new TextComponentString(EnumColor.AQUA + "You have removeed all Planets & Moons! from the discovered list for: " + gameprofile.getName()));
 
 			} catch (final Exception var6) {
 				throw new CommandException(var6.getMessage(), new Object[0]);
@@ -62,8 +62,8 @@ public class CommandRemoveAllUnlockedCelestialBody extends CommandBase {
 	}
 
 	@Override
-	public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args, BlockPos pos) {
-		return args.length == 1 ? getListOfStringsMatchingLastWord(args, server.getOnlinePlayerNames()) : null;
+	public List<String> getTabCompletionOptions(MinecraftServer server, ICommandSender sender, String[] args, BlockPos pos) {
+		return args.length == 1 ? getListOfStringsMatchingLastWord(args, server.getAllUsernames()) : null;
 	}
 
 	@Override

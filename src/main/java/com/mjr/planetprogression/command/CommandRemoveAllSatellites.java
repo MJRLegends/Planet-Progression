@@ -22,8 +22,8 @@ import com.mojang.authlib.GameProfile;
 public class CommandRemoveAllSatellites extends CommandBase {
 
 	@Override
-	public String getUsage(ICommandSender var1) {
-		return "/" + this.getName() + " <player>";
+	public String getCommandUsage(ICommandSender sender) {
+		return "/" + this.getCommandName() + " <player>";
 	}
 
 	@Override
@@ -32,7 +32,7 @@ public class CommandRemoveAllSatellites extends CommandBase {
 	}
 
 	@Override
-	public String getName() {
+	public String getCommandName() {
 		return "removeAllSatellites";
 	}
 
@@ -52,8 +52,8 @@ public class CommandRemoveAllSatellites extends CommandBase {
 					stats = playerToAddFor.getCapability(CapabilityStatsHandler.PP_STATS_CAPABILITY, null);
 				}
 				stats.setSatellites(new ArrayList<SatelliteData>());
-				playerToAddFor.sendMessage(new TextComponentString(EnumColor.RED + "All your satellites have been deleted!"));
-				playerBase.sendMessage(new TextComponentString(EnumColor.AQUA + "You have remove all of : " + gameprofile.getName() + "'s satellites"));
+				playerToAddFor.addChatMessage(new TextComponentString(EnumColor.RED + "All your satellites have been deleted!"));
+				playerBase.addChatMessage(new TextComponentString(EnumColor.AQUA + "You have remove all of : " + gameprofile.getName() + "'s satellites"));
 			} catch (final Exception var6) {
 				throw new CommandException(var6.getMessage(), new Object[0]);
 			}
@@ -61,8 +61,8 @@ public class CommandRemoveAllSatellites extends CommandBase {
 	}
 
 	@Override
-	public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args, BlockPos pos) {
-		return args.length == 1 ? getListOfStringsMatchingLastWord(args, server.getOnlinePlayerNames()) : null;
+	public List<String> getTabCompletionOptions(MinecraftServer server, ICommandSender sender, String[] args, BlockPos pos) {
+		return args.length == 1 ? getListOfStringsMatchingLastWord(args, server.getAllUsernames()) : null;
 	}
 
 	@Override

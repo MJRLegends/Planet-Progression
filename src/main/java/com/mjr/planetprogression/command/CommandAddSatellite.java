@@ -22,8 +22,8 @@ import com.mojang.authlib.GameProfile;
 public class CommandAddSatellite extends CommandBase {
 
 	@Override
-	public String getUsage(ICommandSender var1) {
-		return "/" + this.getName() + " <player>";
+	public String getCommandUsage(ICommandSender sender) {
+		return "/" + this.getCommandName() + " <player>";
 	}
 
 	@Override
@@ -32,7 +32,7 @@ public class CommandAddSatellite extends CommandBase {
 	}
 
 	@Override
-	public String getName() {
+	public String getCommandName() {
 		return "addNewSatellite";
 	}
 
@@ -53,8 +53,8 @@ public class CommandAddSatellite extends CommandBase {
 				}
 				String id = UUID.randomUUID().toString();
 				stats.addSatellites(new SatelliteData(0, id, 0, null));
-				playerToAddFor.sendMessage(new TextComponentString(EnumColor.RED + "Satellite: " + id + " has been launched in to space!"));
-				playerBase.sendMessage(new TextComponentString(EnumColor.AQUA + "You have launched a satellite in to space! for: " + gameprofile.getName() + " with id: " + id));
+				playerToAddFor.addChatMessage(new TextComponentString(EnumColor.RED + "Satellite: " + id + " has been launched in to space!"));
+				playerBase.addChatMessage(new TextComponentString(EnumColor.AQUA + "You have launched a satellite in to space! for: " + gameprofile.getName() + " with id: " + id));
 			} catch (final Exception var6) {
 				throw new CommandException(var6.getMessage(), new Object[0]);
 			}
@@ -62,8 +62,8 @@ public class CommandAddSatellite extends CommandBase {
 	}
 
 	@Override
-	public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args, BlockPos pos) {
-		return args.length == 1 ? getListOfStringsMatchingLastWord(args, server.getOnlinePlayerNames()) : null;
+	public List<String> getTabCompletionOptions(MinecraftServer server, ICommandSender sender, String[] args, BlockPos pos) {
+		return args.length == 1 ? getListOfStringsMatchingLastWord(args, server.getAllUsernames()) : null;
 	}
 
 	@Override

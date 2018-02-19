@@ -23,8 +23,8 @@ import com.mojang.authlib.GameProfile;
 public class CommandUnlockAllCelestialBody extends CommandBase {
 
 	@Override
-	public String getUsage(ICommandSender var1) {
-		return "/" + this.getName() + " <player>";
+	public String getCommandUsage(ICommandSender sender) {
+		return "/" + this.getCommandName() + " <player>";
 	}
 
 	@Override
@@ -33,7 +33,7 @@ public class CommandUnlockAllCelestialBody extends CommandBase {
 	}
 
 	@Override
-	public String getName() {
+	public String getCommandName() {
 		return "unlockAllCelestialBodies";
 	}
 
@@ -56,15 +56,15 @@ public class CommandUnlockAllCelestialBody extends CommandBase {
 				for (Planet planet : GalaxyRegistry.getRegisteredPlanets().values()) {
 					if (!stats.getUnlockedPlanets().contains(planet)) {
 						stats.addUnlockedPlanets(planet);
-						playerToAddFor.sendMessage(new TextComponentString("Research Completed! You have unlocked " + planet.getLocalizedName()));
-						playerBase.sendMessage(new TextComponentString(EnumColor.AQUA + "You have discovered " + planet.getLocalizedName() + "! for: " + gameprofile.getName()));
+						playerToAddFor.addChatMessage(new TextComponentString("Research Completed! You have unlocked " + planet.getLocalizedName()));
+						playerBase.addChatMessage(new TextComponentString(EnumColor.AQUA + "You have discovered " + planet.getLocalizedName() + "! for: " + gameprofile.getName()));
 					}
 				}
 				for (Moon moon : GalaxyRegistry.getRegisteredMoons().values()) {
 					if (!stats.getUnlockedPlanets().contains(moon)) {
 						stats.addUnlockedPlanets(moon);
-						playerToAddFor.sendMessage(new TextComponentString("Research Completed! You have discovered " + moon.getLocalizedName()));
-						playerBase.sendMessage(new TextComponentString(EnumColor.AQUA + "You have discovered " + moon.getLocalizedName() + "! for: " + gameprofile.getName()));
+						playerToAddFor.addChatMessage(new TextComponentString("Research Completed! You have discovered " + moon.getLocalizedName()));
+						playerBase.addChatMessage(new TextComponentString(EnumColor.AQUA + "You have discovered " + moon.getLocalizedName() + "! for: " + gameprofile.getName()));
 					}
 				}
 
@@ -75,8 +75,8 @@ public class CommandUnlockAllCelestialBody extends CommandBase {
 	}
 
 	@Override
-	public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args, BlockPos pos) {
-		return args.length == 1 ? getListOfStringsMatchingLastWord(args, server.getOnlinePlayerNames()) : null;
+	public List<String> getTabCompletionOptions(MinecraftServer server, ICommandSender sender, String[] args, BlockPos pos) {
+		return args.length == 1 ? getListOfStringsMatchingLastWord(args, server.getAllUsernames()) : null;
 	}
 
 	@Override

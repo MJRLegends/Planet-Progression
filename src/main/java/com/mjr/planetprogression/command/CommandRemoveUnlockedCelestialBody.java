@@ -24,8 +24,8 @@ import com.mojang.authlib.GameProfile;
 public class CommandRemoveUnlockedCelestialBody extends CommandBase {
 
 	@Override
-	public String getUsage(ICommandSender var1) {
-		return "/" + this.getName() + " <player> <celestialBodyName>";
+	public String getCommandUsage(ICommandSender sender) {
+		return "/" + this.getCommandName() + " <player> <celestialBodyName>";
 	}
 
 	@Override
@@ -34,7 +34,7 @@ public class CommandRemoveUnlockedCelestialBody extends CommandBase {
 	}
 
 	@Override
-	public String getName() {
+	public String getCommandName() {
 		return "removeUnlockedCelestialBody";
 	}
 
@@ -59,8 +59,8 @@ public class CommandRemoveUnlockedCelestialBody extends CommandBase {
 				for (CelestialBody temp : stats.getUnlockedPlanets()) {
 					if (var4.equalsIgnoreCase(temp.getLocalizedName())) {
 						stats.removeUnlockedPlanets(temp);
-						playerToAddFor.sendMessage(new TextComponentString(var4 + " has been removed from your discovered list!"));
-						playerBase.sendMessage(new TextComponentString(EnumColor.AQUA + "You have remove " + var4 + "! from the discovered list for: " + gameprofile.getName()));
+						playerToAddFor.addChatMessage(new TextComponentString(var4 + " has been removed from your discovered list!"));
+						playerBase.addChatMessage(new TextComponentString(EnumColor.AQUA + "You have remove " + var4 + "! from the discovered list for: " + gameprofile.getName()));
 					}
 				}
 
@@ -71,9 +71,9 @@ public class CommandRemoveUnlockedCelestialBody extends CommandBase {
 	}
 
 	@Override
-	public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args, BlockPos pos) {
+	public List<String> getTabCompletionOptions(MinecraftServer server, ICommandSender sender, String[] args, BlockPos pos) {
 		if (args.length == 1)
-			return getListOfStringsMatchingLastWord(args, server.getOnlinePlayerNames());
+			return getListOfStringsMatchingLastWord(args, server.getAllUsernames());
 		else if (args.length == 2) {
 			String[] array = new String[PlanetProgression_Items.researchPapers.size()];
 			int i = 0;
