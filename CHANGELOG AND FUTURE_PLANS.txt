@@ -8,6 +8,7 @@
 v0.1.2
 *Fixed issue #2
 *Fixed issue #3
+*Fixed Satellite Controller giving you a paper with wrong metadata
 
 v0.1.1
 *Tweaks/Clean up for rendering models
