@@ -1,8 +1,19 @@
-TODO = Not yet done
-===========================================Not yet Released Updates===========================================
- 
- 
-===============================================Released Updates===============================================
+========================================Not Released Updates==========================================
+
+======================================================================================================
+
+
+
+===========================================Released Updates===========================================
+v0.1.2
+*Tweaks/Clean up for rendering models
+*Tweaks to Custom Celestial Selection screen to match GC changes
+*Refactored some rendering code to MJRLegendsLib
+*Changed JEI Support Icons from being letters to item icons
+*Clean up/Fixed formatting
+*Set required GC version requirement to Build 138
+*Set required MJRLegendsLib version requirement to v1.0.5
+
 v0.1.1
 *Fixed config option being on by default
 *Added a creative tab for items and blocks
