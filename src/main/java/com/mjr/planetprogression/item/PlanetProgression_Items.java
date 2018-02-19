@@ -25,6 +25,7 @@ public class PlanetProgression_Items {
 	public static Item SATELLITE_ROCKET;
 
 	public static List<String> bodies = new ArrayList<String>();
+	public static List<String> bodiesExtra = new ArrayList<String>();
 
 	public static void init() {
 		initItems();
@@ -42,14 +43,18 @@ public class PlanetProgression_Items {
 		bodies.add("Moon");
 		bodies.add("Mars");
 		bodies.add("Venus");
-		bodies.add("Mercury");
 		bodies.add("Asteroids");
-		bodies.add("Jupiter");
-		bodies.add("Saturn");
-		bodies.add("Uranus");
-		bodies.add("Neptune");
+		bodiesExtra.add("Mercury");
+		bodiesExtra.add("Jupiter");
+		bodiesExtra.add("Saturn");
+		bodiesExtra.add("Uranus");
+		bodiesExtra.add("Neptune");
 
 		int temp = 0;
+		for (String planet : bodies) {
+			if (!planet.equalsIgnoreCase("overworld"))
+				researchPapers.add(new ResearchPaper(planet, temp++));
+		}
 		for (Planet planet : GalaxyRegistry.getRegisteredPlanets().values()) {
 			if (!planet.getUnlocalizedName().contains("overworld"))
 				researchPapers.add(new ResearchPaper(planet.getLocalizedName(), temp++));
@@ -59,7 +64,7 @@ public class PlanetProgression_Items {
 		}
 
 		boolean found = false;
-		for (String tempBody : bodies) {
+		for (String tempBody : bodiesExtra) {
 			if (researchPapers.size() == 0)
 				found = true;
 
