@@ -103,31 +103,26 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 									temp.add(sat.getCurrentResearchItem());
 							}
 							if (temp.size() != PlanetProgression_Items.researchPapers.size()) {
-								boolean match = false;
 								for (int i = 0; i < PlanetProgression_Items.researchPapers.size(); i++) {
-									match = false;
 									ItemStack newItem = new ItemStack(PlanetProgression_Items.researchPapers.get(i), 1, 0);
 									if (temp.size() == 0) {
 										this.producingStack = newItem;
 										this.currentSatellite.setCurrentResearchItem(this.producingStack);
 										return;
 									} else {
-										for (ItemStack oldItem : temp) {
-											if (!match) {
-												if (oldItem.getMetadata() != newItem.getMetadata()) {
-													match = false;
-												} else {
-													match = true;
-													break;
-												}
+										boolean contains = false;
+										for (int j = 0; j < temp.size(); j++) {
+											if (!contains) {
+												if (!temp.get(j).getUnlocalizedName().equalsIgnoreCase(newItem.getUnlocalizedName()))
+													contains = false;
+												else
+													contains = true;
 											}
 										}
-										if (!match) {
+										if (!contains) {
 											this.producingStack = newItem;
 											this.currentSatellite.setCurrentResearchItem(this.producingStack);
-											return;
 										}
-										match = false;
 									}
 								}
 							}
