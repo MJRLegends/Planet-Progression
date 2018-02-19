@@ -18,6 +18,7 @@ import net.minecraftforge.fml.common.event.FMLFingerprintViolationEvent;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -27,6 +28,7 @@ import com.mjr.mjrlegendslib.util.RegisterUtilities;
 import com.mjr.planetprogression.blocks.PlanetProgression_Blocks;
 import com.mjr.planetprogression.client.gui.GuiHandler;
 import com.mjr.planetprogression.client.handlers.capabilities.CapabilityStatsClientHandler;
+import com.mjr.planetprogression.command.CommandAddSatellite;
 import com.mjr.planetprogression.entities.EntitySatelliteRocket;
 import com.mjr.planetprogression.handlers.MainHandlerServer;
 import com.mjr.planetprogression.handlers.capabilities.CapabilityStatsHandler;
@@ -144,6 +146,11 @@ public class PlanetProgression {
 		@SubscribeEvent(priority = EventPriority.LOWEST)
 		public static void registerRecipesEvent(RegistryEvent.Register<IRecipe> event) {
 		}
+	}
+
+	@EventHandler
+	public void onServerStarting(FMLServerStartingEvent event) {
+		event.registerServerCommand(new CommandAddSatellite());
 	}
 
 	@EventHandler
