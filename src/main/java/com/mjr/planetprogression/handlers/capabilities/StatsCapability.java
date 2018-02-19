@@ -73,10 +73,7 @@ public class StatsCapability implements IStatsCapability {
 
 			if (this.player.get() != null) {
 				for (int i = 0; i < nbt.getTagList("Planets", 10).tagCount(); ++i) {
-					final NBTTagCompound nbttagcompound = nbt.getTagList("Planets", 10).getCompoundTagAt(i);
-
-					final String j = nbttagcompound.getString("UnlockedPlanet");
-					this.unlockedPlanets.add(GalaxyRegistry.getRegisteredPlanets().get(j));
+					this.unlockedPlanets.add(GalaxyRegistry.getCelestialBodyFromUnlocalizedName(nbt.getTagList("Planets", 10).getCompoundTagAt(i).getString("UnlockedPlanet")));
 				}
 				for (int i = 0; i < nbt.getTagList("Satellites", 10).tagCount(); ++i) {
 					final NBTTagCompound nbttagcompound = nbt.getTagList("Satellites", 10).getCompoundTagAt(i);
