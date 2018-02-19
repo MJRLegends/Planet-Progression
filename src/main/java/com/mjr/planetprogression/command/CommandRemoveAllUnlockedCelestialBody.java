@@ -1,5 +1,6 @@
 package com.mjr.planetprogression.command;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
@@ -50,13 +51,9 @@ public class CommandRemoveAllUnlockedCelestialBody extends CommandBase {
 				if (playerToAddFor != null) {
 					stats = playerToAddFor.getCapability(CapabilityStatsHandler.PP_STATS_CAPABILITY, null);
 				}
-				String name = "";
-				for (CelestialBody temp : stats.getUnlockedPlanets()) {
-					name = temp.getLocalizedName();
-					stats.removeUnlockedPlanets(temp);
-					playerToAddFor.sendMessage(new TextComponentString(name + " has been removed from your discovered list!"));
-					playerBase.sendMessage(new TextComponentString(EnumColor.AQUA + "You have remove " + name + "! from the discovered list for: " + gameprofile.getName()));
-				}
+				stats.setUnlockedPlanets(new ArrayList<CelestialBody>());
+				playerToAddFor.sendMessage(new TextComponentString("All your all Planets & Moons have been removed from your discovered list!"));
+				playerBase.sendMessage(new TextComponentString(EnumColor.AQUA + "You have removeed all Planets & Moons! from the discovered list for: " + gameprofile.getName()));
 
 			} catch (final Exception var6) {
 				throw new CommandException(var6.getMessage(), new Object[0]);
