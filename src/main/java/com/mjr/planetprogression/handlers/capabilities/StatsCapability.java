@@ -128,4 +128,14 @@ public class StatsCapability implements IStatsCapability {
 	public void addSatellites(SatelliteData satellites) {
 		this.satellites.add(satellites);
 	}
+	
+	@Override
+	public void removeSatellites(SatelliteData satellites) {
+		this.satellites.remove(satellites);
+	}
+	
+	@Override
+	public void removeUnlockedPlanets(CelestialBody unlockedPlanet) {
+		this.unlockedPlanets.remove(unlockedPlanet);
+	}
 }

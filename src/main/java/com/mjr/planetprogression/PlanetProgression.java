@@ -30,6 +30,8 @@ import com.mjr.planetprogression.client.gui.GuiHandler;
 import com.mjr.planetprogression.client.handlers.capabilities.CapabilityStatsClientHandler;
 import com.mjr.planetprogression.command.CommandAddSatellite;
 import com.mjr.planetprogression.command.CommandRemoveAllSatellites;
+import com.mjr.planetprogression.command.CommandRemoveAllUnlockedCelestialBody;
+import com.mjr.planetprogression.command.CommandRemoveUnlockedCelestialBody;
 import com.mjr.planetprogression.command.CommandUnlockAllCelestialBody;
 import com.mjr.planetprogression.command.CommandUnlockCelestialBody;
 import com.mjr.planetprogression.entities.EntitySatelliteRocket;
@@ -157,6 +159,8 @@ public class PlanetProgression {
 		event.registerServerCommand(new CommandRemoveAllSatellites());
 		event.registerServerCommand(new CommandUnlockCelestialBody());
 		event.registerServerCommand(new CommandUnlockAllCelestialBody());
+		event.registerServerCommand(new CommandRemoveUnlockedCelestialBody());
+		event.registerServerCommand(new CommandRemoveAllUnlockedCelestialBody());
 	}
 
 	@EventHandler
