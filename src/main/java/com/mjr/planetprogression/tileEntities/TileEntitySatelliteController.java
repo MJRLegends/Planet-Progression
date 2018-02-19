@@ -107,7 +107,7 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 								boolean match = false;
 								for (int i = 0; i < PlanetProgression_Items.researchPapers.size(); i++) {
 									match = false;
-									ItemStack newItem = new ItemStack(PlanetProgression_Items.researchPapers.get(i), 1, i);
+									ItemStack newItem = new ItemStack(PlanetProgression_Items.researchPapers.get(i), 1, 0);
 									if (temp.size() == 0) {
 										this.producingStack = newItem;
 										this.currentSatellite.setCurrentResearchItem(this.producingStack);
