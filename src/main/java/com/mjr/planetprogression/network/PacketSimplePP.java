@@ -3,9 +3,11 @@ package com.mjr.planetprogression.network;
 import io.netty.buffer.ByteBuf;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
 import micdoodle8.mods.galacticraft.api.galaxies.GalaxyRegistry;
 import micdoodle8.mods.galacticraft.api.galaxies.Moon;
 import micdoodle8.mods.galacticraft.api.galaxies.Planet;
@@ -130,6 +132,7 @@ public class PacketSimplePP extends PacketBase implements Packet {
 
 		switch (this.type) {
 		case C_UPDATE_UNLOCKED_PLANET_LIST:
+			stats.setUnlockedPlanets(new ArrayList<CelestialBody>());
 			for (Object o : this.data) {
 				for (Planet planet : GalaxyRegistry.getRegisteredPlanets().values()) {
 					if (((String) o).equalsIgnoreCase(planet.getUnlocalizedName()))
