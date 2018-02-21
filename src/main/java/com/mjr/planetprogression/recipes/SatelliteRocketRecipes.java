@@ -22,7 +22,7 @@ public class SatelliteRocketRecipes {
 				return recipe.getRecipeOutput();
 			}
 		}
-		return null;
+		return ItemStack.EMPTY;
 	}
 
 	public static void addSatelliteRocketRecipe(ItemStack result, HashMap<Integer, ItemStack> input) {
