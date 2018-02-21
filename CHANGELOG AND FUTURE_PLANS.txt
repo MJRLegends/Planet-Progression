@@ -8,6 +8,7 @@
 v0.1.4
 *NASA workbench slots now accept valid items from all recipes
 *Fixed issue #9
+*Set required MJRLegendsLib version requirement to v1.1.0
 
 v0.1.3
 *Added command to launch satellites for a player
