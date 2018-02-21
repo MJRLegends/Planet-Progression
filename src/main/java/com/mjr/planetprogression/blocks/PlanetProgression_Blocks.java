@@ -38,10 +38,10 @@ public class PlanetProgression_Blocks {
 	}
 
 	public static void registerBlocks() throws NoSuchMethodException {
-		RegisterUtilities.registerBlock(Constants.modID, TELESCOPE, ItemBlockTelescope.class, TELESCOPE.getUnlocalizedName().substring(5));
+		RegisterUtilities.registerBlock(TELESCOPE, ItemBlockTelescope.class, TELESCOPE.getUnlocalizedName().substring(5));
 		if (Config.researchMode == 2 || Config.researchMode == 3) {
-			RegisterUtilities.registerBlock(Constants.modID, SATTLLITE_BUILDER, ItemBlockTelescope.class, SATTLLITE_BUILDER.getUnlocalizedName().substring(5));
-			RegisterUtilities.registerBlock(Constants.modID, SATTLLITE_CONTROLLER, ItemBlockTelescope.class, SATTLLITE_CONTROLLER.getUnlocalizedName().substring(5));
+			RegisterUtilities.registerBlock(SATTLLITE_BUILDER, ItemBlockTelescope.class, SATTLLITE_BUILDER.getUnlocalizedName().substring(5));
+			RegisterUtilities.registerBlock(SATTLLITE_CONTROLLER, ItemBlockTelescope.class, SATTLLITE_CONTROLLER.getUnlocalizedName().substring(5));
 		}
 	}
 

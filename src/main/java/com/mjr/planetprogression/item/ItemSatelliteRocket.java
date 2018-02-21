@@ -17,10 +17,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.client.FMLClientHandler;
@@ -42,13 +40,13 @@ public class ItemSatelliteRocket extends Item implements IHoldableItem {
 	}
 
 	@Override
-	public EnumActionResult onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+	public boolean onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ) {
 		boolean padFound = false;
 		TileEntity tile = null;
 
 		if (worldIn.isRemote && playerIn instanceof EntityPlayerSP) {
 			ClientProxyCore.playerClientHandler.onBuild(8, (EntityPlayerSP) playerIn);
-			return EnumActionResult.FAIL;
+			return false;
 		} else {
 			float centerX = -1;
 			float centerY = -1;
@@ -82,10 +80,10 @@ public class ItemSatelliteRocket extends Item implements IHoldableItem {
 				// Check whether there is already a rocket on the pad
 				if (tile instanceof TileEntityLandingPad) {
 					if (((TileEntityLandingPad) tile).getDockedEntity() != null) {
-						return EnumActionResult.FAIL;
+						return false;
 					}
 				} else {
-					return EnumActionResult.FAIL;
+					return false;
 				}
 
 				final EntitySatelliteRocket spaceship = new EntitySatelliteRocket(worldIn, centerX, centerY, centerZ, EnumRocketType.values()[stack.getItemDamage()]);
@@ -109,10 +107,10 @@ public class ItemSatelliteRocket extends Item implements IHoldableItem {
 					spaceship.fuelTank.fill(new FluidStack(GCFluids.fluidFuel, spaceship.getMaxFuel()), true);
 				}
 			} else {
-				return EnumActionResult.FAIL;
+				return false;
 			}
 		}
-		return EnumActionResult.SUCCESS;
+		return true;
 	}
 
 	@Override

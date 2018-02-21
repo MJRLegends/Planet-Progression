@@ -206,7 +206,7 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 	}
 
 	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
+	public void writeToNBT(NBTTagCompound nbt) {
 		super.writeToNBT(nbt);
 		nbt.setInteger("smeltingTicks", this.processTicks);
 		this.writeStandardItemsToNBT(nbt);
@@ -217,7 +217,6 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 		nbt.setString("owner", this.getOwner());
 		nbt.setString("ownerUsername", this.ownerUsername);
 		nbt.setBoolean("ownerOnline", false); // False to trigger for Update on Load
-		return nbt;
 	}
 
 	@Override

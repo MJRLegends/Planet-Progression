@@ -2,7 +2,6 @@ package com.mjr.planetprogression.client.handlers;
 
 import java.util.List;
 
-import micdoodle8.mods.galacticraft.core.Constants;
 import micdoodle8.mods.galacticraft.core.client.gui.screen.GuiCelestialSelection;
 import micdoodle8.mods.galacticraft.core.util.EnumColor;
 import net.minecraft.client.Minecraft;
@@ -18,10 +17,8 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.minecraftforge.server.permission.PermissionAPI;
 
 import com.google.common.collect.Lists;
-import com.mjr.mjrlegendslib.util.MCUtilities;
 import com.mjr.mjrlegendslib.util.TranslateUtilities;
 import com.mjr.planetprogression.blocks.PlanetProgression_Blocks;
 import com.mjr.planetprogression.client.gui.screen.CustomGuiCelestialSelection;
@@ -37,7 +34,7 @@ public class MainHandlerClient {
 	@SubscribeEvent
 	public void worldUnloadEvent(WorldEvent.Unload event) {
 		for (PlanetProgressionPacketHandler packetHandler : packetHandlers) {
-			packetHandler.unload(event.getWorld());
+			packetHandler.unload(event.world);
 		}
 	}
 
@@ -58,11 +55,11 @@ public class MainHandlerClient {
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	public void onGuiOpenEvent(GuiOpenEvent event) {
-		if (((event.getGui() instanceof GuiCelestialSelection))) {
+		if (((event.gui instanceof GuiCelestialSelection))) {
 			if (GameSettings.isKeyDown(micdoodle8.mods.galacticraft.core.tick.KeyHandlerClient.galaxyMap)) {
-				event.setGui(new CustomGuiCelestialSelection(true, null, PermissionAPI.hasPermission(MCUtilities.getMinecraft().thePlayer, Constants.PERMISSION_CREATE_STATION)));
+				event.gui = new CustomGuiCelestialSelection(true, null);
 			} else {
-				event.setGui(new CustomGuiCelestialSelection(false, null, PermissionAPI.hasPermission(MCUtilities.getMinecraft().thePlayer, Constants.PERMISSION_CREATE_STATION)));
+				event.gui = new CustomGuiCelestialSelection(false, null);
 			}
 		}
 	}
@@ -70,13 +67,13 @@ public class MainHandlerClient {
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	public void onItemTooltip(ItemTooltipEvent event) {
-		if (event.getItemStack().getItem().equals(Item.getItemFromBlock(PlanetProgression_Blocks.SATTLLITE_BUILDER)))
-			event.getToolTip().add(EnumColor.AQUA + TranslateUtilities.translate("satellite.builder.use.desc"));
-		else if (event.getItemStack().getItem().equals(Item.getItemFromBlock(PlanetProgression_Blocks.SATTLLITE_CONTROLLER))) {
-			event.getToolTip().add(EnumColor.AQUA + TranslateUtilities.translate("satellite.controller.use.desc"));
-			event.getToolTip().add(EnumColor.AQUA + TranslateUtilities.translate("satellite.controller.use.2.desc"));
-		} else if (event.getItemStack().getItem().equals(Item.getItemFromBlock(PlanetProgression_Blocks.TELESCOPE)))
-			event.getToolTip().add(EnumColor.AQUA + TranslateUtilities.translate("telescope.use.desc"));
+		if (event.itemStack.getItem().equals(Item.getItemFromBlock(PlanetProgression_Blocks.SATTLLITE_BUILDER)))
+			event.toolTip.add(EnumColor.AQUA + TranslateUtilities.translate("satellite.builder.use.desc"));
+		else if (event.itemStack.getItem().equals(Item.getItemFromBlock(PlanetProgression_Blocks.SATTLLITE_CONTROLLER))) {
+			event.toolTip.add(EnumColor.AQUA + TranslateUtilities.translate("satellite.controller.use.desc"));
+			event.toolTip.add(EnumColor.AQUA + TranslateUtilities.translate("satellite.controller.use.2.desc"));
+		} else if (event.itemStack.getItem().equals(Item.getItemFromBlock(PlanetProgression_Blocks.TELESCOPE)))
+			event.toolTip.add(EnumColor.AQUA + TranslateUtilities.translate("telescope.use.desc"));
 	}
 
 }

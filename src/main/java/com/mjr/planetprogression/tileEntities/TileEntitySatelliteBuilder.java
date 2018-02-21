@@ -122,11 +122,10 @@ public class TileEntitySatelliteBuilder extends TileBaseElectricBlockWithInvento
 	}
 
 	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
+	public void writeToNBT(NBTTagCompound nbt) {
 		super.writeToNBT(nbt);
 		nbt.setInteger("smeltingTicks", this.processTicks);
 		this.writeStandardItemsToNBT(nbt);
-		return nbt;
 	}
 
 	@Override

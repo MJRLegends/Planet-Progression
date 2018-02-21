@@ -9,14 +9,13 @@ import micdoodle8.mods.galacticraft.core.energy.item.ItemElectricBase;
 import micdoodle8.mods.galacticraft.core.energy.tile.TileBaseElectricBlockWithInventory;
 import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 import micdoodle8.mods.miccore.Annotations.NetworkedField;
+import net.minecraft.client.audio.SoundCategory;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.fml.relauncher.Side;
 
 import com.mjr.mjrlegendslib.util.PlayerUtilties;
@@ -92,7 +91,7 @@ public class TileEntityTelescope extends TileBaseElectricBlockWithInventory impl
 				if (((ResearchPaper) this.containingItems[1].getItem()).getPlanet().equalsIgnoreCase(planet.getLocalizedName())) {
 					if (!stats.getUnlockedPlanets().contains(planet)) {
 						stats.addUnlockedPlanets(planet);
-						player.addChatMessage(new TextComponentString("Research Completed! You have unlocked " + planet.getLocalizedName()));
+						player.addChatMessage(new ChatComponentText("Research Completed! You have unlocked " + planet.getLocalizedName()));
 						this.containingItems[1] = null;
 						found = true;
 						break;
@@ -104,7 +103,7 @@ public class TileEntityTelescope extends TileBaseElectricBlockWithInventory impl
 					if (((ResearchPaper) this.containingItems[1].getItem()).getPlanet().equalsIgnoreCase(moon.getLocalizedName())) {
 						if (!stats.getUnlockedPlanets().contains(moon)) {
 							stats.addUnlockedPlanets(moon);
-							player.addChatMessage(new TextComponentString("Research Completed! You have discovered " + moon.getLocalizedName()));
+							player.addChatMessage(new ChatComponentText("Research Completed! You have discovered " + moon.getLocalizedName()));
 							this.containingItems[1] = null;
 							break;
 						}
@@ -146,7 +145,7 @@ public class TileEntityTelescope extends TileBaseElectricBlockWithInventory impl
 	}
 
 	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
+	public void writeToNBT(NBTTagCompound nbt) {
 		super.writeToNBT(nbt);
 		nbt.setInteger("smeltingTicks", this.processTicks);
 		this.writeStandardItemsToNBT(nbt);
@@ -154,7 +153,6 @@ public class TileEntityTelescope extends TileBaseElectricBlockWithInventory impl
 		nbt.setString("ownerUsername", this.ownerUsername);
 		nbt.setFloat("currentRotation", this.currentRotation);
 		nbt.setBoolean("ownerOnline", false); // False to trigger for Update on Load
-		return nbt;
 	}
 
 	@Override

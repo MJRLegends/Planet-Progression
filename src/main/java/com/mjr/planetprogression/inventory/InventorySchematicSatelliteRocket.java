@@ -4,7 +4,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.IChatComponent;
 
 public class InventorySchematicSatelliteRocket implements IInventory {
 	private final ItemStack[] stackList;
@@ -137,7 +137,7 @@ public class InventorySchematicSatelliteRocket implements IInventory {
 	}
 
 	@Override
-	public ITextComponent getDisplayName() {
+	public IChatComponent getDisplayName() {
 		return null;
 	}
 }

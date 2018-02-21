@@ -8,7 +8,6 @@ import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.gui.IGuiItemStackGroup;
 import mezz.jei.api.gui.IRecipeLayout;
-import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.BlankRecipeCategory;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import micdoodle8.mods.galacticraft.planets.GalacticraftPlanets;
@@ -17,7 +16,7 @@ import net.minecraft.util.ResourceLocation;
 
 import com.mjr.mjrlegendslib.util.TranslateUtilities;
 
-public class SatelliteRocketRecipeCategory extends BlankRecipeCategory<IRecipeWrapper> {
+public class SatelliteRocketRecipeCategory extends BlankRecipeCategory {
 	private static final ResourceLocation rocketGuiTexture = new ResourceLocation(GalacticraftPlanets.ASSET_PREFIX, "textures/gui/schematic_rocket_t3_recipe.png");
 
 	@Nonnull
@@ -89,10 +88,5 @@ public class SatelliteRocketRecipeCategory extends BlankRecipeCategory<IRecipeWr
 			}
 			itemstacks.setFromRecipe(21, rocketRecipeWrapper.getOutputs());
 		}
-	}
-
-	@Override
-	public void setRecipe(IRecipeLayout recipeLayout, IRecipeWrapper recipeWrapper, IIngredients ingredients) {
-		this.setRecipe(recipeLayout, recipeWrapper);
 	}
 }

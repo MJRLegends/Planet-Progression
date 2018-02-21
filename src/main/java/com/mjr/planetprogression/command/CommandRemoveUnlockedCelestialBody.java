@@ -11,8 +11,8 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.ChatComponentText;
 
 import com.mjr.mjrlegendslib.util.PlayerUtilties;
 import com.mjr.planetprogression.handlers.capabilities.CapabilityStatsHandler;
@@ -39,14 +39,14 @@ public class CommandRemoveUnlockedCelestialBody extends CommandBase {
 	}
 
 	@Override
-	public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
+	public void processCommand(ICommandSender sender, String[] args) throws CommandException {
 		String var3 = null;
 		String var4 = null;
 		EntityPlayerMP playerBase = null;
 		if (args.length > 0) {
 			var3 = args[0];
 			var4 = args[1];
-			GameProfile gameprofile = server.getPlayerProfileCache().getGameProfileForUsername(var3);
+			GameProfile gameprofile = MinecraftServer.getServer().getPlayerProfileCache().getGameProfileForUsername(var3);
 
 			EntityPlayerMP playerToAddFor = PlayerUtilties.getPlayerFromUUID(gameprofile.getId());
 			try {
@@ -59,8 +59,8 @@ public class CommandRemoveUnlockedCelestialBody extends CommandBase {
 				for (CelestialBody temp : stats.getUnlockedPlanets()) {
 					if (var4.equalsIgnoreCase(temp.getLocalizedName())) {
 						stats.removeUnlockedPlanets(temp);
-						playerToAddFor.addChatMessage(new TextComponentString(var4 + " has been removed from your discovered list!"));
-						playerBase.addChatMessage(new TextComponentString(EnumColor.AQUA + "You have remove " + var4 + "! from the discovered list for: " + gameprofile.getName()));
+						playerToAddFor.addChatMessage(new ChatComponentText(var4 + " has been removed from your discovered list!"));
+						playerBase.addChatMessage(new ChatComponentText(EnumColor.AQUA + "You have remove " + var4 + "! from the discovered list for: " + gameprofile.getName()));
 					}
 				}
 
@@ -71,9 +71,9 @@ public class CommandRemoveUnlockedCelestialBody extends CommandBase {
 	}
 
 	@Override
-	public List<String> getTabCompletionOptions(MinecraftServer server, ICommandSender sender, String[] args, BlockPos pos) {
+	public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos) {
 		if (args.length == 1)
-			return getListOfStringsMatchingLastWord(args, server.getAllUsernames());
+			return getListOfStringsMatchingLastWord(args, MinecraftServer.getServer().getAllUsernames());
 		else if (args.length == 2) {
 			String[] array = new String[PlanetProgression_Items.researchPapers.size()];
 			int i = 0;

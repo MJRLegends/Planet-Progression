@@ -8,9 +8,9 @@ import micdoodle8.mods.galacticraft.core.util.ClientUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType;
-import net.minecraftforge.common.model.TRSRTransformation;
+import net.minecraftforge.client.model.IFlexibleBakedModel;
+import net.minecraftforge.client.model.TRSRTransformation;
 
 import org.lwjgl.opengl.GL11;
 
@@ -18,7 +18,7 @@ import com.mjr.mjrlegendslib.client.model.ModelTransformWrapper;
 import com.mjr.planetprogression.Constants;
 
 public class ItemModelSatelliteRocket extends ModelTransformWrapper {
-	public ItemModelSatelliteRocket(IBakedModel modelToWrap) {
+	public ItemModelSatelliteRocket(IFlexibleBakedModel modelToWrap) {
 		super(modelToWrap);
 	}
 
@@ -36,7 +36,7 @@ public class ItemModelSatelliteRocket extends ModelTransformWrapper {
 			ret.setIdentity();
 			Matrix4f mul = new Matrix4f();
 			mul.setIdentity();
-			Quat4f rot = TRSRTransformation.quatFromXYZDegrees(new Vector3f(30, 225, 0));
+			Quat4f rot = TRSRTransformation.quatFromYXZDegrees(new Vector3f(30, 225, 0));
 			mul.setRotation(rot);
 			ret.mul(mul);
 			mul.setIdentity();
@@ -78,7 +78,7 @@ public class ItemModelSatelliteRocket extends ModelTransformWrapper {
 			ret.setIdentity();
 			Matrix4f mul = new Matrix4f();
 			mul.setIdentity();
-			Quat4f rot = TRSRTransformation.quatFromXYZDegrees(new Vector3f(0, 45, 0));
+			Quat4f rot = TRSRTransformation.quatFromYXZDegrees(new Vector3f(0, 45, 0));
 			mul.setRotation(rot);
 			ret.mul(mul);
 			mul.setIdentity();
@@ -110,7 +110,7 @@ public class ItemModelSatelliteRocket extends ModelTransformWrapper {
 			ret.setIdentity();
 			Matrix4f mul = new Matrix4f();
 			mul.setIdentity();
-			Quat4f rot = TRSRTransformation.quatFromXYZDegrees(new Vector3f(0, 45, 0));
+			Quat4f rot = TRSRTransformation.quatFromYXZDegrees(new Vector3f(0, 45, 0));
 			mul.setRotation(rot);
 			ret.mul(mul);
 			mul.setIdentity();
@@ -142,7 +142,7 @@ public class ItemModelSatelliteRocket extends ModelTransformWrapper {
 			ret.setIdentity();
 			Matrix4f mul = new Matrix4f();
 			mul.setIdentity();
-			Quat4f rot = TRSRTransformation.quatFromXYZDegrees(new Vector3f(75, 15, 0));
+			Quat4f rot = TRSRTransformation.quatFromYXZDegrees(new Vector3f(75, 15, 0));
 			mul.setRotation(rot);
 			ret.mul(mul);
 			mul.setIdentity();

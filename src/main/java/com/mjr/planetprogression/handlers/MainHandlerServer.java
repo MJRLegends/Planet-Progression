@@ -11,13 +11,9 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.WorldServer;
-import net.minecraft.world.storage.loot.LootEntryItem;
-import net.minecraft.world.storage.loot.conditions.LootCondition;
-import net.minecraft.world.storage.loot.functions.LootFunction;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
-import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -54,7 +50,7 @@ public class MainHandlerServer {
 	@SubscribeEvent
 	public void worldUnloadEvent(WorldEvent.Unload event) {
 		for (PlanetProgressionPacketHandler packetHandler : packetHandlers) {
-			packetHandler.unload(event.getWorld());
+			packetHandler.unload(event.world);
 		}
 	}
 
@@ -71,9 +67,9 @@ public class MainHandlerServer {
 
 	@SubscribeEvent
 	public void onPlayerCloned(PlayerEvent.Clone event) {
-		if (event.isWasDeath()) {
-			IStatsCapability oldStats = event.getOriginal().getCapability(CapabilityStatsHandler.PP_STATS_CAPABILITY, null);
-			IStatsCapability newStats = event.getEntityPlayer().getCapability(CapabilityStatsHandler.PP_STATS_CAPABILITY, null);
+		if (event.wasDeath) {
+			IStatsCapability oldStats = event.original.getCapability(CapabilityStatsHandler.PP_STATS_CAPABILITY, null);
+			IStatsCapability newStats = event.entityPlayer.getCapability(CapabilityStatsHandler.PP_STATS_CAPABILITY, null);
 
 			newStats.copyFrom(oldStats, false);
 		}
@@ -82,8 +78,8 @@ public class MainHandlerServer {
 	@SuppressWarnings("unused")
 	@SubscribeEvent
 	public void onEntityDealth(LivingDeathEvent event) {
-		if (event.getEntity() instanceof EntityPlayerMP) {
-			final EntityLivingBase entityLiving = event.getEntityLiving();
+		if (event.entity instanceof EntityPlayerMP) {
+			final EntityLivingBase entityLiving = event.entityLiving;
 			IStatsCapability stats = null;
 
 			if (entityLiving != null) {
@@ -93,7 +89,7 @@ public class MainHandlerServer {
 	}
 
 	@SubscribeEvent
-	public void onAttachCapability(AttachCapabilitiesEvent<Entity> event) {
+	public void onAttachCapability(AttachCapabilitiesEvent.Entity event) {
 		if (event.getObject() instanceof EntityPlayerMP) {
 			event.addCapability(CapabilityStatsHandler.PP_PLAYER_PROP, new CapabilityProviderStats((EntityPlayerMP) event.getObject()));
 		} else if (event.getObject() instanceof EntityPlayer && ((EntityPlayer) event.getObject()).worldObj.isRemote) {
@@ -102,15 +98,15 @@ public class MainHandlerServer {
 	}
 
 	@SideOnly(Side.CLIENT)
-	private void onAttachCapabilityClient(AttachCapabilitiesEvent<Entity> event) {
+	private void onAttachCapabilityClient(AttachCapabilitiesEvent.Entity event) {
 		if (event.getObject() instanceof EntityPlayerSP)
 			event.addCapability(CapabilityStatsClientHandler.PP_PLAYER_CLIENT_PROP, new CapabilityProviderStatsClient((EntityPlayerSP) event.getObject()));
 	}
 
 	@SubscribeEvent
 	public void onEntityUpdate(LivingEvent.LivingUpdateEvent event) {
-		if (event.getEntityLiving() instanceof EntityPlayerMP) {
-			final EntityPlayerMP player = (EntityPlayerMP) event.getEntityLiving();
+		if (event.entityLiving instanceof EntityPlayerMP) {
+			final EntityPlayerMP player = (EntityPlayerMP) event.entityLiving;
 			int tick = player.ticksExisted - 1;
 
 			IStatsCapability stats = player.getCapability(CapabilityStatsHandler.PP_STATS_CAPABILITY, null);
@@ -121,7 +117,7 @@ public class MainHandlerServer {
 			}
 			if (!stats.getUnlockedPlanets().contains(GalacticraftCore.planetOverworld)) {
 				stats.addUnlockedPlanets(GalacticraftCore.planetOverworld);
-				player.addChatMessage(new TextComponentString("You have discovered Earth!"));
+				player.addChatMessage(new ChatComponentText("You have discovered Earth!"));
 			}
 		}
 	}
@@ -140,7 +136,7 @@ public class MainHandlerServer {
 					planets[i] = "";
 			}
 		}
-		PlanetProgression.packetPipeline.sendTo(new PacketSimplePP(EnumSimplePacket.C_UPDATE_UNLOCKED_PLANET_LIST, player.worldObj.provider.getDimensionType().getId(), new Object[] { planets }), player);
+		PlanetProgression.packetPipeline.sendTo(new PacketSimplePP(EnumSimplePacket.C_UPDATE_UNLOCKED_PLANET_LIST, player.worldObj.provider.getDimensionId(), new Object[] { planets }), player);
 	}
 
 	public static void sendSatellitePacket(EntityPlayerMP player, IStatsCapability stats) {
@@ -149,7 +145,7 @@ public class MainHandlerServer {
 			String uuid = sat.getUuid();
 			int dataAmount = sat.getDataAmount();
 			ItemStack item = sat.getCurrentResearchItem();
-			PlanetProgression.packetPipeline.sendTo(new PacketSimplePP(EnumSimplePacket.C_UPDATE_SATELLITE_LIST, player.worldObj.provider.getDimensionType().getId(), new Object[] { type, uuid, dataAmount,
+			PlanetProgression.packetPipeline.sendTo(new PacketSimplePP(EnumSimplePacket.C_UPDATE_SATELLITE_LIST, player.worldObj.provider.getDimensionId(), new Object[] { type, uuid, dataAmount,
 					(item == null ? "null" : (Constants.modID + ":" + item.getUnlocalizedName().substring(5) + ":" + item.getMetadata())) }), player);
 		}
 	}

@@ -20,12 +20,12 @@ public class PlanetProgression_Recipes {
 	}
 
 	private static void registerRecipes() {
-		RecipeUtilities.addShapedRecipe(new ItemStack(PlanetProgression_Blocks.TELESCOPE), new Object[] { "TDT", "SGS", "TDT", 'T', new ItemStack(GCItems.basicItem, 1, 7), 'D', new ItemStack(Blocks.DIAMOND_BLOCK), 'G',
-				new ItemStack(Blocks.GLASS_PANE), 'S', new ItemStack(GCItems.basicItem, 1, 8) });
+		RecipeUtilities.addShapedRecipe(new ItemStack(PlanetProgression_Blocks.TELESCOPE), new Object[] { "TDT", "SGS", "TDT", 'T', new ItemStack(GCItems.basicItem, 1, 7), 'D', new ItemStack(Blocks.diamond_block), 'G',
+				new ItemStack(Blocks.glass_pane), 'S', new ItemStack(GCItems.basicItem, 1, 8) });
 		if (Config.researchMode == 2) {
 			MachineRecipeManager.addRecipe(new ItemStack(PlanetProgression_Items.satelliteBasic), new ItemStack[] { new ItemStack(GCItems.basicItem, 12, 1), new ItemStack(GCItems.basicItem, 12, 1),
 					new ItemStack(PlanetProgression_Items.satelliteBasicModule, 6, 0) });
-			RecipeUtilities.addShapedRecipe(new ItemStack(PlanetProgression_Items.satelliteBasicModule), new Object[] { "WAW", "CGC", "WAW", 'G', new ItemStack(Items.DYE, 1, 2), 'C', new ItemStack(GCItems.basicItem, 1, 10), 'A',
+			RecipeUtilities.addShapedRecipe(new ItemStack(PlanetProgression_Items.satelliteBasicModule), new Object[] { "WAW", "CGC", "WAW", 'G', new ItemStack(Items.dye, 1, 2), 'C', new ItemStack(GCItems.basicItem, 1, 10), 'A',
 					new ItemStack(GCItems.basicItem, 1, 14), 'W', new ItemStack(GCBlocks.aluminumWire, 1, 1) });
 		}
 		if (Config.researchMode == 2 || Config.researchMode == 3) {

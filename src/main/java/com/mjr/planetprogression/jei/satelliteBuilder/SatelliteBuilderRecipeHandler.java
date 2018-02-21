@@ -21,11 +21,6 @@ public class SatelliteBuilderRecipeHandler implements IRecipeHandler<SatelliteBu
 		return RecipeCategories.SATELLITE_BUILDER_ID;
 	}
 
-	@Override
-	public String getRecipeCategoryUid(SatelliteBuilderRecipeWrapper recipe) {
-		return this.getRecipeCategoryUid();
-	}
-
 	@Nonnull
 	@Override
 	public IRecipeWrapper getRecipeWrapper(@Nonnull SatelliteBuilderRecipeWrapper recipe) {

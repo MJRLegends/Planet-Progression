@@ -8,31 +8,21 @@ import micdoodle8.mods.galacticraft.api.prefab.entity.EntityTieredRocket;
 import micdoodle8.mods.galacticraft.api.tile.IFuelDock;
 import micdoodle8.mods.galacticraft.api.vector.Vector3;
 import micdoodle8.mods.galacticraft.api.world.IGalacticraftWorldProvider;
-import micdoodle8.mods.galacticraft.api.world.IOrbitDimension;
-import micdoodle8.mods.galacticraft.core.GCBlocks;
 import micdoodle8.mods.galacticraft.core.GalacticraftCore;
-import micdoodle8.mods.galacticraft.core.blocks.BlockLandingPadFull;
 import micdoodle8.mods.galacticraft.core.entities.player.GCCapabilities;
 import micdoodle8.mods.galacticraft.core.entities.player.GCPlayerStats;
-import micdoodle8.mods.galacticraft.core.event.EventLandingPadRemoval;
 import micdoodle8.mods.galacticraft.core.tile.TileEntityLandingPad;
 import micdoodle8.mods.galacticraft.core.util.ConfigManagerCore;
 import micdoodle8.mods.galacticraft.core.util.EnumColor;
 import micdoodle8.mods.galacticraft.core.util.PlayerUtil;
-import net.minecraft.block.Block;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
-import net.minecraftforge.common.MinecraftForge;
 
 import com.mjr.mjrlegendslib.util.TranslateUtilities;
 import com.mjr.planetprogression.data.SatelliteData;
@@ -64,7 +54,7 @@ public class EntitySatelliteRocket extends EntityTieredRocket {
 	}
 
 	@Override
-	public ItemStack getPickedResult(RayTraceResult target) {
+	public ItemStack getPickedResult(MovingObjectPosition target) {
 		return new ItemStack(PlanetProgression_Items.SATELLITE_ROCKET, 1, this.rocketType.getIndex());
 	}
 
@@ -84,92 +74,23 @@ public class EntitySatelliteRocket extends EntityTieredRocket {
 	}
 
 	@Override
-	public void onLaunch() {
-		if (!(this.worldObj.provider.getDimension() == GalacticraftCore.planetOverworld.getDimensionID() || this.worldObj.provider instanceof IGalacticraftWorldProvider)) {
-			if (ConfigManagerCore.disableRocketLaunchAllNonGC) {
-				this.cancelLaunch();
-				return;
-			}
-
-			// No rocket flight in the Nether, the End etc
-			for (int i = ConfigManagerCore.disableRocketLaunchDimensions.length - 1; i >= 0; i--) {
-				if (ConfigManagerCore.disableRocketLaunchDimensions[i] == this.worldObj.provider.getDimension()) {
-					this.cancelLaunch();
-					return;
-				}
-			}
-
-		}
-
-		super.onLaunch();
-
-		if (!this.worldObj.isRemote) {
-			GCPlayerStats stats = null;
-
-			if (!this.getPassengers().isEmpty() && this.getPassengers().get(0) instanceof EntityPlayerMP) {
-				EntityPlayerMP player = (EntityPlayerMP) this.getPassengers().get(0);
-				stats = GCPlayerStats.get(player);
-
-				if (!(this.worldObj.provider instanceof IOrbitDimension)) {
-					stats.setCoordsTeleportedFromX(player.posX);
-					stats.setCoordsTeleportedFromZ(player.posZ);
-				}
-			}
-
-			int amountRemoved = 0;
-
-			PADSEARCH: for (int x = MathHelper.floor_double(this.posX) - 1; x <= MathHelper.floor_double(this.posX) + 1; x++) {
-				for (int y = MathHelper.floor_double(this.posY) - 3; y <= MathHelper.floor_double(this.posY) + 1; y++) {
-					for (int z = MathHelper.floor_double(this.posZ) - 1; z <= MathHelper.floor_double(this.posZ) + 1; z++) {
-						BlockPos pos = new BlockPos(x, y, z);
-						final Block block = this.worldObj.getBlockState(pos).getBlock();
-
-						if (block != null && block instanceof BlockLandingPadFull) {
-							if (amountRemoved < 9) {
-								EventLandingPadRemoval event = new EventLandingPadRemoval(this.worldObj, pos);
-								MinecraftForge.EVENT_BUS.post(event);
-
-								if (event.allow) {
-									this.worldObj.setBlockToAir(pos);
-									amountRemoved = 9;
-								}
-								break PADSEARCH;
-							}
-						}
-					}
-				}
-			}
-
-			// Set the player's launchpad item for return on landing - or null if launchpads not removed
-			if (stats != null) {
-				stats.setLaunchpadStack(new ItemStack(GCBlocks.landingPad, 9, 0));
-			}
-
-			this.playSound(SoundEvents.ENTITY_ITEM_PICKUP, 0.2F, ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.7F + 1.0F) * 2.0F);
-		}
-	}
-
-	@Override
 	public void onReachAtmosphere() {
 		// Not launch controlled
 		if (!this.worldObj.isRemote) {
-			for (Entity e : this.getPassengers()) {
-				if (e instanceof EntityPlayerMP) {
-					EntityPlayerMP player = (EntityPlayerMP) e;
+			if (this.riddenByEntity instanceof EntityPlayerMP) {
+				EntityPlayerMP player = (EntityPlayerMP) this.riddenByEntity;
+				this.onTeleport(player);
 
-					this.onTeleport(player);
-
-					for (ItemStack item : this.cargoItems) {
-						if (item != null) {
-							if (item.getItem() instanceof ItemSatellite) {
-								IStatsCapability stats = null;
-								if (player != null) {
-									stats = player.getCapability(CapabilityStatsHandler.PP_STATS_CAPABILITY, null);
-								}
-								String id = UUID.randomUUID().toString();
-								stats.addSatellites(new SatelliteData(((ItemSatellite) item.getItem()).getType(), id, 0, null));
-								player.addChatMessage(new TextComponentString(EnumColor.RED + "Satellite: " + id + " has been launched in to space!"));
+				for (ItemStack item : this.cargoItems) {
+					if (item != null) {
+						if (item.getItem() instanceof ItemSatellite) {
+							IStatsCapability stats = null;
+							if (player != null) {
+								stats = player.getCapability(CapabilityStatsHandler.PP_STATS_CAPABILITY, null);
 							}
+							String id = UUID.randomUUID().toString();
+							stats.addSatellites(new SatelliteData(((ItemSatellite) item.getItem()).getType(), id, 0, null));
+							player.addChatMessage(new ChatComponentText(EnumColor.RED + "Satellite: " + id + " has been launched in to space!"));
 						}
 					}
 				}
@@ -290,8 +211,6 @@ public class EntitySatelliteRocket extends EntityTieredRocket {
 	}
 
 	private void makeFlame(double x2, double y2, double z2, Vector3 motionVec, boolean getLaunched) {
-		EntityLivingBase riddenByEntity = this.getPassengers().isEmpty() || !(this.getPassengers().get(0) instanceof EntityLivingBase) ? null : (EntityLivingBase) this.getPassengers().get(0);
-
 		if (getLaunched) {
 			GalacticraftCore.proxy.spawnParticle("launchFlameLaunched", new Vector3(x2 + 0.4 - this.rand.nextDouble() / 10, y2, z2 + 0.4 - this.rand.nextDouble() / 10), motionVec, new Object[] { riddenByEntity });
 			GalacticraftCore.proxy.spawnParticle("launchFlameLaunched", new Vector3(x2 - 0.4 + this.rand.nextDouble() / 10, y2, z2 + 0.4 - this.rand.nextDouble() / 10), motionVec, new Object[] { riddenByEntity });

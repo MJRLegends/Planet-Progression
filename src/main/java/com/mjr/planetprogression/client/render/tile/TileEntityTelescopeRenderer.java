@@ -3,10 +3,10 @@ package com.mjr.planetprogression.client.render.tile;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.model.IFlexibleBakedModel;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -19,8 +19,8 @@ import com.mjr.planetprogression.tileEntities.TileEntityTelescope;
 
 @SideOnly(Side.CLIENT)
 public class TileEntityTelescopeRenderer extends TileEntitySpecialRenderer<TileEntityTelescope> {
-	private IBakedModel telescope;
-	private IBakedModel telescopeLens;
+	private IFlexibleBakedModel telescope;
+	private IFlexibleBakedModel telescopeLens;
 
 	private void updateModels() {
 		if (telescope == null) {
@@ -39,7 +39,7 @@ public class TileEntityTelescopeRenderer extends TileEntitySpecialRenderer<TileE
 		GL11.glPushMatrix();
 
 		RenderHelper.enableStandardItemLighting();
-		this.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
+		this.bindTexture(TextureMap.locationBlocksTexture);
 		if (Minecraft.isAmbientOcclusionEnabled()) {
 			GlStateManager.shadeModel(GL11.GL_SMOOTH);
 		} else {

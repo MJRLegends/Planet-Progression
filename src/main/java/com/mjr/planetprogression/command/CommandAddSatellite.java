@@ -10,8 +10,8 @@ import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.ChatComponentText;
 
 import com.mjr.mjrlegendslib.util.PlayerUtilties;
 import com.mjr.planetprogression.data.SatelliteData;
@@ -37,12 +37,12 @@ public class CommandAddSatellite extends CommandBase {
 	}
 
 	@Override
-	public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
+	public void processCommand(ICommandSender sender, String[] args) throws CommandException {
 		String var3 = null;
 		EntityPlayerMP playerBase = null;
 		if (args.length > 0) {
 			var3 = args[0];
-			GameProfile gameprofile = server.getPlayerProfileCache().getGameProfileForUsername(var3);
+			GameProfile gameprofile = MinecraftServer.getServer().getPlayerProfileCache().getGameProfileForUsername(var3);
 
 			EntityPlayerMP playerToAddFor = PlayerUtilties.getPlayerFromUUID(gameprofile.getId());
 			try {
@@ -53,8 +53,8 @@ public class CommandAddSatellite extends CommandBase {
 				}
 				String id = UUID.randomUUID().toString();
 				stats.addSatellites(new SatelliteData(0, id, 0, null));
-				playerToAddFor.addChatMessage(new TextComponentString(EnumColor.RED + "Satellite: " + id + " has been launched in to space!"));
-				playerBase.addChatMessage(new TextComponentString(EnumColor.AQUA + "You have launched a satellite in to space! for: " + gameprofile.getName() + " with id: " + id));
+				playerToAddFor.addChatMessage(new ChatComponentText(EnumColor.RED + "Satellite: " + id + " has been launched in to space!"));
+				playerBase.addChatMessage(new ChatComponentText(EnumColor.AQUA + "You have launched a satellite in to space! for: " + gameprofile.getName() + " with id: " + id));
 			} catch (final Exception var6) {
 				throw new CommandException(var6.getMessage(), new Object[0]);
 			}
@@ -62,8 +62,8 @@ public class CommandAddSatellite extends CommandBase {
 	}
 
 	@Override
-	public List<String> getTabCompletionOptions(MinecraftServer server, ICommandSender sender, String[] args, BlockPos pos) {
-		return args.length == 1 ? getListOfStringsMatchingLastWord(args, server.getAllUsernames()) : null;
+	public List<String> addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos) {
+		return args.length == 1 ? getListOfStringsMatchingLastWord(args, MinecraftServer.getServer().getAllUsernames()) : null;
 	}
 
 	@Override

@@ -6,9 +6,9 @@ import javax.vecmath.Vector3f;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType;
-import net.minecraftforge.common.model.TRSRTransformation;
+import net.minecraftforge.client.model.IFlexibleBakedModel;
+import net.minecraftforge.client.model.TRSRTransformation;
 
 import org.lwjgl.opengl.GL11;
 
@@ -16,7 +16,7 @@ import com.mjr.mjrlegendslib.client.model.ModelTransformWrapper;
 import com.mjr.planetprogression.Constants;
 
 public class ItemModelSatellite extends ModelTransformWrapper {
-	public ItemModelSatellite(IBakedModel modelToWrap) {
+	public ItemModelSatellite(IFlexibleBakedModel modelToWrap) {
 		super(modelToWrap);
 	}
 
@@ -52,7 +52,7 @@ public class ItemModelSatellite extends ModelTransformWrapper {
 			ret.setIdentity();
 			Matrix4f mul = new Matrix4f();
 			mul.setIdentity();
-			Quat4f rot = TRSRTransformation.quatFromXYZDegrees(new Vector3f(120, 25, -20));
+			Quat4f rot = TRSRTransformation.quatFromYXZDegrees(new Vector3f(120, 25, -20));
 			mul.setRotation(rot);
 			ret.mul(mul);
 			mul.setIdentity();
@@ -84,7 +84,7 @@ public class ItemModelSatellite extends ModelTransformWrapper {
 			ret.setIdentity();
 			Matrix4f mul = new Matrix4f();
 			mul.setIdentity();
-			Quat4f rot = TRSRTransformation.quatFromXYZDegrees(new Vector3f(130, 180, 10));
+			Quat4f rot = TRSRTransformation.quatFromYXZDegrees(new Vector3f(130, 180, 10));
 			mul.setRotation(rot);
 			ret.mul(mul);
 			mul.setIdentity();

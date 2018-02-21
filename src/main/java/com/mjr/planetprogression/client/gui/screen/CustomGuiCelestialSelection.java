@@ -33,8 +33,8 @@ import com.mjr.planetprogression.client.handlers.capabilities.IStatsClientCapabi
 
 public class CustomGuiCelestialSelection extends GuiCelestialSelection {
 
-	public CustomGuiCelestialSelection(boolean mapMode, List<CelestialBody> possibleBodies, boolean canCreateStations) {
-		super(mapMode, possibleBodies, canCreateStations);
+	public CustomGuiCelestialSelection(boolean mapMode, List<CelestialBody> possibleBodies) {
+		super(mapMode, possibleBodies);
 	}
 
 	@Override

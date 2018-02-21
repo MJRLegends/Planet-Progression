@@ -120,6 +120,6 @@ public class PlanetProgression {
 
 	@EventHandler
 	public void onFingerprintViolation(FMLFingerprintViolationEvent event) {
-		MessageUtilities.fatalErrorMessageToLog(Constants.modID, "Invalid fingerprint detected! The file " + event.getSource().getName() + " may have been tampered with. This version will NOT be supported!");
+		MessageUtilities.fatalErrorMessageToLog(Constants.modID, "Invalid fingerprint detected! The file " + event.source.getName() + " may have been tampered with. This version will NOT be supported!");
 	}
 }

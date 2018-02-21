@@ -3,12 +3,11 @@ package com.mjr.planetprogression.client.render.entities;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.texture.TextureMap;
+import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -16,11 +15,12 @@ import org.lwjgl.opengl.GL11;
 
 import com.mjr.mjrlegendslib.util.ModelUtilities;
 import com.mjr.planetprogression.Constants;
+import com.mjr.planetprogression.client.model.ItemModelSatelliteRocket;
 import com.mjr.planetprogression.entities.EntitySatelliteRocket;
 
 @SideOnly(Side.CLIENT)
 public class RenderSatelliteRocket extends Render<EntitySatelliteRocket> {
-	private IBakedModel rocketModel;
+	private ItemModelSatelliteRocket rocketModel;
 
 	public RenderSatelliteRocket(RenderManager manager) {
 		super(manager);
@@ -29,13 +29,13 @@ public class RenderSatelliteRocket extends Render<EntitySatelliteRocket> {
 
 	private void updateModel() {
 		if (this.rocketModel == null) {
-			this.rocketModel = ModelUtilities.getModelFromRegistry(Constants.TEXTURE_PREFIX, "satellite_rocket");
+			this.rocketModel = (ItemModelSatelliteRocket) ModelUtilities.getModelFromRegistry(Constants.TEXTURE_PREFIX, "satellite_rocket");
 		}
 	}
 
 	@Override
 	protected ResourceLocation getEntityTexture(EntitySatelliteRocket par1Entity) {
-		return TextureMap.LOCATION_BLOCKS_TEXTURE;
+		return TextureMap.locationBlocksTexture;
 	}
 
 	@Override
@@ -57,7 +57,7 @@ public class RenderSatelliteRocket extends Render<EntitySatelliteRocket> {
 		}
 
 		updateModel();
-		this.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
+		this.bindTexture(TextureMap.locationBlocksTexture);
 
 		if (Minecraft.isAmbientOcclusionEnabled()) {
 			GlStateManager.shadeModel(GL11.GL_SMOOTH);

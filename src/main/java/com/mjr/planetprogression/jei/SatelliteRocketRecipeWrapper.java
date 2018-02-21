@@ -6,7 +6,6 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
-import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.BlankRecipeWrapper;
 import mezz.jei.api.recipe.wrapper.ICraftingRecipeWrapper;
 import micdoodle8.mods.galacticraft.api.recipe.INasaWorkbenchRecipe;
@@ -33,10 +32,5 @@ public class SatelliteRocketRecipeWrapper extends BlankRecipeWrapper implements 
 	@Override
 	public List<ItemStack> getOutputs() {
 		return Collections.singletonList(recipe.getRecipeOutput());
-	}
-
-	@Override
-	public void getIngredients(IIngredients ingredients) {
-
 	}
 }

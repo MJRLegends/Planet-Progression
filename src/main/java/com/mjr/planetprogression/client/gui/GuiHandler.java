@@ -4,8 +4,8 @@ import micdoodle8.mods.galacticraft.core.util.PlayerUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.IGuiHandler;
@@ -25,7 +25,7 @@ public class GuiHandler implements IGuiHandler {
 		EntityPlayerMP playerBase = PlayerUtil.getPlayerBaseServerFromPlayer(player, false);
 
 		if (playerBase == null) {
-			player.addChatMessage(new TextComponentString("Planet Progression player instance null server-side. This is a bug."));
+			player.addChatMessage(new ChatComponentText("Planet Progression player instance null server-side. This is a bug."));
 			return null;
 		}
 
