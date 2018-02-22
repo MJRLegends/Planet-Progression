@@ -9,7 +9,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType;
-import net.minecraftforge.client.model.IFlexibleBakedModel;
+import net.minecraft.client.resources.model.IBakedModel;
 import net.minecraftforge.client.model.TRSRTransformation;
 
 import org.lwjgl.opengl.GL11;
@@ -18,7 +18,7 @@ import com.mjr.mjrlegendslib.client.model.ModelTransformWrapper;
 import com.mjr.planetprogression.Constants;
 
 public class ItemModelSatelliteRocket extends ModelTransformWrapper {
-	public ItemModelSatelliteRocket(IFlexibleBakedModel modelToWrap) {
+	public ItemModelSatelliteRocket(IBakedModel modelToWrap) {
 		super(modelToWrap);
 	}
 
