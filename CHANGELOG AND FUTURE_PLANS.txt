@@ -5,6 +5,9 @@
 
 
 ===========================================Released Updates===========================================
+v0.1.5
+*Fixed issue #10
+
 v0.1.4
 *NASA workbench slots now accept valid items from all recipes
 *Fixed issue #9
