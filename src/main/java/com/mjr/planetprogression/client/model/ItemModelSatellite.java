@@ -41,7 +41,7 @@ public class ItemModelSatellite extends ModelTransformWrapper {
 			return ret;
 		}
 
-		if (cameraTransformType == TransformType.FIRST_PERSON_RIGHT_HAND) {
+		if (cameraTransformType == TransformType.FIRST_PERSON) {
 			if (Minecraft.isAmbientOcclusionEnabled()) {
 				GlStateManager.shadeModel(GL11.GL_SMOOTH);
 			} else {
@@ -73,7 +73,7 @@ public class ItemModelSatellite extends ModelTransformWrapper {
 			return ret;
 		}
 
-		if (cameraTransformType == TransformType.THIRD_PERSON_RIGHT_HAND || cameraTransformType == TransformType.THIRD_PERSON_LEFT_HAND) {
+		if (cameraTransformType == TransformType.THIRD_PERSON) {
 			if (Minecraft.isAmbientOcclusionEnabled()) {
 				GlStateManager.shadeModel(GL11.GL_SMOOTH);
 			} else {

@@ -22,7 +22,7 @@ public class CapabilityProviderStatsClient implements ICapabilityProvider {
 	@Override
 	public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
 		if (CapabilityStatsClientHandler.PP_STATS_CLIENT_CAPABILITY != null && capability == CapabilityStatsClientHandler.PP_STATS_CLIENT_CAPABILITY) {
-			return CapabilityStatsClientHandler.PP_STATS_CLIENT_CAPABILITY.cast(statsCapability);
+			return (T) (statsCapability);
 		}
 
 		return null;

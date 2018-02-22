@@ -67,7 +67,7 @@ public class ItemModelSatelliteRocket extends ModelTransformWrapper {
 			return ret;
 		}
 
-		if (cameraTransformType == TransformType.FIRST_PERSON_RIGHT_HAND) {
+		if (cameraTransformType == TransformType.FIRST_PERSON) {
 			if (Minecraft.isAmbientOcclusionEnabled()) {
 				GlStateManager.shadeModel(GL11.GL_SMOOTH);
 			} else {
@@ -99,39 +99,7 @@ public class ItemModelSatelliteRocket extends ModelTransformWrapper {
 			return ret;
 		}
 
-		if (cameraTransformType == TransformType.FIRST_PERSON_LEFT_HAND) {
-			if (Minecraft.isAmbientOcclusionEnabled()) {
-				GlStateManager.shadeModel(GL11.GL_SMOOTH);
-			} else {
-				GlStateManager.shadeModel(GL11.GL_FLAT);
-			}
-			Vector3f trans = new Vector3f(-16.5F, 6.0F, -12.0F);
-			Matrix4f ret = new Matrix4f();
-			ret.setIdentity();
-			Matrix4f mul = new Matrix4f();
-			mul.setIdentity();
-			Quat4f rot = TRSRTransformation.quatFromYXZDegrees(new Vector3f(0, 45, 0));
-			mul.setRotation(rot);
-			ret.mul(mul);
-			mul.setIdentity();
-			mul.setScale(0.45F);
-			ret.mul(mul);
-			mul.setIdentity();
-			mul.rotX(Constants.halfPI);
-			ret.mul(mul);
-			mul.setIdentity();
-			mul.rotZ((float) (-0.65F + Math.PI));
-			ret.mul(mul);
-			mul.setIdentity();
-			mul.setTranslation(trans);
-			ret.mul(mul);
-			mul.setIdentity();
-			mul.rotX((float) (Math.PI));
-			ret.mul(mul);
-			return ret;
-		}
-
-		if (cameraTransformType == TransformType.THIRD_PERSON_RIGHT_HAND || cameraTransformType == TransformType.THIRD_PERSON_LEFT_HAND) {
+		if (cameraTransformType == TransformType.THIRD_PERSON) {
 			if (Minecraft.isAmbientOcclusionEnabled()) {
 				GlStateManager.shadeModel(GL11.GL_SMOOTH);
 			} else {

@@ -44,7 +44,7 @@ public class PlanetProgressionPacketHandler extends SimpleChannelInboundHandler<
 
 	public void unload(World world) {
 		Side side = world.isRemote ? Side.CLIENT : Side.SERVER;
-		int dimId = world.provider.getDimension();
+		int dimId = world.provider.getDimensionId();
 		Queue<PacketPlayerPair> queue = getQueue(side, dimId);
 		queue.clear();
 	}
@@ -52,7 +52,7 @@ public class PlanetProgressionPacketHandler extends SimpleChannelInboundHandler<
 	public void tick(World world) {
 		PacketPlayerPair pair;
 		Side side = world.isRemote ? Side.CLIENT : Side.SERVER;
-		int dimID = world.provider.getDimension();
+		int dimID = world.provider.getDimensionId();
 		Queue<PacketPlayerPair> queue = getQueue(side, dimID);
 		while ((pair = queue.poll()) != null) {
 			switch (side) {

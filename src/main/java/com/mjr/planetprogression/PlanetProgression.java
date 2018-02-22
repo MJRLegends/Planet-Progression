@@ -3,6 +3,9 @@ package com.mjr.planetprogression;
 import micdoodle8.mods.galacticraft.api.recipe.SchematicRegistry;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.WeightedRandomChestContent;
+import net.minecraftforge.common.ChestGenHooks;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -99,6 +102,11 @@ public class PlanetProgression {
 
 		if (Config.generateResearchPaperInStructure)
 			RegisterUtilities.registerWorldGenerator(new WorldGenerater());
+
+		if (Config.generateResearchPaperInLoot) {
+			for (Item item : PlanetProgression_Items.researchPapers)
+				ChestGenHooks.getInfo(ChestGenHooks.DUNGEON_CHEST).addItem(new WeightedRandomChestContent(new ItemStack(item), 1, 1, 50));
+		}
 
 		PlanetProgression.proxy.postInit(event);
 	}

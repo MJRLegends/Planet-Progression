@@ -5,11 +5,9 @@ import java.util.List;
 import micdoodle8.mods.galacticraft.api.recipe.SchematicRegistry;
 import micdoodle8.mods.galacticraft.core.GalacticraftCore;
 import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.WorldServer;
@@ -25,7 +23,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.google.common.collect.Lists;
-import com.mjr.planetprogression.Config;
 import com.mjr.planetprogression.Constants;
 import com.mjr.planetprogression.PlanetProgression;
 import com.mjr.planetprogression.client.handlers.capabilities.CapabilityProviderStatsClient;
@@ -34,8 +31,6 @@ import com.mjr.planetprogression.data.SatelliteData;
 import com.mjr.planetprogression.handlers.capabilities.CapabilityProviderStats;
 import com.mjr.planetprogression.handlers.capabilities.CapabilityStatsHandler;
 import com.mjr.planetprogression.handlers.capabilities.IStatsCapability;
-import com.mjr.planetprogression.item.PlanetProgression_Items;
-import com.mjr.planetprogression.item.ResearchPaper;
 import com.mjr.planetprogression.network.PacketSimplePP;
 import com.mjr.planetprogression.network.PacketSimplePP.EnumSimplePacket;
 import com.mjr.planetprogression.network.PlanetProgressionPacketHandler;
@@ -149,14 +144,4 @@ public class MainHandlerServer {
 					(item == null ? "null" : (Constants.modID + ":" + item.getUnlocalizedName().substring(5) + ":" + item.getMetadata())) }), player);
 		}
 	}
-
-	@SubscribeEvent
-	public void lootLoad(LootTableLoadEvent event) {
-		if (event.getName().toString().equals("minecraft:chests/simple_dungeon")) {
-			if (Config.generateResearchPaperInLoot)
-				for (Item item : PlanetProgression_Items.researchPapers)
-					event.getTable().getPool("main").addEntry(new LootEntryItem(item, 50, 1, new LootFunction[0], new LootCondition[0], item.getUnlocalizedName() + "_" + ((ResearchPaper) item).getPlanet()));
-		}
-	}
-
 }
