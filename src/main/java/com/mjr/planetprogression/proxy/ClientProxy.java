@@ -50,22 +50,22 @@ public class ClientProxy extends CommonProxy {
 
 	@Override
 	public void init(FMLInitializationEvent event) {
+		// Register Block Json Files
+		registerBlockJsons();
+
+		// Register TileEntity Special Renderers
+		renderBlocksTileEntitySpecialRenderers();
+
 		super.init(event);
 	}
 
 	@Override
 	public void postInit(FMLPostInitializationEvent event) {
-		// Register Block Json Files
-		registerBlockJsons();
-
 		// Register Item Json Files
 		registerItemJsons();
 
 		// Register Client Main Handler
 		RegisterUtilities.registerEventHandler(new MainHandlerClient());
-
-		// Register TileEntity Special Renderers
-		renderBlocksTileEntitySpecialRenderers();
 
 		super.postInit(event);
 	}

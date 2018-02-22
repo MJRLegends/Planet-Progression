@@ -43,7 +43,7 @@ public class ItemModelSatelliteRocket extends ModelTransformWrapper {
 			mul.setScale(0.61F);
 			ret.mul(mul);
 			mul.setIdentity();
-			mul.setTranslation(new Vector3f(-0.35F, -0.65F, -0.6F));
+			mul.setTranslation(new Vector3f(-1.5F, 0.1F, -0.5F));
 			ret.mul(mul);
 			mul.setIdentity();
 			mul.rotY(Constants.halfPI);
@@ -62,7 +62,7 @@ public class ItemModelSatelliteRocket extends ModelTransformWrapper {
 			mul.setTranslation(trans);
 			ret.mul(mul);
 			mul.setIdentity();
-			mul.setScale(0.05F);
+			mul.setScale(0.06F);
 			ret.mul(mul);
 			return ret;
 		}
@@ -73,7 +73,7 @@ public class ItemModelSatelliteRocket extends ModelTransformWrapper {
 			} else {
 				GlStateManager.shadeModel(GL11.GL_FLAT);
 			}
-			Vector3f trans = new Vector3f(2.5F, 12.0F, -12.0F);
+			Vector3f trans = new Vector3f(6.5F, 12.0F, -6.0F);
 			Matrix4f ret = new Matrix4f();
 			ret.setIdentity();
 			Matrix4f mul = new Matrix4f();
@@ -105,16 +105,16 @@ public class ItemModelSatelliteRocket extends ModelTransformWrapper {
 			} else {
 				GlStateManager.shadeModel(GL11.GL_FLAT);
 			}
-			Vector3f trans = new Vector3f(17.1F, -25.4F, 2.1F);
+			Vector3f trans = new Vector3f(9.4F, -14.4F, 0.1F);
 			Matrix4f ret = new Matrix4f();
 			ret.setIdentity();
 			Matrix4f mul = new Matrix4f();
 			mul.setIdentity();
-			Quat4f rot = TRSRTransformation.quatFromYXZDegrees(new Vector3f(75, 15, 0));
+			Quat4f rot = TRSRTransformation.quatFromYXZDegrees(new Vector3f(75, -30, 0));
 			mul.setRotation(rot);
 			ret.mul(mul);
 			mul.setIdentity();
-			mul.setScale(0.2F);
+			mul.setScale(0.5F);
 			ret.mul(mul);
 			mul.setIdentity();
 			mul.rotX((float) (Math.PI / 3.0F));
