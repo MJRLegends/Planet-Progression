@@ -36,9 +36,11 @@ public class TileEntityTelescopeRenderer extends TileEntitySpecialRenderer<TileE
 
 	@Override
 	public void renderTileEntityAt(TileEntityTelescope te, double x, double y, double z, float partialTicks, int destroyStage) {
-		GL11.glPushMatrix();
+		GlStateManager.disableRescaleNormal();
+		GlStateManager.pushMatrix();
 
-		RenderHelper.enableStandardItemLighting();
+        RenderHelper.enableStandardItemLighting();
+
 		this.bindTexture(TextureMap.locationBlocksTexture);
 		if (Minecraft.isAmbientOcclusionEnabled()) {
 			GlStateManager.shadeModel(GL11.GL_SMOOTH);
