@@ -27,16 +27,16 @@ public class ItemModelTelescope extends ModelTransformWrapper {
 			ret.setIdentity();
 			Matrix4f mul = new Matrix4f();
 			mul.setIdentity();
-			mul.setTranslation(new Vector3f(0.12F, -0.45F, 0.34F));
+			mul.setTranslation(new Vector3f(-0.3F, -0.65F, 0.2F));
 			ret.mul(mul);
 			mul.setIdentity();
 			mul.rotX((float) Math.PI / 12.0F);
 			ret.mul(mul);
 			mul.setIdentity();
-			mul.rotY((float) Math.PI / 5.0F);
+			mul.rotY((float) Math.PI / 30.0F);
 			ret.mul(mul);
 			mul.setIdentity();
-			mul.setScale(0.020F);
+			mul.setScale(0.030F);
 			ret.mul(mul);
 			return ret;
 		}
@@ -47,19 +47,19 @@ public class ItemModelTelescope extends ModelTransformWrapper {
 			} else {
 				GlStateManager.shadeModel(GL11.GL_FLAT);
 			}
-			Vector3f trans = new Vector3f(-6.0F, 10F, 26.0F);
+			Vector3f trans = new Vector3f(0.0F, 10F, 6.0F);
 			Matrix4f ret = new Matrix4f();
 			ret.setIdentity();
 			Matrix4f mul = new Matrix4f();
 			mul.setIdentity();
-			Quat4f rot = TRSRTransformation.quatFromYXZDegrees(new Vector3f(90, 95, 0));
+			Quat4f rot = TRSRTransformation.quatFromYXZDegrees(new Vector3f(140, 100, 0));
 			mul.setRotation(rot);
 			ret.mul(mul);
 			mul.setIdentity();
 			mul.setScale(0.03F);
 			ret.mul(mul);
 			mul.setIdentity();
-			mul.rotX(Constants.halfPI);
+			mul.rotX(Constants.halfPI + 1.0F);
 			ret.mul(mul);
 			mul.setIdentity();
 			mul.rotZ((float) (-0.65F + Math.PI));
@@ -68,7 +68,7 @@ public class ItemModelTelescope extends ModelTransformWrapper {
 			mul.setTranslation(trans);
 			ret.mul(mul);
 			mul.setIdentity();
-			mul.rotX((float) (Math.PI));
+			mul.rotX((float) (Math.PI - 1.0F));
 			ret.mul(mul);
 			return ret;
 		}
@@ -79,12 +79,12 @@ public class ItemModelTelescope extends ModelTransformWrapper {
 			} else {
 				GlStateManager.shadeModel(GL11.GL_FLAT);
 			}
-			Vector3f trans = new Vector3f(-19.1F, 0.4F, 0.1F);
+			Vector3f trans = new Vector3f(-9.0F, -1.5F, 2.5F);
 			Matrix4f ret = new Matrix4f();
 			ret.setIdentity();
 			Matrix4f mul = new Matrix4f();
 			mul.setIdentity();
-			Quat4f rot = TRSRTransformation.quatFromYXZDegrees(new Vector3f(95, 130, 90));
+			Quat4f rot = TRSRTransformation.quatFromYXZDegrees(new Vector3f(180, 95, 90));
 			mul.setRotation(rot);
 			ret.mul(mul);
 			mul.setIdentity();
