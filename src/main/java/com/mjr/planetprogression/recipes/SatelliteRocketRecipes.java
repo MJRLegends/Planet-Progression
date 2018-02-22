@@ -52,32 +52,32 @@ public class SatelliteRocketRecipes {
 		input.put(10, new ItemStack(GCItems.heavyPlatingTier1));
 		input.put(11, new ItemStack(GCItems.heavyPlatingTier1));
 
-		input.put(12, null); // Booster
+		input.put(12, ItemStack.EMPTY); // Booster
 		input.put(13, new ItemStack(GCItems.partFins)); // Fin
 		input.put(14, new ItemStack(GCItems.partFins)); // Fin
 		input.put(15, new ItemStack(GCItems.rocketEngine)); // Engine
-		input.put(16, null); // Booster
+		input.put(16, ItemStack.EMPTY); // Booster
 		input.put(17, new ItemStack(GCItems.partFins)); // Fin
 		input.put(18, new ItemStack(GCItems.partFins)); // Fin
-		input.put(19, null);
-		input.put(20, null);
-		input.put(21, null);
+		input.put(19, ItemStack.EMPTY);
+		input.put(20, ItemStack.EMPTY);
+		input.put(21, ItemStack.EMPTY);
 
 		HashMap<Integer, ItemStack> input2 = new HashMap<Integer, ItemStack>(input);
 		input2.put(19, new ItemStack(Blocks.CHEST));
-		input2.put(20, null);
-		input2.put(21, null);
+		input2.put(20, ItemStack.EMPTY);
+		input2.put(21, ItemStack.EMPTY);
 		SatelliteRocketRecipes.addSatelliteRocketRecipe(new NasaWorkbenchRecipe(new ItemStack(PlanetProgression_Items.SATELLITE_ROCKET, 1, 1), input2));
 
 		input2 = new HashMap<Integer, ItemStack>(input);
-		input2.put(19, null);
+		input2.put(19, ItemStack.EMPTY);
 		input2.put(20, new ItemStack(Blocks.CHEST));
-		input2.put(21, null);
+		input2.put(21, ItemStack.EMPTY);
 		SatelliteRocketRecipes.addSatelliteRocketRecipe(new NasaWorkbenchRecipe(new ItemStack(PlanetProgression_Items.SATELLITE_ROCKET, 1, 1), input2));
 
 		input2 = new HashMap<Integer, ItemStack>(input);
-		input2.put(19, null);
-		input2.put(20, null);
+		input2.put(19, ItemStack.EMPTY);
+		input2.put(20, ItemStack.EMPTY);
 		input2.put(21, new ItemStack(Blocks.CHEST));
 		SatelliteRocketRecipes.addSatelliteRocketRecipe(new NasaWorkbenchRecipe(new ItemStack(PlanetProgression_Items.SATELLITE_ROCKET, 1, 1), input2));
 	}
