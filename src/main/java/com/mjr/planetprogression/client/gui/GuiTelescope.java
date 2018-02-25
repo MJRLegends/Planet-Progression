@@ -17,6 +17,7 @@ import net.minecraftforge.fml.client.FMLClientHandler;
 
 import org.lwjgl.opengl.GL11;
 
+import com.mjr.planetprogression.Config;
 import com.mjr.planetprogression.Constants;
 import com.mjr.planetprogression.PlanetProgression;
 import com.mjr.planetprogression.inventory.ContainerTelescope;
@@ -106,9 +107,8 @@ public class GuiTelescope extends GuiContainerGC {
 		this.fontRenderer.drawString(displayString, this.xSize / 2 - this.fontRenderer.getStringWidth(displayString) / 2, 5, 4210752);
 
 		this.fontRenderer.drawString(GCCoreUtil.translate("container.inventory"), 8, 135, 4210752);
-		this.fontRenderer.drawString("Progress: " + (this.tileEntity.processTicks / 2) + " %", 5, 20, 4210752);
+		this.fontRenderer.drawString("Progress: " + ((this.tileEntity.processTicks / Config.telescopeTimeModifier) / 2) + " %", 5, 20, 4210752);
 		this.fontRenderer.drawString("Player: " + ((this.tileEntity.owner != "" && this.tileEntity.ownerOnline) ? this.tileEntity.ownerUsername : "Player is not online!"), 5, 45, 4210752);
-
 	}
 
 	@Override
