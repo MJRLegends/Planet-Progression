@@ -42,7 +42,10 @@ public class CommandRemoveUnlockedCelestialBody extends CommandBase {
 	public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
 		String var3 = null;
 		String var4 = null;
-		EntityPlayerMP playerBase = null;
+		EntityPlayerMP playerBase = PlayerUtil.getPlayerBaseServerFromPlayerUsername(sender.getName(), true);
+		if (playerBase == null) {
+            return;
+        }
 		if (args.length > 0) {
 			var3 = args[0];
 			var4 = args[1];
@@ -50,7 +53,6 @@ public class CommandRemoveUnlockedCelestialBody extends CommandBase {
 
 			EntityPlayerMP playerToAddFor = PlayerUtilties.getPlayerFromUUID(gameprofile.getId());
 			try {
-				playerBase = PlayerUtil.getPlayerBaseServerFromPlayerUsername(sender.getName(), true);
 				IStatsCapability stats = null;
 				if (playerToAddFor != null) {
 					stats = playerToAddFor.getCapability(CapabilityStatsHandler.PP_STATS_CAPABILITY, null);
