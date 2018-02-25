@@ -47,6 +47,7 @@ public class ResearchPaper extends BasicItem {
 					list.add(EnumColor.AQUA + TranslateUtilities.translate("research.paper.woldgen.desc"));
 			} else
 				list.add(EnumColor.AQUA + TranslateUtilities.translate("research.paper.satellite.controller.desc"));
+			list.add(EnumColor.BRIGHT_GREEN + TranslateUtilities.translate("research.paper.use.desc"));
 		}
 	}
 }
