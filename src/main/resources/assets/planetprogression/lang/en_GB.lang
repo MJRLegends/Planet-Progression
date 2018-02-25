@@ -77,6 +77,7 @@ satellite.use.desc=Place in Cargo of Satellite Rocket
 research.paper.loot.desc=Obtainable from Dungeon Loot
 research.paper.woldgen.desc=Obtainable from a World Gen Structure
 research.paper.satellite.controller.desc=Obtainable from Satellite Controller
+research.paper.use.desc=Use in the Telescope to discover
 
 #Entities
 entity.planetprogression.EntitySatelliteRocket.name=Satellite Rocket
