@@ -5,6 +5,15 @@
 
 
 ===========================================Released Updates===========================================
+v0.1.6
+*Made Satellites be reusable
+*Added tool tip to research papers to say where they need to be used
+*Fixed some progress issues with modifiers options in the config
+*Changed Satellite Rocket to spawn player at build height, and give rocket/rocket cargo back
+*Added extra info message when player first joins
+*Fixed/Improved compatibility with JourneyMap and other teleporting mods.
+*Fixed commands being able to ran on server consoles
+
 v0.1.5
 *Fixed issue #10
 

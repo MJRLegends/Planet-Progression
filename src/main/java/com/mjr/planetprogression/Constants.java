@@ -6,13 +6,13 @@ public class Constants {
 
 	public static final int LOCALMAJVERSION = 0;
 	public static final int LOCALMINVERSION = 1;
-	public static final int LOCALBUILDVERSION = 5;
+	public static final int LOCALBUILDVERSION = 6;
 
 	public static final String modVersion = "1.12.2" + "-" + LOCALMAJVERSION + "." + LOCALMINVERSION + "." + LOCALBUILDVERSION;
 
 	public static final String MCVERSION = "[1.12.2]";
 	public static final String DEPENDENCIES_FORGE = "required-after:forge@[13.20.1.2513,); "; // Keep the space at the end!
-	public static final String DEPENDENCIES_MODS = "required-after:mjrlegendslib@[1.12.2-1.1.0,); required-after:galacticraftcore@[4.0.1.138,); required-after:galacticraftplanets@[4.0.1.138,); after:extraplanets; after:moreplanets;";
+	public static final String DEPENDENCIES_MODS = "required-after:mjrlegendslib@[1.12.2-1.1.1,); required-after:galacticraftcore@[4.0.1.142,); required-after:galacticraftplanets@[4.0.1.142,); after:extraplanets; after:moreplanets;";
 
 	public static final String CERTIFICATEFINGERPRINT = "b02331787272ec3515ebe63ecdeea0d746653468";
 
