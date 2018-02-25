@@ -122,6 +122,7 @@ public class MainHandlerServer {
 			if (!stats.getUnlockedPlanets().contains(GalacticraftCore.planetOverworld)) {
 				stats.addUnlockedPlanets(GalacticraftCore.planetOverworld);
 				player.addChatMessage(new TextComponentString("You have discovered Earth!"));
+				player.addChatMessage(new TextComponentString("Obtain Research Papers to start discovering!"));
 			}
 		}
 	}
