@@ -68,7 +68,7 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 					// Update Controller for new Satellite (Triggers: onBlockPlaced, onWorldLoad, onDisplayedSatelliteChanged)
 					if (this.markForSatelliteUpdate) {
 						if (this.currentSatellite != null)
-							this.currentSatellite.setDataAmount(this.processTicks);
+							this.currentSatellite.setDataAmount(this.currentSatellite.getDataAmount());
 						int size = stats.getSatellites().size() == 0 ? 0 : (stats.getSatellites().size() - 1);
 						if (this.currentSatelliteNum > size)
 							this.currentSatelliteNum = size;
@@ -82,6 +82,8 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 
 					// Check Satellite does exist
 					if (this.currentSatellite != null) {
+						this.currentSatellite.setDataAmount(this.processTicks);
+
 						// Update Satellite ID for ClientSide
 						this.currentSatelliteID = (this.currentSatellite != null ? this.currentSatellite.getUuid() : "No Satellites Found!");
 
@@ -93,9 +95,11 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 								this.currentSatelliteResearchBody = ((ResearchPaper) this.currentSatellite.getCurrentResearchItem().getItem()).getPlanet();
 						}
 
-						// Check if has research item
-						if (this.currentSatellite.getCurrentResearchItem() != null)
+						// Check if has a already existing research item
+						if (this.currentSatellite.getCurrentResearchItem() != null && this.currentSatellite.getDataAmount() < TileEntitySatelliteController.PROCESS_TIME_REQUIRED)
 							this.producingStack = this.currentSatellite.getCurrentResearchItem();
+						
+						//Assign satellite without a research item with a item
 						else if (this.currentSatellite.getCurrentResearchItem() == null) {
 							List<ItemStack> temp = new ArrayList<ItemStack>();
 							for (SatelliteData sat : stats.getSatellites()) {
@@ -126,7 +130,7 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 									}
 								}
 							}
-						}
+						} 
 
 						// Processing Code
 						if (this.canProcess() && canOutput() && this.hasEnoughEnergyToRun) {
@@ -184,9 +188,46 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 					this.containingItems[1].stackSize += resultItemStack.stackSize;
 				}
 			}
-			this.currentSatellite.setDataAmount(0);
 			this.producingStack = null;
 			this.currentSatelliteResearchBody = "";
+			
+			IStatsCapability stats = null;
+			if (ownerOnline && PlayerUtilties.getPlayerFromUUID(this.owner) != null) {
+				stats = PlayerUtilties.getPlayerFromUUID(this.owner).getCapability(CapabilityStatsHandler.PP_STATS_CAPABILITY, null);
+			}
+			
+			//Change Research Item when completed the the last one
+			ItemStack oldItem = this.currentSatellite.getCurrentResearchItem();
+			List<ItemStack> temp = new ArrayList<ItemStack>();
+			for (SatelliteData sat : stats.getSatellites()) {
+				if (sat.getCurrentResearchItem() != null)
+					temp.add(sat.getCurrentResearchItem());
+			}
+			if (temp.size() != PlanetProgression_Items.researchPapers.size()) {
+				for (int i = 0; i < PlanetProgression_Items.researchPapers.size(); i++) {
+					ItemStack newItem = new ItemStack(PlanetProgression_Items.researchPapers.get(i), 1, 0);
+					if (temp.size() == 0) {
+						this.producingStack = newItem;
+						this.currentSatellite.setCurrentResearchItem(this.producingStack);
+						return;
+					} else {
+						boolean contains = false;
+						for (int j = 0; j < temp.size(); j++) {
+							if (!contains) {
+								if ((!temp.get(j).getUnlocalizedName().equalsIgnoreCase(newItem.getUnlocalizedName())) && (!newItem.getUnlocalizedName().equalsIgnoreCase(oldItem.getUnlocalizedName())))
+									contains = false;
+								else
+									contains = true;
+							}
+						}
+						if (!contains) {
+							this.producingStack = newItem;
+							this.currentSatellite.setCurrentResearchItem(this.producingStack);
+							this.currentSatellite.setDataAmount(0);
+						}
+					}
+				}
+			}
 		}
 	}
 
