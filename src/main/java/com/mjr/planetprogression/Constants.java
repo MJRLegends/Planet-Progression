@@ -12,10 +12,7 @@ public class Constants {
 
 	public static final String MCVERSION = "[1.8.9]";
 	public static final String DEPENDENCIES_FORGE = "required-after:Forge@[11.15.1.1764,);";
-	public static final String DEPENDENCIES_MODS = "required-after:galacticraftcore@[4.0.1.138,); required-after:galacticraftplanets@[4.0.1.138,); required-after:mjrlegendslib@[1.8.9-1.0.5,); after:extraplanets; after:moreplanets;"; // Keep the
-																																																											// space at
-																																																											// the end!
-
+	public static final String DEPENDENCIES_MODS = "required-after:mjrlegendslib@[1.8.9-1.0.5,); required-after:GalacticraftCore@[4.0.1.139,); required-after:GalacticraftPlanets@[4.0.1.139,); after:extraplanets; after:moreplanets;";
 	public static final String CERTIFICATEFINGERPRINT = "b02331787272ec3515ebe63ecdeea0d746653468";
 
 	public static final String ASSET_PREFIX = modID;

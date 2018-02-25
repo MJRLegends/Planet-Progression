@@ -77,7 +77,8 @@ satellite.use.desc=Placeres i Lastrummet af en Satellit raket
 research.paper.loot.desc=Kan fås fra Dungeon Loot
 research.paper.woldgen.desc=Kan fås fra  World Gen Bygninger
 research.paper.satellite.controller.desc=Kan fås fra Satellit Kontrolenhed 
-		
+research.paper.use.desc=Use in the Telescope to discover
+
 #Entities
 entity.planetprogression.EntitySatelliteRocket.name=Satellit Raket
 
