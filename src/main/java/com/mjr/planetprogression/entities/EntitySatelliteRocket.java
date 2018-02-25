@@ -170,7 +170,7 @@ public class EntitySatelliteRocket extends EntityTieredRocket {
 							}
 						}
 					}
-					TickHandlerServer.scheduleNewDimensionChange(new ScheduledDimensionChange(player, player.worldObj.provider.getDimensionType().getName()));
+					TickHandlerServer.scheduleNewDimensionChange(new ScheduledDimensionChange(player, player.world.provider.getDimensionType().getName()));
 				}
 			}
 
