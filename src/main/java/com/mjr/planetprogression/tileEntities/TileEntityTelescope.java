@@ -112,7 +112,7 @@ public class TileEntityTelescope extends TileBaseElectricBlock implements IMulti
 				if (((ResearchPaper) this.containingItems[1].getItem()).getPlanetName().equalsIgnoreCase(planet.getUnlocalizedName())) {
 					if (!stats.getUnlockedPlanets().contains(planet)) {
 						stats.addUnlockedPlanets(planet);
-						player.addChatMessage(new ChatComponentText("Research Completed! You have unlocked " + planet.getLocalizedName()));
+						player.addChatMessage(new ChatComponentText("Research Completed! You have discovered " + planet.getLocalizedName()));
 						this.containingItems[1] = null;
 						found = true;
 						break;
