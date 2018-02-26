@@ -12,7 +12,7 @@ A Galacticraft addon for Planet Research Progression
 **Any lines that need translating within the current lang files have the tag "##NEEDS TRANSLATE##"**
 
 **1.8.9, 1.10.2, 1.11.2, 1.12.2:**
-https://github.com/MJRLegends/ExtraPlanets/tree/master/src/main/resources/assets/extraplanets/lang
+https://github.com/MJRLegends/Planet-Progression/tree/master/src/main/resources/assets/planetprogression/lang
 
 **Note: All versions use the same lang file**
 
