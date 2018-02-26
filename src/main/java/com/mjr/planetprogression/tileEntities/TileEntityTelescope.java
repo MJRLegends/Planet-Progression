@@ -112,7 +112,7 @@ public class TileEntityTelescope extends TileBaseElectricBlockWithInventory impl
 				if (((ResearchPaper) this.stacks.get(1).getItem()).getPlanetName().equalsIgnoreCase(planet.getUnlocalizedName())) {
 					if (!stats.getUnlockedPlanets().contains(planet)) {
 						stats.addUnlockedPlanets(planet);
-						player.sendMessage(new TextComponentString("Research Completed! You have unlocked " + planet.getLocalizedName()));
+						player.sendMessage(new TextComponentString("Research Completed! You have discovered " + planet.getLocalizedName()));
 						this.stacks.set(1, ItemStack.EMPTY);
 						found = true;
 						break;
