@@ -113,22 +113,9 @@ public class TileEntityTelescope extends TileBaseElectricBlockWithInventory impl
 	}
 
 	private boolean canResearch() {
-		IStatsCapability stats = null;
-
-		EntityPlayerMP player = PlayerUtilties.getPlayerFromUUID(this.owner);
-
 		if (this.containingItems[1] != null && this.containingItems[1].getItem() instanceof ResearchPaper) {
-			if (player != null) {
-				stats = player.getCapability(CapabilityStatsHandler.PP_STATS_CAPABILITY, null);
-			}
-
-			if (stats != null)
-				if (stats.getUnlockedPlanets().size() != GalaxyRegistry.getRegisteredPlanets().size())
-					return true;
+			return true;
 		}
-
-		// stats.setUnlockedPlanets(new ArrayList<Planet>()); // DEBUG Tool
-
 		return false;
 	}
 
