@@ -55,7 +55,7 @@ public class CommandRemoveAllUnlockedCelestialBody extends CommandBase {
 				}
 				stats.setUnlockedPlanets(new ArrayList<CelestialBody>());
 				playerToAddFor.addChatMessage(new TextComponentString("All your all Planets & Moons have been removed from your discovered list!"));
-				playerBase.addChatMessage(new TextComponentString(EnumColor.AQUA + "You have removeed all Planets & Moons! from the discovered list for: " + gameprofile.getName()));
+				playerBase.addChatMessage(new TextComponentString(EnumColor.AQUA + "You have removed all Planets & Moons! from the discovered list for: " + gameprofile.getName()));
 
 			} catch (final Exception var6) {
 				throw new CommandException(var6.getMessage(), new Object[0]);

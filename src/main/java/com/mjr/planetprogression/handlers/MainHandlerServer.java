@@ -157,7 +157,7 @@ public class MainHandlerServer {
 		if (event.getName().toString().equals("minecraft:chests/simple_dungeon")) {
 			if (Config.generateResearchPaperInLoot)
 				for (Item item : PlanetProgression_Items.researchPapers)
-					event.getTable().getPool("main").addEntry(new LootEntryItem(item, 50, 1, new LootFunction[0], new LootCondition[0], item.getUnlocalizedName() + "_" + ((ResearchPaper) item).getPlanet()));
+					event.getTable().getPool("main").addEntry(new LootEntryItem(item, 50, 1, new LootFunction[0], new LootCondition[0], item.getUnlocalizedName() + "_" + ((ResearchPaper) item).getPlanetName()));
 		}
 	}
 
