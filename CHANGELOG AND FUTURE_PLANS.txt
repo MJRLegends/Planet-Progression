@@ -5,6 +5,9 @@
 
 
 ===========================================Released Updates===========================================
+v0.1.7
+*Fixed issue #13
+
 v0.1.6
 *Made Satellites be reusable
 *Added tool tip to research papers to say where they need to be used
