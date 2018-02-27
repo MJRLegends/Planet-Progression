@@ -5,6 +5,9 @@
 
 
 ===========================================Released Updates===========================================
+v0.1.6
+*Fixed issue #13
+
 v0.1.5
 *NASA workbench slots now accept valid items from all recipes
 *Made Satellites be reusable
