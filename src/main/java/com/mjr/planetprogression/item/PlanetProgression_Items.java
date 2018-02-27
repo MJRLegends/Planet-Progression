@@ -33,10 +33,10 @@ public class PlanetProgression_Items {
 		int temp = 0;
 		for (Planet planet : GalaxyRegistry.getRegisteredPlanets().values()) {
 			if (!planet.getUnlocalizedName().contains("overworld"))
-				researchPapers.add(new ResearchPaper(planet.getLocalizedName(), temp++));
+				researchPapers.add(new ResearchPaper(planet.getUnlocalizedName(), temp++));
 		}
 		for (Moon moon : GalaxyRegistry.getRegisteredMoons().values()) {
-			researchPapers.add(new ResearchPaper(moon.getLocalizedName(), temp++));
+			researchPapers.add(new ResearchPaper(moon.getUnlocalizedName(), temp++));
 		}
 	}
 
