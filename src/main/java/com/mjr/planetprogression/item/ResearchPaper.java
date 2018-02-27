@@ -23,8 +23,12 @@ public class ResearchPaper extends BasicItem {
 		this.setCreativeTab(PlanetProgression.tab);
 	}
 
-	public String getPlanet() {
+	public String getPlanetName() {
 		return planet;
+	}
+
+	public String getRealPlanetName() {
+		return TranslateUtilities.translate(getPlanetName());
 	}
 
 	public void setPlanet(String planet) {
@@ -35,7 +39,8 @@ public class ResearchPaper extends BasicItem {
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack itemStack, EntityPlayer player, List<String> list, boolean par4) {
 		if (player.world.isRemote) {
-			list.add(EnumColor.YELLOW + planet.substring(0, 1).toUpperCase() + planet.substring(1));
+			String name = TranslateUtilities.translate(getPlanetName());
+			list.add(EnumColor.YELLOW + name.substring(0, 1).toUpperCase() + name.substring(1));
 
 			if (Config.researchMode == 1) {
 				if (Config.generateResearchPaperInLoot && Config.generateResearchPaperInStructure) {

@@ -93,7 +93,7 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 							if (this.currentSatellite.getCurrentResearchItem() == null || this.currentSatellite.getCurrentResearchItem().getItem() == null)
 								this.currentSatelliteResearchBody = "Nothing!";
 							else
-								this.currentSatelliteResearchBody = ((ResearchPaper) this.currentSatellite.getCurrentResearchItem().getItem()).getPlanet();
+								this.currentSatelliteResearchBody = ((ResearchPaper) this.currentSatellite.getCurrentResearchItem().getItem()).getPlanetName();
 						}
 
 						// Check if has a already existing research item
