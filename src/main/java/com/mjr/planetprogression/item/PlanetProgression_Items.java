@@ -40,15 +40,15 @@ public class PlanetProgression_Items {
 	}
 
 	public static void initResearchPaperItems() {
-		bodies.add("Moon");
-		bodies.add("Mars");
-		bodies.add("Venus");
-		bodies.add("Asteroids");
-		bodiesExtra.add("Mercury");
-		bodiesExtra.add("Jupiter");
-		bodiesExtra.add("Saturn");
-		bodiesExtra.add("Uranus");
-		bodiesExtra.add("Neptune");
+		bodies.add("moon.moon");
+		bodies.add("planet.mars");
+		bodies.add("planet.venus");
+		bodies.add("planet.asteroids");
+		bodiesExtra.add("planet.mercury");
+		bodiesExtra.add("planet.jupiter");
+		bodiesExtra.add("planet.saturn");
+		bodiesExtra.add("planet.uranus");
+		bodiesExtra.add("planet.neptune");
 
 		int temp = 0;
 		for (String planet : bodies) {
@@ -57,10 +57,10 @@ public class PlanetProgression_Items {
 		}
 		for (Planet planet : GalaxyRegistry.getRegisteredPlanets().values()) {
 			if (!planet.getUnlocalizedName().contains("overworld"))
-				researchPapers.add(new ResearchPaper(planet.getLocalizedName(), temp++));
+				researchPapers.add(new ResearchPaper(planet.getUnlocalizedName(), temp++));
 		}
 		for (Moon moon : GalaxyRegistry.getRegisteredMoons().values()) {
-			researchPapers.add(new ResearchPaper(moon.getLocalizedName(), temp++));
+			researchPapers.add(new ResearchPaper(moon.getUnlocalizedName(), temp++));
 		}
 
 		boolean found = false;
@@ -69,7 +69,7 @@ public class PlanetProgression_Items {
 				found = true;
 
 			for (Item paper : researchPapers) {
-				if (found == false && !((ResearchPaper) paper).getPlanet().equalsIgnoreCase(tempBody)) {
+				if (found == false && !((ResearchPaper) paper).getPlanetName().equalsIgnoreCase(tempBody)) {
 					found = true;
 				}
 			}
