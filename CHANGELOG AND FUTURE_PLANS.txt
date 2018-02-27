@@ -5,6 +5,10 @@
 
 
 ===========================================Released Updates===========================================
+v0.1.2
+*Fixed issue #14
+*Fixed typing error in one of the command messages
+
 v0.1.1
 *Fixed issue #13
 *Reduced dimension size for some textures, to a smaller size
