@@ -13,7 +13,7 @@ public class InventorySchematicSatelliteRocket implements IInventoryDefaults {
 	private final Container eventHandler;
 
 	public InventorySchematicSatelliteRocket(Container par1Container) {
-		this.stacks = NonNullList.withSize(22, ItemStack.EMPTY);
+		this.stacks = NonNullList.withSize(34, ItemStack.EMPTY);
 		this.eventHandler = par1Container;
 	}
 
