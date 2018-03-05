@@ -28,46 +28,49 @@ public class ContainerSchematicSatelliteRocket extends Container {
 		int var7;
 
 		// Cone
-		this.addSlotToContainer(new SlotSchematicSatelliteRocket(this.craftMatrix, 1, 48, -8 + change, pos, par1InventoryPlayer.player));
+		this.addSlotToContainer(new SlotSchematicSatelliteRocket(this.craftMatrix, 1, 41, -8 + change, pos, par1InventoryPlayer.player));
+
+		// Body left
+		for (var6 = 0; var6 < 8; ++var6) {
+			this.addSlotToContainer(new SlotSchematicSatelliteRocket(this.craftMatrix, 2 + var6, 23, -6 + var6 * 18 + 16 + change, pos, par1InventoryPlayer.player));
+		}
 
 		// Body
-		for (var6 = 0; var6 < 5; ++var6) {
-			this.addSlotToContainer(new SlotSchematicSatelliteRocket(this.craftMatrix, 2 + var6, 39, -6 + var6 * 18 + 16 + change, pos, par1InventoryPlayer.player));
+		for (var6 = 0; var6 < 8; ++var6) {
+			this.addSlotToContainer(new SlotSchematicSatelliteRocket(this.craftMatrix, 10 + var6, 41, -6 + var6 * 18 + 16 + change, pos, par1InventoryPlayer.player));
 		}
 
 		// Body Right
-		for (var6 = 0; var6 < 5; ++var6) {
-			this.addSlotToContainer(new SlotSchematicSatelliteRocket(this.craftMatrix, 7 + var6, 57, -6 + var6 * 18 + 16 + change, pos, par1InventoryPlayer.player));
+		for (var6 = 0; var6 < 8; ++var6) {
+			this.addSlotToContainer(new SlotSchematicSatelliteRocket(this.craftMatrix, 18 + var6, 59, -6 + var6 * 18 + 16 + change, pos, par1InventoryPlayer.player));
 		}
 
 		// Left fins
-		this.addSlotToContainer(new SlotSchematicSatelliteRocket(this.craftMatrix, 12, 21, 64 + change, pos, par1InventoryPlayer.player));
-		this.addSlotToContainer(new SlotSchematicSatelliteRocket(this.craftMatrix, 13, 21, 82 + change, pos, par1InventoryPlayer.player));
-		this.addSlotToContainer(new SlotSchematicSatelliteRocket(this.craftMatrix, 14, 21, 100 + change, pos, par1InventoryPlayer.player));
+		this.addSlotToContainer(new SlotSchematicSatelliteRocket(this.craftMatrix, 26, 5, 46 + change, pos, par1InventoryPlayer.player));
+		this.addSlotToContainer(new SlotSchematicSatelliteRocket(this.craftMatrix, 27, 5, 64 + change, pos, par1InventoryPlayer.player));
 
 		// Engine
-		this.addSlotToContainer(new SlotSchematicSatelliteRocket(this.craftMatrix, 15, 48, 100 + change, pos, par1InventoryPlayer.player));
+		this.addSlotToContainer(new SlotSchematicSatelliteRocket(this.craftMatrix, 28, 41, 154 + change, pos, par1InventoryPlayer.player));
 
 		// Right fins
-		this.addSlotToContainer(new SlotSchematicSatelliteRocket(this.craftMatrix, 16, 75, 64 + change, pos, par1InventoryPlayer.player));
-		this.addSlotToContainer(new SlotSchematicSatelliteRocket(this.craftMatrix, 17, 75, 82 + change, pos, par1InventoryPlayer.player));
-		this.addSlotToContainer(new SlotSchematicSatelliteRocket(this.craftMatrix, 18, 75, 100 + change, pos, par1InventoryPlayer.player));
+		this.addSlotToContainer(new SlotSchematicSatelliteRocket(this.craftMatrix, 29, 77, 46 + change, pos, par1InventoryPlayer.player));
+		this.addSlotToContainer(new SlotSchematicSatelliteRocket(this.craftMatrix, 30, 77, 64 + change, pos, par1InventoryPlayer.player));
 
 		// Addons
 		for (int var8 = 0; var8 < 3; var8++) {
-			this.addSlotToContainer(new SlotSchematicSatelliteRocket(this.craftMatrix, 19 + var8, 93 + var8 * 26, -15 + change, pos, par1InventoryPlayer.player));
+			this.addSlotToContainer(new SlotSchematicSatelliteRocket(this.craftMatrix, 31 + var8, 93 + var8 * 26, -15 + change, pos, par1InventoryPlayer.player));
 		}
 
 		// Player inv:
 
 		for (var6 = 0; var6 < 3; ++var6) {
 			for (var7 = 0; var7 < 9; ++var7) {
-				this.addSlotToContainer(new Slot(par1InventoryPlayer, var7 + var6 * 9 + 9, 8 + var7 * 18, 129 + var6 * 18 + change));
+				this.addSlotToContainer(new Slot(par1InventoryPlayer, var7 + var6 * 9 + 9, 88 + var7 * 18, 147 + var6 * 18 + change));
 			}
 		}
 
 		for (var6 = 0; var6 < 9; ++var6) {
-			this.addSlotToContainer(new Slot(par1InventoryPlayer, var6, 8 + var6 * 18, 18 + 169 + change));
+			this.addSlotToContainer(new Slot(par1InventoryPlayer, var6, 88 + var6 * 18, 18 + 187 + change));
 		}
 
 		this.onCraftMatrixChanged(this.craftMatrix);
@@ -108,52 +111,45 @@ public class ContainerSchematicSatelliteRocket extends Container {
 			var2 = var4.copy();
 
 			boolean done = false;
-			if (par1 <= 21) {
-				if (!this.mergeItemStack(var4, 22, 58, false)) {
+			if (par1 <= 33) {
+				if (!this.mergeItemStack(var4, 22 + 12, 58 + 12, false)) {
 					return ItemStack.EMPTY;
 				}
 
 				var3.onSlotChange(var4, var2);
 			} else {
-				for (int i = 1; i < 19; i++) {
+				boolean valid = false;
+				for (int i = 1; i < 31; i++) {
 					Slot testSlot = this.inventorySlots.get(i);
 					if (!testSlot.getHasStack() && testSlot.isItemValid(var2)) {
-						if (!this.mergeItemStack(var4, i, i + 1, false)) {
-							return ItemStack.EMPTY;
-						}
-						done = true;
+						valid = true;
 						break;
 					}
 				}
-
-				if (!done) {
-					if (var2.getItem() == Item.getItemFromBlock(Blocks.CHEST) && !this.inventorySlots.get(19).getHasStack()) {
-						if (!this.mergeItemStack(var4, 19, 20, false)) {
+				if (valid) {
+					if (!this.mergeOneItemTestValid(var4, 1, 31, false)) {
+						return ItemStack.EMPTY;
+					}
+				} else {
+					if (var2.getItem() == Item.getItemFromBlock(Blocks.CHEST)) {
+						if (!this.mergeOneItemTestValid(var4, 31, 34, false)) {
 							return ItemStack.EMPTY;
 						}
-					} else if (var2.getItem() == Item.getItemFromBlock(Blocks.CHEST) && !this.inventorySlots.get(20).getHasStack()) {
-						if (!this.mergeItemStack(var4, 20, 21, false)) {
+					} else if (par1 >= 22 + 12 && par1 < 49 + 12) {
+						if (!this.mergeItemStack(var4, 49 + 12, 58 + 12, false)) {
 							return ItemStack.EMPTY;
 						}
-					} else if (var2.getItem() == Item.getItemFromBlock(Blocks.CHEST) && !this.inventorySlots.get(21).getHasStack()) {
-						if (!this.mergeItemStack(var4, 21, 22, false)) {
+					} else if (par1 >= 49 + 12 && par1 < 58 + 12) {
+						if (!this.mergeItemStack(var4, 22 + 12, 49 + 12, false)) {
 							return ItemStack.EMPTY;
 						}
-					} else if (par1 >= 22 && par1 < 49) {
-						if (!this.mergeItemStack(var4, 49, 58, false)) {
-							return ItemStack.EMPTY;
-						}
-					} else if (par1 >= 49 && par1 < 58) {
-						if (!this.mergeItemStack(var4, 22, 49, false)) {
-							return ItemStack.EMPTY;
-						}
-					} else if (!this.mergeItemStack(var4, 22, 58, false)) {
+					} else if (!this.mergeItemStack(var4, 22 + 12, 58 + 12, false)) {
 						return ItemStack.EMPTY;
 					}
 				}
 			}
 
-			if (var4.getCount() == 0) {
+			if (var4.isEmpty()) {
 				var3.putStack(ItemStack.EMPTY);
 			} else {
 				var3.onSlotChanged();
@@ -165,6 +161,32 @@ public class ContainerSchematicSatelliteRocket extends Container {
 
 			var3.onTake(par1EntityPlayer, var4);
 		}
+
 		return var2;
+	}
+
+	protected boolean mergeOneItemTestValid(ItemStack par1ItemStack, int par2, int par3, boolean par4) {
+		boolean flag1 = false;
+		if (!par1ItemStack.isEmpty()) {
+			Slot slot;
+			ItemStack slotStack;
+
+			for (int k = par2; k < par3; k++) {
+				slot = this.inventorySlots.get(k);
+				slotStack = slot.getStack();
+
+				if (slotStack.isEmpty() && slot.isItemValid(par1ItemStack)) {
+					ItemStack stackOneItem = par1ItemStack.copy();
+					stackOneItem.setCount(1);
+					par1ItemStack.shrink(1);
+					slot.putStack(stackOneItem);
+					slot.onSlotChanged();
+					flag1 = true;
+					break;
+				}
+			}
+		}
+
+		return flag1;
 	}
 }
