@@ -3,7 +3,6 @@ package com.mjr.planetprogression.client.gui;
 import micdoodle8.mods.galacticraft.api.recipe.ISchematicResultPage;
 import micdoodle8.mods.galacticraft.api.recipe.SchematicRegistry;
 import micdoodle8.mods.galacticraft.core.client.gui.container.GuiPositionedContainer;
-import micdoodle8.mods.galacticraft.planets.GalacticraftPlanets;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.BlockPos;
@@ -12,23 +11,25 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
 import com.mjr.mjrlegendslib.util.TranslateUtilities;
+import com.mjr.planetprogression.Constants;
 import com.mjr.planetprogression.inventory.ContainerSchematicSatelliteRocket;
 
 public class GuiSchematicSatelliteRocket extends GuiPositionedContainer implements ISchematicResultPage {
-	private static final ResourceLocation rocketBenchTexture = new ResourceLocation(GalacticraftPlanets.ASSET_PREFIX, "textures/gui/schematic_rocket_t3.png");
+	private static final ResourceLocation rocketBenchTexture = new ResourceLocation(Constants.ASSET_PREFIX, "textures/gui/schematic_rocket.png");
 
 	private int pageIndex;
 
 	public GuiSchematicSatelliteRocket(InventoryPlayer par1InventoryPlayer, BlockPos pos) {
 		super(new ContainerSchematicSatelliteRocket(par1InventoryPlayer, pos), pos);
-		this.ySize = 238;
+		this.ySize = 255;
+		this.xSize = 256;
 	}
 
 	@Override
 	public void initGui() {
 		super.initGui();
-		this.buttonList.add(new GuiButton(0, this.width / 2 - 130, this.height / 2 - 110, 40, 20, TranslateUtilities.translate("gui.button.back.name")));
-		this.buttonList.add(new GuiButton(1, this.width / 2 - 130, this.height / 2 - 110 + 25, 40, 20, TranslateUtilities.translate("gui.button.next.name")));
+		this.buttonList.add(new GuiButton(0, this.width / 2 - 170, this.height / 2 - 110, 40, 20, TranslateUtilities.translate("gui.button.back.name")));
+		this.buttonList.add(new GuiButton(1, this.width / 2 - 170, this.height / 2 - 110 + 25, 40, 20, TranslateUtilities.translate("gui.button.next.name")));
 	}
 
 	@Override
@@ -48,7 +49,7 @@ public class GuiSchematicSatelliteRocket extends GuiPositionedContainer implemen
 	@Override
 	protected void drawGuiContainerForegroundLayer(int par1, int par2) {
 		this.fontRendererObj.drawString(TranslateUtilities.translate("item.item_satellite_rocket.rocket.name"), 7, -20 + 27, 4210752);
-		this.fontRendererObj.drawString(TranslateUtilities.translate("container.inventory"), 8, 220 - 104 + 2 + 27, 4210752);
+		this.fontRendererObj.drawString(TranslateUtilities.translate("container.inventory"), 88, 220 - 88 + 2 + 27, 4210752);
 	}
 
 	@Override

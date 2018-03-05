@@ -12,7 +12,7 @@ public class InventorySchematicSatelliteRocket implements IInventory {
 	private final Container eventHandler;
 
 	public InventorySchematicSatelliteRocket(Container par1Container) {
-		this.stackList = new ItemStack[22];
+		this.stackList = new ItemStack[34];
 		this.eventHandler = par1Container;
 		this.inventoryWidth = 5;
 	}
