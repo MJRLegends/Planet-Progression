@@ -39,7 +39,7 @@ public class StatsClientCapability implements IStatsClientCapability {
 	public void addSatellites(SatelliteData satellites) {
 		this.satellites.add(satellites);
 	}
-	
+
 	@Override
 	public void removeSatellites(SatelliteData satellites) {
 		this.satellites.remove(satellites);

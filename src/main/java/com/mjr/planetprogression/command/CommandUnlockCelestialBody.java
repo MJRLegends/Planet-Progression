@@ -46,8 +46,8 @@ public class CommandUnlockCelestialBody extends CommandBase {
 		String var4 = null;
 		EntityPlayerMP playerBase = PlayerUtil.getPlayerBaseServerFromPlayerUsername(sender.getName(), true);
 		if (playerBase == null) {
-            return;
-        }
+			return;
+		}
 		if (args.length > 0) {
 			var3 = args[0];
 			var4 = args[1];
@@ -62,7 +62,7 @@ public class CommandUnlockCelestialBody extends CommandBase {
 
 				boolean found = false;
 				for (Planet planet : GalaxyRegistry.getRegisteredPlanets().values()) {
-					if (var4.equalsIgnoreCase(planet.getUnlocalizedName().substring(planet.getUnlocalizedName().indexOf('.')+ 1))) {
+					if (var4.equalsIgnoreCase(planet.getUnlocalizedName().substring(planet.getUnlocalizedName().indexOf('.') + 1))) {
 						if (!stats.getUnlockedPlanets().contains(planet)) {
 							stats.addUnlockedPlanets(planet);
 							playerToAddFor.sendMessage(new TextComponentString("Research Completed! You have unlocked " + planet.getLocalizedName()));
@@ -74,7 +74,7 @@ public class CommandUnlockCelestialBody extends CommandBase {
 				}
 				if (found == false) {
 					for (Moon moon : GalaxyRegistry.getRegisteredMoons().values()) {
-						if (var4.equalsIgnoreCase(moon.getUnlocalizedName().substring(moon.getUnlocalizedName().indexOf('.')+ 1))) {
+						if (var4.equalsIgnoreCase(moon.getUnlocalizedName().substring(moon.getUnlocalizedName().indexOf('.') + 1))) {
 							if (!stats.getUnlockedPlanets().contains(moon)) {
 								stats.addUnlockedPlanets(moon);
 								playerToAddFor.sendMessage(new TextComponentString("Research Completed! You have discovered " + moon.getLocalizedName()));
@@ -98,7 +98,7 @@ public class CommandUnlockCelestialBody extends CommandBase {
 			String[] array = new String[PlanetProgression_Items.researchPapers.size()];
 			int i = 0;
 			for (Item paper : PlanetProgression_Items.researchPapers)
-				array[i++] = ((ResearchPaper) paper).getPlanetName().substring(((ResearchPaper) paper).getPlanetName().indexOf('.')+ 1);
+				array[i++] = ((ResearchPaper) paper).getPlanetName().substring(((ResearchPaper) paper).getPlanetName().indexOf('.') + 1);
 			return getListOfStringsMatchingLastWord(args, array);
 		} else
 			return null;

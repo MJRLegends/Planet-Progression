@@ -99,8 +99,8 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 						// Check if has a already existing research item
 						if (this.currentSatellite.getCurrentResearchItem() != null && this.currentSatellite.getDataAmount() < TileEntitySatelliteController.PROCESS_TIME_REQUIRED)
 							this.producingStack = this.currentSatellite.getCurrentResearchItem();
-						
-						//Assign satellite without a research item with a item
+
+						// Assign satellite without a research item with a item
 						else if (this.currentSatellite.getCurrentResearchItem() == null) {
 							List<ItemStack> temp = new ArrayList<ItemStack>();
 							for (SatelliteData sat : stats.getSatellites()) {
@@ -131,7 +131,7 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 									}
 								}
 							}
-						} 
+						}
 
 						// Processing Code
 						if (this.canProcess() && canOutput() && this.hasEnoughEnergyToRun) {
@@ -191,13 +191,13 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 			}
 			this.producingStack = null;
 			this.currentSatelliteResearchBody = "";
-			
+
 			IStatsCapability stats = null;
 			if (ownerOnline && PlayerUtilties.getPlayerFromUUID(this.owner) != null) {
 				stats = PlayerUtilties.getPlayerFromUUID(this.owner).getCapability(CapabilityStatsHandler.PP_STATS_CAPABILITY, null);
 			}
-			
-			//Change Research Item when completed the the last one
+
+			// Change Research Item when completed the the last one
 			ItemStack oldItem = this.currentSatellite.getCurrentResearchItem();
 			List<ItemStack> temp = new ArrayList<ItemStack>();
 			for (SatelliteData sat : stats.getSatellites()) {
