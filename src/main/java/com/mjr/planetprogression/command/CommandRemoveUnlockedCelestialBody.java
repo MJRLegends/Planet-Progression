@@ -44,8 +44,8 @@ public class CommandRemoveUnlockedCelestialBody extends CommandBase {
 		String var4 = null;
 		EntityPlayerMP playerBase = PlayerUtil.getPlayerBaseServerFromPlayerUsername(sender.getName(), true);
 		if (playerBase == null) {
-            return;
-        }
+			return;
+		}
 		if (args.length > 0) {
 			var3 = args[0];
 			var4 = args[1];
@@ -59,7 +59,7 @@ public class CommandRemoveUnlockedCelestialBody extends CommandBase {
 				}
 
 				for (CelestialBody temp : stats.getUnlockedPlanets()) {
-					if (var4.equalsIgnoreCase(temp.getUnlocalizedName().substring(temp.getUnlocalizedName().indexOf('.')+ 1))) {
+					if (var4.equalsIgnoreCase(temp.getUnlocalizedName().substring(temp.getUnlocalizedName().indexOf('.') + 1))) {
 						stats.removeUnlockedPlanets(temp);
 						playerToAddFor.sendMessage(new TextComponentString(var4 + " has been removed from your discovered list!"));
 						playerBase.sendMessage(new TextComponentString(EnumColor.AQUA + "You have remove " + var4 + "! from the discovered list for: " + gameprofile.getName()));
@@ -80,7 +80,7 @@ public class CommandRemoveUnlockedCelestialBody extends CommandBase {
 			String[] array = new String[PlanetProgression_Items.researchPapers.size()];
 			int i = 0;
 			for (Item paper : PlanetProgression_Items.researchPapers)
-				array[i++] = ((ResearchPaper) paper).getPlanetName().substring(((ResearchPaper) paper).getPlanetName().indexOf('.')+ 1);
+				array[i++] = ((ResearchPaper) paper).getPlanetName().substring(((ResearchPaper) paper).getPlanetName().indexOf('.') + 1);
 			return getListOfStringsMatchingLastWord(args, array);
 		} else
 			return null;
