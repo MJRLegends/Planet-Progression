@@ -35,22 +35,22 @@ public class BlockTelescope extends BlockTileGC implements ISortableBlock {
 		this.setCreativeTab(PlanetProgression.tab);
 	}
 
-    @Override
-    @SideOnly(Side.CLIENT)
-    public boolean shouldSideBeRendered(IBlockAccess worldIn, BlockPos pos, EnumFacing side) {
-        return false;
-    }
+	@Override
+	@SideOnly(Side.CLIENT)
+	public boolean shouldSideBeRendered(IBlockAccess worldIn, BlockPos pos, EnumFacing side) {
+		return false;
+	}
 
-    @Override
-    public boolean isBlockNormalCube() {
-        return false;
-    }
+	@Override
+	public boolean isBlockNormalCube() {
+		return false;
+	}
 
-    @Override
-    public boolean isOpaqueCube() {
-        return false;
-    }
-    
+	@Override
+	public boolean isOpaqueCube() {
+		return false;
+	}
+
 	@Override
 	public boolean onMachineActivated(World world, BlockPos pos, IBlockState state, EntityPlayer entityPlayer, EnumFacing side, float hitX, float hitY, float hitZ) {
 		entityPlayer.openGui(PlanetProgression.instance, -1, world, pos.getX(), pos.getY(), pos.getZ());

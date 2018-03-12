@@ -41,8 +41,8 @@ public class CommandRemoveAllSatellites extends CommandBase {
 		String var3 = null;
 		EntityPlayerMP playerBase = PlayerUtil.getPlayerBaseServerFromPlayerUsername(sender.getName(), true);
 		if (playerBase == null) {
-            return;
-        }
+			return;
+		}
 		if (args.length > 0) {
 			var3 = args[0];
 			GameProfile gameprofile = MinecraftServer.getServer().getPlayerProfileCache().getGameProfileForUsername(var3);

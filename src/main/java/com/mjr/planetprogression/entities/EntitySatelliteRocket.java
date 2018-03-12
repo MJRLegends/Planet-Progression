@@ -96,7 +96,7 @@ public class EntitySatelliteRocket extends EntityTieredRocket {
 						}
 					}
 				}
-	            TickHandlerServer.scheduleNewDimensionChange(new ScheduledDimensionChange(player, player.worldObj.provider.getDimensionName()));
+				TickHandlerServer.scheduleNewDimensionChange(new ScheduledDimensionChange(player, player.worldObj.provider.getDimensionName()));
 			}
 
 			// Destroy any rocket which reached the top of the atmosphere and is not controlled by a Launch Controller

@@ -39,7 +39,7 @@ public class TileEntityTelescopeRenderer extends TileEntitySpecialRenderer<TileE
 		GlStateManager.disableRescaleNormal();
 		GlStateManager.pushMatrix();
 
-        RenderHelper.enableStandardItemLighting();
+		RenderHelper.enableStandardItemLighting();
 
 		this.bindTexture(TextureMap.locationBlocksTexture);
 		if (Minecraft.isAmbientOcclusionEnabled()) {
