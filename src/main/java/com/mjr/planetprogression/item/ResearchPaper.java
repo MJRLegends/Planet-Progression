@@ -28,7 +28,16 @@ public class ResearchPaper extends BasicItem {
 	}
 
 	public String getRealPlanetName() {
-		return TranslateUtilities.translate(getPlanetName());
+		String name = getPlanetName();
+		if (planet.contains("eris"))
+			name = "planet.Eris";
+		else if (planet.contains("pluto"))
+			name = "planet.Pluto";
+		else if (planet.contains("ceres"))
+			name = "planet.Ceres";
+		else if (planet.contains("kuiperbelt"))
+			name = "planet.kuiperBelt";
+		return TranslateUtilities.translate(name);
 	}
 
 	public void setPlanet(String planet) {
@@ -39,20 +48,20 @@ public class ResearchPaper extends BasicItem {
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack itemStack, EntityPlayer player, List<String> list, boolean par4) {
 		if (player.world.isRemote) {
-			String name = TranslateUtilities.translate(getPlanetName());
-			list.add(EnumColor.YELLOW + name.substring(0, 1).toUpperCase() + name.substring(1));
+		String name = getRealPlanetName();
+		list.add(EnumColor.YELLOW + name.substring(0, 1).toUpperCase() + name.substring(1));
 
-			if (Config.researchMode == 1) {
-				if (Config.generateResearchPaperInLoot && Config.generateResearchPaperInStructure) {
-					list.add(EnumColor.AQUA + TranslateUtilities.translate("research.paper.loot.desc"));
-					list.add(EnumColor.AQUA + TranslateUtilities.translate("research.paper.woldgen.desc"));
-				} else if (Config.generateResearchPaperInLoot)
-					list.add(EnumColor.AQUA + TranslateUtilities.translate("research.paper.loot.desc"));
-				else if (Config.generateResearchPaperInStructure)
-					list.add(EnumColor.AQUA + TranslateUtilities.translate("research.paper.woldgen.desc"));
-			} else
-				list.add(EnumColor.AQUA + TranslateUtilities.translate("research.paper.satellite.controller.desc"));
-			list.add(EnumColor.BRIGHT_GREEN + TranslateUtilities.translate("research.paper.use.desc"));
+		if (Config.researchMode == 1) {
+			if (Config.generateResearchPaperInLoot && Config.generateResearchPaperInStructure) {
+				list.add(EnumColor.AQUA + TranslateUtilities.translate("research.paper.loot.desc"));
+				list.add(EnumColor.AQUA + TranslateUtilities.translate("research.paper.woldgen.desc"));
+			} else if (Config.generateResearchPaperInLoot)
+				list.add(EnumColor.AQUA + TranslateUtilities.translate("research.paper.loot.desc"));
+			else if (Config.generateResearchPaperInStructure)
+				list.add(EnumColor.AQUA + TranslateUtilities.translate("research.paper.woldgen.desc"));
+		} else
+			list.add(EnumColor.AQUA + TranslateUtilities.translate("research.paper.satellite.controller.desc"));
+		list.add(EnumColor.BRIGHT_GREEN + TranslateUtilities.translate("research.paper.use.desc"));
 		}
 	}
 }
