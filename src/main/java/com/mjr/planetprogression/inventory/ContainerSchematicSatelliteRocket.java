@@ -103,7 +103,6 @@ public class ContainerSchematicSatelliteRocket extends Container {
 
 	@Override
 	public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int par1) {
-		System.out.println(par1);
 		ItemStack var2 = ItemStack.EMPTY;
 		final Slot var3 = this.inventorySlots.get(par1);
 
