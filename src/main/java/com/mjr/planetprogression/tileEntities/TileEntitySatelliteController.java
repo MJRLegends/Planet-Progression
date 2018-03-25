@@ -102,31 +102,29 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 
 						// Assign satellite without a research item with a item
 						else if (this.currentSatellite.getCurrentResearchItem() == null) {
-							List<ItemStack> temp = new ArrayList<ItemStack>();
+							List<String> temp = new ArrayList<String>();
 							for (SatelliteData sat : stats.getSatellites()) {
 								if (sat.getCurrentResearchItem() != null)
-									temp.add(sat.getCurrentResearchItem());
+									temp.add(((ResearchPaper)sat.getCurrentResearchItem().getItem()).getPlanetName());
 							}
 							if (temp.size() != PlanetProgression_Items.researchPapers.size()) {
+								boolean skip = false;
 								for (int i = 0; i < PlanetProgression_Items.researchPapers.size(); i++) {
+									skip = false;
 									ItemStack newItem = new ItemStack(PlanetProgression_Items.researchPapers.get(i), 1, 0);
 									if (temp.size() == 0) {
 										this.producingStack = newItem;
 										this.currentSatellite.setCurrentResearchItem(this.producingStack);
 										return;
 									} else {
-										boolean contains = false;
-										for (int j = 0; j < temp.size(); j++) {
-											if (!contains) {
-												if (!temp.get(j).getUnlocalizedName().equalsIgnoreCase(newItem.getUnlocalizedName()))
-													contains = false;
-												else
-													contains = true;
-											}
-										}
-										if (!contains) {
+										String newName = ((ResearchPaper) newItem.getItem()).getPlanetName();
+										if (temp.contains(newName))
+											skip = true;
+										if (!skip) {
 											this.producingStack = newItem;
 											this.currentSatellite.setCurrentResearchItem(this.producingStack);
+											this.currentSatellite.setDataAmount(0);
+											return;
 										}
 									}
 								}
@@ -138,6 +136,7 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 							if (this.processTicks == 0) {
 								this.processTicks = TileEntitySatelliteController.PROCESS_TIME_REQUIRED;
 							} else {
+								this.processTicks = this.processTicks - 600;
 								if (--this.processTicks <= 0) {
 									this.smeltItem();
 									this.processTicks = this.canProcess() ? TileEntitySatelliteController.PROCESS_TIME_REQUIRED : 0;
@@ -199,32 +198,30 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 
 			// Change Research Item when completed the the last one
 			ItemStack oldItem = this.currentSatellite.getCurrentResearchItem();
-			List<ItemStack> temp = new ArrayList<ItemStack>();
+			List<String> temp = new ArrayList<String>();
 			for (SatelliteData sat : stats.getSatellites()) {
 				if (sat.getCurrentResearchItem() != null)
-					temp.add(sat.getCurrentResearchItem());
+					temp.add(((ResearchPaper)sat.getCurrentResearchItem().getItem()).getPlanetName());
 			}
 			if (temp.size() != PlanetProgression_Items.researchPapers.size()) {
+				boolean skip = false;
 				for (int i = 0; i < PlanetProgression_Items.researchPapers.size(); i++) {
+					skip = false;
 					ItemStack newItem = new ItemStack(PlanetProgression_Items.researchPapers.get(i), 1, 0);
 					if (temp.size() == 0) {
 						this.producingStack = newItem;
 						this.currentSatellite.setCurrentResearchItem(this.producingStack);
 						return;
 					} else {
-						boolean contains = false;
-						for (int j = 0; j < temp.size(); j++) {
-							if (!contains) {
-								if ((!temp.get(j).getUnlocalizedName().equalsIgnoreCase(newItem.getUnlocalizedName())) && (!newItem.getUnlocalizedName().equalsIgnoreCase(oldItem.getUnlocalizedName())))
-									contains = false;
-								else
-									contains = true;
-							}
-						}
-						if (!contains) {
+						String oldName = ((ResearchPaper) oldItem.getItem()).getPlanetName();
+						String newName = ((ResearchPaper) newItem.getItem()).getPlanetName();
+						if (temp.contains(newName) || oldName.equalsIgnoreCase(newName))
+							skip = true;
+						if (!skip) {
 							this.producingStack = newItem;
 							this.currentSatellite.setCurrentResearchItem(this.producingStack);
 							this.currentSatellite.setDataAmount(0);
+							return;
 						}
 					}
 				}
