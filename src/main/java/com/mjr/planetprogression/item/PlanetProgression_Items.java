@@ -69,11 +69,13 @@ public class PlanetProgression_Items {
 				found = true;
 
 			for (Item paper : researchPapers) {
-				if (found == false && !((ResearchPaper) paper).getPlanetName().equalsIgnoreCase(tempBody)) {
-					found = true;
+				if (found == false) {
+					if (((ResearchPaper) paper).getPlanetName().equalsIgnoreCase(tempBody)) {
+						found = true;
+					}
 				}
 			}
-			if (found) {
+			if (!found) {
 				researchPapers.add(new ResearchPaper(tempBody, temp++));
 				found = false;
 			}
