@@ -136,7 +136,6 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 							if (this.processTicks == 0) {
 								this.processTicks = TileEntitySatelliteController.PROCESS_TIME_REQUIRED;
 							} else {
-								this.processTicks = this.processTicks - 600;
 								if (--this.processTicks <= 0) {
 									this.smeltItem();
 									this.processTicks = this.canProcess() ? TileEntitySatelliteController.PROCESS_TIME_REQUIRED : 0;
