@@ -5,6 +5,10 @@
 
 
 ===========================================Released Updates===========================================
+v0.2.0
+*Fixed debug amount of speed on Satellite Controller
+*Fixed spelling error in Satellite Controller GUI
+
 v0.1.9
 *Added ru_RU.lang (Thanks to QuantumSatement)
 *Changed Satellite Rocket recipe
