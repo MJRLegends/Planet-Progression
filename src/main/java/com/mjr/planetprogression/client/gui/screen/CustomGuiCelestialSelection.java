@@ -139,7 +139,7 @@ public class CustomGuiCelestialSelection extends GuiCelestialSelection {
 				boolean isPossible = !(sat instanceof Satellite) || (this.possibleBodies != null && this.possibleBodies.contains(sat));
 				boolean render = false;
 				if (sat instanceof Moon) {
-					if (stats.getUnlockedPlanets().contains((Moon) sat))
+					if (stats.getUnlockedPlanets().contains(sat))
 						render = true;
 				} else if (sat instanceof Satellite)
 					render = true;
@@ -306,7 +306,7 @@ public class CustomGuiCelestialSelection extends GuiCelestialSelection {
 				boolean isPossible = !(sat instanceof Satellite) || (this.possibleBodies != null && this.possibleBodies.contains(sat));
 				boolean render = false;
 				if (sat instanceof Moon) {
-					if (stats.getUnlockedPlanets().contains((Moon) sat))
+					if (stats.getUnlockedPlanets().contains(sat))
 						render = true;
 				} else if (sat instanceof Satellite)
 					if (stats.getUnlockedPlanets().contains(((Satellite) sat).getParentPlanet()))
