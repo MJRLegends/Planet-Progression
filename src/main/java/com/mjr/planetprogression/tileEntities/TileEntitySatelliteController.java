@@ -105,7 +105,7 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 							List<String> temp = new ArrayList<String>();
 							for (SatelliteData sat : stats.getSatellites()) {
 								if (sat.getCurrentResearchItem() != null)
-									temp.add(((ResearchPaper)sat.getCurrentResearchItem().getItem()).getPlanetName());
+									temp.add(((ResearchPaper) sat.getCurrentResearchItem().getItem()).getPlanetName());
 							}
 							if (temp.size() != PlanetProgression_Items.researchPapers.size()) {
 								boolean skip = false;
@@ -200,7 +200,7 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 			List<String> temp = new ArrayList<String>();
 			for (SatelliteData sat : stats.getSatellites()) {
 				if (sat.getCurrentResearchItem() != null)
-					temp.add(((ResearchPaper)sat.getCurrentResearchItem().getItem()).getPlanetName());
+					temp.add(((ResearchPaper) sat.getCurrentResearchItem().getItem()).getPlanetName());
 			}
 			if (temp.size() != PlanetProgression_Items.researchPapers.size()) {
 				boolean skip = false;
