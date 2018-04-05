@@ -44,7 +44,7 @@ public class RenderSatelliteRocket extends Render<EntitySatelliteRocket> {
 		GlStateManager.pushMatrix();
 		final float pitch = entity.prevRotationPitch + (entity.rotationPitch - entity.prevRotationPitch) * partialTicks + 180;
 
-		GlStateManager.translate((float) x - 3.8, (float) y, (float) z);
+        GlStateManager.translate((float) x - 2.6, (float) y + 0.55, (float) z - 2.6);
 		GlStateManager.rotate(180.0F - entityYaw, 0.0F, 1.0F, 0.0F);
 		GlStateManager.rotate(-pitch, 0.0F, 0.0F, 1.0F);
 		GlStateManager.translate(0.0F, entity.getRenderOffsetY(), 0.0F);
