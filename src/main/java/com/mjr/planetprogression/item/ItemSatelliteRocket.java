@@ -8,12 +8,10 @@ import micdoodle8.mods.galacticraft.api.entity.IRocketType.EnumRocketType;
 import micdoodle8.mods.galacticraft.api.item.IHoldableItem;
 import micdoodle8.mods.galacticraft.core.GCBlocks;
 import micdoodle8.mods.galacticraft.core.GCFluids;
-import micdoodle8.mods.galacticraft.core.proxy.ClientProxyCore;
 import micdoodle8.mods.galacticraft.core.tile.TileEntityLandingPad;
 import micdoodle8.mods.galacticraft.core.util.EnumColor;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -51,9 +49,8 @@ public class ItemSatelliteRocket extends Item implements IHoldableItem {
 		TileEntity tile = null;
 		ItemStack stack = playerIn.getHeldItem(hand);
 
-		if (worldIn.isRemote && playerIn instanceof EntityPlayerSP) {
-			ClientProxyCore.playerClientHandler.onBuild(8, (EntityPlayerSP) playerIn);
-			return EnumActionResult.FAIL;
+		if (worldIn.isRemote) {
+			return EnumActionResult.PASS;
 		} else {
 			float centerX = -1;
 			float centerY = -1;
@@ -84,36 +81,18 @@ public class ItemSatelliteRocket extends Item implements IHoldableItem {
 			}
 
 			if (padFound) {
-				// Check whether there is already a rocket on the pad
-				if (tile instanceof TileEntityLandingPad) {
-					if (((TileEntityLandingPad) tile).getDockedEntity() != null) {
-						return EnumActionResult.FAIL;
-					}
-				} else {
+				if (!placeRocketOnPad(stack, worldIn, tile, centerX, centerY, centerZ)) {
 					return EnumActionResult.FAIL;
-				}
-
-				final EntitySatelliteRocket spaceship = new EntitySatelliteRocket(worldIn, centerX, centerY, centerZ, EnumRocketType.values()[stack.getItemDamage()]);
-
-				spaceship.setPosition(spaceship.posX, spaceship.posY + spaceship.getOnPadYOffset(), spaceship.posZ);
-				worldIn.spawnEntity(spaceship);
-
-				if (stack.hasTagCompound() && stack.getTagCompound().hasKey("RocketFuel")) {
-					spaceship.fuelTank.fill(new FluidStack(GCFluids.fluidFuel, stack.getTagCompound().getInteger("RocketFuel")), true);
 				}
 
 				if (!playerIn.capabilities.isCreativeMode) {
 					stack.shrink(1);
 				}
-
-				if (spaceship.rocketType.getPreFueled()) {
-					spaceship.fuelTank.fill(new FluidStack(GCFluids.fluidFuel, spaceship.getMaxFuel()), true);
-				}
+				return EnumActionResult.SUCCESS;
 			} else {
-				return EnumActionResult.FAIL;
+				return EnumActionResult.PASS;
 			}
 		}
-		return EnumActionResult.SUCCESS;
 	}
 
 	@Override
@@ -167,6 +146,31 @@ public class ItemSatelliteRocket extends Item implements IHoldableItem {
 
 	@Override
 	public boolean shouldCrouch(EntityPlayer player) {
+		return true;
+	}
+
+	public static boolean placeRocketOnPad(ItemStack stack, World worldIn, TileEntity tile, float centerX, float centerY, float centerZ) {
+		// Check whether there is already a rocket on the pad
+		if (tile instanceof TileEntityLandingPad) {
+			if (((TileEntityLandingPad) tile).getDockedEntity() != null) {
+				return false;
+			}
+		} else {
+			return false;
+		}
+
+		EntitySatelliteRocket rocket = new EntitySatelliteRocket(worldIn, centerX, centerY, centerZ, EnumRocketType.values()[stack.getItemDamage()]);
+
+		rocket.rotationYaw += 45;
+		rocket.setPosition(rocket.posX, rocket.posY + rocket.getOnPadYOffset(), rocket.posZ);
+		worldIn.spawnEntity(rocket);
+
+		if (rocket.getType().getPreFueled()) {
+			rocket.fuelTank.fill(new FluidStack(GCFluids.fluidFuel, rocket.getMaxFuel()), true);
+		} else if (stack.hasTagCompound() && stack.getTagCompound().hasKey("RocketFuel")) {
+			rocket.fuelTank.fill(new FluidStack(GCFluids.fluidFuel, stack.getTagCompound().getInteger("RocketFuel")), true);
+		}
+
 		return true;
 	}
 }
