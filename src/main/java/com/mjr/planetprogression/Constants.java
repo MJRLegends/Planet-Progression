@@ -5,14 +5,14 @@ public class Constants {
 	public static final String modName = "Planet Progression";
 
 	public static final int LOCALMAJVERSION = 0;
-	public static final int LOCALMINVERSION = 1;
-	public static final int LOCALBUILDVERSION = 9;
+	public static final int LOCALMINVERSION = 2;
+	public static final int LOCALBUILDVERSION = 0;
 
 	public static final String modVersion = "1.10.2" + "-" + LOCALMAJVERSION + "." + LOCALMINVERSION + "." + LOCALBUILDVERSION;
 
 	public static final String MCVERSION = "[1.10.2]";
 	public static final String DEPENDENCIES_FORGE = "required-after:Forge@[12.18.3.2239,); "; // Keep the space at the end!
-	public static final String DEPENDENCIES_MODS = "required-after:galacticraftcore@[4.0.1.144,); required-after:galacticraftplanets@[4.0.1.144,); required-after:mjrlegendslib@[1.10.2-1.0.8,); after:extraplanets; after:moreplanets;"; // Keep the
+	public static final String DEPENDENCIES_MODS = "required-after:galacticraftcore@[4.0.1.169,); required-after:galacticraftplanets@[4.0.1.169,); required-after:mjrlegendslib@[1.10.2-1.0.8,); after:extraplanets; after:moreplanets;"; // Keep the
 																																																											// space at
 	public static final String CERTIFICATEFINGERPRINT = "b02331787272ec3515ebe63ecdeea0d746653468";
 

@@ -27,7 +27,7 @@ repositories {
 
 apply plugin: 'net.minecraftforge.gradle.forge'
 
-version = "1.10.2-0.1.9"
+version = "1.10.2-0.2.0"
 group= "com.mjr.planetprogression" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "PlanetProgression"
 
@@ -47,10 +47,10 @@ dependencies {
     compile "codechicken:CodeChickenCore:${minecraft_version}-${ccc_version}:deobf"
     compile "codechicken:NotEnoughItems:${minecraft_version}-${NEI_version}:deobf"
 	compile files (
-		"Galacticraft-API-1.10.2-4.0.1.144.jar",
-		"GalacticraftCore-Dev-1.10.2-4.0.1.144.jar",
-		"Galacticraft-Planets-Dev-1.10.2-4.0.1.144.jar",
-		"MicdoodleCore-Dev-1.10.2-4.0.1.144.jar",
+		"Galacticraft-API-1.10.2-4.0.1.169.jar",
+		"GalacticraftCore-Dev-1.10.2-4.0.1.169.jar",
+		"Galacticraft-Planets-Dev-1.10.2-4.0.1.169.jar",
+		"MicdoodleCore-Dev-1.10.2-4.0.1.169.jar",
 		"MJRLegendsLib-1.10.2-1.0.8-dev.jar"
 	)
 }
