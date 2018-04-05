@@ -36,7 +36,7 @@ import com.mjr.planetprogression.item.PlanetProgression_Items;
 public class EntitySatelliteRocket extends EntityTieredRocket {
 	public EntitySatelliteRocket(World world) {
 		super(world);
-		setSize(1.8F, 6.0F);
+        this.setSize(3.0F, 16.0F);
 	}
 
 	public EntitySatelliteRocket(World world, double x, double y, double z, IRocketType.EnumRocketType type) {
