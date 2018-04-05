@@ -12,6 +12,7 @@ v0.2.1
 *Fix torch placement on Telescope in MC 1.12+
 *Tweaks/Fixes for Satellite Rocket Item
 *Few fixes for Satellite Rocket Rendering/Bounding box
+*Set required GC version requirement to Build 169
 
 v0.2.0
 *Fixed debug amount of speed on Satellite Controller
