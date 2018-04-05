@@ -27,7 +27,7 @@ public class SatelliteRocketRecipeHandler implements IRecipeHandler<SatelliteRoc
 
 	@Override
 	public boolean isRecipeValid(@Nonnull SatelliteRocketRecipeWrapper recipe) {
-		if (recipe.getInputs().size() != 21) {
+		if (recipe.getInputs().size() != 33) {
 			GCLog.severe(this.getClass().getSimpleName() + " JEI recipe has wrong number of inputs!");
 		}
 		if (recipe.getOutputs().size() != 1) {
