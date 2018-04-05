@@ -12,7 +12,7 @@ import micdoodle8.mods.galacticraft.core.Constants;
 import micdoodle8.mods.galacticraft.core.blocks.BlockMulti;
 import micdoodle8.mods.galacticraft.core.blocks.BlockMulti.EnumBlockMultiType;
 import micdoodle8.mods.galacticraft.core.energy.item.ItemElectricBase;
-import micdoodle8.mods.galacticraft.core.energy.tile.TileBaseElectricBlock;
+import micdoodle8.mods.galacticraft.core.energy.tile.TileBaseElectricBlockWithInventory;
 import micdoodle8.mods.galacticraft.core.tile.IMultiBlock;
 import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 import micdoodle8.mods.miccore.Annotations.NetworkedField;
@@ -34,7 +34,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import com.mjr.mjrlegendslib.inventory.IInventoryDefaults;
 import com.mjr.mjrlegendslib.util.PlayerUtilties;
 import com.mjr.planetprogression.Config;
 import com.mjr.planetprogression.PlanetProgression;
@@ -44,7 +43,7 @@ import com.mjr.planetprogression.handlers.capabilities.CapabilityStatsHandler;
 import com.mjr.planetprogression.handlers.capabilities.IStatsCapability;
 import com.mjr.planetprogression.item.ResearchPaper;
 
-public class TileEntityTelescope extends TileBaseElectricBlock implements IMultiBlock, IInventoryDefaults, ISidedInventory {
+public class TileEntityTelescope extends TileBaseElectricBlockWithInventory implements IMultiBlock, ISidedInventory {
 
 	public static final int PROCESS_TIME_REQUIRED_BASE = (int) (200 * Config.telescopeTimeModifier);
 	@NetworkedField(targetSide = Side.CLIENT)
@@ -259,16 +258,6 @@ public class TileEntityTelescope extends TileBaseElectricBlock implements IMulti
 	}
 
 	@Override
-	public int getInventoryStackLimit() {
-		return 64;
-	}
-
-	@Override
-	public boolean isUseableByPlayer(EntityPlayer par1EntityPlayer) {
-		return this.worldObj.getTileEntity(getPos()) == this && par1EntityPlayer.getDistanceSq(this.getPos().getX() + 0.5D, this.getPos().getY() + 0.5D, this.getPos().getZ() + 0.5D) <= 64.0D;
-	}
-
-	@Override
 	public boolean isItemValidForSlot(int slotID, ItemStack itemStack) {
 		return slotID == 0 && ItemElectricBase.isElectricItem(itemStack.getItem());
 	}
@@ -349,60 +338,12 @@ public class TileEntityTelescope extends TileBaseElectricBlock implements IMulti
 	}
 
 	@Override
-	public int getSizeInventory() {
-		return this.containingItems.length;
-	}
-
-	@Override
-	public ItemStack getStackInSlot(int par1) {
-		return this.containingItems[par1];
-	}
-
-	@Override
-	public ItemStack decrStackSize(int par1, int par2) {
-		if (this.containingItems[par1] != null) {
-			ItemStack var3;
-
-			if (this.containingItems[par1].stackSize <= par2) {
-				var3 = this.containingItems[par1];
-				this.containingItems[par1] = null;
-				return var3;
-			} else {
-				var3 = this.containingItems[par1].splitStack(par2);
-
-				if (this.containingItems[par1].stackSize == 0) {
-					this.containingItems[par1] = null;
-				}
-
-				return var3;
-			}
-		} else {
-			return null;
-		}
-	}
-
-	@Override
-	public ItemStack removeStackFromSlot(int par1) {
-		if (this.containingItems[par1] != null) {
-			ItemStack var2 = this.containingItems[par1];
-			this.containingItems[par1] = null;
-			return var2;
-		} else {
-			return null;
-		}
-	}
-
-	@Override
-	public void setInventorySlotContents(int par1, ItemStack par2ItemStack) {
-		this.containingItems[par1] = par2ItemStack;
-
-		if (par2ItemStack != null && par2ItemStack.stackSize > this.getInventoryStackLimit()) {
-			par2ItemStack.stackSize = this.getInventoryStackLimit();
-		}
-	}
-
-	@Override
 	public EnumFacing getFront() {
 		return EnumFacing.NORTH;
+	}
+
+	@Override
+	protected ItemStack[] getContainingItems() {
+		return this.containingItems;
 	}
 }
