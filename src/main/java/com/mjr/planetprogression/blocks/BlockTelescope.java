@@ -1,30 +1,37 @@
 package com.mjr.planetprogression.blocks;
 
+import java.util.List;
+
 import micdoodle8.mods.galacticraft.core.blocks.BlockTileGC;
 import micdoodle8.mods.galacticraft.core.blocks.ISortableBlock;
-import micdoodle8.mods.galacticraft.core.energy.tile.TileBaseUniversalElectrical;
+import micdoodle8.mods.galacticraft.core.tile.IMultiBlock;
+import micdoodle8.mods.galacticraft.core.util.EnumColor;
 import micdoodle8.mods.galacticraft.core.util.EnumSortCategoryBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyDirection;
-import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.Vec3;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import com.mjr.mjrlegendslib.util.PlayerUtilties;
+import com.mjr.mjrlegendslib.util.TranslateUtilities;
 import com.mjr.planetprogression.PlanetProgression;
 import com.mjr.planetprogression.tileEntities.TileEntityTelescope;
 
 public class BlockTelescope extends BlockTileGC implements ISortableBlock {
-	// private final Random rand = new Random();
 
 	public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
 
@@ -42,8 +49,8 @@ public class BlockTelescope extends BlockTileGC implements ISortableBlock {
 	}
 
 	@Override
-	public boolean isBlockNormalCube() {
-		return false;
+	public int getRenderType() {
+		return -1;
 	}
 
 	@Override
@@ -52,24 +59,8 @@ public class BlockTelescope extends BlockTileGC implements ISortableBlock {
 	}
 
 	@Override
-	public boolean onMachineActivated(World world, BlockPos pos, IBlockState state, EntityPlayer entityPlayer, EnumFacing side, float hitX, float hitY, float hitZ) {
-		entityPlayer.openGui(PlanetProgression.instance, -1, world, pos.getX(), pos.getY(), pos.getZ());
-		return true;
-	}
-
-	@Override
-	public boolean onUseWrench(World world, BlockPos pos, EntityPlayer entityPlayer, EnumFacing side, float hitX, float hitY, float hitZ) {
-		int metadata = getMetaFromState(world.getBlockState(pos));
-		int change = world.getBlockState(pos).getValue(FACING).rotateY().getHorizontalIndex();
-
-		world.setBlockState(pos, this.getStateFromMeta(metadata - (metadata % 4) + change), 3);
-
-		TileEntity te = world.getTileEntity(pos);
-		if (te instanceof TileBaseUniversalElectrical) {
-			((TileBaseUniversalElectrical) te).updateFacing();
-		}
-
-		return true;
+	public boolean isFullCube() {
+		return false;
 	}
 
 	@Override
@@ -78,71 +69,98 @@ public class BlockTelescope extends BlockTileGC implements ISortableBlock {
 	}
 
 	@Override
-	public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
-		// final TileEntityTelescope var7 = (TileEntityTelescope) worldIn.getTileEntity(pos);
-		//
-		// if (var7 != null) {
-		// for (int var8 = 0; var8 < var7.getSizeInventory(); ++var8) {
-		// final ItemStack var9 = var7.getStackInSlot(var8);
-		//
-		// if (var9 != null) {
-		// final float var10 = this.rand.nextFloat() * 0.8F + 0.1F;
-		// final float var11 = this.rand.nextFloat() * 0.8F + 0.1F;
-		// final float var12 = this.rand.nextFloat() * 0.8F + 0.1F;
-		//
-		// while (var9.stackSize > 0) {
-		// int var13 = this.rand.nextInt(21) + 10;
-		//
-		// if (var13 > var9.stackSize) {
-		// var13 = var9.stackSize;
-		// }
-		//
-		// var9.stackSize -= var13;
-		// final EntityItem var14 = new EntityItem(worldIn, pos.getX() + var10, pos.getY() + var11, pos.getZ() + var12, new ItemStack(var9.getItem(), var13, var9.getItemDamage()));
-		//
-		// if (var9.hasTagCompound()) {
-		// var14.getEntityItem().setTagCompound(var9.getTagCompound().copy());
-		// }
-		//
-		// final float var15 = 0.05F;
-		// var14.motionX = (float) this.rand.nextGaussian() * var15;
-		// var14.motionY = (float) this.rand.nextGaussian() * var15 + 0.2F;
-		// var14.motionZ = (float) this.rand.nextGaussian() * var15;
-		// worldIn.spawnEntityInWorld(var14);
-		// }
-		// }
-		// }
-		// }
+	public AxisAlignedBB getCollisionBoundingBox(World world, BlockPos pos, IBlockState state) {
+		return AxisAlignedBB.fromBounds((double) pos.getX() + -0.0F, (double) pos.getY() + 0.0F, (double) pos.getZ() + -0.0F, (double) pos.getX() + 1.0F, (double) pos.getY() + 1.0F, (double) pos.getZ() + 1.0F);
+	}
 
-		super.breakBlock(worldIn, pos, state);
+	@SideOnly(Side.CLIENT)
+	@Override
+	public AxisAlignedBB getSelectedBoundingBox(World world, BlockPos pos) {
+		return this.getCollisionBoundingBox(world, pos, world.getBlockState(pos));
 	}
 
 	@Override
-	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
-		final int angle = MathHelper.floor_double(placer.rotationYaw * 4.0F / 360.0F + 0.5D) & 3;
-		worldIn.setBlockState(pos, getStateFromMeta(EnumFacing.getHorizontal(angle).getOpposite().getHorizontalIndex()), 3);
+	public MovingObjectPosition collisionRayTrace(World world, BlockPos pos, Vec3 start, Vec3 end) {
+		this.setBlockBounds(-0.0F, 0.0F, -0.0F, 1.0F, 1.0F, 1.0F);
 
-		TileEntity tile = worldIn.getTileEntity(pos);
+		final MovingObjectPosition r = super.collisionRayTrace(world, pos, start, end);
+
+		this.setBlockBounds(-0.0F, 0.0F, -0.0F, 1.0F, 1.0F, 1.0F);
+
+		return r;
+	}
+
+	@Override
+	public void addCollisionBoxesToList(World world, BlockPos pos, IBlockState state, AxisAlignedBB mask, List<AxisAlignedBB> list, Entity collidingEntity) {
+		this.setBlockBounds(-0.0F, 0.0F, -0.0F, 1.0F, 1.0F, 1.0F);
+		super.addCollisionBoxesToList(world, pos, state, mask, list, collidingEntity);
+	}
+
+	@Override
+	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack itemStack) {
+		super.onBlockPlacedBy(world, pos, state, placer, itemStack);
+
+		TileEntity tile = world.getTileEntity(pos);
+
+		boolean validSpot = true;
+
+		for (int y = 0; y < 3; y++) {
+			if (!(y == 0)) {
+				IBlockState stateAt = world.getBlockState(pos.add(0, y, 0));
+
+				if (!stateAt.getBlock().getMaterial().isReplaceable()) {
+					validSpot = false;
+				}
+
+			}
+		}
+
+		if (!validSpot) {
+			world.setBlockToAir(pos);
+
+			if (placer instanceof EntityPlayer) {
+				if (!world.isRemote) {
+					PlayerUtilties.sendMessage((EntityPlayer) placer, "" + EnumColor.RED + TranslateUtilities.translate("gui.warning.noroom"));
+				}
+				((EntityPlayer) placer).inventory.addItemStackToInventory(new ItemStack(Item.getItemFromBlock(this), 1, 0));
+			}
+
+			return;
+		}
 
 		if (tile instanceof TileEntityTelescope) {
 			((TileEntityTelescope) tile).owner = ((EntityPlayer) placer).getUniqueID().toString();
+			((TileEntityTelescope) tile).onCreate(world, pos);
 		}
 	}
 
 	@Override
-	public IBlockState getStateFromMeta(int meta) {
-		EnumFacing enumfacing = EnumFacing.getHorizontal(meta);
-		return this.getDefaultState().withProperty(FACING, enumfacing);
+	public boolean onMachineActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumFacing side, float hitX, float hitY, float hitZ) {
+		return ((IMultiBlock) world.getTileEntity(pos)).onActivated(player);
 	}
 
 	@Override
-	public int getMetaFromState(IBlockState state) {
-		return state.getValue(FACING).getHorizontalIndex();
-	}
+	public void breakBlock(World world, BlockPos pos, IBlockState state) {
+		final TileEntity tileAt = world.getTileEntity(pos);
 
-	@Override
-	protected BlockState createBlockState() {
-		return new BlockState(this, FACING);
+		int fakeBlockCount = 0;
+
+		for (int y = 0; y < 3; y++) {
+			if (!(y == 0)) {
+				if (world.getBlockState(pos.add(0, y, 0)).getBlock() == PlanetProgression_Blocks.FAKE_TELESCOPE) {
+					fakeBlockCount++;
+				}
+			}
+
+		}
+
+		if (tileAt instanceof TileEntityTelescope) {
+			if (fakeBlockCount > 0) {
+				((TileEntityTelescope) tileAt).onDestroy(tileAt);
+			}
+		}
+
+		super.breakBlock(world, pos, state);
 	}
 
 	@Override
