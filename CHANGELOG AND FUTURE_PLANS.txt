@@ -5,6 +5,15 @@
 
 
 ===========================================Released Updates===========================================
+v0.2.1
+*Changes to Celestial Selection screen to match GC changes
+*Clean up/Fix Formatting
+*Fixed Telescope bounding box, Changed to multi block
+*Tweaks for telescope player messages
+*Tweaks/Fixes for Satellite Rocket Item
+*Few fixes for Satellite Rocket Rendering/Bounding box
+*Set required GC version requirement to Build 169
+
 v0.2.0
 *Fixed debug amount of speed on Satellite Controller
 *Fixed spelling error in Satellite Controller GUI
