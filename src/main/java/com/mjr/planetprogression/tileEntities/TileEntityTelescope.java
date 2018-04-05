@@ -1,32 +1,49 @@
 package com.mjr.planetprogression.tileEntities;
 
 import java.util.EnumSet;
+import java.util.LinkedList;
+import java.util.List;
 
 import micdoodle8.mods.galacticraft.api.galaxies.GalaxyRegistry;
 import micdoodle8.mods.galacticraft.api.galaxies.Moon;
 import micdoodle8.mods.galacticraft.api.galaxies.Planet;
+import micdoodle8.mods.galacticraft.api.transmission.NetworkType;
+import micdoodle8.mods.galacticraft.core.Constants;
+import micdoodle8.mods.galacticraft.core.blocks.BlockMulti;
+import micdoodle8.mods.galacticraft.core.blocks.BlockMulti.EnumBlockMultiType;
 import micdoodle8.mods.galacticraft.core.energy.item.ItemElectricBase;
 import micdoodle8.mods.galacticraft.core.energy.tile.TileBaseElectricBlockWithInventory;
+import micdoodle8.mods.galacticraft.core.tile.IMultiBlock;
 import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 import micdoodle8.mods.miccore.Annotations.NetworkedField;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import com.mjr.mjrlegendslib.util.PlayerUtilties;
 import com.mjr.planetprogression.Config;
+import com.mjr.planetprogression.PlanetProgression;
+import com.mjr.planetprogression.blocks.BlockTelescopeFake;
+import com.mjr.planetprogression.blocks.PlanetProgression_Blocks;
 import com.mjr.planetprogression.handlers.capabilities.CapabilityStatsHandler;
 import com.mjr.planetprogression.handlers.capabilities.IStatsCapability;
 import com.mjr.planetprogression.item.ResearchPaper;
 
-public class TileEntityTelescope extends TileBaseElectricBlockWithInventory implements ISidedInventory {
+public class TileEntityTelescope extends TileBaseElectricBlockWithInventory implements IMultiBlock, ISidedInventory {
 
 	public static final int PROCESS_TIME_REQUIRED_BASE = (int) (200 * Config.telescopeTimeModifier);
 	@NetworkedField(targetSide = Side.CLIENT)
@@ -43,6 +60,9 @@ public class TileEntityTelescope extends TileBaseElectricBlockWithInventory impl
 	@NetworkedField(targetSide = Side.CLIENT)
 	public float currentRotation;
 	private NonNullList<ItemStack> stacks = NonNullList.withSize(2, ItemStack.EMPTY);
+
+	@NetworkedField(targetSide = Side.CLIENT)
+	private AxisAlignedBB renderAABB;
 
 	public TileEntityTelescope() {
 		super();
@@ -150,6 +170,64 @@ public class TileEntityTelescope extends TileBaseElectricBlockWithInventory impl
 	}
 
 	@Override
+	public boolean onActivated(EntityPlayer entityPlayer) {
+		entityPlayer.openGui(PlanetProgression.instance, -1, this.world, this.getPos().getX(), this.getPos().getY(), this.getPos().getZ());
+		return true;
+	}
+
+	@Override
+	public void onCreate(World world, BlockPos placedPosition) {
+		List<BlockPos> positions = new LinkedList<BlockPos>();
+		this.getPositions(placedPosition, positions);
+		for (BlockPos vecToAdd : positions)
+			((BlockTelescopeFake) PlanetProgression_Blocks.FAKE_TELESCOPE).makeFakeBlock(world, vecToAdd, placedPosition,
+					PlanetProgression_Blocks.FAKE_TELESCOPE.getDefaultState().withProperty(BlockTelescopeFake.TOP, vecToAdd.getY() == placedPosition.getY() + 2));
+	}
+
+	@Override
+	public BlockMulti.EnumBlockMultiType getMultiType() {
+		// Not actually used - maybe this shouldn't be an IMultiBlock at all?
+		return EnumBlockMultiType.MINER_BASE;
+	}
+
+	@Override
+	public void getPositions(BlockPos placedPosition, List<BlockPos> positions) {
+		positions.add(placedPosition.add(0, 1, 0));
+		positions.add(placedPosition.add(0, 2, 0));
+	}
+
+	@Override
+	public void onDestroy(TileEntity callingBlock) {
+		final BlockPos thisBlock = getPos();
+		List<BlockPos> positions = new LinkedList<BlockPos>();
+		this.getPositions(thisBlock, positions);
+
+		for (BlockPos pos : positions) {
+			IBlockState stateAt = this.world.getBlockState(pos);
+
+			if (stateAt.getBlock() == PlanetProgression_Blocks.FAKE_TELESCOPE) {
+				this.world.destroyBlock(pos, false);
+			}
+		}
+		this.world.destroyBlock(thisBlock, true);
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public AxisAlignedBB getRenderBoundingBox() {
+		if (this.renderAABB == null) {
+			this.renderAABB = new AxisAlignedBB(getPos().getX() - 1, getPos().getY(), getPos().getZ() - 1, getPos().getX() + 2, getPos().getY() + 4, getPos().getZ() + 2);
+		}
+		return this.renderAABB;
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public double getMaxRenderDistanceSquared() {
+		return Constants.RENDERDISTANCE_MEDIUM;
+	}
+
+	@Override
 	public String getName() {
 		return GCCoreUtil.translate("container.telescope.name");
 	}
@@ -162,6 +240,11 @@ public class TileEntityTelescope extends TileBaseElectricBlockWithInventory impl
 	@Override
 	public boolean hasCustomName() {
 		return true;
+	}
+
+	@Override
+	public int getInventoryStackLimit() {
+		return 64;
 	}
 
 	@Override
@@ -186,12 +269,36 @@ public class TileEntityTelescope extends TileBaseElectricBlockWithInventory impl
 
 	@Override
 	public boolean shouldUseEnergy() {
-		return !this.getDisabled(0);
+		return false;
+	}
+
+	@Override
+	public float receiveElectricity(EnumFacing from, float energy, int tier, boolean doReceive) {
+		return 0;
+	}
+
+	@Override
+	public EnumSet<EnumFacing> getElectricalInputDirections() {
+		return EnumSet.noneOf(EnumFacing.class);
+	}
+
+	@Override
+	public boolean canConnect(EnumFacing direction, NetworkType type) {
+		if (direction == null || type == NetworkType.POWER) {
+			return false;
+		}
+		return false;
+
 	}
 
 	@Override
 	public EnumFacing getElectricInputDirection() {
-		return EnumFacing.getFront((this.getBlockMetadata() & 3) + 2);
+		return null;
+	}
+
+	@Override
+	public ItemStack getBatteryInSlot() {
+		return this.getStackInSlot(0);
 	}
 
 	@Override
