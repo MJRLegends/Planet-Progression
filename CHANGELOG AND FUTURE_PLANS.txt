@@ -5,6 +5,17 @@
 
 
 ===========================================Released Updates===========================================
+v0.1.5
+*Changes to Celestial Selection screen to match GC changes
+*Clean up/Fix Formatting
+*Fixed JEI recipe has wrong number of inputs warning
+*Fixed Telescope bounding box, Changed to multi block
+*Tweaks for telescope player messages
+*Clean up for Telescope Tile Entity class
+*Tweaks/Fixes for Satellite Rocket Item
+*Few fixes for Satellite Rocket Rendering/Bounding box
+*Set required GC version requirement to Build 169
+
 v0.1.4
 *Fixed debug amount of speed on Satellite Controller
 *Fixed spelling error in Satellite Controller GUI
