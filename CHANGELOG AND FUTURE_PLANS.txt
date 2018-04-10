@@ -5,6 +5,9 @@
 
 
 ===========================================Released Updates===========================================
+v0.1.6
+*Fixed issue with Telescope not accepting power from batteries
+
 v0.1.5
 *Changes to Celestial Selection screen to match GC changes
 *Clean up/Fix Formatting
