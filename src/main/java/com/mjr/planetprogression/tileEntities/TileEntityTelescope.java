@@ -67,7 +67,7 @@ public class TileEntityTelescope extends TileBaseElectricBlockWithInventory impl
 
 	public TileEntityTelescope() {
 		super();
-		this.storage.setMaxExtract(300);
+		this.storage.setMaxExtract(100);
 	}
 
 	@Override
@@ -279,7 +279,7 @@ public class TileEntityTelescope extends TileBaseElectricBlockWithInventory impl
 
 	@Override
 	public boolean shouldUseEnergy() {
-		return false;
+		return true;
 	}
 
 	@Override
@@ -299,11 +299,6 @@ public class TileEntityTelescope extends TileBaseElectricBlockWithInventory impl
 		}
 		return false;
 
-	}
-
-	@Override
-	public EnumFacing getElectricInputDirection() {
-		return null;
 	}
 
 	@Override
