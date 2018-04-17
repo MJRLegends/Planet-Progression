@@ -137,7 +137,7 @@ public class BlockTelescopeFake extends BlockAdvancedTile implements ITileEntity
 			}
 		}
 
-		return null;
+		return ItemStack.EMPTY;
 	}
 
 	@Override
