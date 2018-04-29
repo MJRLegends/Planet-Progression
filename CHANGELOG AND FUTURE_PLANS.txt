@@ -5,6 +5,10 @@
 
 
 ===========================================Released Updates===========================================
+v0.1.7
+*Fixed issue with Custom Celestial Selection launch button not working at first
+*Changes to Celestial Selection screen to match GC changes
+
 v0.1.6
 *Fixed issue with Telescope not accepting power from batteries
 
