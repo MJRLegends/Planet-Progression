@@ -5,6 +5,12 @@
 
 
 ===========================================Released Updates===========================================
+v0.1.8
+*Changes to Celestial Selection screen to match GC changes
+*Fixed issue with getting Permissions on client side
+*Satellite Rocket Launch particle performance improvements
+*Set required GC version requirement to Build 177
+
 v0.1.7
 *Fixed issue with Custom Celestial Selection launch button not working at first
 *Changes to Celestial Selection screen to match GC changes
