@@ -2,7 +2,6 @@ package com.mjr.planetprogression.client.handlers;
 
 import java.util.List;
 
-import micdoodle8.mods.galacticraft.core.Constants;
 import micdoodle8.mods.galacticraft.core.client.gui.screen.GuiCelestialSelection;
 import micdoodle8.mods.galacticraft.core.util.EnumColor;
 import net.minecraft.client.Minecraft;
@@ -18,10 +17,8 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.minecraftforge.server.permission.PermissionAPI;
 
 import com.google.common.collect.Lists;
-import com.mjr.mjrlegendslib.util.MCUtilities;
 import com.mjr.mjrlegendslib.util.TranslateUtilities;
 import com.mjr.planetprogression.blocks.PlanetProgression_Blocks;
 import com.mjr.planetprogression.client.gui.screen.CustomGuiCelestialSelection;
@@ -60,9 +57,9 @@ public class MainHandlerClient {
 	public void onGuiOpenEvent(GuiOpenEvent event) {
 		if (((event.getGui() instanceof GuiCelestialSelection))) {
 			if (GameSettings.isKeyDown(micdoodle8.mods.galacticraft.core.tick.KeyHandlerClient.galaxyMap)) {
-				event.setGui(new CustomGuiCelestialSelection(true, ((GuiCelestialSelection) event.getGui()).possibleBodies, PermissionAPI.hasPermission(MCUtilities.getMinecraft().thePlayer, Constants.PERMISSION_CREATE_STATION)));
+				event.setGui(new CustomGuiCelestialSelection(true, ((GuiCelestialSelection) event.getGui()).possibleBodies, ((GuiCelestialSelection) event.getGui()).canCreateStations));
 			} else {
-				event.setGui(new CustomGuiCelestialSelection(false, ((GuiCelestialSelection) event.getGui()).possibleBodies, PermissionAPI.hasPermission(MCUtilities.getMinecraft().thePlayer, Constants.PERMISSION_CREATE_STATION)));
+				event.setGui(new CustomGuiCelestialSelection(false, ((GuiCelestialSelection) event.getGui()).possibleBodies, ((GuiCelestialSelection) event.getGui()).canCreateStations));
 			}
 		}
 	}
