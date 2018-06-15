@@ -135,6 +135,8 @@ public class TileEntityTelescope extends TileBaseElectricBlockWithInventory impl
 	}
 
 	private boolean canResearch() {
+		if(this.getDisabled(0))
+			return false;
 		if (this.stacks.get(1) != null && this.stacks.get(1).getItem() instanceof ResearchPaper) {
 			return true;
 		}
