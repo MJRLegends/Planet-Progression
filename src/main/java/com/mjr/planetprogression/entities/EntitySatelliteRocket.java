@@ -242,11 +242,7 @@ public class EntitySatelliteRocket extends EntityTieredRocket {
 		if (playerBase != null) {
 			GCPlayerStats stats = playerBase.getCapability(GCCapabilities.GC_STATS_CAPABILITY, null);
 
-			if (this.stacks == null || this.stacks.isEmpty()) {
-				stats.setRocketStacks(NonNullList.withSize(2, ItemStack.EMPTY));
-			} else {
-				stats.setRocketStacks(this.stacks);
-			}
+			stats.setRocketStacks(NonNullList.withSize(2, ItemStack.EMPTY));
 
 			stats.setRocketType(this.rocketType.getIndex());
 			stats.setRocketItem(PlanetProgression_Items.SATELLITE_ROCKET);
