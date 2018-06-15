@@ -4,6 +4,15 @@ import java.util.EnumSet;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.mjr.mjrlegendslib.util.PlayerUtilties;
+import com.mjr.planetprogression.Config;
+import com.mjr.planetprogression.PlanetProgression;
+import com.mjr.planetprogression.blocks.BlockTelescopeFake;
+import com.mjr.planetprogression.blocks.PlanetProgression_Blocks;
+import com.mjr.planetprogression.handlers.capabilities.CapabilityStatsHandler;
+import com.mjr.planetprogression.handlers.capabilities.IStatsCapability;
+import com.mjr.planetprogression.item.ResearchPaper;
+
 import micdoodle8.mods.galacticraft.api.galaxies.GalaxyRegistry;
 import micdoodle8.mods.galacticraft.api.galaxies.Moon;
 import micdoodle8.mods.galacticraft.api.galaxies.Planet;
@@ -33,15 +42,6 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import com.mjr.mjrlegendslib.util.PlayerUtilties;
-import com.mjr.planetprogression.Config;
-import com.mjr.planetprogression.PlanetProgression;
-import com.mjr.planetprogression.blocks.BlockTelescopeFake;
-import com.mjr.planetprogression.blocks.PlanetProgression_Blocks;
-import com.mjr.planetprogression.handlers.capabilities.CapabilityStatsHandler;
-import com.mjr.planetprogression.handlers.capabilities.IStatsCapability;
-import com.mjr.planetprogression.item.ResearchPaper;
 
 public class TileEntityTelescope extends TileBaseElectricBlockWithInventory implements IMultiBlock, ISidedInventory {
 
@@ -76,22 +76,24 @@ public class TileEntityTelescope extends TileBaseElectricBlockWithInventory impl
 				if (ownerOnline)
 					this.ownerUsername = PlayerUtilties.getUsernameFromUUID(this.owner);
 				this.ownerOnline = PlayerUtilties.isPlayerOnlineByUUID(this.owner);
-				if (this.hasEnoughEnergyToRun && ownerOnline) {
-					if (this.canResearch()) {
-						++this.processTicks;
+				if (this.hasEnoughEnergyToRun) {
+					if (ownerOnline) {
+						if (this.canResearch()) {
+							++this.processTicks;
 
-						this.processTimeRequired = TileEntityTelescope.PROCESS_TIME_REQUIRED_BASE * 2 / (1 + this.poweredByTierGC);
+							this.processTimeRequired = TileEntityTelescope.PROCESS_TIME_REQUIRED_BASE * 2 / (1 + this.poweredByTierGC);
 
-						if (this.processTicks >= this.processTimeRequired) {
-							this.world.playSound(null, this.getPos(), SoundEvents.BLOCK_ANVIL_LAND, SoundCategory.BLOCKS, 0.3F, this.world.rand.nextFloat() * 0.1F + 0.9F);
+							if (this.processTicks >= this.processTimeRequired) {
+								this.world.playSound(null, this.getPos(), SoundEvents.BLOCK_ANVIL_LAND, SoundCategory.BLOCKS, 0.3F, this.world.rand.nextFloat() * 0.1F + 0.9F);
+								this.processTicks = 0;
+								this.doResearch();
+							}
+						} else {
 							this.processTicks = 0;
-							this.doResearch();
 						}
 					} else {
 						this.processTicks = 0;
 					}
-				} else {
-					this.processTicks = 0;
 				}
 			}
 		}
@@ -135,7 +137,7 @@ public class TileEntityTelescope extends TileBaseElectricBlockWithInventory impl
 	}
 
 	private boolean canResearch() {
-		if(this.getDisabled(0))
+		if (this.getDisabled(0))
 			return false;
 		if (this.stacks.get(1) != null && this.stacks.get(1).getItem() instanceof ResearchPaper) {
 			return true;
