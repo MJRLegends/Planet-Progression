@@ -75,22 +75,24 @@ public class TileEntityTelescope extends TileBaseElectricBlockWithInventory impl
 				if (ownerOnline)
 					this.ownerUsername = PlayerUtilties.getUsernameFromUUID(this.owner);
 				this.ownerOnline = PlayerUtilties.isPlayerOnlineByUUID(this.owner);
-				if (this.hasEnoughEnergyToRun && ownerOnline) {
-					if (this.canResearch()) {
-						++this.processTicks;
+				if (this.hasEnoughEnergyToRun) {
+					if (ownerOnline) {
+						if (this.canResearch()) {
+							++this.processTicks;
 
-						this.processTimeRequired = TileEntityTelescope.PROCESS_TIME_REQUIRED_BASE * 2 / (1 + this.poweredByTierGC);
+							this.processTimeRequired = TileEntityTelescope.PROCESS_TIME_REQUIRED_BASE * 2 / (1 + this.poweredByTierGC);
 
-						if (this.processTicks >= this.processTimeRequired) {
-							this.worldObj.playSoundEffect(this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), "random.anvil_land", 0.2F, 0.5F);
+							if (this.processTicks >= this.processTimeRequired) {
+								this.worldObj.playSoundEffect(this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), "random.anvil_land", 0.2F, 0.5F);
+								this.processTicks = 0;
+								this.doResearch();
+							}
+						} else {
 							this.processTicks = 0;
-							this.doResearch();
 						}
 					} else {
 						this.processTicks = 0;
 					}
-				} else {
-					this.processTicks = 0;
 				}
 			}
 		}
@@ -134,7 +136,7 @@ public class TileEntityTelescope extends TileBaseElectricBlockWithInventory impl
 	}
 
 	private boolean canResearch() {
-		if(this.getDisabled(0))
+		if (this.getDisabled(0))
 			return false;
 		if (this.containingItems[1] != null && this.containingItems[1].getItem() instanceof ResearchPaper) {
 			return true;
