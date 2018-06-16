@@ -9,6 +9,7 @@ v0.2.5
 *Fixed issue #25
 *Fixed issue #26
 *Fixed issue #27
+*Fixed issue #23
 
 v0.2.4
 *Changes to Celestial Selection screen to match GC changes
