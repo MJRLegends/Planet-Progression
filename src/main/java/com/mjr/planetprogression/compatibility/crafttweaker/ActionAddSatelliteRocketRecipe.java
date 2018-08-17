@@ -140,7 +140,7 @@ public class ActionAddSatelliteRocketRecipe implements IAction {
 
 	@Override
 	public String describe() {
-		return "Adding a new Nasaworkbench recipe for Satellite Rocket";
+		return "Adding a new Nasa Workbench recipe for Satellite Rocket";
 	}
 
 }

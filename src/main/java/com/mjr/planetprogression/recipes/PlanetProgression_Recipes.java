@@ -11,6 +11,9 @@ public class PlanetProgression_Recipes {
 
 	public static void init() {
 		registerRecipes();
+	}
+	
+	public static void initRocketRecipes() {
 		if (Config.researchMode == 2 || Config.researchMode == 3)
 			SatelliteRocketRecipes.registerRocketCraftingRecipe();
 	}

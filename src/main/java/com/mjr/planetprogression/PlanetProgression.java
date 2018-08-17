@@ -86,6 +86,8 @@ public class PlanetProgression {
 
 		// Register RegistrationHandler
 		RegisterUtilities.registerEventHandler(new RegistrationHandler());
+		
+		PlanetProgression_Recipes.initRocketRecipes();
 
 		PlanetProgression.proxy.preInit(event);
 	}
