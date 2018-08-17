@@ -81,7 +81,7 @@ public class PlanetProgression_Items {
 		List<CelestialBody> unReachableResearchPapers = new ArrayList<>();
 		List<CelestialBody> reachablePlanetsMoons = new ArrayList<>();
 
-		//Sort Registered Addon Planets by in to reachable & unreachable
+		// Sort All Registered Planets/Moons by in to reachable & unreachable
 		int temp = 0;
 		for (Planet planet : GalaxyRegistry.getRegisteredPlanets().values()) {
 			if (!planet.getUnlocalizedName().contains("overworld")) {
