@@ -5,6 +5,14 @@
 
 
 ===========================================Released Updates===========================================
+v0.2.6
+*Added after BlackPlanet requirement to the dependencies
+*Changed Research Paper order of addon planets to be orderd by Rocket Tier & all ureachable planets/moons last
+*Added Items input/output automation to the Satellite Builder
+*Added CraftTweaker support for Satellite Builder recipes
+*Added crafttweaker support for adding new nasa workbench recipes for the Satellite Rocket
+*Added crafttweaker support for removing nasa workbench recipes for the Satellite Rocket
+
 v0.2.5
 *Fixed issue #25
 *Fixed issue #26
