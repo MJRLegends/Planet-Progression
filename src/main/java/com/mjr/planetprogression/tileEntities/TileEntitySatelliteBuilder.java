@@ -3,6 +3,12 @@ package com.mjr.planetprogression.tileEntities;
 import java.util.Arrays;
 import java.util.Map.Entry;
 
+import com.mjr.mjrlegendslib.util.TranslateUtilities;
+import com.mjr.planetprogression.blocks.BlockSatelliteBuilder;
+import com.mjr.planetprogression.item.PlanetProgression_Items;
+import com.mjr.planetprogression.recipes.MachineRecipeManager;
+
+import micdoodle8.mods.galacticraft.core.GCItems;
 import micdoodle8.mods.galacticraft.core.energy.item.ItemElectricBase;
 import micdoodle8.mods.galacticraft.core.energy.tile.TileBaseElectricBlockWithInventory;
 import micdoodle8.mods.miccore.Annotations.NetworkedField;
@@ -13,10 +19,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fml.relauncher.Side;
-
-import com.mjr.mjrlegendslib.util.TranslateUtilities;
-import com.mjr.planetprogression.blocks.BlockSatelliteBuilder;
-import com.mjr.planetprogression.recipes.MachineRecipeManager;
 
 public class TileEntitySatelliteBuilder extends TileBaseElectricBlockWithInventory implements ISidedInventory {
 	public static final int PROCESS_TIME_REQUIRED = 100;
@@ -148,22 +150,66 @@ public class TileEntitySatelliteBuilder extends TileBaseElectricBlockWithInvento
 
 	@Override
 	public int[] getSlotsForFace(EnumFacing side) {
-		return new int[] { 0, 1, 2, 3 };
+		if (side == EnumFacing.DOWN) {
+			return new int[] { 4 };
+		} else if (side == EnumFacing.EAST) {
+			return new int[] { 3 };
+		} else if (side == EnumFacing.WEST) {
+			return new int[] { 1, 2 };
+		}
+		return new int[] { 0, 1, 2, 3, 4 };
+	}
+
+	@Override
+	public boolean canInsertItem(int slotID, ItemStack itemStack, EnumFacing side) {
+		if (itemStack != null && this.isItemValidForSlot(slotID, itemStack)) {
+			switch (slotID) {
+			case 0:
+				return ItemElectricBase.isElectricItemCharged(itemStack);
+			case 1:
+				return itemStack.getItem() == GCItems.basicItem && itemStack.getMetadata() == 1;
+			case 2:
+				return itemStack.getItem() == GCItems.basicItem && itemStack.getMetadata() == 1;
+			case 3:
+				return itemStack.getItem() == PlanetProgression_Items.satelliteBasicModule;
+			default:
+				return false;
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public boolean canExtractItem(int slotID, ItemStack itemStack, EnumFacing side) {
+		if (itemStack != null && this.isItemValidForSlot(slotID, itemStack)) {
+			switch (slotID) {
+			case 0:
+				return ItemElectricBase.isElectricItemEmpty(itemStack) || !this.shouldPullEnergy();
+			case 4:
+				return this.producingStack == null ? false : itemStack.getItem() == this.producingStack.getItem();
+			default:
+				return false;
+			}
+		}
+		return false;
 	}
 
 	@Override
 	public boolean isItemValidForSlot(int slotID, ItemStack itemStack) {
-		return slotID == 0 && ItemElectricBase.isElectricItem(itemStack.getItem());
-	}
+		switch (slotID) {
+		case 0:
+			return itemStack != null && ItemElectricBase.isElectricItem(itemStack.getItem());
+		case 1:
+			return itemStack.getItem() == GCItems.basicItem && itemStack.getMetadata() == 1;
+		case 2:
+			return itemStack.getItem() == GCItems.basicItem && itemStack.getMetadata() == 1;
+		case 3:
+			return itemStack.getItem() == PlanetProgression_Items.satelliteBasicModule;
+		case 4:
+			return this.producingStack == null ? false : itemStack.getItem() == this.producingStack.getItem();
+		}
 
-	@Override
-	public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction) {
-		return index == 0;
-	}
-
-	@Override
-	public boolean canInsertItem(int index, ItemStack itemStackIn, EnumFacing direction) {
-		return this.isItemValidForSlot(index, itemStackIn);
+		return false;
 	}
 
 	@Override
