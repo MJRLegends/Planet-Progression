@@ -1,15 +1,21 @@
 package com.mjr.planetprogression.item;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
+import javax.annotation.Nullable;
+
+import com.google.common.collect.Lists;
+import com.mjr.mjrlegendslib.util.RegisterUtilities;
+import com.mjr.planetprogression.Config;
+
+import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
 import micdoodle8.mods.galacticraft.api.galaxies.GalaxyRegistry;
 import micdoodle8.mods.galacticraft.api.galaxies.Moon;
 import micdoodle8.mods.galacticraft.api.galaxies.Planet;
 import net.minecraft.item.Item;
-
-import com.mjr.mjrlegendslib.util.RegisterUtilities;
-import com.mjr.planetprogression.Config;
 
 public class PlanetProgression_Items {
 	public static List<Item> researchPapers = new ArrayList<>();
@@ -29,14 +35,74 @@ public class PlanetProgression_Items {
 		registerItems();
 	}
 
+	static enum SortType implements Comparator<CelestialBody> {
+		TIER(1) {
+			@Override
+			public int compare(CelestialBody celestial1, CelestialBody celestial2) {
+				return Integer.compare(celestial2.getTierRequirement(), celestial1.getTierRequirement());
+			}
+		};
+
+		protected static final SortType[] values = SortType.values();
+		private int id;
+
+		private SortType(int id) {
+			this.id = id;
+		}
+
+		@Override
+		public int compare(CelestialBody celestial1, CelestialBody celestial2) {
+			return celestial2.getName().compareTo(celestial1.getName());
+		}
+
+		@Nullable
+		protected static SortType getTypeFromID(int id) {
+			for (SortType type : SortType.values) {
+				if (type.id == id) {
+					return type;
+				}
+			}
+			return null;
+		}
+	}
+
 	public static void initResearchPaperItems() {
+		List<CelestialBody> unReachableResearchPapers = new ArrayList<>();
+		List<CelestialBody> reachablePlanetsMoons = new ArrayList<>();
+
+		// Sort All Registered Planets/Moons by in to reachable & unreachable
 		int temp = 0;
 		for (Planet planet : GalaxyRegistry.getRegisteredPlanets().values()) {
-			if (!planet.getUnlocalizedName().contains("overworld"))
-				researchPapers.add(new ResearchPaper(planet.getUnlocalizedName(), temp++));
+			if (!planet.getUnlocalizedName().contains("overworld")) {
+				if (planet.getReachable())
+					reachablePlanetsMoons.add(planet);
+				else
+					unReachableResearchPapers.add(planet);
+			}
 		}
 		for (Moon moon : GalaxyRegistry.getRegisteredMoons().values()) {
-			researchPapers.add(new ResearchPaper(moon.getUnlocalizedName(), temp++));
+			if (moon.getReachable())
+				reachablePlanetsMoons.add(moon);
+			else
+				unReachableResearchPapers.add(moon);
+		}
+
+		// Sort Research Paper order by Rocket Tier
+		Collections.sort(reachablePlanetsMoons, SortType.getTypeFromID(1));
+
+		// Reverse list to get it in the correct order
+		reachablePlanetsMoons = Lists.reverse(reachablePlanetsMoons);
+
+		// Create Research Papers for Sorted Planets/Moons
+		for (CelestialBody body : reachablePlanetsMoons) {
+			researchPapers.add(new ResearchPaper(body.getUnlocalizedName(), temp++));
+		}
+		for (CelestialBody body : unReachableResearchPapers) {
+			researchPapers.add(new ResearchPaper(body.getUnlocalizedName(), temp++));
+		}
+
+		for (Item item : researchPapers) {
+			System.out.println(((ResearchPaper) item).getPlanetName());
 		}
 	}
 
