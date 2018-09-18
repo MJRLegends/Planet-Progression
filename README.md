@@ -1,3 +1,5 @@
+[![](http://cf.way2muchnoise.eu/full_planet-progression_downloads.svg)](https://minecraft.curseforge.com/projects/planet-progression) [![](http://cf.way2muchnoise.eu/versions/Minecraft_planet-progression_all.svg)](https://minecraft.curseforge.com/projects/planet-progression)
+
 # Planet-Progression
 A Galacticraft addon for Planet Research Progression
 
