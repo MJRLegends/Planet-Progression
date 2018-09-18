@@ -5,7 +5,6 @@ import io.netty.channel.ChannelHandlerContext;
 
 import java.util.EnumMap;
 
-import micdoodle8.mods.galacticraft.core.network.IPacket;
 import micdoodle8.mods.galacticraft.core.util.GCLog;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -15,6 +14,7 @@ import net.minecraftforge.fml.common.network.FMLOutboundHandler;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 
+import com.mjr.mjrlegendslib.network.IPacket;
 import com.mjr.planetprogression.Constants;
 
 public class PlanetProgressionChannelHandler extends FMLIndexedMessageToMessageCodec<IPacket> {
