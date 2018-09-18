@@ -1,34 +1,11 @@
 package com.mjr.planetprogression.network;
 
-import io.netty.buffer.ByteBuf;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
-import micdoodle8.mods.galacticraft.api.galaxies.GalaxyRegistry;
-import micdoodle8.mods.galacticraft.api.galaxies.Moon;
-import micdoodle8.mods.galacticraft.api.galaxies.Planet;
-import micdoodle8.mods.galacticraft.core.entities.player.GCPlayerStats;
-import micdoodle8.mods.galacticraft.core.network.NetworkUtil;
-import micdoodle8.mods.galacticraft.core.network.PacketBase;
-import micdoodle8.mods.galacticraft.core.util.GCLog;
-import micdoodle8.mods.galacticraft.core.util.PlayerUtil;
-import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.network.INetHandler;
-import net.minecraft.network.Packet;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
-import net.minecraftforge.fml.client.FMLClientHandler;
-import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-
+import com.mjr.mjrlegendslib.network.PacketSimpleBase;
 import com.mjr.mjrlegendslib.util.ItemUtilities;
 import com.mjr.planetprogression.Constants;
 import com.mjr.planetprogression.client.handlers.capabilities.CapabilityStatsClientHandler;
@@ -39,8 +16,27 @@ import com.mjr.planetprogression.handlers.capabilities.IStatsCapability;
 import com.mjr.planetprogression.tileEntities.TileEntitySatelliteController;
 import com.mjr.planetprogression.tileEntities.TileEntityTelescope;
 
-@SuppressWarnings("rawtypes")
-public class PacketSimplePP extends PacketBase implements Packet {
+import io.netty.buffer.ByteBuf;
+import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
+import micdoodle8.mods.galacticraft.api.galaxies.GalaxyRegistry;
+import micdoodle8.mods.galacticraft.api.galaxies.Moon;
+import micdoodle8.mods.galacticraft.api.galaxies.Planet;
+import micdoodle8.mods.galacticraft.core.entities.player.GCPlayerStats;
+import micdoodle8.mods.galacticraft.core.network.NetworkUtil;
+import micdoodle8.mods.galacticraft.core.util.GCLog;
+import micdoodle8.mods.galacticraft.core.util.PlayerUtil;
+import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.network.INetHandler;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockPos;
+import net.minecraftforge.fml.client.FMLClientHandler;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
+public class PacketSimplePP extends PacketSimpleBase {
 	public enum EnumSimplePacket {
 		// SERVER
 		S_UPDATE_ROTATION(Side.SERVER, BlockPos.class, Float.class), S_UPDATE_CONTROLLER_SATLLITE_CHANGE(Side.SERVER, BlockPos.class, Float.class),
@@ -146,8 +142,8 @@ public class PacketSimplePP extends PacketBase implements Packet {
 			break;
 		case C_UPDATE_SATELLITE_LIST:
 			String item = (String) this.data.get(3);
-			stats.addSatellites(new SatelliteData((int) this.data.get(0), (String) this.data.get(1), (int) this.data.get(2),
-					(item.equalsIgnoreCase("null") ? null : ItemUtilities.stringToItemStack(item, Constants.modID + ":UpdateSatellieList", true))));
+			stats.addSatellites(
+					new SatelliteData((int) this.data.get(0), (String) this.data.get(1), (int) this.data.get(2), (item.equalsIgnoreCase("null") ? null : ItemUtilities.stringToItemStack(item, Constants.modID + ":UpdateSatellieList", true))));
 			break;
 		default:
 			break;
@@ -206,16 +202,6 @@ public class PacketSimplePP extends PacketBase implements Packet {
 		default:
 			break;
 		}
-	}
-
-	@Override
-	public void readPacketData(PacketBuffer var1) {
-		this.decodeInto(var1);
-	}
-
-	@Override
-	public void writePacketData(PacketBuffer var1) {
-		this.encodeInto(var1);
 	}
 
 	@SideOnly(Side.CLIENT)
