@@ -98,6 +98,7 @@ public class StatsCapability implements IStatsCapability {
 	@Override
 	public void copyFrom(IStatsCapability oldData, boolean keepInv) {
 		this.unlockedPlanets = oldData.getUnlockedPlanets();
+		this.satellites = oldData.getSatellites();
 	}
 
 	@Override
