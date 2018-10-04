@@ -5,6 +5,11 @@
 
 
 ===========================================Released Updates===========================================
+v0.2.1
+*Changed network system to use a base class from MJRLegendsLib
+*Fixed issue #34
+*Set minimum version of MJRLegendsLib requirement to v1.1.1
+
 v0.2.0
 *Added after BlackPlanet requirement to the dependencies
 *Changed Research Paper order of addon planets to be orderd by Rocket Tier & all ureachable planets/moons last
