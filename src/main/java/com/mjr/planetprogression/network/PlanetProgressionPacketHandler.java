@@ -9,7 +9,6 @@ import java.util.Queue;
 import java.util.concurrent.ConcurrentHashMap;
 
 import micdoodle8.mods.galacticraft.core.GalacticraftCore;
-import micdoodle8.mods.galacticraft.core.network.IPacket;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.network.INetHandler;
 import net.minecraft.world.World;
@@ -20,6 +19,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Queues;
+import com.mjr.mjrlegendslib.network.IPacket;
 import com.mjr.planetprogression.client.handlers.MainHandlerClient;
 import com.mjr.planetprogression.handlers.MainHandlerServer;
 
