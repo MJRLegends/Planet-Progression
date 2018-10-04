@@ -5,6 +5,9 @@
 
 
 ===========================================Released Updates===========================================
+v0.2.7
+*Fixed issue with packets sending to client
+
 v0.2.6
 *Changed network system to use a base class from MJRLegendsLib
 *Fixed issue #34
