@@ -5,6 +5,12 @@
 
 
 ===========================================Released Updates===========================================
+v0.2.7
+*Changed network system to use a base class from MJRLegendsLib
+*Fixed issue #34
+*Set minimum version of MJRLegendsLib requirement to v1.1.6
+*Changed CustomGuiCelestialSelection screen to be lowest priority on GuiOpenEvent event
+
 v0.2.6
 *Added after BlackPlanet requirement to the dependencies
 *Changed Research Paper order of addon planets to be orderd by Rocket Tier & all ureachable planets/moons last
