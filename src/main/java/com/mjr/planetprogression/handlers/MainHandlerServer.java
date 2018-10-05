@@ -4,6 +4,7 @@ import java.util.List;
 
 import micdoodle8.mods.galacticraft.api.recipe.SchematicRegistry;
 import micdoodle8.mods.galacticraft.core.GalacticraftCore;
+import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -138,7 +139,7 @@ public class MainHandlerServer {
 					planets[i] = "";
 			}
 		}
-		PlanetProgression.packetPipeline.sendTo(new PacketSimplePP(EnumSimplePacket.C_UPDATE_UNLOCKED_PLANET_LIST, player.world.provider.getDimensionType().getId(), new Object[] { planets }), player);
+		PlanetProgression.packetPipeline.sendTo(new PacketSimplePP(EnumSimplePacket.C_UPDATE_UNLOCKED_PLANET_LIST, GCCoreUtil.getDimensionID(player.world), new Object[] { planets }), player);
 	}
 
 	public static void sendSatellitePacket(EntityPlayerMP player, IStatsCapability stats) {
