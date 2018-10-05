@@ -5,6 +5,9 @@
 
 
 ===========================================Released Updates===========================================
+v0.2.3
+*Fixed issue #35
+
 v0.2.2
 *Fixed issue with packets sending to client
 
