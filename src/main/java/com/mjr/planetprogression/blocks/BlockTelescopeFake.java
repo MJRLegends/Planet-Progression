@@ -137,24 +137,26 @@ public class BlockTelescopeFake extends BlockAdvancedTile implements ITileEntity
 	@Override
 	public EnumFacing getBedDirection(IBlockState state, IBlockAccess world, BlockPos pos) {
 		TileEntity tileEntity = world.getTileEntity(pos);
-		BlockPos mainBlockPosition = ((TileEntityTelescopeFake) tileEntity).mainBlockPosition;
-
-		if (mainBlockPosition != null) {
-			return world.getBlockState(pos).getBlock().getBedDirection(world.getBlockState(mainBlockPosition), world, mainBlockPosition);
-		}
-
+		if (tileEntity instanceof TileEntityTelescopeFake) {
+			BlockPos mainBlockPosition = ((TileEntityTelescopeFake) tileEntity).mainBlockPosition;
+	
+			if (mainBlockPosition != null) {
+				return world.getBlockState(pos).getBlock().getBedDirection(world.getBlockState(mainBlockPosition), world, mainBlockPosition);
+			}
+        }
 		return getActualState(world.getBlockState(pos), world, pos).getValue(BlockDirectional.FACING);
 	}
 
 	@Override
 	public boolean isBed(IBlockState state, IBlockAccess world, BlockPos pos, Entity player) {
 		TileEntity tileEntity = world.getTileEntity(pos);
-		BlockPos mainBlockPosition = ((TileEntityTelescopeFake) tileEntity).mainBlockPosition;
-
-		if (mainBlockPosition != null) {
-			return world.getBlockState(pos).getBlock().isBed(state, world, mainBlockPosition, player);
-		}
-
+		if (tileEntity instanceof TileEntityTelescopeFake) {
+			BlockPos mainBlockPosition = ((TileEntityTelescopeFake) tileEntity).mainBlockPosition;
+	
+			if (mainBlockPosition != null) {
+				return world.getBlockState(pos).getBlock().isBed(world.getBlockState(mainBlockPosition), world, mainBlockPosition, player);
+			}
+        }
 		return super.isBed(state, world, pos, player);
 	}
 
