@@ -86,7 +86,7 @@ task signJar(type: SignJar, dependsOn: reobfJar) {
 }
 
 curseforge {
-	apiKey = project.findProperty("curseforge_key")
+	apiKey = project.getProperty("curseforge_key")
 	project {
 		id = "287275"
 		releaseType = "release"
