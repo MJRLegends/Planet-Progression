@@ -148,7 +148,7 @@ public class MainHandlerServer {
 			String uuid = sat.getUuid();
 			int dataAmount = sat.getDataAmount();
 			ItemStack item = sat.getCurrentResearchItem();
-			PlanetProgression.packetPipeline.sendTo(new PacketSimplePP(EnumSimplePacket.C_UPDATE_SATELLITE_LIST, player.world.provider.getDimensionType().getId(), new Object[] { type, uuid, dataAmount,
+			PlanetProgression.packetPipeline.sendTo(new PacketSimplePP(EnumSimplePacket.C_UPDATE_SATELLITE_LIST, GCCoreUtil.getDimensionID(player.world), new Object[] { type, uuid, dataAmount,
 					(item == null ? "null" : (Constants.modID + ":" + item.getUnlocalizedName().substring(5) + ":" + item.getMetadata())) }), player);
 		}
 	}
