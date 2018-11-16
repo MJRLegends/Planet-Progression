@@ -5,6 +5,10 @@
 
 
 ===========================================Released Updates===========================================
+v0.2.4
+*Fixed issue #39
+*Fixed packet for Satellite list Server to Client not working on space stations
+
 v0.2.3
 *Fixed issue #35
 
