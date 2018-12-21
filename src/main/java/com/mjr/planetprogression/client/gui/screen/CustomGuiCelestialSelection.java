@@ -35,6 +35,11 @@ public class CustomGuiCelestialSelection extends GuiCelestialSelection {
 		if (player != null) {
 			stats = playerBaseClient.getCapability(CapabilityStatsClientHandler.PP_STATS_CLIENT_CAPABILITY, null);
 		}
+		
+		for (SolarSystem star : GalaxyRegistry.getRegisteredSolarSystems().values()) {
+			this.celestialBodyTicks.put(star.getMainStar(), 0);
+		}
+		
 		for (Planet planet : GalaxyRegistry.getRegisteredPlanets().values()) {
 			if (stats.getUnlockedPlanets().contains(planet)) {
 				this.celestialBodyTicks.put(planet, 0);
