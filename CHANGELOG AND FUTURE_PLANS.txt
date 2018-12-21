@@ -5,6 +5,9 @@
 
 
 ===========================================Released Updates===========================================
+v0.2.5
+*Fixed possible crash with other GC addons when using Galaxy Map
+
 v0.2.4
 *Fixed issue #39
 *Fixed packet for Satellite list Server to Client not working on space stations
