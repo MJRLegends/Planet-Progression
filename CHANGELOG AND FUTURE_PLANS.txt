@@ -5,6 +5,10 @@
 
 
 ===========================================Released Updates===========================================
+v0.3.1
+*Fixed possible crash with other GC addons when using Galaxy Map
+*Force crash game with custom crash log if GalaxyMap from Galaxy Space/AsmodeusCore is still enabled to stop possible conflicts
+
 v0.3.0
 *Fixed issue #39
 *Fixed packet for Satellite list Server to Client not working on space stations
