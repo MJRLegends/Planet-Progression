@@ -115,7 +115,10 @@ public class TileEntityTelescope extends TileBaseElectricBlockWithInventory impl
 					if (!stats.getUnlockedPlanets().contains(planet)) {
 						stats.addUnlockedPlanets(planet);
 						player.sendMessage(new TextComponentString("Research Completed! You have discovered " + planet.getLocalizedName()));
-						this.stacks.set(1, ItemStack.EMPTY);
+						if(this.stacks.get(1).getCount() != 1)
+							this.stacks.get(1).setCount(this.stacks.get(1).getCount() - 1);
+						else
+							this.stacks.set(1, ItemStack.EMPTY);
 						found = true;
 						break;
 					}
@@ -127,7 +130,10 @@ public class TileEntityTelescope extends TileBaseElectricBlockWithInventory impl
 						if (!stats.getUnlockedPlanets().contains(moon)) {
 							stats.addUnlockedPlanets(moon);
 							player.sendMessage(new TextComponentString("Research Completed! You have discovered " + moon.getLocalizedName()));
-							this.stacks.set(1, ItemStack.EMPTY);
+							if(this.stacks.get(1).getCount() != 1)
+								this.stacks.get(1).setCount(this.stacks.get(1).getCount() - 1);
+							else
+								this.stacks.set(1, ItemStack.EMPTY);
 							break;
 						}
 					}
