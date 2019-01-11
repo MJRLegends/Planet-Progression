@@ -15,6 +15,7 @@ import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
 import micdoodle8.mods.galacticraft.api.galaxies.GalaxyRegistry;
 import micdoodle8.mods.galacticraft.api.galaxies.Moon;
 import micdoodle8.mods.galacticraft.api.galaxies.Planet;
+import micdoodle8.mods.galacticraft.core.GalacticraftCore;
 import net.minecraft.item.Item;
 
 public class PlanetProgression_Items {
@@ -81,15 +82,14 @@ public class PlanetProgression_Items {
 		List<CelestialBody> unReachableResearchPapers = new ArrayList<>();
 		List<CelestialBody> reachablePlanetsMoons = new ArrayList<>();
 
+		reachablePlanetsMoons.add(GalacticraftCore.planetOverworld);
 		// Sort All Registered Planets/Moons by in to reachable & unreachable
 		int temp = 0;
 		for (Planet planet : GalaxyRegistry.getRegisteredPlanets().values()) {
-			if (!planet.getUnlocalizedName().contains("overworld")) {
-				if (planet.getReachable())
-					reachablePlanetsMoons.add(planet);
-				else
-					unReachableResearchPapers.add(planet);
-			}
+			if (planet.getReachable())
+				reachablePlanetsMoons.add(planet);
+			else
+				unReachableResearchPapers.add(planet);
 		}
 		for (Moon moon : GalaxyRegistry.getRegisteredMoons().values()) {
 			if (moon.getReachable())
