@@ -12,6 +12,7 @@ public class Config {
 	public static boolean generateResearchPaperInStructure;
 	public static double telescopeTimeModifier = 1.0F;
 	public static double satelliteControllerModifier = 1.0F;
+	public static String[] worldgenStructureWorldWhitelist;
 
 	public static void load() {
 		Configuration config = new Configuration(new File(Constants.CONFIG_FILE));
@@ -24,7 +25,7 @@ public class Config {
 				"Will add the Research Papers to spawn in Custom WorldGen Structure, Note will disable structure if set to false").getBoolean(false);
 		telescopeTimeModifier = config.get(Constants.CONFIG_CATEGORY_GENERAL_SETTINGS, "Telescope Research Time Modifier", 1.0, "Default: 1.0F").getDouble(1.0);
 		satelliteControllerModifier = config.get(Constants.CONFIG_CATEGORY_GENERAL_SETTINGS, "Satellite Controller Research Time Modifier", 1.0, "Default: 1.0F").getDouble(1.0);
-
+		worldgenStructureWorldWhitelist = config.getStringList("Whitelist for World Gen Structure", Constants.CONFIG_CATEGORY_GENERAL_SETTINGS, new String[]{"0"}, "Default: 0 | Format: 'planet.NAME' OR 'moon.NAME' | Example: 'planet.venus'");
 		config.save();
 		if (researchMode != 1 && researchMode != 2)
 			researchMode = 2;
