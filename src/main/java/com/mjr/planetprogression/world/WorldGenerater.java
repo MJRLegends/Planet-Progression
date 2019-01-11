@@ -1,5 +1,6 @@
 package com.mjr.planetprogression.world;
 
+import java.util.Arrays;
 import java.util.Random;
 
 import net.minecraft.util.math.BlockPos;
@@ -16,9 +17,10 @@ public class WorldGenerater implements IWorldGenerator {
 
 	@Override
 	public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
-		if (random.nextInt(Config.worldgenStructureAmount) == 1) {
+		if (Arrays.asList(Config.worldgenStructureWorldWhitelist).contains("" + world.provider.getDimension()) && random.nextInt(Config.worldgenStructureAmount) == 1) {
 			int xPos = chunkX * 16 + 8;
 			int zPos = chunkZ * 16 + 8;
+			System.out.println(world.provider.getDimension());
 			WorldGenUtilities.generateStructure(new WorldGenStructure(), world, random, new BlockPos(xPos, 0, zPos));
 		}
 	}
