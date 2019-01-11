@@ -7,6 +7,7 @@ import com.mjr.planetprogression.Constants;
 import com.mjr.planetprogression.PlanetProgression;
 import com.mjr.planetprogression.client.handlers.capabilities.CapabilityProviderStatsClient;
 import com.mjr.planetprogression.client.handlers.capabilities.CapabilityStatsClientHandler;
+import com.mjr.planetprogression.data.SatelliteData;
 import com.mjr.planetprogression.handlers.capabilities.CapabilityProviderStats;
 import com.mjr.planetprogression.handlers.capabilities.CapabilityStatsHandler;
 import com.mjr.planetprogression.handlers.capabilities.IStatsCapability;
