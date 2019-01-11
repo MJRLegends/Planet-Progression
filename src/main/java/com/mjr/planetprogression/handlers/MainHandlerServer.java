@@ -2,7 +2,22 @@ package com.mjr.planetprogression.handlers;
 
 import java.util.List;
 
+import com.google.common.collect.Lists;
+import com.mjr.planetprogression.Constants;
+import com.mjr.planetprogression.PlanetProgression;
+import com.mjr.planetprogression.client.handlers.capabilities.CapabilityProviderStatsClient;
+import com.mjr.planetprogression.client.handlers.capabilities.CapabilityStatsClientHandler;
+import com.mjr.planetprogression.handlers.capabilities.CapabilityProviderStats;
+import com.mjr.planetprogression.handlers.capabilities.CapabilityStatsHandler;
+import com.mjr.planetprogression.handlers.capabilities.IStatsCapability;
+import com.mjr.planetprogression.network.PacketSimplePP;
+import com.mjr.planetprogression.network.PacketSimplePP.EnumSimplePacket;
+import com.mjr.planetprogression.network.PlanetProgressionPacketHandler;
+
+import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
+import micdoodle8.mods.galacticraft.api.galaxies.GalaxyRegistry;
 import micdoodle8.mods.galacticraft.api.recipe.SchematicRegistry;
+import micdoodle8.mods.galacticraft.api.world.IGalacticraftWorldProvider;
 import micdoodle8.mods.galacticraft.core.GalacticraftCore;
 import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -22,19 +37,6 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.WorldTickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import com.google.common.collect.Lists;
-import com.mjr.planetprogression.Constants;
-import com.mjr.planetprogression.PlanetProgression;
-import com.mjr.planetprogression.client.handlers.capabilities.CapabilityProviderStatsClient;
-import com.mjr.planetprogression.client.handlers.capabilities.CapabilityStatsClientHandler;
-import com.mjr.planetprogression.data.SatelliteData;
-import com.mjr.planetprogression.handlers.capabilities.CapabilityProviderStats;
-import com.mjr.planetprogression.handlers.capabilities.CapabilityStatsHandler;
-import com.mjr.planetprogression.handlers.capabilities.IStatsCapability;
-import com.mjr.planetprogression.network.PacketSimplePP;
-import com.mjr.planetprogression.network.PacketSimplePP.EnumSimplePacket;
-import com.mjr.planetprogression.network.PlanetProgressionPacketHandler;
 
 public class MainHandlerServer {
 	private static List<PlanetProgressionPacketHandler> packetHandlers = Lists.newCopyOnWriteArrayList();
@@ -108,10 +110,20 @@ public class MainHandlerServer {
 				MainHandlerServer.sendSatellitePacket(player, stats);
 				SchematicRegistry.addUnlockedPage(player, SchematicRegistry.getMatchingRecipeForID(2535));
 			}
-			if (!stats.getUnlockedPlanets().contains(GalacticraftCore.planetOverworld)) {
-				stats.addUnlockedPlanets(GalacticraftCore.planetOverworld);
-				player.addChatMessage(new ChatComponentText("You have discovered Earth!"));
-				player.addChatMessage(new ChatComponentText("Obtain Research Papers to start discovering!"));
+			if(event.entityLiving.worldObj.provider instanceof IGalacticraftWorldProvider) {
+				CelestialBody temp = GalaxyRegistry.getCelestialBodyFromDimensionID(event.entityLiving.worldObj.provider.getDimensionId());
+				if (!stats.getUnlockedPlanets().contains(temp)) {
+					stats.addUnlockedPlanets(temp);
+					player.addChatMessage(new ChatComponentText("You have discovered " + temp.getLocalizedName() + "!"));
+					player.addChatMessage(new ChatComponentText("Obtain Research Papers to start discovering!"));
+				}
+			}
+			else {
+				if (!stats.getUnlockedPlanets().contains(GalacticraftCore.planetOverworld)) {
+					stats.addUnlockedPlanets(GalacticraftCore.planetOverworld);
+					player.addChatMessage(new ChatComponentText("You have discovered Earth!"));
+					player.addChatMessage(new ChatComponentText("Obtain Research Papers to start discovering!"));
+				}
 			}
 		}
 	}
@@ -139,8 +151,8 @@ public class MainHandlerServer {
 			String uuid = sat.getUuid();
 			int dataAmount = sat.getDataAmount();
 			ItemStack item = sat.getCurrentResearchItem();
-			PlanetProgression.packetPipeline.sendTo(new PacketSimplePP(EnumSimplePacket.C_UPDATE_SATELLITE_LIST, player.worldObj.provider.getDimensionId(), new Object[] { type, uuid, dataAmount,
-					(item == null ? "null" : (Constants.modID + ":" + item.getUnlocalizedName().substring(5) + ":" + item.getMetadata())) }), player);
+			PlanetProgression.packetPipeline.sendTo(new PacketSimplePP(EnumSimplePacket.C_UPDATE_SATELLITE_LIST, GCCoreUtil.getDimensionID(player.worldObj),
+					new Object[] { type, uuid, dataAmount, (item == null ? "null" : (Constants.modID + ":" + item.getUnlocalizedName().substring(5) + ":" + item.getMetadata())) }), player);
 		}
 	}
 }
