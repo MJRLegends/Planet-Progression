@@ -5,6 +5,12 @@
 
 
 ===========================================Released Updates===========================================
+v0.3.2
+*Fixed issue #43
+*Changed the player login start researched planets to not just support the overworld
+*Added Blacklist for Research Papers in World Gen Structure & Blacklist for Research Papers in Dungeon Loot config options
+*Added whitelist in config for where the Research Paper Structure will generate in
+
 v0.3.1
 *Fixed possible crash with other GC addons when using Galaxy Map
 
