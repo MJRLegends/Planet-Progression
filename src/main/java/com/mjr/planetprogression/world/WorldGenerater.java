@@ -20,7 +20,6 @@ public class WorldGenerater implements IWorldGenerator {
 		if (Arrays.asList(Config.worldgenStructureWorldWhitelist).contains("" + world.provider.getDimension()) && random.nextInt(Config.worldgenStructureAmount) == 1) {
 			int xPos = chunkX * 16 + 8;
 			int zPos = chunkZ * 16 + 8;
-			System.out.println(world.provider.getDimension());
 			WorldGenUtilities.generateStructure(new WorldGenStructure(), world, random, new BlockPos(xPos, 0, zPos));
 		}
 	}
