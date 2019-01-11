@@ -1,18 +1,21 @@
 package com.mjr.planetprogression.world.features;
 
+import java.util.Arrays;
 import java.util.Random;
-
-import micdoodle8.mods.galacticraft.core.GCBlocks;
-import net.minecraft.init.Blocks;
-import net.minecraft.tileentity.TileEntityChest;
-import net.minecraft.util.BlockPos;
-import net.minecraft.world.World;
-import net.minecraft.world.gen.feature.WorldGenerator;
 
 import com.mjr.mjrlegendslib.util.ItemUtilities;
 import com.mjr.mjrlegendslib.util.WorldGenUtilities;
 import com.mjr.planetprogression.Config;
 import com.mjr.planetprogression.item.PlanetProgression_Items;
+import com.mjr.planetprogression.item.ResearchPaper;
+
+import micdoodle8.mods.galacticraft.core.GCBlocks;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntityChest;
+import net.minecraft.util.BlockPos;
+import net.minecraft.world.World;
+import net.minecraft.world.gen.feature.WorldGenerator;
 
 public class WorldGenStructure extends WorldGenerator {
 
@@ -1653,7 +1656,12 @@ public class WorldGenStructure extends WorldGenerator {
 				for (int j = 0; j < chest.getSizeInventory(); j++) {
 					chest.setInventorySlotContents(j, null);
 				}
-				chest.setInventorySlotContents(0, ItemUtilities.getRandomItemStackFromItemList(PlanetProgression_Items.researchPapers));
+				ItemStack item = null;
+				do {
+					item = ItemUtilities.getRandomItemStackFromItemList(PlanetProgression_Items.researchPapers);
+				}
+				while(Arrays.asList(Config.dungeonPaperBlacklist).contains(((ResearchPaper) item.getItem()).getPlanetName()));
+				chest.setInventorySlotContents(0, item);
 			}
 		}
 		return false;
