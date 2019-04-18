@@ -4,11 +4,15 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import com.mjr.mjrlegendslib.util.TranslateUtilities;
+import com.mjr.planetprogression.PlanetProgression;
+import com.mjr.planetprogression.blocks.PlanetProgression_Blocks;
+import com.mjr.planetprogression.entities.EntitySatelliteRocket;
+import com.mjr.planetprogression.tileEntities.TileEntitySatelliteLandingPad;
+
 import micdoodle8.mods.galacticraft.api.entity.IRocketType.EnumRocketType;
 import micdoodle8.mods.galacticraft.api.item.IHoldableItem;
-import micdoodle8.mods.galacticraft.core.GCBlocks;
 import micdoodle8.mods.galacticraft.core.GCFluids;
-import micdoodle8.mods.galacticraft.core.tile.TileEntityLandingPad;
 import micdoodle8.mods.galacticraft.core.util.EnumColor;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -28,10 +32,6 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import com.mjr.mjrlegendslib.util.TranslateUtilities;
-import com.mjr.planetprogression.PlanetProgression;
-import com.mjr.planetprogression.entities.EntitySatelliteRocket;
 
 public class ItemSatelliteRocket extends Item implements IHoldableItem {
 	public ItemSatelliteRocket(String assetName) {
@@ -63,7 +63,7 @@ public class ItemSatelliteRocket extends Item implements IHoldableItem {
 					final Block id = state.getBlock();
 					int meta = id.getMetaFromState(state);
 
-					if (id == GCBlocks.landingPadFull && meta == 0) {
+					if (id == PlanetProgression_Blocks.ADVANCED_LAUCHPAD_FULL && meta == 0) {
 						padFound = true;
 						tile = worldIn.getTileEntity(pos.add(i, 0, j));
 
@@ -81,7 +81,7 @@ public class ItemSatelliteRocket extends Item implements IHoldableItem {
 			}
 
 			if (padFound) {
-				if (!placeRocketOnPad(stack, worldIn, tile, centerX, centerY, centerZ)) {
+				if (!placeRocketOnPad(stack, worldIn, tile, centerX, centerY, centerZ, playerIn)) {
 					return EnumActionResult.FAIL;
 				}
 
@@ -124,7 +124,7 @@ public class ItemSatelliteRocket extends Item implements IHoldableItem {
 		}
 
 		if (par1ItemStack.hasTagCompound() && par1ItemStack.getTagCompound().hasKey("RocketFuel")) {
-			EntitySatelliteRocket rocket = new EntitySatelliteRocket(FMLClientHandler.instance().getWorldClient(), 0, 0, 0, EnumRocketType.values()[par1ItemStack.getItemDamage()]);
+			EntitySatelliteRocket rocket = new EntitySatelliteRocket(FMLClientHandler.instance().getWorldClient(), 0, 0, 0, EnumRocketType.values()[par1ItemStack.getItemDamage()], null);
 			par2List.add(TranslateUtilities.translate("gui.message.fuel.name") + ": " + par1ItemStack.getTagCompound().getInteger("RocketFuel") + " / " + rocket.fuelTank.getCapacity());
 		}
 	}
@@ -149,17 +149,17 @@ public class ItemSatelliteRocket extends Item implements IHoldableItem {
 		return true;
 	}
 
-	public static boolean placeRocketOnPad(ItemStack stack, World worldIn, TileEntity tile, float centerX, float centerY, float centerZ) {
+	public static boolean placeRocketOnPad(ItemStack stack, World worldIn, TileEntity tile, float centerX, float centerY, float centerZ, EntityPlayer playerIn) {
 		// Check whether there is already a rocket on the pad
-		if (tile instanceof TileEntityLandingPad) {
-			if (((TileEntityLandingPad) tile).getDockedEntity() != null) {
+		if (tile instanceof TileEntitySatelliteLandingPad) {
+			if (((TileEntitySatelliteLandingPad) tile).getDockedEntity() != null) {
 				return false;
 			}
 		} else {
 			return false;
 		}
 
-		EntitySatelliteRocket rocket = new EntitySatelliteRocket(worldIn, centerX, centerY, centerZ, EnumRocketType.values()[stack.getItemDamage()]);
+		EntitySatelliteRocket rocket = new EntitySatelliteRocket(worldIn, centerX, centerY, centerZ, EnumRocketType.values()[stack.getItemDamage()], playerIn);
 
 		rocket.rotationYaw += 45;
 		rocket.setPosition(rocket.posX, rocket.posY + rocket.getOnPadYOffset(), rocket.posZ);

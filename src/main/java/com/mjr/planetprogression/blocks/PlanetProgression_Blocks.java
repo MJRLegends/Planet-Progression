@@ -2,9 +2,6 @@ package com.mjr.planetprogression.blocks;
 
 import java.lang.reflect.Constructor;
 
-import net.minecraft.block.Block;
-import net.minecraft.item.ItemBlock;
-
 import com.google.common.collect.ObjectArrays;
 import com.mjr.mjrlegendslib.itemBlock.ItemBlockDefault;
 import com.mjr.mjrlegendslib.util.RegisterUtilities;
@@ -12,10 +9,18 @@ import com.mjr.planetprogression.Config;
 import com.mjr.planetprogression.Constants;
 import com.mjr.planetprogression.PlanetProgression;
 import com.mjr.planetprogression.itemBlocks.ItemBlockBasic;
+import com.mjr.planetprogression.itemBlocks.ItemBlockCustomLandingPad;
 import com.mjr.planetprogression.tileEntities.TileEntitySatelliteBuilder;
 import com.mjr.planetprogression.tileEntities.TileEntitySatelliteController;
+import com.mjr.planetprogression.tileEntities.TileEntitySatelliteLandingPad;
+import com.mjr.planetprogression.tileEntities.TileEntitySatelliteLandingPadSingle;
+import com.mjr.planetprogression.tileEntities.TileEntitySatelliteRocketLauncher;
 import com.mjr.planetprogression.tileEntities.TileEntityTelescope;
 import com.mjr.planetprogression.tileEntities.TileEntityTelescopeFake;
+
+import micdoodle8.mods.galacticraft.core.items.ItemBlockDummy;
+import net.minecraft.block.Block;
+import net.minecraft.item.ItemBlock;
 
 public class PlanetProgression_Blocks {
 
@@ -25,6 +30,9 @@ public class PlanetProgression_Blocks {
 	public static Block SATTLLITE_BUILDER;
 	public static Block SATTLLITE_CONTROLLER;
 	public static Block SATTLLITE_LAUNCHER;
+	public static Block ADVANCED_LAUCHPAD;
+	public static Block ADVANCED_LAUCHPAD_FULL;
+	public static Block FAKE_BLOCK;
 
 	public static void init() {
 		initBlocks();
@@ -70,6 +78,10 @@ public class PlanetProgression_Blocks {
 		if (Config.researchMode == 2 || Config.researchMode == 3) {
 			SATTLLITE_BUILDER = new BlockSatelliteBuilder("satellite_builder");
 			SATTLLITE_CONTROLLER = new BlockSatelliteController("satellite_controller");
+			SATTLLITE_LAUNCHER = new BlockSatelliteRocketLauncher("satellite_launcher");
+			ADVANCED_LAUCHPAD = new BlockCustomLandingPad("advanced_launch_pad");
+			ADVANCED_LAUCHPAD_FULL = new BlockCustomLandingPadFull("advanced_launch_pad_full");
+			FAKE_BLOCK = new BlockCustomMulti("block_multi");
 		}
 	}
 
@@ -79,6 +91,10 @@ public class PlanetProgression_Blocks {
 		if (Config.researchMode == 2 || Config.researchMode == 3) {
 			registerBlock(SATTLLITE_BUILDER, ItemBlockBasic.class, SATTLLITE_BUILDER.getUnlocalizedName().substring(5));
 			registerBlock(SATTLLITE_CONTROLLER, ItemBlockBasic.class, SATTLLITE_CONTROLLER.getUnlocalizedName().substring(5));
+			registerBlock(SATTLLITE_LAUNCHER, ItemBlockBasic.class, SATTLLITE_LAUNCHER.getUnlocalizedName().substring(5));
+			registerBlock(ADVANCED_LAUCHPAD, ItemBlockCustomLandingPad.class, ADVANCED_LAUCHPAD.getUnlocalizedName().substring(5));
+			registerBlock(ADVANCED_LAUCHPAD_FULL, ItemBlockDefault.class, ADVANCED_LAUCHPAD_FULL.getUnlocalizedName().substring(5));
+			registerBlock(FAKE_BLOCK, ItemBlockDummy.class, FAKE_BLOCK.getUnlocalizedName().substring(5));
 		}
 	}
 
@@ -88,6 +104,9 @@ public class PlanetProgression_Blocks {
 		if (Config.researchMode == 2 || Config.researchMode == 3) {
 			RegisterUtilities.registerTileEntity(TileEntitySatelliteBuilder.class, Constants.modName + "SatelliteBuilder");
 			RegisterUtilities.registerTileEntity(TileEntitySatelliteController.class, Constants.modName + "SatelliteController");
+			RegisterUtilities.registerTileEntity(TileEntitySatelliteRocketLauncher.class, Constants.modName + "SatelliteLauncher");
+			RegisterUtilities.registerTileEntity(TileEntitySatelliteLandingPadSingle.class, "Satellite Landing Pad");
+			RegisterUtilities.registerTileEntity(TileEntitySatelliteLandingPad.class, "Satellite Landing Pad Full");
 		}
 	}
 
