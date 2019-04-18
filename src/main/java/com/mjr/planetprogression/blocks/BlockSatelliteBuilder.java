@@ -27,7 +27,6 @@ import com.mjr.planetprogression.PlanetProgression;
 import com.mjr.planetprogression.tileEntities.TileEntitySatelliteBuilder;
 
 public class BlockSatelliteBuilder extends BlockAdvancedTile implements ISortableBlock {
-	private final Random rand = new Random();
 
 	public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
 
