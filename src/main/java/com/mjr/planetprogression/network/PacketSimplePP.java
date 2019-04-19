@@ -7,10 +7,14 @@ import java.util.List;
 
 import com.mjr.mjrlegendslib.network.PacketSimpleBase;
 import com.mjr.mjrlegendslib.util.ItemUtilities;
+import com.mjr.mjrlegendslib.util.MCUtilities;
 import com.mjr.planetprogression.Constants;
+import com.mjr.planetprogression.PlanetProgression;
+import com.mjr.planetprogression.client.gui.GuiSatelliteRocket;
 import com.mjr.planetprogression.client.handlers.capabilities.CapabilityStatsClientHandler;
 import com.mjr.planetprogression.client.handlers.capabilities.IStatsClientCapability;
 import com.mjr.planetprogression.data.SatelliteData;
+import com.mjr.planetprogression.entities.EntitySatelliteRocket;
 import com.mjr.planetprogression.handlers.capabilities.CapabilityStatsHandler;
 import com.mjr.planetprogression.handlers.capabilities.IStatsCapability;
 import com.mjr.planetprogression.tileEntities.TileEntitySatelliteController;
@@ -24,11 +28,13 @@ import micdoodle8.mods.galacticraft.api.galaxies.Moon;
 import micdoodle8.mods.galacticraft.api.galaxies.Planet;
 import micdoodle8.mods.galacticraft.core.entities.player.GCPlayerStats;
 import micdoodle8.mods.galacticraft.core.network.NetworkUtil;
+import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 import micdoodle8.mods.galacticraft.core.util.GCLog;
 import micdoodle8.mods.galacticraft.core.util.PlayerUtil;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.Item;
 import net.minecraft.network.INetHandler;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -43,10 +49,12 @@ public class PacketSimplePP extends PacketSimpleBase {
 		S_UPDATE_ROTATION(Side.SERVER, BlockPos.class, Float.class), 
 		S_UPDATE_CONTROLLER_SATLLITE_CHANGE(Side.SERVER, BlockPos.class, Float.class), 
 		S_UPDATE_SATELLITE_LAUNCHER_GUI(Side.SERVER, Integer.class, BlockPos.class, Integer.class),
+		S_UPDATE_SATELLITE_ROCKET_STATUS(Side.SERVER, Integer.class, Integer.class),
 
 		// CLIENT
 		C_UPDATE_UNLOCKED_PLANET_LIST(Side.CLIENT, String[].class), 
 		C_UPDATE_SATELLITE_LIST(Side.CLIENT, Integer.class, String.class, Integer.class, String.class), 
+		C_OPEN_SATELLITE_ROCKET_GUI(Side.CLIENT, Integer.class, Integer.class);
 
 		private Side targetSide;
 		private Class<?>[] decodeAs;
@@ -149,6 +157,17 @@ public class PacketSimplePP extends PacketSimpleBase {
 			stats.addSatellites(
 					new SatelliteData((int) this.data.get(0), (String) this.data.get(1), (int) this.data.get(2), (item.equalsIgnoreCase("null") ? null : ItemUtilities.stringToItemStack(item, Constants.modID + ":UpdateSatellieList", true))));
 			break;
+		case C_OPEN_SATELLITE_ROCKET_GUI:
+			int entityID = 0;
+			Entity entity = null;
+			entityID = (Integer) this.data.get(1);
+			entity = player.world.getEntityByID(entityID);
+
+			if (entity != null && entity instanceof EntitySatelliteRocket) {
+				MCUtilities.getClient().displayGuiScreen(new GuiSatelliteRocket(player.inventory, (EntitySatelliteRocket) entity));
+			}
+			player.openContainer.windowId = (Integer) this.data.get(0);
+			break;
 		default:
 			break;
 		}
@@ -224,6 +243,21 @@ public class PacketSimplePP extends PacketSimpleBase {
 
 			default:
 				break;
+			}
+			break;
+		case S_UPDATE_SATELLITE_ROCKET_STATUS:
+			Entity entity2 = player.world.getEntityByID((Integer) this.data.get(0));
+
+			if (entity2 instanceof EntitySatelliteRocket) {
+				EntitySatelliteRocket rocket = (EntitySatelliteRocket) entity2;
+
+				int subType = (Integer) this.data.get(1);
+
+				switch (subType) {
+				default:
+					rocket.statusValid = rocket.checkLaunchValidity();
+					break;
+				}
 			}
 			break;
 		default:

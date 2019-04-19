@@ -37,7 +37,7 @@ public class BlockCustomMulti extends BlockAdvanced implements IPartialSealableB
 	protected static final AxisAlignedBB AABB_PAD = new AxisAlignedBB(0.0F, 0.0F, 0.0F, 1.0F, 0.1875F, 1.0F);
 
 	public enum EnumBlockMultiType implements IStringSerializable {
-		SATELLITE_ROCKET_PAD(0, "satellite_rocket");
+		SATELLITE_ROCKET_PAD(0, "satellite_rocket_pad");
 		private final int meta;
 		private final String name;
 
