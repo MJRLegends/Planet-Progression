@@ -9,8 +9,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemBlockTelescope extends ItemBlockDesc {
-	public ItemBlockTelescope(Block block) {
+public class ItemBlockBasic extends ItemBlockDesc {
+	public ItemBlockBasic(Block block) {
 		super(block);
 	}
 
