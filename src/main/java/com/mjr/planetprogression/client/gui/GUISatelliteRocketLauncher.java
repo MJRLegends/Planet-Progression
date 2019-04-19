@@ -93,9 +93,9 @@ public class GUISatelliteRocketLauncher extends GuiContainerGC implements IDropb
 	@Override
 	protected void drawGuiContainerForegroundLayer(int par1, int par2) {
 		String displayString = this.launchController.getName();
-		this.fontRenderer.drawString(displayString, this.xSize / 2 - this.fontRenderer.getStringWidth(displayString) / 2, 5, 4210752);
-		this.fontRenderer.drawString(TranslateUtilities.translate("container.inventory"), 8, 115, 4210752);
-		this.fontRenderer.drawString(TranslateUtilities.translate("gui.satellite_launcher.delay_type"), 8, 65, 4210752);
+		this.fontRendererObj.drawString(displayString, this.xSize / 2 - this.fontRendererObj.getStringWidth(displayString) / 2, 5, 4210752);
+		this.fontRendererObj.drawString(TranslateUtilities.translate("container.inventory"), 8, 115, 4210752);
+		this.fontRendererObj.drawString(TranslateUtilities.translate("gui.satellite_launcher.delay_type"), 8, 65, 4210752);
 	}
 
 	@Override
