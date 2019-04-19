@@ -5,6 +5,10 @@
 
 
 ===========================================Released Updates===========================================
+v0.3.4
+*Removed debug output
+*Fixed a crash issue with when Research Mode 1 is enabled
+
 v0.3.3
 *Changed Satellite Rocket Fuel Capacity from 1500mb to 1000mb
 *Added Satellite Rocket Launch Pad (Place in a 5x5 grid)
