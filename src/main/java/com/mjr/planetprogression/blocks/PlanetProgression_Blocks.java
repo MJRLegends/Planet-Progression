@@ -6,7 +6,8 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import com.mjr.mjrlegendslib.util.RegisterUtilities;
 import com.mjr.planetprogression.Config;
 import com.mjr.planetprogression.Constants;
-import com.mjr.planetprogression.itemBlocks.ItemBlockTelescope;
+import com.mjr.planetprogression.PlanetProgression;
+import com.mjr.planetprogression.itemBlocks.ItemBlockBasic;
 import com.mjr.planetprogression.tileEntities.TileEntitySatelliteBuilder;
 import com.mjr.planetprogression.tileEntities.TileEntitySatelliteController;
 import com.mjr.planetprogression.tileEntities.TileEntityTelescope;
@@ -15,9 +16,11 @@ import com.mjr.planetprogression.tileEntities.TileEntityTelescopeFake;
 public class PlanetProgression_Blocks {
 
 	public static Block TELESCOPE;
+	public static Block FAKE_TELESCOPE;
+
 	public static Block SATTLLITE_BUILDER;
 	public static Block SATTLLITE_CONTROLLER;
-	public static Block FAKE_TELESCOPE;
+	public static Block SATTLLITE_LAUNCHER;
 
 	public static void init() {
 		initBlocks();
@@ -41,11 +44,11 @@ public class PlanetProgression_Blocks {
 	}
 
 	public static void registerBlocks() throws NoSuchMethodException {
-		RegisterUtilities.registerBlock(Constants.modID, TELESCOPE, ItemBlockTelescope.class, TELESCOPE.getUnlocalizedName().substring(5));
-		RegisterUtilities.registerBlock(Constants.modID, FAKE_TELESCOPE, FAKE_TELESCOPE.getUnlocalizedName().substring(5));
+		registerBlock(TELESCOPE, ItemBlockTelescope.class, TELESCOPE.getUnlocalizedName().substring(5));
+		registerBlock(FAKE_TELESCOPE, ItemBlockDefault.class, FAKE_TELESCOPE.getUnlocalizedName().substring(5));
 		if (Config.researchMode == 2 || Config.researchMode == 3) {
-			RegisterUtilities.registerBlock(Constants.modID, SATTLLITE_BUILDER, ItemBlockTelescope.class, SATTLLITE_BUILDER.getUnlocalizedName().substring(5));
-			RegisterUtilities.registerBlock(Constants.modID, SATTLLITE_CONTROLLER, ItemBlockTelescope.class, SATTLLITE_CONTROLLER.getUnlocalizedName().substring(5));
+			registerBlock(SATTLLITE_BUILDER, ItemBlockTelescope.class, SATTLLITE_BUILDER.getUnlocalizedName().substring(5));
+			registerBlock(SATTLLITE_CONTROLLER, ItemBlockTelescope.class, SATTLLITE_CONTROLLER.getUnlocalizedName().substring(5));
 		}
 	}
 
