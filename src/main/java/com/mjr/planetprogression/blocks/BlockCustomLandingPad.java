@@ -35,7 +35,7 @@ public class BlockCustomLandingPad extends BlockAdvancedTile implements IPartial
 	protected static final AxisAlignedBB AABB = new AxisAlignedBB(0.0, 0.0, 0.0, 1.0, 0.1875, 1.0);
 
 	public enum EnumLandingPadType implements IStringSerializable {
-		SATELLITE_ROCKET_PAD(0, "satellite_rocket");
+		SATELLITE_ROCKET_PAD(0, "satellite_rocket_pad");
 
 		private final int meta;
 		private final String name;
@@ -144,13 +144,7 @@ public class BlockCustomLandingPad extends BlockAdvancedTile implements IPartial
 	@Override
 	public String getShiftDescription(int meta) {
 		if (meta == 0)
-			return TranslateUtilities.translate(this.getUnlocalizedName() + ".tier2.desc");
-		else if (meta == 1)
-			return TranslateUtilities.translate(this.getUnlocalizedName() + ".tier3.desc");
-		else if (meta == 2)
-			return TranslateUtilities.translate(this.getUnlocalizedName() + ".powered.desc");
-		else if (meta == 3)
-			return TranslateUtilities.translate(this.getUnlocalizedName() + ".powered.rocket.desc");
+			return TranslateUtilities.translate(this.getUnlocalizedName() + ".satelliteLandingPad.desc");
 		else
 			return "";
 	}

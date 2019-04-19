@@ -86,14 +86,24 @@ entity.planetprogression.EntitySatelliteRocket.name=Cohete de Satélite
 container.satellite.controller.name=Controlador de Satélite
 container.satellite.builder.name=Constructor de Satélite
 container.telescope.name=Telescopio
+container.satellite_rocket_launcher.name=Satellite Rocket Launch Module ##NEEDS TRANSLATE##
 
 #Blocks
 tile.satellite_builder.name=Constructor de Satélite
 tile.satellite_controller.name=Controlador de Satélite
 tile.telescope.name=Telescopio
+tile.satellite_launcher.name=Satellite Rocket Launch Module ##NEEDS TRANSLATE##
+tile.advanced_launch_pad.satelliteLandingPad.name=Satellite Rocket Launch Pad ##NEEDS TRANSLATE##
+tile.advanced_launch_pad.satelliteLandingPad.desc=Used to launch Satellite Rocket. To be placed in a 5x5 square ##NEEDS TRANSLATE##
 gui.status.missing.inputs.name=Faltan Items o Líquidos
 gui.status.missing.power.name=Falta Energía
 gui.status.building.name=Construyendo Satélite
+gui.satellite_pad_use.desc=Use Satellite Rocket Launch Pad to launch ##NEEDS TRANSLATE##
+gui.satellite_pad_extras.1.desc=Satellite Rocket Launch Module &  ##NEEDS TRANSLATE##
+gui.satellite_pad_extras.2.desc=Cargo Loader can be used for auto launching rockets ##NEEDS TRANSLATE##
+gui.satellite_launcher.auto_enable=Enable Auto Launch System ##NEEDS TRANSLATE##
+gui.satellite_launcher.auto_disable=Disable Auto Launch System ##NEEDS TRANSLATE##
+gui.satellite_launcher.delay_type=Delay Type ##NEEDS TRANSLATE##
 satellite.builder.use.desc=Sirve para contruir Satélites
 satellite.controller.use.desc=Sirve para controlar Satélites y
 satellite.controller.use.2.desc=usarlos para Investigación
