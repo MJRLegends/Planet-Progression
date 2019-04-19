@@ -42,14 +42,14 @@ public class TileEntitySatelliteLandingPad extends TileEntityMulti implements IM
 	@Override
 	public void update() {
 		if (!this.initialised) {
-			if (!this.world.isRemote)
-				this.onCreate(this.world, this.getPos());
-			this.initialiseMultiTiles(this.getPos(), this.world);
+			if (!this.worldObj.isRemote)
+				this.onCreate(this.worldObj, this.getPos());
+			this.initialiseMultiTiles(this.getPos(), this.worldObj);
 			this.initialised = true;
 		}
 
-		if (!this.world.isRemote) {
-			final List<Entity> list = this.world.getEntitiesWithinAABB(Entity.class,
+		if (!this.worldObj.isRemote) {
+			final List<Entity> list = this.worldObj.getEntitiesWithinAABB(Entity.class,
 					new AxisAlignedBB(this.getPos().getX() - 0.5D, this.getPos().getY(), this.getPos().getZ() - 0.5D, this.getPos().getX() + 0.5D, this.getPos().getY() + 1.25D, this.getPos().getZ() + 0.5D));
 
 			boolean docked = false;
@@ -123,16 +123,16 @@ public class TileEntitySatelliteLandingPad extends TileEntityMulti implements IM
 		this.getPositions(thisBlock, positions);
 
 		for (BlockPos pos : positions) {
-			IBlockState stateAt = this.world.getBlockState(pos);
+			IBlockState stateAt = this.worldObj.getBlockState(pos);
 
 			if (stateAt.getBlock() == PlanetProgression_Blocks.FAKE_BLOCK && stateAt.getValue(BlockCustomMulti.MULTI_TYPE) == EnumBlockMultiType.SATELLITE_ROCKET_PAD) {
-				if (this.world.isRemote && this.world.rand.nextDouble() < 0.1D) {
-					MCUtilities.getClient().effectRenderer.addBlockDestroyEffects(pos, this.world.getBlockState(pos));
+				if (this.worldObj.isRemote && this.worldObj.rand.nextDouble() < 0.1D) {
+					MCUtilities.getClient().effectRenderer.addBlockDestroyEffects(pos, this.worldObj.getBlockState(pos));
 				}
-				this.world.destroyBlock(pos, false);
+				this.worldObj.destroyBlock(pos, false);
 			}
 		}
-		this.world.destroyBlock(thisBlock, true);
+		this.worldObj.destroyBlock(thisBlock, true);
 
 		if (this.dockedEntity != null) {
 			this.dockedEntity.onPadDestroyed();
@@ -177,11 +177,11 @@ public class TileEntitySatelliteLandingPad extends TileEntityMulti implements IM
 
 	private void testConnectedTile(int x, int z, HashSet<ILandingPadAttachable> connectedTiles) {
 		BlockPos testPos = new BlockPos(x, this.getPos().getY(), z);
-		if (!this.world.isBlockLoaded(testPos, false))
+		if (!this.worldObj.isBlockLoaded(testPos, false))
 			return;
 
-		final TileEntity tile = this.world.getTileEntity(testPos);
-		if (tile instanceof ILandingPadAttachable && ((ILandingPadAttachable) tile).canAttachToLandingPad(this.world, this.getPos())) {
+		final TileEntity tile = this.worldObj.getTileEntity(testPos);
+		if (tile instanceof ILandingPadAttachable && ((ILandingPadAttachable) tile).canAttachToLandingPad(this.worldObj, this.getPos())) {
 			connectedTiles.add((ILandingPadAttachable) tile);
 			if (tile instanceof TileEntitySatelliteRocketLauncher) {
 				((TileEntitySatelliteRocketLauncher) tile).setAttachedPad(this);

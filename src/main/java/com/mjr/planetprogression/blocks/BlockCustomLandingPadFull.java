@@ -125,7 +125,7 @@ public class BlockCustomLandingPadFull extends BlockAdvancedTile implements IPar
 	}
 
 	@Override
-	public void neighborChanged(IBlockState state, World world, BlockPos pos, Block blockIn, BlockPos fromPos) {
+	public void neighborChanged(IBlockState state, World world, BlockPos pos, Block blockIn) {
 		world.notifyBlockUpdate(pos, state, state, 3);
 	}
 

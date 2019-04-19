@@ -1,26 +1,15 @@
 package com.mjr.planetprogression.blocks;
 
-import java.lang.reflect.Constructor;
-
-import com.google.common.collect.ObjectArrays;
-import com.mjr.mjrlegendslib.itemBlock.ItemBlockDefault;
 import com.mjr.mjrlegendslib.util.RegisterUtilities;
 import com.mjr.planetprogression.Config;
 import com.mjr.planetprogression.Constants;
-import com.mjr.planetprogression.PlanetProgression;
 import com.mjr.planetprogression.itemBlocks.ItemBlockBasic;
-import com.mjr.planetprogression.itemBlocks.ItemBlockCustomLandingPad;
 import com.mjr.planetprogression.tileEntities.TileEntitySatelliteBuilder;
 import com.mjr.planetprogression.tileEntities.TileEntitySatelliteController;
-import com.mjr.planetprogression.tileEntities.TileEntitySatelliteLandingPad;
-import com.mjr.planetprogression.tileEntities.TileEntitySatelliteLandingPadSingle;
-import com.mjr.planetprogression.tileEntities.TileEntitySatelliteRocketLauncher;
 import com.mjr.planetprogression.tileEntities.TileEntityTelescope;
 import com.mjr.planetprogression.tileEntities.TileEntityTelescopeFake;
 
-import micdoodle8.mods.galacticraft.core.items.ItemBlockDummy;
 import net.minecraft.block.Block;
-import net.minecraft.item.ItemBlock;
 
 public class PlanetProgression_Blocks {
 
@@ -60,7 +49,7 @@ public class PlanetProgression_Blocks {
 	}
 
 	public static void registerBlocks() throws NoSuchMethodException {
-		RegisterUtilities.registerBlock(Constants.modID, TELESCOPE, ItemBlockTelescope.class, TELESCOPE.getUnlocalizedName().substring(5));
+		RegisterUtilities.registerBlock(Constants.modID, TELESCOPE, ItemBlockBasic.class, TELESCOPE.getUnlocalizedName().substring(5));
 		RegisterUtilities.registerBlock(Constants.modID, FAKE_TELESCOPE, FAKE_TELESCOPE.getUnlocalizedName().substring(5));
 		if (Config.researchMode == 2 || Config.researchMode == 3) {
 			RegisterUtilities.registerBlock(Constants.modID, SATTLLITE_BUILDER, ItemBlockBasic.class, SATTLLITE_BUILDER.getUnlocalizedName().substring(5));

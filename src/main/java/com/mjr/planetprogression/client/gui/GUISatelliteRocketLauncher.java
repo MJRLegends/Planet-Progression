@@ -35,7 +35,7 @@ public class GUISatelliteRocketLauncher extends GuiContainerGC implements IDropb
 	private GuiElementInfoRegion electricInfoRegion = new GuiElementInfoRegion(0, 0, 52, 9, null, 0, 0, this);
 
 	public GUISatelliteRocketLauncher(InventoryPlayer playerInventory, TileEntitySatelliteRocketLauncher launchController) {
-		super(new ContainerSatelliteRocketLauncher(playerInventory, launchController, FMLClientHandler.instance().getClient().player));
+		super(new ContainerSatelliteRocketLauncher(playerInventory, launchController, FMLClientHandler.instance().getClient().thePlayer));
 		this.ySize = 209;
 		this.launchController = launchController;
 	}
@@ -77,11 +77,11 @@ public class GUISatelliteRocketLauncher extends GuiContainerGC implements IDropb
 				if (this.launchController.launchEnabled) {
 					this.launchButton.displayString = TranslateUtilities.translate("gui.satellite_launcher.auto_enable");
 					this.launchController.launchEnabled = false;
-					PlanetProgression.packetPipeline.sendToServer(new PacketSimplePP(EnumSimplePacket.S_UPDATE_SATELLITE_LAUNCHER_GUI, GCCoreUtil.getDimensionID(mc.world), new Object[] { 2, this.launchController.getPos(), 0 }));
+					PlanetProgression.packetPipeline.sendToServer(new PacketSimplePP(EnumSimplePacket.S_UPDATE_SATELLITE_LAUNCHER_GUI, GCCoreUtil.getDimensionID(mc.theWorld), new Object[] { 2, this.launchController.getPos(), 0 }));
 				} else {
 					this.launchButton.displayString = TranslateUtilities.translate("gui.satellite_launcher.auto_disable");
 					this.launchController.launchEnabled = true;
-					PlanetProgression.packetPipeline.sendToServer(new PacketSimplePP(EnumSimplePacket.S_UPDATE_SATELLITE_LAUNCHER_GUI, GCCoreUtil.getDimensionID(mc.world), new Object[] { 2, this.launchController.getPos(), 1 }));
+					PlanetProgression.packetPipeline.sendToServer(new PacketSimplePP(EnumSimplePacket.S_UPDATE_SATELLITE_LAUNCHER_GUI, GCCoreUtil.getDimensionID(mc.theWorld), new Object[] { 2, this.launchController.getPos(), 1 }));
 				}
 				break;
 			default:
@@ -132,7 +132,7 @@ public class GUISatelliteRocketLauncher extends GuiContainerGC implements IDropb
 		if (dropdown.equals(this.dropdownTest)) {
 			this.launchController.launchDropdownSelection = selection;
 			PlanetProgression.packetPipeline
-					.sendToServer(new PacketSimplePP(EnumSimplePacket.S_UPDATE_SATELLITE_LAUNCHER_GUI, GCCoreUtil.getDimensionID(mc.world), new Object[] { 1, this.launchController.getPos(), this.launchController.launchDropdownSelection }));
+					.sendToServer(new PacketSimplePP(EnumSimplePacket.S_UPDATE_SATELLITE_LAUNCHER_GUI, GCCoreUtil.getDimensionID(mc.theWorld), new Object[] { 1, this.launchController.getPos(), this.launchController.launchDropdownSelection }));
 		}
 	}
 

@@ -21,14 +21,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.fml.relauncher.Side;
 
 public class TileEntitySatelliteRocketLauncher extends TileBaseElectricBlockWithInventory implements ISidedInventory, ILandingPadAttachable {
 	public static final int WATTS_PER_TICK = 1;
-	private NonNullList<ItemStack> stacks = NonNullList.withSize(1, ItemStack.EMPTY);
+	private ItemStack[] containingItems = new ItemStack[1];
 	private List<BlockPos> connectedPads = new ArrayList<BlockPos>();
 	public Object attachedDock = null;
 	@NetworkedField(targetSide = Side.CLIENT)
@@ -37,7 +36,7 @@ public class TileEntitySatelliteRocketLauncher extends TileBaseElectricBlockWith
 	public boolean launchEnabled;
 
 	public TileEntitySatelliteRocketLauncher() {
-        this.storage.setMaxExtract(6);
+		this.storage.setMaxExtract(6);
 		this.noRedstoneControl = true;
 		this.launchDropdownSelection = 0;
 		this.launchEnabled = false;
@@ -51,13 +50,13 @@ public class TileEntitySatelliteRocketLauncher extends TileBaseElectricBlockWith
 	public void update() {
 		super.update();
 
-		if (!this.world.isRemote) {
+		if (!this.worldObj.isRemote) {
 
 			if (this.ticks % 20 == 0 && canRun()) {
 				if (connectedPads.size() == 0) {
 					for (int x = -4; x <= 4; x++) {
 						for (int z = -4; z <= 4; z++) {
-							Block blockID = this.world.getBlockState(this.getPos().add(x, 0, z)).getBlock();
+							Block blockID = this.worldObj.getBlockState(this.getPos().add(x, 0, z)).getBlock();
 							if (blockID instanceof BlockCustomLandingPadFull) {
 								this.connectedPads.add(new BlockPos(this.getPos().getX() + x, this.getPos().getY(), this.getPos().getZ() + z));
 							}
@@ -68,7 +67,7 @@ public class TileEntitySatelliteRocketLauncher extends TileBaseElectricBlockWith
 			}
 		}
 	}
-	
+
 	@Override
 	public boolean shouldUseEnergy() {
 		return this.canRun();
@@ -82,19 +81,19 @@ public class TileEntitySatelliteRocketLauncher extends TileBaseElectricBlockWith
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
 		super.readFromNBT(nbt);
-		this.stacks = this.readStandardItemsFromNBT(nbt);
+		this.containingItems = this.readStandardItemsFromNBT(nbt);
 	}
 
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
 		super.writeToNBT(nbt);
-		this.writeStandardItemsToNBT(nbt, this.stacks);
+		this.writeStandardItemsToNBT(nbt);
 		return nbt;
 	}
 
 	@Override
-	public NonNullList<ItemStack> getContainingItems() {
-		return this.stacks;
+	public ItemStack[] getContainingItems() {
+		return this.containingItems;
 	}
 
 	@Override
@@ -180,7 +179,7 @@ public class TileEntitySatelliteRocketLauncher extends TileBaseElectricBlockWith
 
 	@Override
 	public EnumFacing getFront() {
-		IBlockState state = this.world.getBlockState(getPos());
+		IBlockState state = this.worldObj.getBlockState(getPos());
 		if (state.getBlock() instanceof BlockSatelliteRocketLauncher) {
 			return state.getValue(BlockSatelliteRocketLauncher.FACING);
 		}

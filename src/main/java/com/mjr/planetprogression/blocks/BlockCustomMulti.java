@@ -149,7 +149,7 @@ public class BlockCustomMulti extends BlockAdvanced implements IPartialSealableB
 	@Override
 	public boolean onUseWrench(World world, BlockPos pos, EntityPlayer entityPlayer, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
 		TileEntityMulti tileEntity = (TileEntityMulti) world.getTileEntity(pos);
-		return tileEntity.onBlockWrenched(world, pos, entityPlayer, hand, side, hitX, hitY, hitZ);
+		return tileEntity.onBlockWrenched(world, pos, entityPlayer, hand, heldItem, side, hitX, hitY, hitZ);
 	}
 
 	/**
@@ -190,7 +190,7 @@ public class BlockCustomMulti extends BlockAdvanced implements IPartialSealableB
 			}
 		}
 
-		return ItemStack.EMPTY;
+		return null;
 	}
 
 	@Override
