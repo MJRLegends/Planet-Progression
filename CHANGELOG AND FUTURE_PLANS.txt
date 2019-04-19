@@ -5,6 +5,16 @@
 
 
 ===========================================Released Updates===========================================
+v0.3.3
+*Changed Satellite Rocket Fuel Capacity from 1500mb to 1000mb
+*Added Satellite Rocket Launch Pad (Place in a 5x5 grid)
+*Changed Satellite Rocket to use new Satellite Rocket Launch Pad
+*Removed the requirement for the player to fly with the rocket, you can now right click the rocket to launch it or use the Auto Launch System
+*Added a Satellite Rocket Launch Module to assist with the Auto Launch System for the Satellite Rocket
+*Fixed issue #44
+*Added a few helpful tooltips to the Satellite Rocket
+*Set required GC version requirement to Build 185
+
 v0.3.2
 *Fixed issue #43
 *Changed the player login start researched planets to not just support the overworld
