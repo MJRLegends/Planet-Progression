@@ -718,7 +718,6 @@ public abstract class EntitySatelliteAutoRocket extends EntitySpaceshipBase impl
 			}
 
 			if (this.autoLaunchCountdown > 0 && this.getPassengers().isEmpty() && this.fuelTank.getFluidAmount() == this.fuelTank.getCapacity()) {
-				System.out.println(this.autoLaunchCountdown);
 				if (--this.autoLaunchCountdown == 0) {
 					this.autoLaunch();
 				}
