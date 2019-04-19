@@ -560,7 +560,7 @@ public abstract class EntitySatelliteAutoRocket extends EntitySpaceshipBase impl
 
 	@Override
 	public boolean isUsableByPlayer(EntityPlayer entityplayer) {
-		return !this.isDead && entityplayer.getDistanceSq(this) <= 64.0D;
+		return !this.isDead && entityplayer.getDistanceSqToEntity(this) <= 64.0D;
 	}
 
 	@Override
