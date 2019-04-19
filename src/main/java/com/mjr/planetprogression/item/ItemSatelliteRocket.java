@@ -2,8 +2,6 @@ package com.mjr.planetprogression.item;
 
 import java.util.List;
 
-import javax.annotation.Nullable;
-
 import com.mjr.mjrlegendslib.util.TranslateUtilities;
 import com.mjr.planetprogression.PlanetProgression;
 import com.mjr.planetprogression.blocks.PlanetProgression_Blocks;
@@ -105,7 +103,10 @@ public class ItemSatelliteRocket extends Item implements IHoldableItem {
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void addInformation(ItemStack par1ItemStack, EntityPlayer player, List<String> par2List, boolean b) {		
+	public void addInformation(ItemStack par1ItemStack, EntityPlayer player, List<String> par2List, boolean b) {
+		par2List.add(EnumColor.DARK_AQUA + "\u00a7o" + TranslateUtilities.translate("gui.satellite_pad_use.desc"));
+		par2List.add(EnumColor.ORANGE + "\u00a7o" + TranslateUtilities.translate("gui.satellite_pad_extras.1.desc"));
+		par2List.add(EnumColor.ORANGE + "\u00a7o" + TranslateUtilities.translate("gui.satellite_pad_extras.2.desc"));
 		EnumRocketType type;
 
 		if (par1ItemStack.getItemDamage() < 10) {
