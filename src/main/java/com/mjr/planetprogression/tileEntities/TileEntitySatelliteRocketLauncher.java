@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.mjr.mjrlegendslib.util.TranslateUtilities;
 import com.mjr.planetprogression.blocks.BlockCustomLandingPadFull;
+import com.mjr.planetprogression.blocks.BlockSatelliteRocketLauncher;
 import com.mjr.planetprogression.entities.EntitySatelliteRocket;
 
 import micdoodle8.mods.galacticraft.api.entity.IDockable;
@@ -12,7 +13,6 @@ import micdoodle8.mods.galacticraft.api.tile.IFuelDock;
 import micdoodle8.mods.galacticraft.api.tile.ILandingPadAttachable;
 import micdoodle8.mods.galacticraft.core.energy.item.ItemElectricBase;
 import micdoodle8.mods.galacticraft.core.energy.tile.TileBaseElectricBlockWithInventory;
-import micdoodle8.mods.galacticraft.planets.mars.blocks.BlockMachineMars;
 import micdoodle8.mods.miccore.Annotations.NetworkedField;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -37,14 +37,14 @@ public class TileEntitySatelliteRocketLauncher extends TileBaseElectricBlockWith
 	public boolean launchEnabled;
 
 	public TileEntitySatelliteRocketLauncher() {
-		this.storage.setMaxExtract(2);
+        this.storage.setMaxExtract(6);
 		this.noRedstoneControl = true;
 		this.launchDropdownSelection = 0;
 		this.launchEnabled = false;
 	}
 
 	public boolean canRun() {
-		return this.hasEnoughEnergyToRun && !this.getDisabled(0);
+		return this.hasEnoughEnergyToRun && this.launchEnabled;
 	}
 
 	@Override
@@ -67,6 +67,11 @@ public class TileEntitySatelliteRocketLauncher extends TileBaseElectricBlockWith
 					updateRocketOnDockSettings();
 			}
 		}
+	}
+	
+	@Override
+	public boolean shouldUseEnergy() {
+		return this.canRun();
 	}
 
 	@Override
@@ -123,11 +128,6 @@ public class TileEntitySatelliteRocketLauncher extends TileBaseElectricBlockWith
 	}
 
 	@Override
-	public boolean shouldUseEnergy() {
-		return !this.getDisabled(0);
-	}
-
-	@Override
 	public void setDisabled(int index, boolean disabled) {
 		if (this.disableCooldown == 0) {
 			switch (index) {
@@ -159,7 +159,7 @@ public class TileEntitySatelliteRocketLauncher extends TileBaseElectricBlockWith
 	public void setLaunchDropdownSelection(int newvalue) {
 		if (newvalue != this.launchDropdownSelection) {
 			this.launchDropdownSelection = newvalue;
-			this.storage.extractEnergyGC(15, false);
+			this.storage.extractEnergyGC(25, false);
 			this.updateRocketOnDockSettings();
 		}
 	}
@@ -170,7 +170,6 @@ public class TileEntitySatelliteRocketLauncher extends TileBaseElectricBlockWith
 			IDockable rocket = pad.getDockedEntity();
 			if (rocket instanceof EntitySatelliteRocket && canRun()) {
 				((EntitySatelliteRocket) rocket).updateControllerSettings(pad);
-				this.storage.extractEnergyGC(25, false);
 			}
 		}
 	}
@@ -182,14 +181,14 @@ public class TileEntitySatelliteRocketLauncher extends TileBaseElectricBlockWith
 	@Override
 	public EnumFacing getFront() {
 		IBlockState state = this.world.getBlockState(getPos());
-		if (state.getBlock() instanceof BlockMachineMars) {
-			return state.getValue(BlockMachineMars.FACING);
+		if (state.getBlock() instanceof BlockSatelliteRocketLauncher) {
+			return state.getValue(BlockSatelliteRocketLauncher.FACING);
 		}
 		return EnumFacing.NORTH;
 	}
 
 	@Override
 	public EnumFacing getElectricInputDirection() {
-		return getFront().rotateY();
+		return EnumFacing.UP;
 	}
 }
