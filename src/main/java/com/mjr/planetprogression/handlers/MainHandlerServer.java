@@ -123,7 +123,7 @@ public class MainHandlerServer {
 			}
 			if(event.getEntityLiving().world.provider instanceof IGalacticraftWorldProvider) {
 				CelestialBody temp = GalaxyRegistry.getCelestialBodyFromDimensionID(event.getEntityLiving().world.provider.getDimension());
-				if (!stats.getUnlockedPlanets().contains(temp)) {
+				if (temp != null && !stats.getUnlockedPlanets().contains(temp)) {
 					stats.addUnlockedPlanets(temp);
 					player.sendMessage(new TextComponentString("You have discovered " + temp.getLocalizedName() + "!"));
 					player.sendMessage(new TextComponentString("Obtain Research Papers to start discovering!"));
