@@ -74,8 +74,10 @@ public class ClientProxy extends CommonProxy {
 
 	@Override
 	public void registerVariants() {
-		ClientUtilities.addVariants(Constants.modID, "advanced_launch_pad", "satellite_rocket_pad");
-		ClientUtilities.addVariants(Constants.modID, "advanced_launch_pad_full", "satellite_rocket_pad");
+		if (Config.researchMode == 2 || Config.researchMode == 3) {
+			ClientUtilities.addVariants(Constants.modID, "advanced_launch_pad", "satellite_rocket_pad");
+			ClientUtilities.addVariants(Constants.modID, "advanced_launch_pad_full", "satellite_rocket_pad");
+		}
 	}
 
 	@Override
