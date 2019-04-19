@@ -14,6 +14,7 @@ import com.mjr.planetprogression.data.SatelliteData;
 import com.mjr.planetprogression.handlers.capabilities.CapabilityStatsHandler;
 import com.mjr.planetprogression.handlers.capabilities.IStatsCapability;
 import com.mjr.planetprogression.tileEntities.TileEntitySatelliteController;
+import com.mjr.planetprogression.tileEntities.TileEntitySatelliteRocketLauncher;
 import com.mjr.planetprogression.tileEntities.TileEntityTelescope;
 
 import io.netty.buffer.ByteBuf;
@@ -39,10 +40,13 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class PacketSimplePP extends PacketSimpleBase {
 	public enum EnumSimplePacket {
 		// SERVER
-		S_UPDATE_ROTATION(Side.SERVER, BlockPos.class, Float.class), S_UPDATE_CONTROLLER_SATLLITE_CHANGE(Side.SERVER, BlockPos.class, Float.class),
+		S_UPDATE_ROTATION(Side.SERVER, BlockPos.class, Float.class), 
+		S_UPDATE_CONTROLLER_SATLLITE_CHANGE(Side.SERVER, BlockPos.class, Float.class), 
+		S_UPDATE_SATELLITE_LAUNCHER_GUI(Side.SERVER, Integer.class, BlockPos.class, Integer.class),
 
 		// CLIENT
-		C_UPDATE_UNLOCKED_PLANET_LIST(Side.CLIENT, String[].class), C_UPDATE_SATELLITE_LIST(Side.CLIENT, Integer.class, String.class, Integer.class, String.class);
+		C_UPDATE_UNLOCKED_PLANET_LIST(Side.CLIENT, String[].class), 
+		C_UPDATE_SATELLITE_LIST(Side.CLIENT, Integer.class, String.class, Integer.class, String.class), 
 
 		private Side targetSide;
 		private Class<?>[] decodeAs;
@@ -197,6 +201,29 @@ public class PacketSimplePP extends PacketSimpleBase {
 						machine.currentSatelliteNum += 1;
 					machine.markForSatelliteUpdate = true;
 				}
+			}
+			break;
+		case S_UPDATE_SATELLITE_LAUNCHER_GUI:
+			TileEntity tile = player.world.getTileEntity((BlockPos) this.data.get(1));
+
+			switch ((Integer) this.data.get(0)) {
+			case 1:
+				if (tile instanceof TileEntitySatelliteRocketLauncher) {
+					TileEntitySatelliteRocketLauncher launchController = (TileEntitySatelliteRocketLauncher) tile;
+					launchController.setLaunchDropdownSelection((Integer) this.data.get(2));
+				}
+				break;
+			case 2:
+				if (tile instanceof TileEntitySatelliteRocketLauncher) {
+					TileEntitySatelliteRocketLauncher launchController = (TileEntitySatelliteRocketLauncher) tile;
+					int bool = (Integer) this.data.get(2);
+					launchController.launchEnabled = bool == 0 ? false : true;
+					launchController.updateRocketOnDockSettings();
+				}
+				break;
+
+			default:
+				break;
 			}
 			break;
 		default:
