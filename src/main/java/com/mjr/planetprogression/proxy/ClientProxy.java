@@ -1,21 +1,12 @@
 package com.mjr.planetprogression.proxy;
 
-import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraftforge.client.event.ModelBakeEvent;
-import net.minecraftforge.client.event.ModelRegistryEvent;
-import net.minecraftforge.client.event.TextureStitchEvent;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-
 import com.google.common.collect.ImmutableList;
 import com.mjr.mjrlegendslib.util.ClientUtilities;
 import com.mjr.mjrlegendslib.util.RegisterUtilities;
 import com.mjr.planetprogression.Config;
 import com.mjr.planetprogression.Constants;
+import com.mjr.planetprogression.blocks.BlockCustomLandingPad;
+import com.mjr.planetprogression.blocks.BlockCustomLandingPadFull;
 import com.mjr.planetprogression.blocks.PlanetProgression_Blocks;
 import com.mjr.planetprogression.client.handlers.MainHandlerClient;
 import com.mjr.planetprogression.client.model.ItemModelSatellite;
@@ -26,6 +17,17 @@ import com.mjr.planetprogression.client.render.tile.TileEntityTelescopeRenderer;
 import com.mjr.planetprogression.entities.EntitySatelliteRocket;
 import com.mjr.planetprogression.item.PlanetProgression_Items;
 import com.mjr.planetprogression.tileEntities.TileEntityTelescope;
+
+import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraftforge.client.event.ModelBakeEvent;
+import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.client.event.TextureStitchEvent;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ClientProxy extends CommonProxy {
 
@@ -72,7 +74,8 @@ public class ClientProxy extends CommonProxy {
 
 	@Override
 	public void registerVariants() {
-
+		ClientUtilities.addVariants(Constants.modID, "advanced_launch_pad", "satellite_rocket_pad");
+		ClientUtilities.addVariants(Constants.modID, "advanced_launch_pad_full", "satellite_rocket_pad");
 	}
 
 	@Override
@@ -80,6 +83,14 @@ public class ClientProxy extends CommonProxy {
 		if (Config.researchMode == 2 || Config.researchMode == 3) {
 			ClientUtilities.registerBlockJson(Constants.TEXTURE_PREFIX, PlanetProgression_Blocks.SATTLLITE_BUILDER);
 			ClientUtilities.registerBlockJson(Constants.TEXTURE_PREFIX, PlanetProgression_Blocks.SATTLLITE_CONTROLLER);
+			ClientUtilities.registerBlockJson(Constants.TEXTURE_PREFIX, PlanetProgression_Blocks.SATTLLITE_LAUNCHER);
+			for (BlockCustomLandingPad.EnumLandingPadType blockBasic : BlockCustomLandingPad.EnumLandingPadType.values()) {
+				ClientUtilities.registerBlockJson(Constants.TEXTURE_PREFIX, PlanetProgression_Blocks.ADVANCED_LAUCHPAD, blockBasic.getMeta(), blockBasic.getName());
+			}
+			for (BlockCustomLandingPadFull.EnumLandingPadFullType blockBasic : BlockCustomLandingPadFull.EnumLandingPadFullType.values()) {
+				ClientUtilities.registerBlockJson(Constants.TEXTURE_PREFIX, PlanetProgression_Blocks.ADVANCED_LAUCHPAD_FULL, blockBasic.getMeta(), blockBasic.getName());
+			}
+			ClientUtilities.registerBlockJson(Constants.TEXTURE_PREFIX, PlanetProgression_Blocks.FAKE_BLOCK);
 		}
 	}
 
@@ -103,13 +114,15 @@ public class ClientProxy extends CommonProxy {
 				ImmutableList.of("Eyes_lens", "first_leg_tripod", "Body_Teleskope", "Primary_lens", "two__leg_tripod", "third_leg_tripod", "Stand", "swivel_ground", "small_gear", "Big_gear"), ItemModelTelescope.class);
 
 		if (Config.researchMode == 2 || Config.researchMode == 3)
-			ClientUtilities.replaceModelDefault(Constants.modID, event, "satellite_rocket", ImmutableList.of("Body_Satellite", "solar_panel_side007", "solar_panel_side1", "solar_panel_side002", "satellite_dish2", "solar_panel_side004",
-					"solar_panel_side006", "flang2", "joint3", "solar_panel4", "satellite_dish1", "solar_panel3", "solar_panel_side003", "flang1", "solar_panel2", "joint2", "solar_panel1", "launch_vehicle", "Antenn", "solar_panel_side005", "joint1",
-					"solar_panel_side008"), ItemModelSatelliteRocket.class);
+			ClientUtilities.replaceModelDefault(
+					Constants.modID, event, "satellite_rocket", ImmutableList.of("Body_Satellite", "solar_panel_side007", "solar_panel_side1", "solar_panel_side002", "satellite_dish2", "solar_panel_side004", "solar_panel_side006", "flang2", "joint3",
+							"solar_panel4", "satellite_dish1", "solar_panel3", "solar_panel_side003", "flang1", "solar_panel2", "joint2", "solar_panel1", "launch_vehicle", "Antenn", "solar_panel_side005", "joint1", "solar_panel_side008"),
+					ItemModelSatelliteRocket.class);
 
 		if (Config.researchMode == 2)
-			ClientUtilities.replaceModelDefault(Constants.modID, event, "basic_satellite", ImmutableList.of("solar_panel3", "solar_panel_side_007", "solar_panel_side_004", "joint3", "body_satellite", "solar_panel_side_002", "joint1", "joint2",
-					"solar_panel_side_006", "solar_panel1", "solar_panel2", "solar_panel4", "solar_panel_side_005", "solar_panel_side_003", "antenn", "solar_panel_side_008", "satellite_dish2", "joint4", "solar_panel_side_1", "satellite_dish1"),
+			ClientUtilities.replaceModelDefault(
+					Constants.modID, event, "basic_satellite", ImmutableList.of("solar_panel3", "solar_panel_side_007", "solar_panel_side_004", "joint3", "body_satellite", "solar_panel_side_002", "joint1", "joint2", "solar_panel_side_006",
+							"solar_panel1", "solar_panel2", "solar_panel4", "solar_panel_side_005", "solar_panel_side_003", "antenn", "solar_panel_side_008", "satellite_dish2", "joint4", "solar_panel_side_1", "satellite_dish1"),
 					ItemModelSatellite.class);
 	}
 

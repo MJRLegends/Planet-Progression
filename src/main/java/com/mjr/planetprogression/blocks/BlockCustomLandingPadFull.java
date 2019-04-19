@@ -33,7 +33,7 @@ public class BlockCustomLandingPadFull extends BlockAdvancedTile implements IPar
 	private final AxisAlignedBB AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.1875D, 1.0D);
 
 	public enum EnumLandingPadFullType implements IStringSerializable {
-		SATELLITE_ROCKET_PAD(0, "satellite_rocket");
+		SATELLITE_ROCKET_PAD(0, "satellite_rocket_pad");
 
 		private final int meta;
 		private final String name;

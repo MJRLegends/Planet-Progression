@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "normal": { "model": "planetprogression:satellite_rocket_landing_pad_model" },
+        "type=satellite_rocket_pad": { "model": "planetprogression:satellite_rocket_landing_pad_model" }
+    }
+}

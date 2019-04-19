@@ -66,8 +66,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  */
 public abstract class EntitySatelliteAutoRocket extends EntitySpaceshipBase implements ILandable, IInventoryDefaults, IEntityNoisy, IRocketType, IInventory, IDockable {
 	public static enum EnumAutoLaunch {
-		INSTANT(0, "instant"), TIME_10_SECONDS(1, "ten_sec"), TIME_30_SECONDS(3, "thirty_sec"), TIME_1_MINUTE(4,
-				"one_min"), REDSTONE_SIGNAL(5, "redstone_sig");
+		INSTANT(0, "instant"), TIME_10_SECONDS(1, "ten_sec"), TIME_30_SECONDS(3, "thirty_sec"), TIME_1_MINUTE(4, "one_min"), REDSTONE_SIGNAL(5, "redstone_sig");
 
 		private final int index;
 		private String title;
@@ -85,6 +84,7 @@ public abstract class EntitySatelliteAutoRocket extends EntitySpaceshipBase impl
 			return GCCoreUtil.translate("gui.message." + this.title + ".name");
 		}
 	}
+
 	private static Class<?> controllerClass = null;
 	static {
 		try {
@@ -99,7 +99,7 @@ public abstract class EntitySatelliteAutoRocket extends EntitySpaceshipBase impl
 
 	public int autoLaunchCountdown;
 	private BlockVec3 activeLaunchController;
-	public EntityPlayer placedPlayer;
+	public String placedPlayerUUID;
 	public String statusMessage;
 	public String statusColour;
 	public int statusMessageCooldown;
@@ -135,68 +135,68 @@ public abstract class EntitySatelliteAutoRocket extends EntitySpaceshipBase impl
 
 	@Override
 	public EnumCargoLoadingState addCargo(ItemStack stack, boolean doAdd) {
-//		if (this.getSizeInventory() <= 3) {
-//			if (this.autoLaunchSetting == EnumAutoLaunch.CARGO_IS_FULL) {
-//				this.autoLaunch();
-//			}
-//
-//			return EnumCargoLoadingState.NOINVENTORY;
-//		}
-//
-//		int count = 0;
-//
-//		for (count = 0; count < this.stacks.size() - 2; count++) {
-//			ItemStack stackAt = this.stacks.get(count);
-//
-//			if (!stackAt.isEmpty() && stackAt.getItem() == stack.getItem() && stackAt.getItemDamage() == stack.getItemDamage() && stackAt.getCount() < stackAt.getMaxStackSize()) {
-//				if (stackAt.getCount() + stack.getCount() <= stackAt.getMaxStackSize()) {
-//					if (doAdd) {
-//						stackAt.grow(stack.getCount());
-//						this.markDirty();
-//					}
-//
-//					return EnumCargoLoadingState.SUCCESS;
-//				} else {
-//					// Part of the stack can fill this slot but there will be some left over
-//					int origSize = stackAt.getCount();
-//					int surplus = origSize + stack.getCount() - stackAt.getMaxStackSize();
-//
-//					if (doAdd) {
-//						stackAt.setCount(stackAt.getMaxStackSize());
-//						this.markDirty();
-//					}
-//
-//					stack.setCount(surplus);
-//					if (this.addCargo(stack, doAdd) == EnumCargoLoadingState.SUCCESS) {
-//						return EnumCargoLoadingState.SUCCESS;
-//					}
-//
-//					stackAt.setCount(origSize);
-//					if (this.autoLaunchSetting == EnumAutoLaunch.CARGO_IS_FULL) {
-//						this.autoLaunch();
-//					}
-//					return EnumCargoLoadingState.FULL;
-//				}
-//			}
-//		}
-//
-//		for (count = 0; count < this.stacks.size() - 2; count++) {
-//			ItemStack stackAt = this.stacks.get(count);
-//
-//			if (stackAt.isEmpty()) {
-//				if (doAdd) {
-//					this.stacks.set(count, stack);
-//					this.markDirty();
-//				}
-//
-//				return EnumCargoLoadingState.SUCCESS;
-//			}
-//		}
-//
-//		if (this.autoLaunchSetting == EnumAutoLaunch.CARGO_IS_FULL) {
-//			this.autoLaunch();
-//		}
-//
+		// if (this.getSizeInventory() <= 3) {
+		// if (this.autoLaunchSetting == EnumAutoLaunch.CARGO_IS_FULL) {
+		// this.autoLaunch();
+		// }
+		//
+		// return EnumCargoLoadingState.NOINVENTORY;
+		// }
+
+		int count = 0;
+
+		for (count = 0; count < this.stacks.size() - 2; count++) {
+			ItemStack stackAt = this.stacks.get(count);
+
+			if (!stackAt.isEmpty() && stackAt.getItem() == stack.getItem() && stackAt.getItemDamage() == stack.getItemDamage() && stackAt.getCount() < stackAt.getMaxStackSize()) {
+				if (stackAt.getCount() + stack.getCount() <= stackAt.getMaxStackSize()) {
+					if (doAdd) {
+						stackAt.grow(stack.getCount());
+						this.markDirty();
+					}
+
+					return EnumCargoLoadingState.SUCCESS;
+				} else {
+					// Part of the stack can fill this slot but there will be some left over
+					int origSize = stackAt.getCount();
+					int surplus = origSize + stack.getCount() - stackAt.getMaxStackSize();
+
+					if (doAdd) {
+						stackAt.setCount(stackAt.getMaxStackSize());
+						this.markDirty();
+					}
+
+					stack.setCount(surplus);
+					if (this.addCargo(stack, doAdd) == EnumCargoLoadingState.SUCCESS) {
+						return EnumCargoLoadingState.SUCCESS;
+					}
+
+					stackAt.setCount(origSize);
+					// if (this.autoLaunchSetting == EnumAutoLaunch.CARGO_IS_FULL) {
+					// this.autoLaunch();
+					// }
+					return EnumCargoLoadingState.FULL;
+				}
+			}
+		}
+
+		for (count = 0; count < this.stacks.size() - 2; count++) {
+			ItemStack stackAt = this.stacks.get(count);
+
+			if (stackAt.isEmpty()) {
+				if (doAdd) {
+					this.stacks.set(count, stack);
+					this.markDirty();
+				}
+
+				return EnumCargoLoadingState.SUCCESS;
+			}
+		}
+
+		// if (this.autoLaunchSetting == EnumAutoLaunch.CARGO_IS_FULL) {
+		// this.autoLaunch();
+		// }
+
 		return EnumCargoLoadingState.FULL;
 	}
 
@@ -214,15 +214,15 @@ public abstract class EntitySatelliteAutoRocket extends EntitySpaceshipBase impl
 				if (controllerClass.isInstance(tile)) {
 					Boolean autoLaunchEnabled = null;
 					try {
-;						autoLaunchEnabled = controllerClass.getField("launchEnabled").getBoolean(tile);
+						;
+						autoLaunchEnabled = controllerClass.getField("launchEnabled").getBoolean(tile);
 					} catch (Exception e) {
 					}
 
 					if (autoLaunchEnabled != null && autoLaunchEnabled) {
 						if (this.fuelTank.getFluidAmount() > this.fuelTank.getCapacity() * 2 / 5) {
 							this.ignite();
-						}
-						else
+						} else
 							this.failMessageInsufficientFuel();
 					} else {
 						this.failMessageLaunchController();
@@ -723,8 +723,6 @@ public abstract class EntitySatelliteAutoRocket extends EntitySpaceshipBase impl
 				this.autoLaunch();
 			}
 
-			System.out.println(this.fuelTank.getFluidAmount());
-			
 			if (this.autoLaunchCountdown > 0 && this.getPassengers().isEmpty() && this.fuelTank.getFluidAmount() == this.fuelTank.getCapacity()) {
 				System.out.println(this.autoLaunchCountdown);
 				if (--this.autoLaunchCountdown == 0) {
@@ -733,25 +731,25 @@ public abstract class EntitySatelliteAutoRocket extends EntitySpaceshipBase impl
 				}
 			}
 
-//			if (this.autoLaunchSetting == EnumAutoLaunch.ROCKET_IS_FUELED && this.fuelTank.getFluidAmount() == this.fuelTank.getCapacity() && (!this.getPassengers().isEmpty())) {
-//				this.autoLaunch();
-//			}
-//
-//			if (this.autoLaunchSetting == EnumAutoLaunch.INSTANT) {
-//				if (this.autoLaunchCountdown == 0 && (this.getPassengers().isEmpty())) {
-//					this.autoLaunch();
-//				}
-//				else if (this.fuelTank.getFluidAmount() == this.fuelTank.getCapacity())
-//					placedPlayer.sendMessage(new TextComponentString( "Launcing in " + (this.autoLaunchCountdown / 10)  + " seconds!"));
-//			}
-//
-//			if (this.autoLaunchSetting == EnumAutoLaunch.REDSTONE_SIGNAL) {
-//				if (this.ticks % 11 == 0 && this.activeLaunchController != null) {
-//					if (RedstoneUtil.isBlockReceivingRedstone(this.world, this.activeLaunchController.toBlockPos())) {
-//						this.autoLaunch();
-//					}
-//				}
-//			}
+			// if (this.autoLaunchSetting == EnumAutoLaunch.ROCKET_IS_FUELED && this.fuelTank.getFluidAmount() == this.fuelTank.getCapacity() && (!this.getPassengers().isEmpty())) {
+			// this.autoLaunch();
+			// }
+			//
+			// if (this.autoLaunchSetting == EnumAutoLaunch.INSTANT) {
+			// if (this.autoLaunchCountdown == 0 && (this.getPassengers().isEmpty())) {
+			// this.autoLaunch();
+			// }
+			// else if (this.fuelTank.getFluidAmount() == this.fuelTank.getCapacity())
+			// placedPlayer.sendMessage(new TextComponentString( "Launcing in " + (this.autoLaunchCountdown / 10) + " seconds!"));
+			// }
+			//
+			// if (this.autoLaunchSetting == EnumAutoLaunch.REDSTONE_SIGNAL) {
+			// if (this.ticks % 11 == 0 && this.activeLaunchController != null) {
+			// if (RedstoneUtil.isBlockReceivingRedstone(this.world, this.activeLaunchController.toBlockPos())) {
+			// this.autoLaunch();
+			// }
+			// }
+			// }
 
 			if (this.launchPhase >= EnumLaunchPhase.LAUNCHED.ordinal()) {
 				this.setPad(null);
@@ -799,27 +797,27 @@ public abstract class EntitySatelliteAutoRocket extends EntitySpaceshipBase impl
 
 	@Override
 	public RemovalResult removeCargo(boolean doRemove) {
-//		for (int i = 0; i < this.stacks.size() - 2; i++) {
-//			ItemStack stackAt = this.stacks.get(i);
-//
-//			if (!stackAt.isEmpty()) {
-//				ItemStack resultStack = stackAt.copy();
-//				resultStack.setCount(1);
-//
-//				if (doRemove) {
-//					stackAt.shrink(1);
-//				}
-//
-//				if (doRemove) {
-//					this.markDirty();
-//				}
-//				return new RemovalResult(EnumCargoLoadingState.SUCCESS, resultStack);
-//			}
-//		}
-//
-//		if (this.autoLaunchSetting == EnumAutoLaunch.CARGO_IS_UNLOADED) {
-//			this.autoLaunch();
-//		}
+		// for (int i = 0; i < this.stacks.size() - 2; i++) {
+		// ItemStack stackAt = this.stacks.get(i);
+		//
+		// if (!stackAt.isEmpty()) {
+		// ItemStack resultStack = stackAt.copy();
+		// resultStack.setCount(1);
+		//
+		// if (doRemove) {
+		// stackAt.shrink(1);
+		// }
+		//
+		// if (doRemove) {
+		// this.markDirty();
+		// }
+		// return new RemovalResult(EnumCargoLoadingState.SUCCESS, resultStack);
+		// }
+		// }
+		//
+		// if (this.autoLaunchSetting == EnumAutoLaunch.CARGO_IS_UNLOADED) {
+		// this.autoLaunch();
+		// }
 
 		return new RemovalResult(EnumCargoLoadingState.EMPTY, ItemStack.EMPTY);
 	}
