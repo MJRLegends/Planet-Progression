@@ -5,6 +5,10 @@
 
 
 ===========================================Released Updates===========================================
+v0.3.4
+*Removed debug output
+*Added missing tooltips
+
 v0.3.3
 *Changed Satellite Rocket Fuel Capacity from 1500mb to 1000mb
 *Added Satellite Rocket Launch Pad (Place in a 5x5 grid)
