@@ -103,7 +103,7 @@ public class ItemSatelliteRocket extends Item implements IHoldableItem {
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void addInformation(ItemStack par1ItemStack, EntityPlayer player, List<String> par2List, boolean b) {
+	public void addInformation(ItemStack par1ItemStack, @Nullable World worldIn, List<String> par2List, ITooltipFlag flagIn) {
 		EnumRocketType type;
 
 		if (par1ItemStack.getItemDamage() < 10) {
@@ -121,7 +121,7 @@ public class ItemSatelliteRocket extends Item implements IHoldableItem {
 		}
 
 		if (par1ItemStack.hasTagCompound() && par1ItemStack.getTagCompound().hasKey("RocketFuel")) {
-			EntitySatelliteRocket rocket = new EntitySatelliteRocket(FMLClientHandler.instance().getWorldClient(), 0, 0, 0, EnumRocketType.values()[par1ItemStack.getItemDamage()], null);
+			EntitySatelliteRocket rocket = new EntitySatelliteRocket(FMLClientHandler.instance().getWorldClient(), 0, 0, 0, EnumRocketType.values()[par1ItemStack.getItemDamage()]);
 			par2List.add(TranslateUtilities.translate("gui.message.fuel.name") + ": " + par1ItemStack.getTagCompound().getInteger("RocketFuel") + " / " + rocket.fuelTank.getCapacity());
 		}
 	}
@@ -171,3 +171,4 @@ public class ItemSatelliteRocket extends Item implements IHoldableItem {
 		return true;
 	}
 }
+	public void addInformation(ItemStack par1ItemStack, EntityPlayer player, List<String> par2List, boolean b) {
