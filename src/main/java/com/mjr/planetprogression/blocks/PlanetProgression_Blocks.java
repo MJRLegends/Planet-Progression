@@ -60,7 +60,7 @@ public class PlanetProgression_Blocks {
 		if (Config.researchMode == 2 || Config.researchMode == 3) {
 			RegisterUtilities.registerBlock(Constants.modID, SATTLLITE_BUILDER, ItemBlockBasic.class, SATTLLITE_BUILDER.getUnlocalizedName().substring(5));
 			RegisterUtilities.registerBlock(Constants.modID, SATTLLITE_CONTROLLER, ItemBlockBasic.class, SATTLLITE_CONTROLLER.getUnlocalizedName().substring(5));
-			RegisterUtilities.registerBlock(Constants.modID, SATTLLITE_LAUNCHER, ItemBlockBasic.class, SATTLLITE_CONTROLLER.getUnlocalizedName().substring(5));
+			RegisterUtilities.registerBlock(Constants.modID, SATTLLITE_LAUNCHER, ItemBlockBasic.class, SATTLLITE_LAUNCHER.getUnlocalizedName().substring(5));
 			RegisterUtilities.registerBlock(Constants.modID, ADVANCED_LAUCHPAD, ItemBlockCustomLandingPad.class, ADVANCED_LAUCHPAD.getUnlocalizedName().substring(5));
 			RegisterUtilities.registerBlock(Constants.modID, ADVANCED_LAUCHPAD_FULL, ItemBlockDefault.class, ADVANCED_LAUCHPAD_FULL.getUnlocalizedName().substring(5));
 			RegisterUtilities.registerBlock(Constants.modID, FAKE_BLOCK, ItemBlockDummy.class, FAKE_BLOCK.getUnlocalizedName().substring(5));
