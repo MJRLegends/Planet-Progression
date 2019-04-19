@@ -121,9 +121,9 @@ public class MainHandlerServer {
 				MainHandlerServer.sendSatellitePacket(player, stats);
 				SchematicRegistry.addUnlockedPage(player, SchematicRegistry.getMatchingRecipeForID(2535));
 			}
-			if(event.getEntityLiving().worldObj.provider instanceof IGalacticraftWorldProvider) {
-				CelestialBody temp = GalaxyRegistry.getCelestialBodyFromDimensionID(event.getEntityLiving().worldObj.provider.getDimension());
-				if (!stats.getUnlockedPlanets().contains(temp)) {
+			if(event.getEntityLiving().world.provider instanceof IGalacticraftWorldProvider) {
+				CelestialBody temp = GalaxyRegistry.getCelestialBodyFromDimensionID(event.getEntityLiving().world.provider.getDimension());
+				if (temp != null && !stats.getUnlockedPlanets().contains(temp)) {
 					stats.addUnlockedPlanets(temp);
 					player.addChatMessage(new TextComponentString("You have discovered " + temp.getLocalizedName() + "!"));
 					player.addChatMessage(new TextComponentString("Obtain Research Papers to start discovering!"));
