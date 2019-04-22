@@ -5,6 +5,9 @@
 
 
 ===========================================Released Updates===========================================
+v0.3.3
+*Added missing recipes for Satellite Rocket Launch Pad & Satellite Rocket Launch Pad
+
 v0.3.2
 *Changed Satellite Rocket Fuel Capacity from 1500mb to 1000mb
 *Added Satellite Rocket Launch Pad (Place in a 5x5 grid)
