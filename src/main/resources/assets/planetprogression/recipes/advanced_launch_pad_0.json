@@ -1,0 +1,27 @@
+{
+  "result": {
+    "item": "planetprogression:advanced_launch_pad",
+    "data": 0,
+    "count": 9
+  },
+  "pattern": [
+    "YYY",
+    "YYY",
+    "XXX"
+  ],
+  "conditions": [
+    {
+      "type": "planetprogression:recipe_enabled",
+      "value": "research_mode_2"
+    }
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "X": {
+      "item": "#BLOCKIRON"
+    },
+    "Y": {
+      "item": "#COMPRESSEDIRON"
+    }
+  }
+}
