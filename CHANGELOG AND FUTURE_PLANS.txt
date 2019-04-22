@@ -5,6 +5,9 @@
 
 
 ===========================================Released Updates===========================================
+v0.3.5
+*Added missing recipes for Satellite Rocket Launch Pad & Satellite Rocket Launch Pad
+
 v0.3.4
 *Removed debug output
 *Fixed a crash issue with when Research Mode 1 is enabled
