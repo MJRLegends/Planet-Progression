@@ -275,7 +275,7 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 
 	@Override
 	public int[] getSlotsForFace(EnumFacing side) {
-		return new int[] { 0, 1, 2, 3 };
+		return new int[] { 1 };
 	}
 
 	@Override
@@ -285,7 +285,7 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 
 	@Override
 	public boolean canExtractItem(int index, ItemStack stack, EnumFacing direction) {
-		return index == 0;
+		return index == 1;
 	}
 
 	@Override
