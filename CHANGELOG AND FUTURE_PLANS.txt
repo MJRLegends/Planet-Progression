@@ -5,6 +5,9 @@
 
 
 ===========================================Released Updates===========================================
+v0.3.6
+*Fixed issue #46
+
 v0.3.5
 *Added missing recipes for Satellite Rocket Launch Pad & Satellite Rocket Launch Pad
 
