@@ -3,6 +3,15 @@ package com.mjr.planetprogression.tileEntities;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mjr.mjrlegendslib.util.PlayerUtilties;
+import com.mjr.planetprogression.Config;
+import com.mjr.planetprogression.blocks.BlockSatelliteController;
+import com.mjr.planetprogression.data.SatelliteData;
+import com.mjr.planetprogression.handlers.capabilities.CapabilityStatsHandler;
+import com.mjr.planetprogression.handlers.capabilities.IStatsCapability;
+import com.mjr.planetprogression.item.PlanetProgression_Items;
+import com.mjr.planetprogression.item.ResearchPaper;
+
 import micdoodle8.mods.galacticraft.core.energy.item.ItemElectricBase;
 import micdoodle8.mods.galacticraft.core.energy.tile.TileBaseElectricBlockWithInventory;
 import micdoodle8.mods.miccore.Annotations.NetworkedField;
@@ -15,21 +24,10 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.relauncher.Side;
 
-import com.mjr.mjrlegendslib.util.PlayerUtilties;
-import com.mjr.mjrlegendslib.util.TranslateUtilities;
-import com.mjr.planetprogression.Config;
-import com.mjr.planetprogression.blocks.BlockSatelliteController;
-import com.mjr.planetprogression.data.SatelliteData;
-import com.mjr.planetprogression.handlers.capabilities.CapabilityStatsHandler;
-import com.mjr.planetprogression.handlers.capabilities.IStatsCapability;
-import com.mjr.planetprogression.item.PlanetProgression_Items;
-import com.mjr.planetprogression.item.ResearchPaper;
-
 public class TileEntitySatelliteController extends TileBaseElectricBlockWithInventory implements ISidedInventory {
 	public static final int PROCESS_TIME_REQUIRED = (int) (SatelliteData.getMAX_DATA() * Config.satelliteControllerModifier);
 	@NetworkedField(targetSide = Side.CLIENT)
 	public int processTicks = 0;
-	private NonNullList<ItemStack> stacks = NonNullList.withSize(2, ItemStack.EMPTY);
 	public SatelliteData currentSatellite = null;
 	public boolean markForSatelliteUpdate = true;
 
@@ -49,6 +47,8 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 	public ItemStack producingStack = null;
 
 	public TileEntitySatelliteController() {
+		super("container.satellite.controller.name");
+		this.inventory = NonNullList.withSize(2, ItemStack.EMPTY);
 	}
 
 	@Override
@@ -155,7 +155,7 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 	}
 
 	public boolean canOutput() {
-		if (!this.stacks.get(1).isEmpty())
+		if (!this.getInventory().get(1).isEmpty())
 			return false;
 		if (this.producingStack == null || this.currentSatellite.getCurrentResearchItem() == null)
 			return false;
@@ -169,11 +169,11 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 	public void smeltItem() {
 		ItemStack resultItemStack = this.producingStack;
 		if (this.canProcess() && canOutput() && hasInputs()) {
-			if (this.stacks.get(1).isEmpty()) {
-				this.stacks.set(1, resultItemStack.copy());
-			} else if (this.stacks.get(1).isItemEqual(resultItemStack)) {
-				if (this.stacks.get(1).getCount() + resultItemStack.getCount() > 64) {
-					for (int i = 0; i < this.stacks.get(1).getCount() + resultItemStack.getCount() - 64; i++) {
+			if (this.getInventory().get(1).isEmpty()) {
+				this.getInventory().set(1, resultItemStack.copy());
+			} else if (this.getInventory().get(1).isItemEqual(resultItemStack)) {
+				if (this.getInventory().get(1).getCount() + resultItemStack.getCount() > 64) {
+					for (int i = 0; i < this.getInventory().get(1).getCount() + resultItemStack.getCount() - 64; i++) {
 						float var = 0.7F;
 						double dx = this.world.rand.nextFloat() * var + (1.0F - var) * 0.5D;
 						double dy = this.world.rand.nextFloat() * var + (1.0F - var) * 0.5D;
@@ -182,9 +182,9 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 						entityitem.setPickupDelay(10);
 						this.world.spawnEntity(entityitem);
 					}
-					this.stacks.get(1).setCount(64);
+					this.getInventory().get(1).setCount(64);
 				} else {
-					this.stacks.get(1).grow(resultItemStack.getCount());
+					this.getInventory().get(1).grow(resultItemStack.getCount());
 				}
 			}
 			this.producingStack = null;
@@ -231,7 +231,6 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
 		super.readFromNBT(nbt);
-		this.stacks = this.readStandardItemsFromNBT(nbt);
 		this.processTicks = nbt.getInteger("smeltingTicks");
 		this.currentSatelliteNum = nbt.getInteger("currentSatelliteNum");
 		this.currentSatelliteID = nbt.getString("currentSatelliteID");
@@ -239,7 +238,6 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 		this.markForSatelliteUpdate = nbt.getBoolean("markForSatelliteUpdate");
 		this.setOwner(nbt.getString("owner"));
 		this.ownerUsername = nbt.getString("ownerUsername");
-		this.stacks = this.readStandardItemsFromNBT(nbt);
 		this.ownerOnline = nbt.getBoolean("ownerOnline");
 	}
 
@@ -247,7 +245,6 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 	public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
 		super.writeToNBT(nbt);
 		nbt.setInteger("smeltingTicks", this.processTicks);
-		this.writeStandardItemsToNBT(nbt, this.stacks);
 		nbt.setInteger("currentSatelliteNum", this.currentSatelliteNum);
 		nbt.setString("currentSatelliteID", this.currentSatelliteID);
 		nbt.setString("currentSatelliteResearchBody", this.currentSatelliteResearchBody);
@@ -256,21 +253,6 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 		nbt.setString("ownerUsername", this.ownerUsername);
 		nbt.setBoolean("ownerOnline", false); // False to trigger for Update on Load
 		return nbt;
-	}
-
-	@Override
-	protected NonNullList<ItemStack> getContainingItems() {
-		return this.stacks;
-	}
-
-	@Override
-	public String getName() {
-		return TranslateUtilities.translate("container.satellite.controller.name");
-	}
-
-	@Override
-	public boolean hasCustomName() {
-		return true;
 	}
 
 	// ISidedInventory Implementation:

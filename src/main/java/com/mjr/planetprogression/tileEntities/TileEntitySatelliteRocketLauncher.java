@@ -3,7 +3,6 @@ package com.mjr.planetprogression.tileEntities;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.mjr.mjrlegendslib.util.TranslateUtilities;
 import com.mjr.planetprogression.blocks.BlockCustomLandingPadFull;
 import com.mjr.planetprogression.blocks.BlockSatelliteRocketLauncher;
 import com.mjr.planetprogression.entities.EntitySatelliteRocket;
@@ -18,7 +17,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
@@ -28,7 +26,6 @@ import net.minecraftforge.fml.relauncher.Side;
 
 public class TileEntitySatelliteRocketLauncher extends TileBaseElectricBlockWithInventory implements ISidedInventory, ILandingPadAttachable {
 	public static final int WATTS_PER_TICK = 1;
-	private NonNullList<ItemStack> stacks = NonNullList.withSize(1, ItemStack.EMPTY);
 	private List<BlockPos> connectedPads = new ArrayList<BlockPos>();
 	public Object attachedDock = null;
 	@NetworkedField(targetSide = Side.CLIENT)
@@ -37,10 +34,12 @@ public class TileEntitySatelliteRocketLauncher extends TileBaseElectricBlockWith
 	public boolean launchEnabled;
 
 	public TileEntitySatelliteRocketLauncher() {
-        this.storage.setMaxExtract(6);
+		super("container.satellite_rocket_launcher.name");
+		this.storage.setMaxExtract(6);
 		this.noRedstoneControl = true;
 		this.launchDropdownSelection = 0;
 		this.launchEnabled = false;
+		this.inventory = NonNullList.withSize(1, ItemStack.EMPTY);
 	}
 
 	public boolean canRun() {
@@ -68,7 +67,7 @@ public class TileEntitySatelliteRocketLauncher extends TileBaseElectricBlockWith
 			}
 		}
 	}
-	
+
 	@Override
 	public boolean shouldUseEnergy() {
 		return this.canRun();
@@ -77,34 +76,6 @@ public class TileEntitySatelliteRocketLauncher extends TileBaseElectricBlockWith
 	@Override
 	public void invalidate() {
 		super.invalidate();
-	}
-
-	@Override
-	public void readFromNBT(NBTTagCompound nbt) {
-		super.readFromNBT(nbt);
-		this.stacks = this.readStandardItemsFromNBT(nbt);
-	}
-
-	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
-		super.writeToNBT(nbt);
-		this.writeStandardItemsToNBT(nbt, this.stacks);
-		return nbt;
-	}
-
-	@Override
-	public NonNullList<ItemStack> getContainingItems() {
-		return this.stacks;
-	}
-
-	@Override
-	public String getName() {
-		return TranslateUtilities.translate("container.satellite_rocket_launcher.name");
-	}
-
-	@Override
-	public boolean hasCustomName() {
-		return true;
 	}
 
 	@Override

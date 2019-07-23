@@ -17,6 +17,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
 
 public class TileEntityTelescopeFake extends TileBaseElectricBlock {
+	public TileEntityTelescopeFake() {
+		super("container.telescope.fake.name");
+	}
+
 	// The the position of the main block
 	@NetworkedField(targetSide = Side.CLIENT)
 	public BlockPos mainBlockPosition;
@@ -213,5 +217,10 @@ public class TileEntityTelescopeFake extends TileBaseElectricBlock {
 		}
 
 		this.canConnect = false;
+	}
+
+	@Override
+	public int[] getSlotsForFace(EnumFacing side) {
+		return new int[0];
 	}
 }

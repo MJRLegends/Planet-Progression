@@ -59,14 +59,14 @@ public class TileEntityTelescope extends TileBaseElectricBlockWithInventory impl
 
 	@NetworkedField(targetSide = Side.CLIENT)
 	public float currentRotation;
-	private NonNullList<ItemStack> stacks = NonNullList.withSize(2, ItemStack.EMPTY);
 
 	@NetworkedField(targetSide = Side.CLIENT)
 	private AxisAlignedBB renderAABB;
 
 	public TileEntityTelescope() {
-		super();
+		super("container.telescope.name");
 		this.storage.setMaxExtract(100);
+		this.inventory = NonNullList.withSize(2, ItemStack.EMPTY);
 	}
 
 	@Override
@@ -111,14 +111,14 @@ public class TileEntityTelescope extends TileBaseElectricBlockWithInventory impl
 		if (Config.researchMode == 0 || Config.researchMode == 1 || Config.researchMode == 2 || Config.researchMode == 3) {
 			boolean found = false;
 			for (Planet planet : GalaxyRegistry.getRegisteredPlanets().values()) {
-				if (((ResearchPaper) this.stacks.get(1).getItem()).getPlanetName().equalsIgnoreCase(planet.getUnlocalizedName())) {
+				if (((ResearchPaper) this.getInventory().get(1).getItem()).getPlanetName().equalsIgnoreCase(planet.getUnlocalizedName())) {
 					if (!stats.getUnlockedPlanets().contains(planet)) {
 						stats.addUnlockedPlanets(planet);
 						player.sendMessage(new TextComponentString("Research Completed! You have discovered " + planet.getLocalizedName()));
-						if(this.stacks.get(1).getCount() != 1)
-							this.stacks.get(1).setCount(this.stacks.get(1).getCount() - 1);
+						if(this.getInventory().get(1).getCount() != 1)
+							this.getInventory().get(1).setCount(this.getInventory().get(1).getCount() - 1);
 						else
-							this.stacks.set(1, ItemStack.EMPTY);
+							this.getInventory().set(1, ItemStack.EMPTY);
 						found = true;
 						break;
 					}
@@ -126,14 +126,14 @@ public class TileEntityTelescope extends TileBaseElectricBlockWithInventory impl
 			}
 			if (found == false) {
 				for (Moon moon : GalaxyRegistry.getRegisteredMoons().values()) {
-					if (((ResearchPaper) this.stacks.get(1).getItem()).getPlanetName().equalsIgnoreCase(moon.getUnlocalizedName())) {
+					if (((ResearchPaper) this.getInventory().get(1).getItem()).getPlanetName().equalsIgnoreCase(moon.getUnlocalizedName())) {
 						if (!stats.getUnlockedPlanets().contains(moon)) {
 							stats.addUnlockedPlanets(moon);
 							player.sendMessage(new TextComponentString("Research Completed! You have discovered " + moon.getLocalizedName()));
-							if(this.stacks.get(1).getCount() != 1)
-								this.stacks.get(1).setCount(this.stacks.get(1).getCount() - 1);
+							if(this.getInventory().get(1).getCount() != 1)
+								this.getInventory().get(1).setCount(this.getInventory().get(1).getCount() - 1);
 							else
-								this.stacks.set(1, ItemStack.EMPTY);
+								this.getInventory().set(1, ItemStack.EMPTY);
 							break;
 						}
 					}
@@ -145,7 +145,7 @@ public class TileEntityTelescope extends TileBaseElectricBlockWithInventory impl
 	private boolean canResearch() {
 		if (this.getDisabled(0))
 			return false;
-		if (this.stacks.get(1) != null && this.stacks.get(1).getItem() instanceof ResearchPaper) {
+		if (this.getInventory().get(1) != null && this.getInventory().get(1).getItem() instanceof ResearchPaper) {
 			return true;
 		}
 		return false;
@@ -154,7 +154,6 @@ public class TileEntityTelescope extends TileBaseElectricBlockWithInventory impl
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
 		super.readFromNBT(nbt);
-		this.stacks = this.readStandardItemsFromNBT(nbt);
 		this.processTicks = nbt.getInteger("smeltingTicks");
 		this.owner = nbt.getString("owner");
 		this.ownerUsername = nbt.getString("ownerUsername");
@@ -166,17 +165,11 @@ public class TileEntityTelescope extends TileBaseElectricBlockWithInventory impl
 	public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
 		super.writeToNBT(nbt);
 		nbt.setInteger("smeltingTicks", this.processTicks);
-		this.writeStandardItemsToNBT(nbt, this.stacks);
 		nbt.setString("owner", this.owner);
 		nbt.setString("ownerUsername", this.ownerUsername);
 		nbt.setFloat("currentRotation", this.currentRotation);
 		nbt.setBoolean("ownerOnline", false); // False to trigger for Update on Load
 		return nbt;
-	}
-
-	@Override
-	protected NonNullList<ItemStack> getContainingItems() {
-		return this.stacks;
 	}
 
 	@Override
