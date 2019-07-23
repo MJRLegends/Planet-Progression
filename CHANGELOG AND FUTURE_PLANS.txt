@@ -5,6 +5,10 @@
 
 
 ===========================================Released Updates===========================================
+v0.3.7
+*Match Galacticraft API changes
+*Changed Galacticraft minimum version to Build 212
+
 v0.3.6
 *Fixed issue #46
 
