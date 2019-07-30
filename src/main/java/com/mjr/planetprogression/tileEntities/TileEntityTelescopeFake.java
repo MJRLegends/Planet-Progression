@@ -223,4 +223,9 @@ public class TileEntityTelescopeFake extends TileBaseElectricBlock {
 	public int[] getSlotsForFace(EnumFacing side) {
 		return new int[0];
 	}
+
+	@Override
+	protected boolean handleInventory() {
+		return false;
+	}
 }
