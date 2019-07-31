@@ -3,6 +3,12 @@ package com.mjr.planetprogression.client.gui.screen;
 import java.util.Collections;
 import java.util.List;
 
+import org.lwjgl.util.vector.Vector3f;
+
+import com.google.common.collect.Lists;
+import com.mjr.planetprogression.client.handlers.capabilities.CapabilityStatsClientHandler;
+import com.mjr.planetprogression.client.handlers.capabilities.IStatsClientCapability;
+
 import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
 import micdoodle8.mods.galacticraft.api.galaxies.GalaxyRegistry;
 import micdoodle8.mods.galacticraft.api.galaxies.Moon;
@@ -15,16 +21,15 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraftforge.fml.client.FMLClientHandler;
 
-import com.google.common.collect.Lists;
-import com.mjr.planetprogression.client.handlers.capabilities.CapabilityStatsClientHandler;
-import com.mjr.planetprogression.client.handlers.capabilities.IStatsClientCapability;
-
 public class CustomGuiCelestialSelection extends GuiCelestialSelection {
 
 	public CustomGuiCelestialSelection(boolean mapMode, List<CelestialBody> possibleBodies) {
 		super(mapMode, possibleBodies);
 	}
 
+	/*
+	 * Overriding for the purpose of to stop planets/moon from being initiated so they will be hidden from the screen in till unlocked
+	 */
 	@Override
 	public void initGui() {
 		final Minecraft minecraft = FMLClientHandler.instance().getClient();
@@ -35,11 +40,12 @@ public class CustomGuiCelestialSelection extends GuiCelestialSelection {
 		if (player != null) {
 			stats = playerBaseClient.getCapability(CapabilityStatsClientHandler.PP_STATS_CLIENT_CAPABILITY, null);
 		}
-		
+		this.celestialBodyTicks.clear();
+		this.bodiesToRender.clear();
 		for (SolarSystem star : GalaxyRegistry.getRegisteredSolarSystems().values()) {
 			this.celestialBodyTicks.put(star.getMainStar(), 0);
 		}
-		
+
 		for (Planet planet : GalaxyRegistry.getRegisteredPlanets().values()) {
 			if (stats.getUnlockedPlanets().contains(planet)) {
 				this.celestialBodyTicks.put(planet, 0);
@@ -69,6 +75,9 @@ public class CustomGuiCelestialSelection extends GuiCelestialSelection {
 		}
 	}
 
+	/*
+	 * Overriding for the purpose of to hide planets/moon from the screen in till unlocked
+	 */
 	@Override
 	protected List<CelestialBody> getChildren(Object object) {
 		List<CelestialBody> bodyList = Lists.newArrayList();
@@ -97,5 +106,15 @@ public class CustomGuiCelestialSelection extends GuiCelestialSelection {
 		Collections.sort(bodyList);
 
 		return bodyList;
+	}
+
+	/*
+	 * Overriding for the purpose of to fix possible init issues due to network packets delay
+	 */
+	@Override
+	protected Vector3f getCelestialBodyPosition(CelestialBody cBody) {
+		if (this.celestialBodyTicks.get(cBody) == null)
+			this.initGui();
+		return super.getCelestialBodyPosition(cBody);
 	}
 }
