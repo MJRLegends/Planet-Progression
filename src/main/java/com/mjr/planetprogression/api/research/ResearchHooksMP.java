@@ -8,7 +8,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 
 public class ResearchHooksMP {
 
-	public boolean hasUnlockedCelestialBody(EntityPlayerMP player, CelestialBody body) {
+	public static boolean hasUnlockedCelestialBody(EntityPlayerMP player, CelestialBody body) {
 		IStatsCapability stats = null;
 		if (player != null) {
 			stats = player.getCapability(CapabilityStatsHandler.PP_STATS_CAPABILITY, null);
