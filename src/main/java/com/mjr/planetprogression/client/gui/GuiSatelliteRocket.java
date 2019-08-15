@@ -46,7 +46,7 @@ public class GuiSatelliteRocket extends GuiContainerGC {
 	}
 
 	public GuiSatelliteRocket(IInventory par1IInventory, EntitySatelliteRocket rocket, EnumRocketType rocketType) {
-		super(new ContainerRocketInventory(par1IInventory, rocket, rocketType, FMLClientHandler.instance().getClient().thePlayer));
+		super(new ContainerRocketInventory(par1IInventory, rocket, rocketType, FMLClientHandler.instance().getClient().player));
 		this.upperChestInventory = par1IInventory;
 		this.rocket = rocket;
 		this.allowUserInput = false;
@@ -58,7 +58,7 @@ public class GuiSatelliteRocket extends GuiContainerGC {
 	protected void actionPerformed(GuiButton button) {
 		switch (button.id) {
 		case 0:
-			PlanetProgression.packetPipeline.sendToServer(new PacketSimplePP(EnumSimplePacket.S_UPDATE_SATELLITE_ROCKET_STATUS, GCCoreUtil.getDimensionID(mc.theWorld), new Object[] { this.rocket.getEntityId(), 0 }));
+			PlanetProgression.packetPipeline.sendToServer(new PacketSimplePP(EnumSimplePacket.S_UPDATE_SATELLITE_ROCKET_STATUS, GCCoreUtil.getDimensionID(mc.world), new Object[] { this.rocket.getEntityId(), 0 }));
 			break;
 		default:
 			break;
@@ -81,19 +81,19 @@ public class GuiSatelliteRocket extends GuiContainerGC {
 	@Override
 	protected void drawGuiContainerForegroundLayer(int par1, int par2) {
 		if (this.rocket.rocketType.getInventorySpace() == 2) {
-			this.fontRendererObj.drawString(TranslateUtilities.translate(this.upperChestInventory.getName()), 8, 76 + (this.rocket.rocketType.getInventorySpace() - 20) / 9 * 18, 4210752);
+			this.fontRenderer.drawString(TranslateUtilities.translate(this.upperChestInventory.getName()), 8, 76 + (this.rocket.rocketType.getInventorySpace() - 20) / 9 * 18, 4210752);
 		} else {
-			this.fontRendererObj.drawString(TranslateUtilities.translate(this.upperChestInventory.getName()), 8, 89 + (this.rocket.rocketType.getInventorySpace() - 20) / 9 * 18, 4210752);
+			this.fontRenderer.drawString(TranslateUtilities.translate(this.upperChestInventory.getName()), 8, 89 + (this.rocket.rocketType.getInventorySpace() - 20) / 9 * 18, 4210752);
 		}
 
 		String str = TranslateUtilities.translate("gui.message.fuel.name") + ":";
-		this.fontRendererObj.drawString(str, 140 - this.fontRendererObj.getStringWidth(str) / 2, 5, 4210752);
+		this.fontRenderer.drawString(str, 140 - this.fontRenderer.getStringWidth(str) / 2, 5, 4210752);
 		final double percentage = this.rocket.getScaledFuelLevel(100);
 		String color = percentage > 80.0D ? EnumColor.BRIGHT_GREEN.getCode() : percentage > 40.0D ? EnumColor.ORANGE.getCode() : EnumColor.RED.getCode();
 		str = percentage + "% " + TranslateUtilities.translate("gui.message.full.name");
-		this.fontRendererObj.drawString(color + str, 140 - this.fontRendererObj.getStringWidth(str) / 2, 15, 4210752);
+		this.fontRenderer.drawString(color + str, 140 - this.fontRenderer.getStringWidth(str) / 2, 15, 4210752);
 		str = TranslateUtilities.translate("gui.message.status.name") + ":";
-		this.fontRendererObj.drawString(str, 40 - this.fontRendererObj.getStringWidth(str) / 2, 9, 4210752);
+		this.fontRenderer.drawString(str, 40 - this.fontRenderer.getStringWidth(str) / 2, 9, 4210752);
 
 		String[] spltString = { "" };
 		String colour = EnumColor.YELLOW.toString();
@@ -116,7 +116,7 @@ public class GuiSatelliteRocket extends GuiContainerGC {
 
 		int y = 2;
 		for (String splitString : spltString) {
-			this.fontRendererObj.drawString(colour + splitString, 35 - this.fontRendererObj.getStringWidth(splitString) / 2, 9 * y, 4210752);
+			this.fontRenderer.drawString(colour + splitString, 35 - this.fontRenderer.getStringWidth(splitString) / 2, 9 * y, 4210752);
 			y++;
 		}
 

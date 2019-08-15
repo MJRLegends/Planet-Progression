@@ -9,6 +9,7 @@ import com.mjr.mjrlegendslib.network.PacketSimpleBase;
 import com.mjr.mjrlegendslib.util.ItemUtilities;
 import com.mjr.mjrlegendslib.util.MCUtilities;
 import com.mjr.planetprogression.Constants;
+import com.mjr.planetprogression.PlanetProgression;
 import com.mjr.planetprogression.client.gui.GuiSatelliteRocket;
 import com.mjr.planetprogression.client.handlers.capabilities.CapabilityStatsClientHandler;
 import com.mjr.planetprogression.client.handlers.capabilities.IStatsClientCapability;
@@ -27,12 +28,14 @@ import micdoodle8.mods.galacticraft.api.galaxies.Moon;
 import micdoodle8.mods.galacticraft.api.galaxies.Planet;
 import micdoodle8.mods.galacticraft.core.entities.player.GCPlayerStats;
 import micdoodle8.mods.galacticraft.core.network.NetworkUtil;
+import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 import micdoodle8.mods.galacticraft.core.util.GCLog;
 import micdoodle8.mods.galacticraft.core.util.PlayerUtil;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.Item;
 import net.minecraft.network.INetHandler;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
@@ -159,7 +162,7 @@ public class PacketSimplePP extends PacketSimpleBase {
 			int entityID = 0;
 			Entity entity = null;
 			entityID = (Integer) this.data.get(1);
-			entity = player.worldObj.getEntityByID(entityID);
+			entity = player.world.getEntityByID(entityID);
 
 			if (entity != null && entity instanceof EntitySatelliteRocket) {
 				MCUtilities.getClient().displayGuiScreen(new GuiSatelliteRocket(player.inventory, (EntitySatelliteRocket) entity));
@@ -244,7 +247,7 @@ public class PacketSimplePP extends PacketSimpleBase {
 			}
 			break;
 		case S_UPDATE_SATELLITE_ROCKET_STATUS:
-			Entity entity2 = player.worldObj.getEntityByID((Integer) this.data.get(0));
+			Entity entity2 = player.world.getEntityByID((Integer) this.data.get(0));
 
 			if (entity2 instanceof EntitySatelliteRocket) {
 				EntitySatelliteRocket rocket = (EntitySatelliteRocket) entity2;

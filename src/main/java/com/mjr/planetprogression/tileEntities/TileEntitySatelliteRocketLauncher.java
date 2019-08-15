@@ -3,6 +3,7 @@ package com.mjr.planetprogression.tileEntities;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mjr.mjrlegendslib.util.TranslateUtilities;
 import com.mjr.planetprogression.blocks.BlockCustomLandingPadFull;
 import com.mjr.planetprogression.entities.EntitySatelliteRocket;
 
@@ -11,7 +12,6 @@ import micdoodle8.mods.galacticraft.api.tile.IFuelDock;
 import micdoodle8.mods.galacticraft.api.tile.ILandingPadAttachable;
 import micdoodle8.mods.galacticraft.core.energy.item.ItemElectricBase;
 import micdoodle8.mods.galacticraft.core.energy.tile.TileBaseElectricBlockWithInventory;
-import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 import micdoodle8.mods.galacticraft.planets.mars.blocks.BlockMachineMars;
 import micdoodle8.mods.miccore.Annotations.NetworkedField;
 import net.minecraft.block.Block;
@@ -36,7 +36,7 @@ public class TileEntitySatelliteRocketLauncher extends TileBaseElectricBlockWith
 	public boolean launchEnabled;
 
 	public TileEntitySatelliteRocketLauncher() {
-		this.storage.setMaxExtract(6);
+		this.storage.setMaxExtract(2);
 		this.noRedstoneControl = true;
 		this.launchDropdownSelection = 0;
 		this.launchEnabled = false;
@@ -52,7 +52,7 @@ public class TileEntitySatelliteRocketLauncher extends TileBaseElectricBlockWith
 
 		if (!this.worldObj.isRemote) {
 
-			if (this.ticks % 20 == 0) {
+			if (this.ticks % 20 == 0 && canRun()) {
 				if (connectedPads.size() == 0) {
 					for (int x = -4; x <= 4; x++) {
 						for (int z = -4; z <= 4; z++) {
@@ -92,7 +92,7 @@ public class TileEntitySatelliteRocketLauncher extends TileBaseElectricBlockWith
 
 	@Override
 	public String getName() {
-		return GCCoreUtil.translate("container.satellite_rocket_launcher.name");
+		return TranslateUtilities.translate("container.satellite_rocket_launcher.name");
 	}
 
 	@Override
@@ -157,6 +157,7 @@ public class TileEntitySatelliteRocketLauncher extends TileBaseElectricBlockWith
 	public void setLaunchDropdownSelection(int newvalue) {
 		if (newvalue != this.launchDropdownSelection) {
 			this.launchDropdownSelection = newvalue;
+			this.storage.extractEnergyGC(15, false);
 			this.updateRocketOnDockSettings();
 		}
 	}
@@ -167,6 +168,7 @@ public class TileEntitySatelliteRocketLauncher extends TileBaseElectricBlockWith
 			IDockable rocket = pad.getDockedEntity();
 			if (rocket instanceof EntitySatelliteRocket && canRun()) {
 				((EntitySatelliteRocket) rocket).updateControllerSettings(pad);
+				this.storage.extractEnergyGC(25, false);
 			}
 		}
 	}

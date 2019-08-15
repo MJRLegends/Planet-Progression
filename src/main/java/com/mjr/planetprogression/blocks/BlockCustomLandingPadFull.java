@@ -30,7 +30,7 @@ public class BlockCustomLandingPadFull extends BlockAdvancedTile implements IPar
 	public static final PropertyEnum<EnumLandingPadFullType> PAD_TYPE = PropertyEnum.create("type", EnumLandingPadFullType.class);
 
 	public enum EnumLandingPadFullType implements IStringSerializable {
-		SATELLITE_ROCKET_PAD(0, "satellite_rocket");
+		SATELLITE_ROCKET_PAD(0, "satellite_rocket_pad");
 
 		private final int meta;
 		private final String name;

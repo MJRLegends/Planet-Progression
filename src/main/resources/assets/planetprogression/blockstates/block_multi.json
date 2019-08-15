@@ -1,0 +1,21 @@
+{
+    "forge_marker": 1,
+    "variants": {
+        "type": {
+           "satellite_rocket_pad":     { "model": "planetprogression:satellite_rocket_landing_pad_model" }
+        },
+
+        "rendertype": {
+            "0": { },
+			"1": { },
+			"2": { },
+			"3": { },
+			"4": { },
+			"5": { },
+			"6": { },
+			"7": { }
+        },
+
+        "inventory": [{ "model": "planetprogression:block_multi_model" }]
+    }
+}

@@ -3,6 +3,16 @@ package com.mjr.planetprogression.client.gui;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.lwjgl.opengl.GL11;
+
+import com.mjr.mjrlegendslib.util.TranslateUtilities;
+import com.mjr.planetprogression.Config;
+import com.mjr.planetprogression.Constants;
+import com.mjr.planetprogression.PlanetProgression;
+import com.mjr.planetprogression.inventory.ContainerTelescope;
+import com.mjr.planetprogression.network.PacketSimplePP;
+import com.mjr.planetprogression.tileEntities.TileEntityTelescope;
+
 import micdoodle8.mods.galacticraft.core.GalacticraftCore;
 import micdoodle8.mods.galacticraft.core.client.gui.container.GuiContainerGC;
 import micdoodle8.mods.galacticraft.core.client.gui.element.GuiElementInfoRegion;
@@ -14,15 +24,6 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.FMLClientHandler;
-
-import org.lwjgl.opengl.GL11;
-
-import com.mjr.planetprogression.Config;
-import com.mjr.planetprogression.Constants;
-import com.mjr.planetprogression.PlanetProgression;
-import com.mjr.planetprogression.inventory.ContainerTelescope;
-import com.mjr.planetprogression.network.PacketSimplePP;
-import com.mjr.planetprogression.tileEntities.TileEntityTelescope;
 
 public class GuiTelescope extends GuiContainerGC {
 	private static final ResourceLocation gui = new ResourceLocation(Constants.ASSET_PREFIX, "textures/gui/telescope.png");
@@ -50,7 +51,7 @@ public class GuiTelescope extends GuiContainerGC {
 			this.enableButton.enabled = true;
 		}
 
-		this.enableButton.displayString = this.tileEntity.getDisabled(0) ? GCCoreUtil.translate("gui.button.enable.name") : GCCoreUtil.translate("gui.button.disable.name");
+		this.enableButton.displayString = this.tileEntity.getDisabled(0) ? TranslateUtilities.translate("gui.button.enable.name") : TranslateUtilities.translate("gui.button.disable.name");
 
 		super.drawScreen(par1, par2, par3);
 	}
@@ -61,7 +62,7 @@ public class GuiTelescope extends GuiContainerGC {
 		this.buttonList.clear();
 		final int var5 = (this.width - this.xSize) / 2;
 		final int var6 = (this.height - this.ySize) / 2;
-		this.enableButton = new GuiButton(0, var5 + 10, var6 + 110, 60, 20, GCCoreUtil.translate("gui.button.enable.name"));
+		this.enableButton = new GuiButton(0, var5 + 10, var6 + 110, 60, 20, TranslateUtilities.translate("gui.button.enable.name"));
 		this.leftButton = new GuiButton(1, var5 + 5, var6 + 75, 15, 20, "<");
 		this.rightButton = new GuiButton(2, var5 + 70 + 158, var6 + 75, 15, 20, ">");
 
@@ -75,7 +76,7 @@ public class GuiTelescope extends GuiContainerGC {
 		this.electricInfoRegion.parentHeight = this.height;
 		this.infoRegions.add(this.electricInfoRegion);
 		List<String> batterySlotDesc = new ArrayList<String>();
-		batterySlotDesc.add(GCCoreUtil.translate("gui.battery_slot.desc.0"));
+		batterySlotDesc.add(TranslateUtilities.translate("gui.battery_slot.desc.0"));
 		this.infoRegions.add(new GuiElementInfoRegion((this.width - this.xSize) / 2 + 151, (this.height - this.ySize) / 2 + 104, 18, 18, batterySlotDesc, this.width, this.height, this));
 	}
 
@@ -105,10 +106,9 @@ public class GuiTelescope extends GuiContainerGC {
 		String displayString = this.tileEntity.getName();
 		this.fontRendererObj.drawString(displayString, this.xSize / 2 - this.fontRendererObj.getStringWidth(displayString) / 2, 5, 4210752);
 
-		this.fontRendererObj.drawString(GCCoreUtil.translate("container.inventory"), 8, 135, 4210752);
-		this.fontRendererObj.drawString("Progress: " + ((this.tileEntity.processTicks / Config.telescopeTimeModifier) / 2) + " %", 5, 20, 4210752);
-		this.fontRendererObj.drawString("Player: " + ((this.tileEntity.owner != "" && this.tileEntity.ownerOnline) ? this.tileEntity.ownerUsername : "Player is not online!"), 5, 45, 4210752);
-
+		this.fontRenderer.drawString(TranslateUtilities.translate("container.inventory"), 8, 135, 4210752);
+		this.fontRenderer.drawString("Progress: " + ((this.tileEntity.processTicks / Config.telescopeTimeModifier) / 2) + " %", 5, 20, 4210752);
+		this.fontRenderer.drawString("Player: " + ((this.tileEntity.owner != "" && this.tileEntity.ownerOnline) ? this.tileEntity.ownerUsername : "Player is not online!"), 5, 45, 4210752);
 	}
 
 	@Override
@@ -121,7 +121,7 @@ public class GuiTelescope extends GuiContainerGC {
 		this.drawTexturedModalRect(var5, var6, 0, 0, this.xSize, this.ySize);
 
 		List<String> electricityDesc = new ArrayList<String>();
-		electricityDesc.add(GCCoreUtil.translate("gui.energy_storage.desc.0"));
+		electricityDesc.add(TranslateUtilities.translate("gui.energy_storage.desc.0"));
 		EnergyDisplayHelper.getEnergyDisplayTooltip(this.tileEntity.getEnergyStoredGC(), this.tileEntity.getMaxEnergyStoredGC(), electricityDesc);
 		this.electricInfoRegion.tooltipStrings = electricityDesc;
 

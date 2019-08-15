@@ -142,33 +142,33 @@ public abstract class EntitySatelliteAutoRocket extends EntitySpaceshipBase impl
 
 		int count = 0;
 
-		for (count = 0; count < this.cargoItems.length - 2; count++) {
-			ItemStack stackAt = this.cargoItems[count];
+		for (count = 0; count < this.stacks.size() - 2; count++) {
+			ItemStack stackAt = this.stacks.get(count);
 
-			if (stackAt != null && stackAt.getItem() == stack.getItem() && stackAt.getItemDamage() == stack.getItemDamage() && stackAt.stackSize < stackAt.getMaxStackSize()) {
-				if (stackAt.stackSize + stack.stackSize <= stackAt.getMaxStackSize()) {
+			if (!stackAt.isEmpty() && stackAt.getItem() == stack.getItem() && stackAt.getItemDamage() == stack.getItemDamage() && stackAt.getCount() < stackAt.getMaxStackSize()) {
+				if (stackAt.getCount() + stack.getCount() <= stackAt.getMaxStackSize()) {
 					if (doAdd) {
-						this.cargoItems[count].stackSize += stack.stackSize;
+						stackAt.grow(stack.getCount());
 						this.markDirty();
 					}
 
 					return EnumCargoLoadingState.SUCCESS;
 				} else {
 					// Part of the stack can fill this slot but there will be some left over
-					int origSize = stackAt.stackSize;
-					int surplus = origSize + stack.stackSize - stackAt.getMaxStackSize();
+					int origSize = stackAt.getCount();
+					int surplus = origSize + stack.getCount() - stackAt.getMaxStackSize();
 
 					if (doAdd) {
-						this.cargoItems[count].stackSize = stackAt.getMaxStackSize();
+						stackAt.setCount(stackAt.getMaxStackSize());
 						this.markDirty();
 					}
 
-					stack.stackSize = surplus;
+					stack.setCount(surplus);
 					if (this.addCargo(stack, doAdd) == EnumCargoLoadingState.SUCCESS) {
 						return EnumCargoLoadingState.SUCCESS;
 					}
 
-					this.cargoItems[count].stackSize = origSize;
+					stackAt.setCount(origSize);
 					// if (this.autoLaunchSetting == EnumAutoLaunch.CARGO_IS_FULL) {
 					// this.autoLaunch();
 					// }
@@ -177,12 +177,12 @@ public abstract class EntitySatelliteAutoRocket extends EntitySpaceshipBase impl
 			}
 		}
 
-		for (count = 0; count < this.cargoItems.length - 2; count++) {
-			ItemStack stackAt = this.cargoItems[count];
+		for (count = 0; count < this.stacks.size() - 2; count++) {
+			ItemStack stackAt = this.stacks.get(count);
 
-			if (stackAt == null) {
+			if (stackAt.isEmpty()) {
 				if (doAdd) {
-					this.cargoItems[count] = stack;
+					this.stacks.set(count, stack);
 					this.markDirty();
 				}
 
@@ -712,7 +712,8 @@ public abstract class EntitySatelliteAutoRocket extends EntitySpaceshipBase impl
 				this.autoLaunch();
 			}
 
-			if (this.autoLaunchCountdown > 0 && this.riddenByEntity != null && this.fuelTank.getFluidAmount() == this.fuelTank.getCapacity()) {
+			if (this.autoLaunchCountdown > 0 && this.getPassengers().isEmpty() && this.fuelTank.getFluidAmount() == this.fuelTank.getCapacity()) {
+				System.out.println(this.autoLaunchCountdown);
 				if (--this.autoLaunchCountdown == 0) {
 					this.autoLaunch();
 				}
@@ -727,7 +728,7 @@ public abstract class EntitySatelliteAutoRocket extends EntitySpaceshipBase impl
 			// this.autoLaunch();
 			// }
 			// else if (this.fuelTank.getFluidAmount() == this.fuelTank.getCapacity())
-			// placedPlayer.sendMessage(new ChatComponentText( "Launcing in " + (this.autoLaunchCountdown / 10) + " seconds!"));
+			// placedPlayer.sendMessage(new TextComponentString( "Launcing in " + (this.autoLaunchCountdown / 10) + " seconds!"));
 			// }
 			//
 			// if (this.autoLaunchSetting == EnumAutoLaunch.REDSTONE_SIGNAL) {
