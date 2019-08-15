@@ -5,6 +5,12 @@
 
 
 ===========================================Released Updates===========================================
+v0.3.7
+*Fix possible init issues due to network packets delay with Custom Celestial/Galaxy Map screen
+*Allow for ExtraPlanets Celestial/Galaxy Map screen to take priority since PlanetProgressions research system is now supported by ExtraPlanets (v0.5.6 & above) Celestial/Galaxy Map screen
+*Added an API for checking if a celestial body is researched/unlocked
+*Added missing lang file to match MC1.10.2 version/Updated ko_KR.lang(Thanks to mindy15963)
+
 v0.3.6
 *Fixed issue #46
 
