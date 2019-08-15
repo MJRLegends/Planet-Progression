@@ -5,6 +5,14 @@
 
 
 ===========================================Released Updates===========================================
+v0.3.8
+*Fixed telescope inventory null pointer error
+*Fix possible init issues due to network packets delay with Custom Celestial/Galaxy Map screen
+*Allow for ExtraPlanets Celestial/Galaxy Map screen to take priority since PlanetProgressions research system is now supported by ExtraPlanets (v0.5.6 & above) Celestial/Galaxy Map screen
+*Added Zollern Galaxy mod to be on the load after list just to make sure things always work
+*Added an API for checking if a celestial body is researched/unlocked
+*Added missing lang file to match MC1.10.2 version/Updated ko_KR.lang(Thanks to mindy15963)
+
 v0.3.7
 *Match Galacticraft API changes
 *Changed Galacticraft minimum version to Build 212
