@@ -55,11 +55,13 @@ public class MainHandlerClient {
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	public void onGuiOpenEvent(GuiOpenEvent event) {
-		if (((event.gui instanceof GuiCelestialSelection))) {
-			if (GameSettings.isKeyDown(micdoodle8.mods.galacticraft.core.tick.KeyHandlerClient.galaxyMap)) {
-				event.gui = new CustomGuiCelestialSelection(true, ((GuiCelestialSelection) event.gui).possibleBodies);
-			} else {
-				event.gui = new CustomGuiCelestialSelection(false, ((GuiCelestialSelection) event.gui).possibleBodies);
+		if (((event.getGui() instanceof GuiCelestialSelection))) {
+			if(!event.getGui().getClass().getName().equalsIgnoreCase("com.mjr.extraplanets.client.gui.screen.CustomCelestialSelection")) {
+				if (GameSettings.isKeyDown(micdoodle8.mods.galacticraft.core.tick.KeyHandlerClient.galaxyMap)) {
+					event.setGui(new CustomGuiCelestialSelection(true, ((GuiCelestialSelection) event.getGui()).possibleBodies, ((GuiCelestialSelection) event.getGui()).canCreateStations));
+				} else {
+					event.setGui(new CustomGuiCelestialSelection(false, ((GuiCelestialSelection) event.getGui()).possibleBodies, ((GuiCelestialSelection) event.getGui()).canCreateStations));
+				}
 			}
 		}
 	}
