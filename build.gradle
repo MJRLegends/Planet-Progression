@@ -78,6 +78,20 @@ processResources
     }
 }
 
+task apiJar(type: Jar) {
+    from(sourceSets.main.output) {
+        include "com/mjr/planetprogression/api/**"
+		include "com/mjr/planetprogression/client/handlers/capabilities/**"
+		include "com/mjr/planetprogression/handlers/capabilities/**"
+    }
+	from(sourceSets.main.java) {
+        include "com/mjr/planetprogression/api/**"
+		include "com/mjr/planetprogression/client/handlers/capabilities/**"
+		include "com/mjr/planetprogression/handlers/capabilities/**"
+    }
+    classifier = 'api'
+}
+
 task signJar(type: SignJar, dependsOn: reobfJar) {
     onlyIf {
         project.hasProperty('keyStore')
@@ -90,15 +104,34 @@ task signJar(type: SignJar, dependsOn: reobfJar) {
     outputFile = jar.archivePath
 }
 
+artifacts {
+    archives apiJar
+}
+
+task ("uploadMaven"){
+	apply plugin: 'maven'
+	uploadArchives {
+		repositories {
+			mavenDeployer {
+				if (project.hasProperty("local_maven")) {
+					repository(url: "file://${local_maven}")
+				}
+			}
+		}
+	}
+}
+
 curseforge {
-	apiKey = project.findProperty("curseforge_key")
-	project {
-		id = "287275"
-		releaseType = "release"
-		addGameVersion "${minecraft_version}"
-		mainArtifact(jar) {
-			relations {
-				requiredLibrary 'mjrlegendslib'
+    if (project.hasProperty('curseforge_key')){
+		apiKey = project.findProperty("curseforge_key")
+		project {
+			id = "287275"
+			releaseType = "release"
+			addGameVersion "${minecraft_version}"
+			mainArtifact(jar) {
+				relations {
+					requiredLibrary 'mjrlegendslib'
+				}
 			}
 		}
 	}
