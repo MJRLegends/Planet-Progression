@@ -11,7 +11,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.properties.PropertyInteger;
-import net.minecraft.block.state.BlockStateContainer;
+import net.minecraft.block.state.BlockState;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.particle.EffectRenderer;
 import net.minecraft.entity.player.EntityPlayer;
@@ -136,7 +136,7 @@ public class BlockCustomMulti extends BlockAdvanced implements IPartialSealableB
 	@Override
 	public boolean onUseWrench(World world, BlockPos pos, EntityPlayer entityPlayer, EnumFacing side, float hitX, float hitY, float hitZ) {
 		TileEntityMulti tileEntity = (TileEntityMulti) world.getTileEntity(pos);
-		return tileEntity.onBlockWrenched(world, pos, entityPlayer, hand, heldItem, side, hitX, hitY, hitZ);
+		return tileEntity.onBlockWrenched(world, pos, entityPlayer, side, hitX, hitY, hitZ);
 	}
 
 	/**

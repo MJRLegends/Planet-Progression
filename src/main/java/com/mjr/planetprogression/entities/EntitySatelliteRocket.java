@@ -26,15 +26,13 @@ import micdoodle8.mods.galacticraft.core.inventory.ContainerRocketInventory;
 import micdoodle8.mods.galacticraft.core.util.ConfigManagerCore;
 import micdoodle8.mods.galacticraft.core.util.EnumColor;
 import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
 public class EntitySatelliteRocket extends EntitySatelliteAutoRocket {
@@ -53,7 +51,7 @@ public class EntitySatelliteRocket extends EntitySatelliteAutoRocket {
 		this.cargoItems = new ItemStack[this.getSizeInventory()];
 	}
 
-	public EntitySatelliteRocket(World world, double x, double y, double z, IRocketType.EnumRocketType type) {
+	public EntitySatelliteRocket(World world, double x, double y, double z, IRocketType.EnumRocketType type, EntityPlayer playerIn) {
 		super(world, x, y, z);
 		this.rocketType = type;
 		this.cargoItems = new ItemStack[this.getSizeInventory()];
@@ -136,12 +134,12 @@ public class EntitySatelliteRocket extends EntitySatelliteAutoRocket {
 							}
 							String id = UUID.randomUUID().toString();
 							stats.addSatellites(new SatelliteData(((ItemSatellite) item.getItem()).getType(), id, 0, null));
-							player.addChatMessage(new TextComponentString(EnumColor.RED + "Satellite: " + id + " has been launched in to space!"));
+							player.addChatMessage(new ChatComponentText(EnumColor.RED + "Satellite: " + id + " has been launched in to space!"));
 						}
 					}
 				}
 				if (found == 0)
-					player.addChatMessage(new TextComponentString(EnumColor.RED + "No Satellites were found in the rocket!"));
+					player.addChatMessage(new ChatComponentText(EnumColor.RED + "No Satellites were found in the rocket!"));
 			}
 
 			// Destroy any rocket which reached the top of the atmosphere and is not controlled by a Launch Controller
@@ -274,7 +272,7 @@ public class EntitySatelliteRocket extends EntitySatelliteAutoRocket {
 	}
 
 	@Override
-	public boolean processInitialInteract(EntityPlayer player, ItemStack stack, EnumHand hand) {
+	public boolean interactFirst(EntityPlayer player) {
 		if (!this.worldObj.isRemote && player instanceof EntityPlayerMP) {
 			EntityPlayerMP playerMP = (EntityPlayerMP) player;
 			playerMP.getNextWindowId();
@@ -283,7 +281,7 @@ public class EntitySatelliteRocket extends EntitySatelliteAutoRocket {
 			PlanetProgression.packetPipeline.sendTo(new PacketSimplePP(EnumSimplePacket.C_OPEN_SATELLITE_ROCKET_GUI, GCCoreUtil.getDimensionID(playerMP.worldObj), new Object[] { windowId, this.getEntityId() }), playerMP);
 			player.openContainer = new ContainerRocketInventory(playerMP.inventory, this, this.rocketType, playerMP);
 			player.openContainer.windowId = windowId;
-			player.openContainer.addListener(playerMP);
+			player.openContainer.onCraftGuiOpened(playerMP);
 		}
 
 		return false;
@@ -319,28 +317,6 @@ public class EntitySatelliteRocket extends EntitySatelliteAutoRocket {
 		}
 		return this.rocketType.getInventorySpace();
 	}
-
-	@Override
-	public void decodePacketdata(ByteBuf buffer) {
-		this.rocketType = EnumRocketType.values()[buffer.readInt()];
-		super.decodePacketdata(buffer);
-		this.posX = buffer.readDouble() / 8000.0D;
-		this.posY = buffer.readDouble() / 8000.0D;
-		this.posZ = buffer.readDouble() / 8000.0D;
-	}
-
-	@Override
-	public void getNetworkedData(ArrayList<Object> list) {
-		if (this.worldObj.isRemote) {
-			return;
-		}
-		list.add(this.rocketType != null ? this.rocketType.getIndex() : 0);
-		super.getNetworkedData(list);
-		list.add(this.posX * 8000.0D);
-		list.add(this.posY * 8000.0D);
-		list.add(this.posZ * 8000.0D);
-	}
-}
 
 	@Override
 	public void decodePacketdata(ByteBuf buffer) {

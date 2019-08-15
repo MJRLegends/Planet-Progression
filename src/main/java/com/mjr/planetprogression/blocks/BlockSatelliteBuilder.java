@@ -2,6 +2,9 @@ package com.mjr.planetprogression.blocks;
 
 import java.util.Random;
 
+import com.mjr.planetprogression.PlanetProgression;
+import com.mjr.planetprogression.tileEntities.TileEntitySatelliteBuilder;
+
 import micdoodle8.mods.galacticraft.core.blocks.BlockAdvancedTile;
 import micdoodle8.mods.galacticraft.core.blocks.ISortableBlock;
 import micdoodle8.mods.galacticraft.core.energy.tile.TileBaseUniversalElectrical;
@@ -24,12 +27,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import com.mjr.planetprogression.PlanetProgression;
-import com.mjr.planetprogression.tileEntities.TileEntitySatelliteBuilder;
-
 public class BlockSatelliteBuilder extends BlockAdvancedTile implements ISortableBlock {
-	private final Random rand = new Random();
-
 	public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
 	private final Random rand = new Random();
 	

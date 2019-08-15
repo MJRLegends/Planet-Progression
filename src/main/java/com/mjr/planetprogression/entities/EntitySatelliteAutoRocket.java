@@ -47,10 +47,8 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ClassInheritanceMultiMap;
 import net.minecraft.util.ITickable;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.TextComponentString;
-import net.minecraft.util.text.translation.I18n;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.common.MinecraftForge;
@@ -239,8 +237,8 @@ public abstract class EntitySatelliteAutoRocket extends EntitySpaceshipBase impl
 	public void cancelLaunch() {
 		this.setLaunchPhase(EnumLaunchPhase.UNIGNITED);
 		this.timeUntilLaunch = 0;
-		if (!this.worldObj.isRemote && !this.getPassengers().isEmpty() && this.getPassengers().get(0) instanceof EntityPlayerMP) {
-			this.getPassengers().get(0).addChatMessage(new TextComponentString(GCCoreUtil.translate("gui.rocket.warning.nogyroscope")));
+		if (!this.worldObj.isRemote && this.riddenByEntity instanceof EntityPlayerMP) {
+			((EntityPlayerMP) this.riddenByEntity).addChatMessage(new ChatComponentText(GCCoreUtil.translate("gui.rocket.warning.nogyroscope")));
 		}
 	}
 
@@ -250,7 +248,7 @@ public abstract class EntitySatelliteAutoRocket extends EntitySpaceshipBase impl
 
 		if (this.hasValidFuel()) {
 			if (this.launchPhase == EnumLaunchPhase.UNIGNITED.ordinal() && !this.worldObj.isRemote) {
-				this.statusMessage = I18n.translateToLocal("gui.message.success.name");
+				this.statusMessage = StatCollector.translateToLocal("gui.message.frequency.name") + "#" + StatCollector.translateToLocal("gui.message.not_set.name");
 				this.statusColour = "\u00a7a";
 				return true;
 			}
@@ -324,8 +322,8 @@ public abstract class EntitySatelliteAutoRocket extends EntitySpaceshipBase impl
 						if (e.dimension != this.dimension) {
 							if (e instanceof EntityPlayer) {
 								e = WorldUtil.forceRespawnClient(this.dimension, e.worldObj.getDifficulty().getDifficultyId(), e.worldObj.getWorldInfo().getTerrainType().getWorldTypeName(),
-										((EntityPlayerMP) e).interactionManager.getGameType().getID());
-								e.startRiding(this);
+										((EntityPlayerMP) e).theItemInWorldManager.getGameType().getID());
+								e.mountEntity(this);
 							}
 						} else
 							e.mountEntity(this);
@@ -340,8 +338,8 @@ public abstract class EntitySatelliteAutoRocket extends EntitySpaceshipBase impl
 						if (e.dimension != this.dimension) {
 							if (e instanceof EntityPlayer) {
 								e = WorldUtil.forceRespawnClient(this.dimension, e.worldObj.getDifficulty().getDifficultyId(), e.worldObj.getWorldInfo().getTerrainType().getWorldTypeName(),
-										((EntityPlayerMP) e).interactionManager.getGameType().getID());
-								e.startRiding(this);
+										((EntityPlayerMP) e).theItemInWorldManager.getGameType().getID());
+								e.mountEntity(this);
 							}
 						} else
 							e.mountEntity(this);
@@ -377,15 +375,15 @@ public abstract class EntitySatelliteAutoRocket extends EntitySpaceshipBase impl
 		}
 	}
 
-	public void failMessageInsufficientFuel() {
-		if (!this.worldObj.isRemote && !this.getPassengers().isEmpty() && this.getPassengers().get(0) instanceof EntityPlayerMP) {
-			((EntityPlayerMP) this.getPassengers().get(0)).addChatMessage(new TextComponentString(GCCoreUtil.translate("gui.rocket.warning.fuelinsufficient")));
+	public void failMessageLaunchController() {
+		if (!this.worldObj.isRemote && this.riddenByEntity instanceof EntityPlayerMP) {
+			((EntityPlayerMP) this.riddenByEntity).addChatMessage(new ChatComponentText(GCCoreUtil.translate("gui.rocket.warning.launchcontroller")));
 		}
 	}
 
-	public void failMessageLaunchController() {
-		if (!this.worldObj.isRemote && !this.getPassengers().isEmpty() && this.getPassengers().get(0) instanceof EntityPlayerMP) {
-			((EntityPlayerMP) this.getPassengers().get(0)).addChatMessage(new TextComponentString(GCCoreUtil.translate("gui.rocket.warning.launchcontroller")));
+	public void failMessageInsufficientFuel() {
+		if (!this.worldObj.isRemote && this.riddenByEntity instanceof EntityPlayerMP) {
+			((EntityPlayerMP) this.riddenByEntity).addChatMessage(new ChatComponentText(GCCoreUtil.translate("gui.rocket.warning.fuelinsufficient")));
 		}
 	}
 
@@ -452,7 +450,7 @@ public abstract class EntitySatelliteAutoRocket extends EntitySpaceshipBase impl
 	@Override
 	public void getNetworkedData(ArrayList<Object> list) {
 		if (this.worldObj.isRemote) {
-			if (this.getPassengers().contains(FMLClientHandler.instance().getClientPlayerEntity()) && this.hasValidFuel()) {
+			if (this.riddenByEntity == FMLClientHandler.instance().getClientPlayerEntity() && this.hasValidFuel()) {
 				list.add(this.posY);
 			} else {
 				list.add(Double.NaN);
@@ -477,7 +475,7 @@ public abstract class EntitySatelliteAutoRocket extends EntitySpaceshipBase impl
 		list.add(this.statusValid);
 
 		if (!this.worldObj.isRemote) {
-			list.add(this.getPassengers().isEmpty() ? -1 : this.getPassengers().get(0).getEntityId());
+			list.add(this.riddenByEntity == null ? -1 : this.riddenByEntity.getEntityId());
 		}
 		list.add(this.statusColour != null ? this.statusColour : "");
 	}
@@ -593,7 +591,7 @@ public abstract class EntitySatelliteAutoRocket extends EntitySpaceshipBase impl
 
 	@Override
 	public void onLaunch() {
-		if (!(this.worldObj.provider.getDimension() == GalacticraftCore.planetOverworld.getDimensionID() || this.worldObj.provider instanceof IGalacticraftWorldProvider)) {
+		if (!(this.worldObj.provider.getDimensionId() == GalacticraftCore.planetOverworld.getDimensionID() || this.worldObj.provider instanceof IGalacticraftWorldProvider)) {
 			if (ConfigManagerCore.disableRocketLaunchAllNonGC) {
 				this.cancelLaunch();
 				return;
@@ -601,7 +599,7 @@ public abstract class EntitySatelliteAutoRocket extends EntitySpaceshipBase impl
 
 			// No rocket flight in the Nether, the End etc
 			for (int i = ConfigManagerCore.disableRocketLaunchDimensions.length - 1; i >= 0; i--) {
-				if (ConfigManagerCore.disableRocketLaunchDimensions[i] == this.worldObj.provider.getDimension()) {
+				if (ConfigManagerCore.disableRocketLaunchDimensions[i] == this.worldObj.provider.getDimensionId()) {
 					this.cancelLaunch();
 					return;
 				}
@@ -617,11 +615,9 @@ public abstract class EntitySatelliteAutoRocket extends EntitySpaceshipBase impl
 			if (this.riddenByEntity != null && this.riddenByEntity instanceof EntityPlayerMP) {
 				stats = GCPlayerStats.get(this.riddenByEntity);
 
-						if (!(this.worldObj.provider instanceof IOrbitDimension)) {
-							stats.setCoordsTeleportedFromX(player.posX);
-							stats.setCoordsTeleportedFromZ(player.posZ);
-						}
-					}
+				if (!(this.worldObj.provider instanceof IOrbitDimension)) {
+					stats.setCoordsTeleportedFromX(this.riddenByEntity.posX);
+					stats.setCoordsTeleportedFromZ(this.riddenByEntity.posZ);
 				}
 			}
 
@@ -688,7 +684,7 @@ public abstract class EntitySatelliteAutoRocket extends EntitySpaceshipBase impl
 		// this entity from the WorldClient.loadedEntityList - this entity stays in the world loadedEntityList.
 		// That's why an onUpdate() tick is active for it, still!
 		// Weird, huh?
-		if (this.worldObj.isRemote && this.addedToChunk && !CompatibilityManager.isCubicChunksLoaded) {
+		if (this.worldObj.isRemote && this.addedToChunk) {
 			Chunk chunk = this.worldObj.getChunkFromChunkCoords(this.chunkCoordX, this.chunkCoordZ);
 			int cx = MathHelper.floor_double(this.posX) >> 4;
 			int cz = MathHelper.floor_double(this.posZ) >> 4;
@@ -717,7 +713,7 @@ public abstract class EntitySatelliteAutoRocket extends EntitySpaceshipBase impl
 				this.autoLaunch();
 			}
 
-			if (this.autoLaunchCountdown > 0 && this.getPassengers().isEmpty() && this.fuelTank.getFluidAmount() == this.fuelTank.getCapacity()) {
+			if (this.autoLaunchCountdown > 0 && this.riddenByEntity == null && this.fuelTank.getFluidAmount() == this.fuelTank.getCapacity()) {
 				if (--this.autoLaunchCountdown == 0) {
 					this.autoLaunch();
 				}

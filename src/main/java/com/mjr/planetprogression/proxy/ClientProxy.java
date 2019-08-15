@@ -18,8 +18,8 @@ import com.mjr.planetprogression.entities.EntitySatelliteRocket;
 import com.mjr.planetprogression.item.PlanetProgression_Items;
 import com.mjr.planetprogression.tileEntities.TileEntityTelescope;
 
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;

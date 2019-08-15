@@ -2,6 +2,12 @@ package com.mjr.planetprogression.client.handlers;
 
 import java.util.List;
 
+import com.google.common.collect.Lists;
+import com.mjr.mjrlegendslib.util.TranslateUtilities;
+import com.mjr.planetprogression.blocks.PlanetProgression_Blocks;
+import com.mjr.planetprogression.client.gui.screen.CustomGuiCelestialSelection;
+import com.mjr.planetprogression.network.PlanetProgressionPacketHandler;
+
 import micdoodle8.mods.galacticraft.core.client.gui.screen.GuiCelestialSelection;
 import micdoodle8.mods.galacticraft.core.util.EnumColor;
 import net.minecraft.client.Minecraft;
@@ -17,12 +23,6 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import com.google.common.collect.Lists;
-import com.mjr.mjrlegendslib.util.TranslateUtilities;
-import com.mjr.planetprogression.blocks.PlanetProgression_Blocks;
-import com.mjr.planetprogression.client.gui.screen.CustomGuiCelestialSelection;
-import com.mjr.planetprogression.network.PlanetProgressionPacketHandler;
 
 public class MainHandlerClient {
 	private static List<PlanetProgressionPacketHandler> packetHandlers = Lists.newCopyOnWriteArrayList();
@@ -55,12 +55,12 @@ public class MainHandlerClient {
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	public void onGuiOpenEvent(GuiOpenEvent event) {
-		if (((event.getGui() instanceof GuiCelestialSelection))) {
-			if(!event.getGui().getClass().getName().equalsIgnoreCase("com.mjr.extraplanets.client.gui.screen.CustomCelestialSelection")) {
+		if (((event.gui instanceof GuiCelestialSelection))) {
+			if (!event.gui.getClass().getName().equalsIgnoreCase("com.mjr.extraplanets.client.gui.screen.CustomCelestialSelection")) {
 				if (GameSettings.isKeyDown(micdoodle8.mods.galacticraft.core.tick.KeyHandlerClient.galaxyMap)) {
-					event.setGui(new CustomGuiCelestialSelection(true, ((GuiCelestialSelection) event.getGui()).possibleBodies, ((GuiCelestialSelection) event.getGui()).canCreateStations));
+					event.gui = new CustomGuiCelestialSelection(true, ((GuiCelestialSelection) event.gui).possibleBodies);
 				} else {
-					event.setGui(new CustomGuiCelestialSelection(false, ((GuiCelestialSelection) event.getGui()).possibleBodies, ((GuiCelestialSelection) event.getGui()).canCreateStations));
+					event.gui = new CustomGuiCelestialSelection(false, ((GuiCelestialSelection) event.gui).possibleBodies);
 				}
 			}
 		}
