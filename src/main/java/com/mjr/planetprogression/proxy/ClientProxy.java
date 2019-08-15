@@ -20,7 +20,6 @@ import com.mjr.planetprogression.tileEntities.TileEntityTelescope;
 
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraftforge.client.event.ModelBakeEvent;
-import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -76,50 +75,9 @@ public class ClientProxy extends CommonProxy {
 		ClientUtilities.registerEntityRenderer(EntitySatelliteRocket.class, (RenderManager manager) -> new RenderSatelliteRocket(manager));
 	}
 
-	@Override
-	public void registerCustomModel() {
-		ClientUtilities.registerModel(Constants.TEXTURE_PREFIX, PlanetProgression_Blocks.TELESCOPE, "telescope");
-		if (Config.researchMode == 2)
-			ClientUtilities.registerModel(Constants.TEXTURE_PREFIX, PlanetProgression_Items.satelliteBasic, "basic_satellite");
-
-		if (Config.researchMode == 2 || Config.researchMode == 3) {
-			ClientUtilities.registerModel(Constants.TEXTURE_PREFIX, PlanetProgression_Items.SATELLITE_ROCKET, 1, "satellite_rocket");
-		}
-	}
-
-	@Override
 	public void registerVariants() {
 		ClientUtilities.addVariants(Constants.modID, "advanced_launch_pad", "satellite_rocket_pad");
 		ClientUtilities.addVariants(Constants.modID, "advanced_launch_pad_full", "satellite_rocket_pad");
-	}
-
-	@Override
-	public void registerBlockJsons() {
-		if (Config.researchMode == 2 || Config.researchMode == 3) {
-			ClientUtilities.registerBlockJson(Constants.TEXTURE_PREFIX, PlanetProgression_Blocks.SATTLLITE_BUILDER);
-			ClientUtilities.registerBlockJson(Constants.TEXTURE_PREFIX, PlanetProgression_Blocks.SATTLLITE_CONTROLLER);
-			ClientUtilities.registerBlockJson(Constants.TEXTURE_PREFIX, PlanetProgression_Blocks.SATTLLITE_LAUNCHER);
-			for (BlockCustomLandingPad.EnumLandingPadType blockBasic : BlockCustomLandingPad.EnumLandingPadType.values()) {
-				ClientUtilities.registerBlockJson(Constants.TEXTURE_PREFIX, PlanetProgression_Blocks.ADVANCED_LAUCHPAD, blockBasic.getMeta(), blockBasic.getName());
-			}
-			for (BlockCustomLandingPadFull.EnumLandingPadFullType blockBasic : BlockCustomLandingPadFull.EnumLandingPadFullType.values()) {
-				ClientUtilities.registerBlockJson(Constants.TEXTURE_PREFIX, PlanetProgression_Blocks.ADVANCED_LAUCHPAD_FULL, blockBasic.getMeta(), blockBasic.getName());
-			}
-			ClientUtilities.registerBlockJson(Constants.TEXTURE_PREFIX, PlanetProgression_Blocks.FAKE_BLOCK);
-		}
-	}
-
-	@Override
-	public void registerItemJsons() {
-		if (Config.researchMode == 2)
-			ClientUtilities.registerItemJson(Constants.TEXTURE_PREFIX, PlanetProgression_Items.satelliteBasicModule);
-		ClientUtilities.registerItemJson(Constants.TEXTURE_PREFIX, PlanetProgression_Items.researchPapers);
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void renderBlocksTileEntitySpecialRenderers() {
-		ClientUtilities.registerTileEntityRenderer(TileEntityTelescope.class, new TileEntityTelescopeRenderer());
 	}
 
 	@SubscribeEvent
@@ -171,18 +129,22 @@ public class ClientProxy extends CommonProxy {
 		}
 	}
 
-	private void registerVariants() {
-
-	}
-
-	private void registerBlockJsons() {
+	public void registerBlockJsons() {
 		if (Config.researchMode == 2 || Config.researchMode == 3) {
 			ClientUtilities.registerBlockJson(Constants.TEXTURE_PREFIX, PlanetProgression_Blocks.SATTLLITE_BUILDER);
 			ClientUtilities.registerBlockJson(Constants.TEXTURE_PREFIX, PlanetProgression_Blocks.SATTLLITE_CONTROLLER);
+			ClientUtilities.registerBlockJson(Constants.TEXTURE_PREFIX, PlanetProgression_Blocks.SATTLLITE_LAUNCHER);
+			for (BlockCustomLandingPad.EnumLandingPadType blockBasic : BlockCustomLandingPad.EnumLandingPadType.values()) {
+				ClientUtilities.registerBlockJson(Constants.TEXTURE_PREFIX, PlanetProgression_Blocks.ADVANCED_LAUCHPAD, blockBasic.getMeta(), blockBasic.getName());
+			}
+			for (BlockCustomLandingPadFull.EnumLandingPadFullType blockBasic : BlockCustomLandingPadFull.EnumLandingPadFullType.values()) {
+				ClientUtilities.registerBlockJson(Constants.TEXTURE_PREFIX, PlanetProgression_Blocks.ADVANCED_LAUCHPAD_FULL, blockBasic.getMeta(), blockBasic.getName());
+			}
+			ClientUtilities.registerBlockJson(Constants.TEXTURE_PREFIX, PlanetProgression_Blocks.FAKE_BLOCK);
 		}
 	}
 
-	private void registerItemJsons() {
+	public void registerItemJsons() {
 		if (Config.researchMode == 2)
 			ClientUtilities.registerItemJson(Constants.TEXTURE_PREFIX, PlanetProgression_Items.satelliteBasicModule);
 		ClientUtilities.registerItemJson(Constants.TEXTURE_PREFIX, PlanetProgression_Items.researchPapers);
