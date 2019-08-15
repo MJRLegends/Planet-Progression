@@ -31,6 +31,7 @@ public class BlockSatelliteController extends BlockAdvancedTile implements ISort
 	private final Random rand = new Random();
 
 	public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
+	private final Random rand = new Random();
 
 	public BlockSatelliteController(String assetName) {
 		super(Material.rock);

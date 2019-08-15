@@ -31,7 +31,8 @@ public class BlockSatelliteBuilder extends BlockAdvancedTile implements ISortabl
 	private final Random rand = new Random();
 
 	public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
-
+	private final Random rand = new Random();
+	
 	public BlockSatelliteBuilder(String assetName) {
 		super(Material.rock);
 		this.setHardness(1.0F);

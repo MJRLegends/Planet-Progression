@@ -41,53 +41,71 @@ public class ContainerSatelliteRocketLauncher extends Container {
 		this.tileEntity.closeInventory(entityplayer);
 	}
 
-	@Override
-	public boolean canInteractWith(EntityPlayer par1EntityPlayer) {
-		return this.tileEntity.isUseableByPlayer(par1EntityPlayer);
-	}
+    @Override
+    public boolean canInteractWith(EntityPlayer par1EntityPlayer)
+    {
+        return this.tileEntity.isUseableByPlayer(par1EntityPlayer);
+    }
 
-	@Override
-	public ItemStack transferStackInSlot(EntityPlayer entityPlayer, int par1) {
-		ItemStack var2 = null;
-		final Slot slot = this.inventorySlots.get(par1);
-		final int b = this.inventorySlots.size();
+    @Override
+    public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int par1)
+    {
+        ItemStack var2 = null;
+        final Slot slot = (Slot) this.inventorySlots.get(par1);
+        final int b = this.inventorySlots.size();
 
 		if (slot != null && slot.getHasStack()) {
 			final ItemStack stack = slot.getStack();
 			var2 = stack.copy();
 
-			if (par1 == 0) {
-				if (!this.mergeItemStack(stack, b - 36, b, true)) {
-					return null;
-				}
-			} else {
-				if (EnergyUtil.isElectricItem(stack.getItem())) {
-					if (!this.mergeItemStack(stack, 0, 1, false)) {
-						return null;
-					}
-				} else {
-					if (par1 < b - 9) {
-						if (!this.mergeItemStack(stack, b - 9, b, false)) {
-							return null;
-						}
-					} else if (!this.mergeItemStack(stack, b - 36, b - 9, false)) {
-						return null;
-					}
-				}
-			}
+            if (par1 == 0)
+            {
+                if (!this.mergeItemStack(stack, b - 36, b, true))
+                {
+                    return null;
+                }
+            }
+            else
+            {
+                if (EnergyUtil.isElectricItem(stack.getItem()))
+                {
+                    if (!this.mergeItemStack(stack, 0, 1, false))
+                    {
+                        return null;
+                    }
+                }
+                else
+                {
+                    if (par1 < b - 9)
+                    {
+                        if (!this.mergeItemStack(stack, b - 9, b, false))
+                        {
+                            return null;
+                        }
+                    }
+                    else if (!this.mergeItemStack(stack, b - 36, b - 9, false))
+                    {
+                        return null;
+                    }
+                }
+            }
 
-			if (stack.stackSize == 0) {
-				slot.putStack(null);
-			} else {
-				slot.onSlotChanged();
-			}
+            if (stack.stackSize == 0)
+            {
+                slot.putStack((ItemStack) null);
+            }
+            else
+            {
+                slot.onSlotChanged();
+            }
 
-			if (stack.stackSize == var2.stackSize) {
-				return null;
-			}
+            if (stack.stackSize == var2.stackSize)
+            {
+                return null;
+            }
 
-			slot.onPickupFromSlot(entityPlayer, stack);
-		}
+            slot.onPickupFromSlot(par1EntityPlayer, stack);
+        }
 
 		return var2;
 	}

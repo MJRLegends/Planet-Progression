@@ -46,7 +46,7 @@ public class GuiSatelliteRocket extends GuiContainerGC {
 	}
 
 	public GuiSatelliteRocket(IInventory par1IInventory, EntitySatelliteRocket rocket, EnumRocketType rocketType) {
-		super(new ContainerRocketInventory(par1IInventory, rocket, rocketType, FMLClientHandler.instance().getClient().player));
+		super(new ContainerRocketInventory(par1IInventory, rocket, rocketType, FMLClientHandler.instance().getClient().thePlayer));
 		this.upperChestInventory = par1IInventory;
 		this.rocket = rocket;
 		this.allowUserInput = false;
@@ -58,7 +58,7 @@ public class GuiSatelliteRocket extends GuiContainerGC {
 	protected void actionPerformed(GuiButton button) {
 		switch (button.id) {
 		case 0:
-			PlanetProgression.packetPipeline.sendToServer(new PacketSimplePP(EnumSimplePacket.S_UPDATE_SATELLITE_ROCKET_STATUS, GCCoreUtil.getDimensionID(mc.world), new Object[] { this.rocket.getEntityId(), 0 }));
+			PlanetProgression.packetPipeline.sendToServer(new PacketSimplePP(EnumSimplePacket.S_UPDATE_SATELLITE_ROCKET_STATUS, GCCoreUtil.getDimensionID(mc.theWorld), new Object[] { this.rocket.getEntityId(), 0 }));
 			break;
 		default:
 			break;

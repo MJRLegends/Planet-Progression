@@ -1,6 +1,5 @@
 package com.mjr.planetprogression.blocks;
 
-import com.mjr.mjrlegendslib.itemBlock.ItemBlockDefault;
 import com.mjr.mjrlegendslib.util.RegisterUtilities;
 import com.mjr.planetprogression.Config;
 import com.mjr.planetprogression.Constants;
@@ -50,7 +49,7 @@ public class PlanetProgression_Blocks {
 	}
 
 	public static void registerBlocks() throws NoSuchMethodException {
-		RegisterUtilities.registerBlock(Constants.modID, TELESCOPE, ItemBlockTelescope.class, TELESCOPE.getUnlocalizedName().substring(5));
+		RegisterUtilities.registerBlock(Constants.modID, TELESCOPE, ItemBlockBasic.class, TELESCOPE.getUnlocalizedName().substring(5));
 		RegisterUtilities.registerBlock(Constants.modID, FAKE_TELESCOPE, FAKE_TELESCOPE.getUnlocalizedName().substring(5));
 		if (Config.researchMode == 2 || Config.researchMode == 3) {
 			RegisterUtilities.registerBlock(Constants.modID, SATTLLITE_BUILDER, ItemBlockBasic.class, SATTLLITE_BUILDER.getUnlocalizedName().substring(5));

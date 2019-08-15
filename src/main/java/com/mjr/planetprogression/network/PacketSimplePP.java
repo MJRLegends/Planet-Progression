@@ -159,7 +159,7 @@ public class PacketSimplePP extends PacketSimpleBase {
 			int entityID = 0;
 			Entity entity = null;
 			entityID = (Integer) this.data.get(1);
-			entity = player.world.getEntityByID(entityID);
+			entity = player.worldObj.getEntityByID(entityID);
 
 			if (entity != null && entity instanceof EntitySatelliteRocket) {
 				MCUtilities.getClient().displayGuiScreen(new GuiSatelliteRocket(player.inventory, (EntitySatelliteRocket) entity));
@@ -244,7 +244,7 @@ public class PacketSimplePP extends PacketSimpleBase {
 			}
 			break;
 		case S_UPDATE_SATELLITE_ROCKET_STATUS:
-			Entity entity2 = player.world.getEntityByID((Integer) this.data.get(0));
+			Entity entity2 = player.worldObj.getEntityByID((Integer) this.data.get(0));
 
 			if (entity2 instanceof EntitySatelliteRocket) {
 				EntitySatelliteRocket rocket = (EntitySatelliteRocket) entity2;

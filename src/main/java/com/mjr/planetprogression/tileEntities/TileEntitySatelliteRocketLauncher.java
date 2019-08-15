@@ -22,6 +22,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.fml.relauncher.Side;
 
@@ -36,7 +37,7 @@ public class TileEntitySatelliteRocketLauncher extends TileBaseElectricBlockWith
 	public boolean launchEnabled;
 
 	public TileEntitySatelliteRocketLauncher() {
-        this.storage.setMaxExtract(6);
+		this.storage.setMaxExtract(6);
 		this.noRedstoneControl = true;
 		this.launchDropdownSelection = 0;
 		this.launchEnabled = false;
@@ -67,7 +68,7 @@ public class TileEntitySatelliteRocketLauncher extends TileBaseElectricBlockWith
 			}
 		}
 	}
-	
+
 	@Override
 	public boolean shouldUseEnergy() {
 		return this.canRun();
@@ -88,10 +89,11 @@ public class TileEntitySatelliteRocketLauncher extends TileBaseElectricBlockWith
 	public void writeToNBT(NBTTagCompound nbt) {
 		super.writeToNBT(nbt);
 		this.writeStandardItemsToNBT(nbt);
+		return nbt;
 	}
 
 	@Override
-	protected ItemStack[] getContainingItems() {
+	public ItemStack[] getContainingItems() {
 		return this.containingItems;
 	}
 
@@ -178,7 +180,7 @@ public class TileEntitySatelliteRocketLauncher extends TileBaseElectricBlockWith
 
 	@Override
 	public EnumFacing getFront() {
-		IBlockState state = this.world.getBlockState(getPos());
+		IBlockState state = this.worldObj.getBlockState(getPos());
 		if (state.getBlock() instanceof BlockSatelliteRocketLauncher) {
 			return state.getValue(BlockSatelliteRocketLauncher.FACING);
 		}
