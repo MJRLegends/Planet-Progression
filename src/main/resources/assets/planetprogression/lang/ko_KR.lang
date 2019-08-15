@@ -86,14 +86,24 @@ entity.planetprogression.EntitySatelliteRocket.name=위성 로켓
 container.satellite.controller.name=위성 조절기
 container.satellite.builder.name=위성 제조기
 container.telescope.name=망원경
+container.satellite_rocket_launcher.name=위성 로켓 발사 모듈
 
 #Blocks
 tile.satellite_builder.name=위성 제조기
 tile.satellite_controller.name=위성 조절기
 tile.telescope.name=망원경
+tile.satellite_launcher.name=위성 로켓 발사 모듈
+tile.advanced_launch_pad.satelliteLandingPad.name=위성 로켓 발사판
+tile.advanced_launch_pad.satelliteLandingPad.desc=위성 로켓을 발사하는 데 사용됩니다. 5x5크기의 정사각형으로 설치하세요.
 gui.status.missing.inputs.name=잃어버린 아이템/유체
-gui.status.missing.power.name=잃어버린 힘
+gui.status.missing.power.name=잃어버린 전력
 gui.status.building.name=위성 제조
+gui.satellite_pad_use.desc=위성 로켓 발사 모듈을 사용해서 발사하기
+gui.satellite_pad_extras.1.desc=위성 로켓 발사 모듈과 
+gui.satellite_pad_extras.2.desc=화물 적재기가 로켓 발사에 사용될 수 있습니다.
+gui.satellite_launcher.auto_enable=자동 발사 시스템 사용
+gui.satellite_launcher.auto_disable=자동 발사 시스템 미사용
+gui.satellite_launcher.delay_type=지연 유형
 satellite.builder.use.desc=위성 제조에 사용됩니다
 satellite.controller.use.desc=위성을 조절하고 그들을 연구하는데
 satellite.controller.use.2.desc=사용합니다.
