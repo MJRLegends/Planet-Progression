@@ -7,13 +7,17 @@ import java.util.List;
 
 import com.mjr.mjrlegendslib.network.PacketSimpleBase;
 import com.mjr.mjrlegendslib.util.ItemUtilities;
+import com.mjr.mjrlegendslib.util.MCUtilities;
 import com.mjr.planetprogression.Constants;
+import com.mjr.planetprogression.client.gui.GuiSatelliteRocket;
 import com.mjr.planetprogression.client.handlers.capabilities.CapabilityStatsClientHandler;
 import com.mjr.planetprogression.client.handlers.capabilities.IStatsClientCapability;
 import com.mjr.planetprogression.data.SatelliteData;
+import com.mjr.planetprogression.entities.EntitySatelliteRocket;
 import com.mjr.planetprogression.handlers.capabilities.CapabilityStatsHandler;
 import com.mjr.planetprogression.handlers.capabilities.IStatsCapability;
 import com.mjr.planetprogression.tileEntities.TileEntitySatelliteController;
+import com.mjr.planetprogression.tileEntities.TileEntitySatelliteRocketLauncher;
 import com.mjr.planetprogression.tileEntities.TileEntityTelescope;
 
 import io.netty.buffer.ByteBuf;
@@ -26,6 +30,7 @@ import micdoodle8.mods.galacticraft.core.network.NetworkUtil;
 import micdoodle8.mods.galacticraft.core.util.GCLog;
 import micdoodle8.mods.galacticraft.core.util.PlayerUtil;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.INetHandler;
@@ -39,10 +44,15 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class PacketSimplePP extends PacketSimpleBase {
 	public enum EnumSimplePacket {
 		// SERVER
-		S_UPDATE_ROTATION(Side.SERVER, BlockPos.class, Float.class), S_UPDATE_CONTROLLER_SATLLITE_CHANGE(Side.SERVER, BlockPos.class, Float.class),
+		S_UPDATE_ROTATION(Side.SERVER, BlockPos.class, Float.class), 
+		S_UPDATE_CONTROLLER_SATLLITE_CHANGE(Side.SERVER, BlockPos.class, Float.class), 
+		S_UPDATE_SATELLITE_LAUNCHER_GUI(Side.SERVER, Integer.class, BlockPos.class, Integer.class),
+		S_UPDATE_SATELLITE_ROCKET_STATUS(Side.SERVER, Integer.class, Integer.class),
 
 		// CLIENT
-		C_UPDATE_UNLOCKED_PLANET_LIST(Side.CLIENT, String[].class), C_UPDATE_SATELLITE_LIST(Side.CLIENT, Integer.class, String.class, Integer.class, String.class);
+		C_UPDATE_UNLOCKED_PLANET_LIST(Side.CLIENT, String[].class), 
+		C_UPDATE_SATELLITE_LIST(Side.CLIENT, Integer.class, String.class, Integer.class, String.class), 
+		C_OPEN_SATELLITE_ROCKET_GUI(Side.CLIENT, Integer.class, Integer.class);
 
 		private Side targetSide;
 		private Class<?>[] decodeAs;
@@ -145,6 +155,17 @@ public class PacketSimplePP extends PacketSimpleBase {
 			stats.addSatellites(
 					new SatelliteData((int) this.data.get(0), (String) this.data.get(1), (int) this.data.get(2), (item.equalsIgnoreCase("null") ? null : ItemUtilities.stringToItemStack(item, Constants.modID + ":UpdateSatellieList", true))));
 			break;
+		case C_OPEN_SATELLITE_ROCKET_GUI:
+			int entityID = 0;
+			Entity entity = null;
+			entityID = (Integer) this.data.get(1);
+			entity = player.worldObj.getEntityByID(entityID);
+
+			if (entity != null && entity instanceof EntitySatelliteRocket) {
+				MCUtilities.getClient().displayGuiScreen(new GuiSatelliteRocket(player.inventory, (EntitySatelliteRocket) entity));
+			}
+			player.openContainer.windowId = (Integer) this.data.get(0);
+			break;
 		default:
 			break;
 		}
@@ -196,6 +217,44 @@ public class PacketSimplePP extends PacketSimpleBase {
 					else
 						machine.currentSatelliteNum += 1;
 					machine.markForSatelliteUpdate = true;
+				}
+			}
+			break;
+		case S_UPDATE_SATELLITE_LAUNCHER_GUI:
+			TileEntity tile = player.worldObj.getTileEntity((BlockPos) this.data.get(1));
+
+			switch ((Integer) this.data.get(0)) {
+			case 1:
+				if (tile instanceof TileEntitySatelliteRocketLauncher) {
+					TileEntitySatelliteRocketLauncher launchController = (TileEntitySatelliteRocketLauncher) tile;
+					launchController.setLaunchDropdownSelection((Integer) this.data.get(2));
+				}
+				break;
+			case 2:
+				if (tile instanceof TileEntitySatelliteRocketLauncher) {
+					TileEntitySatelliteRocketLauncher launchController = (TileEntitySatelliteRocketLauncher) tile;
+					int bool = (Integer) this.data.get(2);
+					launchController.launchEnabled = bool == 0 ? false : true;
+					launchController.updateRocketOnDockSettings();
+				}
+				break;
+
+			default:
+				break;
+			}
+			break;
+		case S_UPDATE_SATELLITE_ROCKET_STATUS:
+			Entity entity2 = player.worldObj.getEntityByID((Integer) this.data.get(0));
+
+			if (entity2 instanceof EntitySatelliteRocket) {
+				EntitySatelliteRocket rocket = (EntitySatelliteRocket) entity2;
+
+				int subType = (Integer) this.data.get(1);
+
+				switch (subType) {
+				default:
+					rocket.statusValid = rocket.checkLaunchValidity();
+					break;
 				}
 			}
 			break;

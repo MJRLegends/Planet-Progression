@@ -1,22 +1,31 @@
 package com.mjr.planetprogression.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import com.mjr.mjrlegendslib.util.PlayerUtilties;
+import com.mjr.mjrlegendslib.util.TranslateUtilities;
+import com.mjr.planetprogression.PlanetProgression;
+import com.mjr.planetprogression.data.SatelliteData;
+import com.mjr.planetprogression.handlers.capabilities.CapabilityStatsHandler;
+import com.mjr.planetprogression.handlers.capabilities.IStatsCapability;
+import com.mjr.planetprogression.item.ItemSatellite;
+import com.mjr.planetprogression.item.PlanetProgression_Items;
+import com.mjr.planetprogression.network.PacketSimplePP;
+import com.mjr.planetprogression.network.PacketSimplePP.EnumSimplePacket;
+import com.mjr.planetprogression.tileEntities.TileEntitySatelliteLandingPad;
+
+import io.netty.buffer.ByteBuf;
 import micdoodle8.mods.galacticraft.api.entity.IRocketType;
-import micdoodle8.mods.galacticraft.api.prefab.entity.EntityTieredRocket;
 import micdoodle8.mods.galacticraft.api.tile.IFuelDock;
 import micdoodle8.mods.galacticraft.api.vector.Vector3;
 import micdoodle8.mods.galacticraft.api.world.IGalacticraftWorldProvider;
 import micdoodle8.mods.galacticraft.core.GalacticraftCore;
-import micdoodle8.mods.galacticraft.core.entities.player.GCCapabilities;
-import micdoodle8.mods.galacticraft.core.entities.player.GCPlayerStats;
-import micdoodle8.mods.galacticraft.core.tick.TickHandlerServer;
-import micdoodle8.mods.galacticraft.core.tile.TileEntityLandingPad;
+import micdoodle8.mods.galacticraft.core.inventory.ContainerRocketInventory;
 import micdoodle8.mods.galacticraft.core.util.ConfigManagerCore;
 import micdoodle8.mods.galacticraft.core.util.EnumColor;
-import micdoodle8.mods.galacticraft.core.util.PlayerUtil;
-import micdoodle8.mods.galacticraft.core.wrappers.ScheduledDimensionChange;
+import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
@@ -26,14 +35,11 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
-import com.mjr.mjrlegendslib.util.TranslateUtilities;
-import com.mjr.planetprogression.data.SatelliteData;
-import com.mjr.planetprogression.handlers.capabilities.CapabilityStatsHandler;
-import com.mjr.planetprogression.handlers.capabilities.IStatsCapability;
-import com.mjr.planetprogression.item.ItemSatellite;
-import com.mjr.planetprogression.item.PlanetProgression_Items;
+public class EntitySatelliteRocket extends EntitySatelliteAutoRocket {
 
-public class EntitySatelliteRocket extends EntityTieredRocket {
+	public EnumRocketType rocketType;
+	public float rumble;
+
 	public EntitySatelliteRocket(World world) {
 		super(world);
 		this.setSize(3.0F, 16.0F);
@@ -45,9 +51,11 @@ public class EntitySatelliteRocket extends EntityTieredRocket {
 		this.cargoItems = new ItemStack[this.getSizeInventory()];
 	}
 
-	public EntitySatelliteRocket(World world, double x, double y, double z, IRocketType.EnumRocketType type, ItemStack[] inv) {
-		this(world, x, y, z, type);
-		this.cargoItems = inv;
+	public EntitySatelliteRocket(World world, double x, double y, double z, IRocketType.EnumRocketType type, EntityPlayer playerIn) {
+		super(world, x, y, z);
+		this.rocketType = type;
+		this.cargoItems = new ItemStack[this.getSizeInventory()];
+		this.placedPlayerUUID = playerIn.getUniqueID().toString();
 	}
 
 	@Override
@@ -66,26 +74,60 @@ public class EntitySatelliteRocket extends EntityTieredRocket {
 	}
 
 	@Override
-	public float getRotateOffset() {
-		return 0.8F;
-	}
-
-	@Override
 	public double getOnPadYOffset() {
 		return 0.4D;
 	}
 
 	@Override
-	public void onReachAtmosphere() {
-		// Not launch controlled
-		if (!this.worldObj.isRemote) {
-			if (this.riddenByEntity instanceof EntityPlayerMP) {
-				EntityPlayerMP player = (EntityPlayerMP) this.riddenByEntity;
-				this.onTeleport(player);
+	public float getRenderOffsetY() {
+		return 1.1F;
+	}
 
+	@Override
+	public int getRocketTier() {
+		return Integer.MAX_VALUE;
+	}
+
+	@Override
+	public int getFuelTankCapacity() {
+		return 1000;
+	}
+
+	@Override
+	public int getPreLaunchWait() {
+		return 0;
+	}
+
+	@Override
+	public List<ItemStack> getItemsDropped(List<ItemStack> droppedItems) {
+		super.getItemsDropped(droppedItems);
+		ItemStack rocket = new ItemStack(PlanetProgression_Items.SATELLITE_ROCKET, 1, this.rocketType.getIndex());
+		rocket.setTagCompound(new NBTTagCompound());
+		rocket.getTagCompound().setInteger("RocketFuel", this.fuelTank.getFluidAmount());
+		droppedItems.add(rocket);
+		return droppedItems;
+	}
+
+	@Override
+	public boolean isDockValid(IFuelDock dock) {
+		return (dock instanceof TileEntitySatelliteLandingPad);
+	}
+
+	@Override
+	public String getName() {
+		return TranslateUtilities.translate("entity.planetprogression.EntitySatelliteRocket.name", false);
+	}
+
+	@Override
+	public void onReachAtmosphere() {
+		if (!this.worldObj.isRemote) {
+			EntityPlayerMP player = PlayerUtilties.getPlayerFromUUID(this.placedPlayerUUID);
+			if (player != null) {
+				int found = 0;
 				for (ItemStack item : this.cargoItems) {
 					if (item != null) {
 						if (item.getItem() instanceof ItemSatellite) {
+							found++;
 							IStatsCapability stats = null;
 							if (player != null) {
 								stats = player.getCapability(CapabilityStatsHandler.PP_STATS_CAPABILITY, null);
@@ -96,14 +138,13 @@ public class EntitySatelliteRocket extends EntityTieredRocket {
 						}
 					}
 				}
-				TickHandlerServer.scheduleNewDimensionChange(new ScheduledDimensionChange(player, player.worldObj.provider.getDimensionName()));
+				if (found == 0)
+					player.addChatMessage(new ChatComponentText(EnumColor.RED + "No Satellites were found in the rocket!"));
 			}
 
 			// Destroy any rocket which reached the top of the atmosphere and is not controlled by a Launch Controller
-			this.setDead();
 		}
-
-		// Client side, non-launch controlled, do nothing - no reason why it can't continue flying until the GUICelestialSelection activates
+		this.setDead();
 	}
 
 	@Override
@@ -160,28 +201,13 @@ public class EntitySatelliteRocket extends EntityTieredRocket {
 		}
 	}
 
-	@Override
-	public void onTeleport(EntityPlayerMP player) {
-		EntityPlayerMP playerBase = PlayerUtil.getPlayerBaseServerFromPlayer(player, false);
-
-		if (playerBase != null) {
-			GCPlayerStats stats = playerBase.getCapability(GCCapabilities.GC_STATS_CAPABILITY, null);
-
-			stats.setRocketStacks(new ItemStack[2]);
-
-			stats.setRocketType(this.rocketType.getIndex());
-			stats.setRocketItem(PlanetProgression_Items.SATELLITE_ROCKET);
-			stats.setFuelLevel(this.fuelTank.getFluidAmount());
-		}
-	}
-
 	protected void spawnParticles(boolean launched) {
 		if (!this.isDead) {
 			double x1 = 3.2 * Math.cos(this.rotationYaw / 57.2957795D) * Math.sin(this.rotationPitch / 57.2957795D);
 			double z1 = 3.2 * Math.sin(this.rotationYaw / 57.2957795D) * Math.sin(this.rotationPitch / 57.2957795D);
 			double y1 = 3.2 * Math.cos((this.rotationPitch - 180) / 57.2957795D);
-			if (this.launchPhase == EnumLaunchPhase.LANDING.ordinal() && this.targetVec != null) {
-				double modifier = this.posY - this.targetVec.getY();
+			if (this.launchPhase == EnumLaunchPhase.LANDING.ordinal()) {
+				double modifier = this.posY;
 				modifier = Math.max(modifier, 1.0);
 				x1 *= modifier / 60.0D;
 				y1 *= modifier / 60.0D;
@@ -238,11 +264,6 @@ public class EntitySatelliteRocket extends EntityTieredRocket {
 	}
 
 	@Override
-	public boolean isUseableByPlayer(EntityPlayer par1EntityPlayer) {
-		return !this.isDead && par1EntityPlayer.getDistanceSqToEntity(this) <= 64.0D;
-	}
-
-	@Override
 	public void onPadDestroyed() {
 		if (!this.isDead && this.launchPhase != EnumLaunchPhase.LAUNCHED.ordinal()) {
 			this.dropShipAsItem();
@@ -251,72 +272,70 @@ public class EntitySatelliteRocket extends EntityTieredRocket {
 	}
 
 	@Override
-	public int getRocketTier() {
-		return 4;
+	public boolean interactFirst(EntityPlayer player) {
+		if (!this.worldObj.isRemote && player instanceof EntityPlayerMP) {
+			EntityPlayerMP playerMP = (EntityPlayerMP) player;
+			playerMP.getNextWindowId();
+			playerMP.closeContainer();
+			int windowId = playerMP.currentWindowId;
+			PlanetProgression.packetPipeline.sendTo(new PacketSimplePP(EnumSimplePacket.C_OPEN_SATELLITE_ROCKET_GUI, GCCoreUtil.getDimensionID(playerMP.worldObj), new Object[] { windowId, this.getEntityId() }), playerMP);
+			player.openContainer = new ContainerRocketInventory(playerMP.inventory, this, this.rocketType, playerMP);
+			player.openContainer.windowId = windowId;
+			player.openContainer.onCraftGuiOpened(playerMP);
+		}
+
+		return false;
 	}
 
 	@Override
-	public int getFuelTankCapacity() {
-		return 1500;
+	protected void writeEntityToNBT(NBTTagCompound nbt) {
+		if (worldObj.isRemote)
+			return;
+		nbt.setInteger("Type", this.rocketType.getIndex());
+		nbt.setString("PlacedPlayerUUID", this.placedPlayerUUID);
+
+		super.writeEntityToNBT(nbt);
 	}
 
 	@Override
-	public int getPreLaunchWait() {
-		return 400;
+	protected void readEntityFromNBT(NBTTagCompound nbt) {
+		this.rocketType = EnumRocketType.values()[nbt.getInteger("Type")];
+		this.placedPlayerUUID = nbt.getString("PlacedPlayerUUID");
+
+		super.readEntityFromNBT(nbt);
 	}
 
 	@Override
-	public float getCameraZoom() {
-		return 15.0F;
+	public EnumRocketType getType() {
+		return this.rocketType;
 	}
 
 	@Override
-	public boolean defaultThirdPerson() {
-		return true;
+	public int getSizeInventory() {
+		if (this.rocketType == null) {
+			return 0;
+		}
+		return this.rocketType.getInventorySpace();
 	}
 
 	@Override
-	public List<ItemStack> getItemsDropped(List<ItemStack> droppedItems) {
-		super.getItemsDropped(droppedItems);
-		ItemStack rocket = new ItemStack(PlanetProgression_Items.SATELLITE_ROCKET, 1, this.rocketType.getIndex());
-		rocket.setTagCompound(new NBTTagCompound());
-		rocket.getTagCompound().setInteger("RocketFuel", this.fuelTank.getFluidAmount());
-		droppedItems.add(rocket);
-		return droppedItems;
+	public void decodePacketdata(ByteBuf buffer) {
+		this.rocketType = EnumRocketType.values()[buffer.readInt()];
+		super.decodePacketdata(buffer);
+		this.posX = buffer.readDouble() / 8000.0D;
+		this.posY = buffer.readDouble() / 8000.0D;
+		this.posZ = buffer.readDouble() / 8000.0D;
 	}
 
 	@Override
-	public int getField(int id) {
-		return 0;
-	}
-
-	@Override
-	public void setField(int id, int value) {
-
-	}
-
-	@Override
-	public int getFieldCount() {
-		return 0;
-	}
-
-	@Override
-	public void clear() {
-
-	}
-
-	@Override
-	public float getRenderOffsetY() {
-		return 1.1F;
-	}
-
-	@Override
-	public boolean isDockValid(IFuelDock dock) {
-		return (dock instanceof TileEntityLandingPad);
-	}
-
-	@Override
-	public String getName() {
-		return TranslateUtilities.translate("entity.planetprogression.EntitySatelliteRocket.name", false);
+	public void getNetworkedData(ArrayList<Object> list) {
+		if (this.worldObj.isRemote) {
+			return;
+		}
+		list.add(this.rocketType != null ? this.rocketType.getIndex() : 0);
+		super.getNetworkedData(list);
+		list.add(this.posX * 8000.0D);
+		list.add(this.posY * 8000.0D);
+		list.add(this.posZ * 8000.0D);
 	}
 }
