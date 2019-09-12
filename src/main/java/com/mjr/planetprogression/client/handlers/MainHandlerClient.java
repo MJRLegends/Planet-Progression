@@ -2,6 +2,8 @@ package com.mjr.planetprogression.client.handlers;
 
 import java.util.List;
 
+import org.apache.logging.log4j.core.util.Loader;
+
 import micdoodle8.mods.galacticraft.core.client.gui.screen.GuiCelestialSelection;
 import micdoodle8.mods.galacticraft.core.util.EnumColor;
 import net.minecraft.client.Minecraft;
@@ -58,7 +60,7 @@ public class MainHandlerClient {
 	@SideOnly(Side.CLIENT)
 	public void onGuiOpenEvent(GuiOpenEvent event) {
 		if (((event.getGui() instanceof GuiCelestialSelection))) {
-			if(!event.getGui().getClass().getName().equalsIgnoreCase("com.mjr.extraplanets.client.gui.screen.CustomCelestialSelection")) {
+			if(!Loader.isClassAvailable("com.mjr.extraplanets.compatibility.PlanetProgressionCompatibility") || !event.getGui().getClass().getName().equalsIgnoreCase("com.mjr.extraplanets.client.gui.screen.CustomCelestialSelection")) {
 				if(event.getGui().getClass().getName().equalsIgnoreCase("asmodeuscore.core.astronomy.gui.screen.NewGuiCelestialSelection"))
 					MessageUtilities.throwCrashError("Please disable the following option: enableNewGalaxyMap in configs/AsmodeusCore/core.conf");
 				if (GameSettings.isKeyDown(micdoodle8.mods.galacticraft.core.tick.KeyHandlerClient.galaxyMap)) {
