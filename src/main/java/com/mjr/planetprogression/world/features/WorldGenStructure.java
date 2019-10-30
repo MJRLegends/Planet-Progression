@@ -1660,7 +1660,7 @@ public class WorldGenStructure extends WorldGenerator {
 				do {
 					item = ItemUtilities.getRandomItemStackFromItemList(PlanetProgression_Items.researchPapers);
 				}
-				while(Arrays.asList(Config.dungeonPaperBlacklist).contains(((ResearchPaper) item.getItem()).getPlanetName()));
+				while(Arrays.asList(Config.dungeonPaperBlacklist).contains(((ResearchPaper) item.getItem()).getBodyName()));
 				chest.setInventorySlotContents(0, item);
 			}
 		}
