@@ -115,8 +115,7 @@ public class PlanetProgression_Items {
     		researchPapers.add(new ResearchPaper(body.getUnlocalizedName(), temp++));
         }
         for(CelestialBody body : unReachableResearchPapers) {
-        	if(!body.getUnlocalizedName().contains("jupiter"))
-        		researchPapers.add(new ResearchPaper(body.getUnlocalizedName(), temp++));
+        	researchPapers.add(new ResearchPaper(body.getUnlocalizedName(), temp++));
         }
         
         // Add Planet Extras that GC adds if they dont exist from a addon
