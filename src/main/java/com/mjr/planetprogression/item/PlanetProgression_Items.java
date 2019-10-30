@@ -115,7 +115,8 @@ public class PlanetProgression_Items {
     		researchPapers.add(new ResearchPaper(body.getUnlocalizedName(), temp++));
         }
         for(CelestialBody body : unReachableResearchPapers) {
-    		researchPapers.add(new ResearchPaper(body.getUnlocalizedName(), temp++));
+        	if(!body.getUnlocalizedName().contains("jupiter"))
+        		researchPapers.add(new ResearchPaper(body.getUnlocalizedName(), temp++));
         }
         
         // Add Planet Extras that GC adds if they dont exist from a addon
@@ -133,7 +134,7 @@ public class PlanetProgression_Items {
 
             for (Item paper : researchPapers) {
                 if (found == false) {
-                    if (((ResearchPaper) paper).getPlanetName().equalsIgnoreCase(tempBody)) {
+                    if (((ResearchPaper) paper).getBodyName().equalsIgnoreCase(tempBody)) {
                         found = true;
                     }
                 }
@@ -144,7 +145,7 @@ public class PlanetProgression_Items {
             }
         }
         for(Item item : researchPapers) {
-        	System.out.println(((ResearchPaper) item).getPlanetName());
+        	System.out.println(((ResearchPaper) item).getBodyName());
         }
 	}
 

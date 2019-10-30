@@ -93,7 +93,7 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 							if (this.currentSatellite.getCurrentResearchItem() == null || this.currentSatellite.getCurrentResearchItem().getItem() == null)
 								this.currentSatelliteResearchBody = "Nothing!";
 							else
-								this.currentSatelliteResearchBody = ((ResearchPaper) this.currentSatellite.getCurrentResearchItem().getItem()).getPlanetName();
+								this.currentSatelliteResearchBody = ((ResearchPaper) this.currentSatellite.getCurrentResearchItem().getItem()).getBodyName();
 						}
 
 						// Check if has a already existing research item
@@ -105,7 +105,7 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 							List<String> temp = new ArrayList<String>();
 							for (SatelliteData sat : stats.getSatellites()) {
 								if (sat.getCurrentResearchItem() != null)
-									temp.add(((ResearchPaper) sat.getCurrentResearchItem().getItem()).getPlanetName());
+									temp.add(((ResearchPaper) sat.getCurrentResearchItem().getItem()).getBodyName());
 							}
 							if (temp.size() != PlanetProgression_Items.researchPapers.size()) {
 								boolean skip = false;
@@ -117,7 +117,7 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 										this.currentSatellite.setCurrentResearchItem(this.producingStack);
 										return;
 									} else {
-										String newName = ((ResearchPaper) newItem.getItem()).getPlanetName();
+										String newName = ((ResearchPaper) newItem.getItem()).getBodyName();
 										if (temp.contains(newName))
 											skip = true;
 										if (!skip) {
@@ -200,7 +200,7 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 			List<String> temp = new ArrayList<String>();
 			for (SatelliteData sat : stats.getSatellites()) {
 				if (sat.getCurrentResearchItem() != null)
-					temp.add(((ResearchPaper) sat.getCurrentResearchItem().getItem()).getPlanetName());
+					temp.add(((ResearchPaper) sat.getCurrentResearchItem().getItem()).getBodyName());
 			}
 			if (temp.size() != PlanetProgression_Items.researchPapers.size()) {
 				boolean skip = false;
@@ -212,8 +212,8 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 						this.currentSatellite.setCurrentResearchItem(this.producingStack);
 						return;
 					} else {
-						String oldName = ((ResearchPaper) oldItem.getItem()).getPlanetName();
-						String newName = ((ResearchPaper) newItem.getItem()).getPlanetName();
+						String oldName = ((ResearchPaper) oldItem.getItem()).getBodyName();
+						String newName = ((ResearchPaper) newItem.getItem()).getBodyName();
 						if (temp.contains(newName) || oldName.equalsIgnoreCase(newName))
 							skip = true;
 						if (!skip) {
