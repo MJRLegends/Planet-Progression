@@ -102,7 +102,7 @@ public class PlanetProgression_Items {
 		}
 
 		for (Item item : researchPapers) {
-			System.out.println(((ResearchPaper) item).getPlanetName());
+			System.out.println(((ResearchPaper) item).getBodyName());
 		}
 	}
 

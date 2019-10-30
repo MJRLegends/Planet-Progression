@@ -16,40 +16,36 @@ import com.mjr.planetprogression.PlanetProgression;
 
 public class ResearchPaper extends BasicItem {
 
-	private String planet;
+	private String body;
 
 	public ResearchPaper(String name, int number) {
 		super("research_paper_" + number);
-		this.planet = name.toLowerCase();
+		this.body = name.toLowerCase();
 		this.setCreativeTab(PlanetProgression.tab);
 	}
 
-	public String getPlanetName() {
-		return planet;
+	public String getBodyName() {
+		return body;
 	}
 
-	public String getRealPlanetName() {
-		String name = getPlanetName();
-		if (planet.contains("eris"))
+	public String getRealBodyName() {
+		String name = getBodyName();
+		if (body.contains("eris"))
 			name = "planet.Eris";
-		else if (planet.contains("pluto"))
+		else if (body.contains("pluto"))
 			name = "planet.Pluto";
-		else if (planet.contains("ceres"))
+		else if (body.contains("ceres"))
 			name = "planet.Ceres";
-		else if (planet.contains("kuiperbelt"))
+		else if (body.contains("kuiperbelt"))
 			name = "planet.kuiperBelt";
 		return TranslateUtilities.translate(name);
-	}
-
-	public void setPlanet(String planet) {
-		this.planet = planet;
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack itemStack, EntityPlayer player, List<String> list, boolean par4) {
 		if (player.world.isRemote) {
-			String name = getRealPlanetName();
+			String name = getRealBodyName();
 			list.add(EnumColor.YELLOW + name.substring(0, 1).toUpperCase() + name.substring(1));
 
 			if (Config.researchMode == 1) {
