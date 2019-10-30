@@ -7,6 +7,7 @@ import javax.annotation.Nullable;
 import micdoodle8.mods.galacticraft.core.util.EnumColor;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -64,5 +65,10 @@ public class ResearchPaper extends BasicItem {
 		} else
 			list.add(EnumColor.AQUA + TranslateUtilities.translate("research.paper.satellite.controller.desc"));
 		list.add(EnumColor.BRIGHT_GREEN + TranslateUtilities.translate("research.paper.use.desc"));
+	}
+
+	@Override
+	public String getItemStackDisplayName(ItemStack stack) {
+		return I18n.translateToLocal(I18n.translateToLocal("item.research_paper") + ".name").trim();
 	}
 }
