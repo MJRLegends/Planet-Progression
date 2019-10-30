@@ -139,6 +139,7 @@ curseforge {
 				}
 >>>>>>> 2ae93d4... Added an API for checking if a celestial body is researched/unlocked
 			}
+			addArtifact(apiJar)
 		}
 	}
 }
