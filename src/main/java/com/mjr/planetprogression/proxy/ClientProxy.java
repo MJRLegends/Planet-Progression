@@ -19,6 +19,7 @@ import com.mjr.planetprogression.item.PlanetProgression_Items;
 import com.mjr.planetprogression.tileEntities.TileEntityTelescope;
 
 import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.item.Item;
 import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -146,7 +147,10 @@ public class ClientProxy extends CommonProxy {
 	public void registerItemJsons() {
 		if (Config.researchMode == 2)
 			ClientUtilities.registerItemJson(Constants.TEXTURE_PREFIX, PlanetProgression_Items.satelliteBasicModule);
-		ClientUtilities.registerItemJson(Constants.TEXTURE_PREFIX, PlanetProgression_Items.researchPapers);
+
+		for (Item item : PlanetProgression_Items.researchPapers) {
+			ClientUtilities.registerItemJson(Constants.TEXTURE_PREFIX, item, "research_paper");
+		}
 	}
 
 	private void renderBlocksTileEntitySpecialRenderers() {
