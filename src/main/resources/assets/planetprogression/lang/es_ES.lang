@@ -7,7 +7,7 @@ satellite.use.desc=Colocar en el Cargo de un Cohete de Satélite
 research.paper.loot.desc=Obtenible del botín de Mazmorra
 research.paper.woldgen.desc=Obtenible en una estructura generada en el mundo
 research.paper.satellite.controller.desc=Obtenible de Controlador de Satélite
-research.paper.use.desc=Use in the Telescope to discover##NEEDS TRANSLATE##
+research.paper.use.desc=Usalo en un Telescopio para descubrir un Planeta/Luna
 
 #Entities
 entity.planetprogression.EntitySatelliteRocket.name=Cohete de Satélite
@@ -16,27 +16,27 @@ entity.planetprogression.EntitySatelliteRocket.name=Cohete de Satélite
 container.satellite.controller.name=Controlador de Satélite
 container.satellite.builder.name=Constructor de Satélite
 container.telescope.name=Telescopio
-container.satellite_rocket_launcher.name=Satellite Rocket Launch Module ##NEEDS TRANSLATE##
+container.satellite_rocket_launcher.name=Módulo de lanzamiento de cohetes satelitales
 
 #Blocks
 tile.satellite_builder.name=Constructor de Satélite
 tile.satellite_controller.name=Controlador de Satélite
 tile.telescope.name=Telescopio
-tile.satellite_launcher.name=Satellite Rocket Launch Module ##NEEDS TRANSLATE##
-tile.advanced_launch_pad.satelliteLandingPad.name=Satellite Rocket Launch Pad ##NEEDS TRANSLATE##
-tile.advanced_launch_pad.satelliteLandingPad.desc=Used to launch Satellite Rocket. To be placed in a 5x5 square ##NEEDS TRANSLATE##
+tile.satellite_launcher.name=Módulo de lanzamiento de cohetes satelitales
+tile.advanced_launch_pad.satelliteLandingPad.name=Plataforma de lanzamiento de Cohetes Satelitales
+tile.advanced_launch_pad.satelliteLandingPad.desc=Usado para lanzar un Cohete Satelital. Debe de colocarse en un cuadro 5x5
 gui.status.missing.inputs.name=Faltan Items o Líquidos
 gui.status.missing.power.name=Falta Energía
 gui.status.building.name=Construyendo Satélite
-gui.satellite_pad_use.desc=Use Satellite Rocket Launch Pad to launch ##NEEDS TRANSLATE##
-gui.satellite_pad_extras.1.desc=Satellite Rocket Launch Module &  ##NEEDS TRANSLATE##
-gui.satellite_pad_extras.2.desc=Cargo Loader can be used for auto launching rockets ##NEEDS TRANSLATE##
-gui.satellite_launcher.auto_enable=Enable Auto Launch System ##NEEDS TRANSLATE##
-gui.satellite_launcher.auto_disable=Disable Auto Launch System ##NEEDS TRANSLATE##
-gui.satellite_launcher.delay_type=Delay Type ##NEEDS TRANSLATE##
+gui.satellite_pad_use.desc=Usa una Plataforma de Lanza. Satelital para lanzar un
+gui.satellite_pad_extras.1.desc=Módulo de lanza. de cohetes satelital y
+gui.satellite_pad_extras.2.desc=puede usarse en una Plataforma de carga para un Lanzamiento Auto.
+gui.satellite_launcher.auto_enable=Habilitar Lanzamiento Automatico
+gui.satellite_launcher.auto_disable=Deshabilitar Lanzamiento Automatico
+gui.satellite_launcher.delay_type=Tipo de Retraso
 satellite.builder.use.desc=Sirve para contruir Satélites
 satellite.controller.use.desc=Sirve para controlar Satélites y
 satellite.controller.use.2.desc=usarlos para Investigación
 telescope.use.desc=Sirve para descubrir objetos espaciales de los Papeles de Investigación
 
-itemGroup.PlanetProgressionTab=Planet Progression##NEEDS TRANSLATE##
+itemGroup.PlanetProgressionTab=Progreso de Planetas
