@@ -98,7 +98,7 @@ public class CommandUnlockCelestialBody extends CommandBase {
 			String[] array = new String[PlanetProgression_Items.researchPapers.size()];
 			int i = 0;
 			for (Item paper : PlanetProgression_Items.researchPapers)
-				array[i++] = ((ResearchPaper) paper).getPlanetName().substring(((ResearchPaper) paper).getPlanetName().indexOf('.') + 1);
+				array[i++] = ((ResearchPaper) paper).getBodyName().substring(((ResearchPaper) paper).getBodyName().indexOf('.') + 1);
 			return getListOfStringsMatchingLastWord(args, array);
 		} else
 			return null;

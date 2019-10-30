@@ -112,7 +112,8 @@ public class TileEntityTelescope extends TileBaseElectricBlockWithInventory impl
 		if (Config.researchMode == 0 || Config.researchMode == 1 || Config.researchMode == 2 || Config.researchMode == 3) {
 			boolean found = false;
 			for (Planet planet : GalaxyRegistry.getRegisteredPlanets().values()) {
-				if (((ResearchPaper) this.containingItems[1].getItem()).getPlanetName().equalsIgnoreCase(planet.getUnlocalizedName())) {
+				if (((ResearchPaper) this.containingItems[1].getItem()).getBodyName().equalsIgnoreCase(planet.getUnlocalizedName())) {
+
 					if (!stats.getUnlockedPlanets().contains(planet)) {
 						stats.addUnlockedPlanets(planet);
 						player.addChatMessage(new TextComponentString("Research Completed! You have discovered " + planet.getLocalizedName()));
@@ -127,7 +128,7 @@ public class TileEntityTelescope extends TileBaseElectricBlockWithInventory impl
 			}
 			if (found == false) {
 				for (Moon moon : GalaxyRegistry.getRegisteredMoons().values()) {
-					if (((ResearchPaper) this.containingItems[1].getItem()).getPlanetName().equalsIgnoreCase(moon.getUnlocalizedName())) {
+					if (((ResearchPaper) this.containingItems[1].getItem()).getBodyName().equalsIgnoreCase(moon.getUnlocalizedName())) {
 						if (!stats.getUnlockedPlanets().contains(moon)) {
 							stats.addUnlockedPlanets(moon);
 							player.addChatMessage(new TextComponentString("Research Completed! You have discovered " + moon.getLocalizedName()));
