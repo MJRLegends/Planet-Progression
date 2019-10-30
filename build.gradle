@@ -134,6 +134,7 @@ curseforge {
 					requiredLibrary 'mjrlegendslib'
 				}
 			}
+			addArtifact(apiJar)
 		}
 	}
 }
