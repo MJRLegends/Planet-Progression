@@ -117,7 +117,6 @@ task ("uploadMaven"){
 }
 
 curseforge {
-<<<<<<< HEAD
 	apiKey = project.getProperty("curseforge_key")
 	project {
 		id = "287275"
@@ -126,18 +125,6 @@ curseforge {
 		mainArtifact(jar) {
 			relations {
 				requiredLibrary 'mjrlegendslib'
-=======
-    if (project.hasProperty('curseforge_key')){
-		apiKey = project.findProperty("curseforge_key")
-		project {
-			id = "287275"
-			releaseType = "release"
-			addGameVersion "${minecraft_version}"
-			mainArtifact(jar) {
-				relations {
-					requiredLibrary 'mjrlegendslib'
-				}
->>>>>>> 2ae93d4... Added an API for checking if a celestial body is researched/unlocked
 			}
 			addArtifact(apiJar)
 		}
