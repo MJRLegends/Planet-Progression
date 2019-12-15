@@ -6,6 +6,10 @@
 
 ===========================================Released Updates===========================================
 v0.2.7
+*Updated es_ES.Lang (Thanks to Yataro-Ibuza)
+*Tweaks to research paper code to reflect full use of the paper
+*Fixed issue #49
+*Made ResearchHooksMP.hasUnlockedCelestialBody static
 *Fix possible init issues due to network packets delay with Custom Celestial/Galaxy Map screen
 *Allow for ExtraPlanets Celestial/Galaxy Map screen to take priority since PlanetProgressions research system is now supported by ExtraPlanets (v0.5.6 & above) Celestial/Galaxy Map screen
 *Added an API for checking if a celestial body is researched/unlocked
