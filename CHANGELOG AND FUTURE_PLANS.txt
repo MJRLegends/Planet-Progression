@@ -5,6 +5,12 @@
 
 
 ===========================================Released Updates===========================================
+v0.3.6
+*Updated es_ES.Lang (Thanks to Yataro-Ibuza)
+*Tweaks to research paper code to reflect full use of the paper
+*Fixed issue #49
+*Added config option to disable showing of the Overworld As been Discovered Message on first joining world/server #50
+
 v0.3.5
 *Fix possible init issues due to network packets delay with Custom Celestial/Galaxy Map screen
 *Allow for ExtraPlanets Celestial/Galaxy Map screen to take priority since PlanetProgressions research system is now supported by ExtraPlanets (v0.5.6 & above) Celestial/Galaxy Map screen
