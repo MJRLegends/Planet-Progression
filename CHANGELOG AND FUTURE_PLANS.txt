@@ -5,6 +5,13 @@
 
 
 ===========================================Released Updates===========================================
+v0.3.9
+*Updated es_ES.Lang (Thanks to Yataro-Ibuza)
+*Tweaks to research paper code to reflect full use of the paper
+*Fixed issue #49
+*Added config option to disable showing of the Overworld As been Discovered Message on first joining world/server #50
+*Celestial map screen will now work with any ExtraPlanets versions not just v0.5.6 and future updates
+
 v0.3.8
 *Fixed telescope inventory null pointer error
 *Fix possible init issues due to network packets delay with Custom Celestial/Galaxy Map screen
