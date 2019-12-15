@@ -5,6 +5,9 @@
 
 
 ===========================================Released Updates===========================================
+v0.2.8
+*Added config option to disable showing of the Overworld As been Discovered Message on first joining world/server #50
+
 v0.2.7
 *Updated es_ES.Lang (Thanks to Yataro-Ibuza)
 *Tweaks to research paper code to reflect full use of the paper
