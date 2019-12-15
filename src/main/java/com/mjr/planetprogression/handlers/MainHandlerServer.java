@@ -132,8 +132,10 @@ public class MainHandlerServer {
 			else {
 				if (!stats.getUnlockedPlanets().contains(GalacticraftCore.planetOverworld)) {
 					stats.addUnlockedPlanets(GalacticraftCore.planetOverworld);
-					player.sendMessage(new TextComponentString("You have discovered Earth!"));
-					player.sendMessage(new TextComponentString("Obtain Research Papers to start discovering!"));
+					if(Config.showOverworldSpawnMessage) {
+						player.sendMessage(new TextComponentString("You have discovered Earth!"));
+						player.sendMessage(new TextComponentString("Obtain Research Papers to start discovering!"));
+					}
 				}
 			}
 		}
