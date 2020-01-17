@@ -291,7 +291,6 @@ public class EntitySatelliteRocket extends EntitySatelliteAutoRocket {
 			player.openContainer = new ContainerRocketInventory(playerMP.inventory, this, this.rocketType, playerMP);
 			player.openContainer.windowId = windowId;
 			player.openContainer.addListener(playerMP);
-			player.openContainer.detectAndSendChanges();
 		}
 
 		return false;
