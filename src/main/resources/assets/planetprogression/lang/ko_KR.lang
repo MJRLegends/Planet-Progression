@@ -41,5 +41,9 @@ satellite.builder.use.desc=위성 제조에 사용됩니다
 satellite.controller.use.desc=위성을 조절하고 그들을 연구하는데
 satellite.controller.use.2.desc=사용합니다.
 telescope.use.desc=연구 논문으로부터 우주 물체를 탐험하는데 사용됩니다
+telescope.use.unlocked=Research Completed! You have discovered  ##NEEDS TRANSLATE##
+research.discovered=You have discovered   ##NEEDS TRANSLATE##
+research.discovered.earth=You have discovered Earth!  ##NEEDS TRANSLATE##
+research.howto=Obtain Research Papers to start discovering!  ##NEEDS TRANSLATE##
 
 itemGroup.PlanetProgressionTab=행성 진화

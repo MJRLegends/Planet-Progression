@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.mjr.mjrlegendslib.util.PlayerUtilties;
+import com.mjr.mjrlegendslib.util.TranslateUtilities;
 import com.mjr.planetprogression.Config;
 import com.mjr.planetprogression.PlanetProgression;
 import com.mjr.planetprogression.blocks.BlockTelescopeFake;
@@ -116,11 +117,11 @@ public class TileEntityTelescope extends TileBaseElectricBlockWithInventory impl
 
 					if (!stats.getUnlockedPlanets().contains(planet)) {
 						stats.addUnlockedPlanets(planet);
-						player.addChatMessage(new ChatComponentText("Research Completed! You have discovered " + planet.getLocalizedName()));
-                        if(this.containingItems[1].stackSize != 1)
-                        	this.containingItems[1].stackSize = this.containingItems[1].stackSize - 1;
-                        else
-                        	this.containingItems[1] = null;
+						player.addChatMessage(new ChatComponentText(TranslateUtilities.translate("telescope.use.unlocked") + planet.getLocalizedName()));
+						if (this.containingItems[1].stackSize != 1)
+							this.containingItems[1].stackSize = this.containingItems[1].stackSize - 1;
+						else
+							this.containingItems[1] = null;
 						found = true;
 						break;
 					}
@@ -131,11 +132,11 @@ public class TileEntityTelescope extends TileBaseElectricBlockWithInventory impl
 					if (((ResearchPaper) this.containingItems[1].getItem()).getBodyName().equalsIgnoreCase(moon.getUnlocalizedName())) {
 						if (!stats.getUnlockedPlanets().contains(moon)) {
 							stats.addUnlockedPlanets(moon);
-							player.addChatMessage(new ChatComponentText("Research Completed! You have discovered " + moon.getLocalizedName()));
-							if(this.containingItems[1].stackSize != 1)
-	                        	this.containingItems[1].stackSize = this.containingItems[1].stackSize - 1;
-	                        else
-	                        	this.containingItems[1] = null;
+							player.addChatMessage(new ChatComponentText(TranslateUtilities.translate("telescope.use.unlocked") + moon.getLocalizedName()));
+							if (this.containingItems[1].stackSize != 1)
+								this.containingItems[1].stackSize = this.containingItems[1].stackSize - 1;
+							else
+								this.containingItems[1] = null;
 							break;
 						}
 					}

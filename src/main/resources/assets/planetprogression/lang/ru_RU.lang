@@ -41,5 +41,9 @@ satellite.builder.use.desc=Нужен, чтобы создавать спутн�
 satellite.controller.use.desc=Нужен для контроля за спутниками и
 satellite.controller.use.2.desc=для проведения исследований с их помощью
 telescope.use.desc=Нужен для обнаружения космических объектов из исследовательских отчетов
+telescope.use.unlocked=Research Completed! You have discovered  ##NEEDS TRANSLATE##
+research.discovered=You have discovered   ##NEEDS TRANSLATE##
+research.discovered.earth=You have discovered Earth!  ##NEEDS TRANSLATE##
+research.howto=Obtain Research Papers to start discovering!  ##NEEDS TRANSLATE##
 
 itemGroup.PlanetProgressionTab=Planet Progression
