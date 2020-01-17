@@ -3,6 +3,7 @@ package com.mjr.planetprogression.tileEntities;
 import java.util.ArrayList;
 import java.util.List;
 
+import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
 import micdoodle8.mods.galacticraft.core.energy.item.ItemElectricBase;
 import micdoodle8.mods.galacticraft.core.energy.tile.TileBaseElectricBlockWithInventory;
 import micdoodle8.mods.miccore.Annotations.NetworkedField;
@@ -107,6 +108,9 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 								if (sat.getCurrentResearchItem() != null)
 									temp.add(((ResearchPaper) sat.getCurrentResearchItem().getItem()).getBodyName());
 							}
+							for (CelestialBody body : stats.getUnlockedPlanets()) {
+								temp.add(body.getUnlocalizedName());
+							}
 							if (temp.size() != PlanetProgression_Items.researchPapers.size()) {
 								boolean skip = false;
 								for (int i = 0; i < PlanetProgression_Items.researchPapers.size(); i++) {
@@ -201,6 +205,9 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 			for (SatelliteData sat : stats.getSatellites()) {
 				if (sat.getCurrentResearchItem() != null)
 					temp.add(((ResearchPaper) sat.getCurrentResearchItem().getItem()).getBodyName());
+			}
+			for (CelestialBody body : stats.getUnlockedPlanets()) {
+				temp.add(body.getUnlocalizedName());
 			}
 			if (temp.size() != PlanetProgression_Items.researchPapers.size()) {
 				boolean skip = false;
