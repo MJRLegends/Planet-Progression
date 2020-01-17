@@ -56,6 +56,8 @@ public class TileEntityTelescope extends TileBaseElectricBlockWithInventory impl
 	public boolean ownerOnline = false;
 	@NetworkedField(targetSide = Side.CLIENT)
 	public String ownerUsername = "";
+	@NetworkedField(targetSide = Side.CLIENT)
+	public boolean alreadyResearchedInput = false;
 
 	@NetworkedField(targetSide = Side.CLIENT)
 	public float currentRotation;
@@ -115,7 +117,7 @@ public class TileEntityTelescope extends TileBaseElectricBlockWithInventory impl
 					if (!stats.getUnlockedPlanets().contains(planet)) {
 						stats.addUnlockedPlanets(planet);
 						player.sendMessage(new TextComponentString("Research Completed! You have discovered " + planet.getLocalizedName()));
-						if(this.stacks.get(1).getCount() != 1)
+						if (this.stacks.get(1).getCount() != 1)
 							this.stacks.get(1).setCount(this.stacks.get(1).getCount() - 1);
 						else
 							this.stacks.set(1, ItemStack.EMPTY);
@@ -130,7 +132,7 @@ public class TileEntityTelescope extends TileBaseElectricBlockWithInventory impl
 						if (!stats.getUnlockedPlanets().contains(moon)) {
 							stats.addUnlockedPlanets(moon);
 							player.sendMessage(new TextComponentString("Research Completed! You have discovered " + moon.getLocalizedName()));
-							if(this.stacks.get(1).getCount() != 1)
+							if (this.stacks.get(1).getCount() != 1)
 								this.stacks.get(1).setCount(this.stacks.get(1).getCount() - 1);
 							else
 								this.stacks.set(1, ItemStack.EMPTY);
@@ -157,21 +159,20 @@ public class TileEntityTelescope extends TileBaseElectricBlockWithInventory impl
 				if (((ResearchPaper) this.stacks.get(1).getItem()).getBodyName().equalsIgnoreCase(planet.getUnlocalizedName())) {
 					if (stats.getUnlockedPlanets().contains(planet))
 						return false;
-					else
-						return true;
-				}
+				} else
+					return true;
 			}
 			if (found == false) {
 				for (Moon moon : GalaxyRegistry.getRegisteredMoons().values()) {
 					if (((ResearchPaper) this.stacks.get(1).getItem()).getBodyName().equalsIgnoreCase(moon.getUnlocalizedName())) {
 						if (stats.getUnlockedPlanets().contains(moon))
 							return false;
-						else
-							return true;
-					}
+					} else
+						return true;
 				}
 			}
-		}
+		} else
+			alreadyResearchedInput = false;
 		return false;
 	}
 
