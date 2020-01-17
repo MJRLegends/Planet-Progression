@@ -41,5 +41,9 @@ satellite.builder.use.desc=Bruges til at bygge Satellit
 satellite.controller.use.desc=Bruges til at kontroler Satelliter &
 satellite.controller.use.2.desc= Bruge dem til forskning
 telescope.use.desc=Bruges til at opdage objekter i rummet fra Forsknings noter
+telescope.use.unlocked=Research Completed! You have discovered  ##NEEDS TRANSLATE##
+research.discovered=You have discovered   ##NEEDS TRANSLATE##
+research.discovered.earth=You have discovered Earth!  ##NEEDS TRANSLATE##
+research.howto=Obtain Research Papers to start discovering!  ##NEEDS TRANSLATE##
 
 itemGroup.PlanetProgressionTab=Planet Progression##NEEDS TRANSLATE##

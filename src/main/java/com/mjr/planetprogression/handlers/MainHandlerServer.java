@@ -125,16 +125,16 @@ public class MainHandlerServer {
 				CelestialBody temp = GalaxyRegistry.getCelestialBodyFromDimensionID(event.getEntityLiving().world.provider.getDimension());
 				if (temp != null && !stats.getUnlockedPlanets().contains(temp)) {
 					stats.addUnlockedPlanets(temp);
-					player.sendMessage(new TextComponentString("You have discovered " + temp.getLocalizedName() + "!"));
-					player.sendMessage(new TextComponentString("Obtain Research Papers to start discovering!"));
+					player.sendMessage(new TextComponentString(TranslateUtilities.translate("research.discovered") + temp.getLocalizedName() + "!"));
+					player.sendMessage(new TextComponentString(TranslateUtilities.translate("research.howto")));
 				}
 			}
 			else {
 				if (!stats.getUnlockedPlanets().contains(GalacticraftCore.planetOverworld)) {
 					stats.addUnlockedPlanets(GalacticraftCore.planetOverworld);
 					if(Config.showOverworldSpawnMessage) {
-						player.sendMessage(new TextComponentString("You have discovered Earth!"));
-						player.sendMessage(new TextComponentString("Obtain Research Papers to start discovering!"));
+						player.sendMessage(new TextComponentString(TranslateUtilities.translate("research.discovered.earth")));
+						player.sendMessage(new TextComponentString(TranslateUtilities.translate("research.howto")));
 					}
 				}
 			}
