@@ -134,6 +134,14 @@ public abstract class EntitySatelliteAutoRocket extends EntitySpaceshipBase impl
 
 	@Override
 	public EnumCargoLoadingState addCargo(ItemStack stack, boolean doAdd) {
+		// if (this.getSizeInventory() <= 3) {
+		// if (this.autoLaunchSetting == EnumAutoLaunch.CARGO_IS_FULL) {
+		// this.autoLaunch();
+		// }
+		//
+		// return EnumCargoLoadingState.NOINVENTORY;
+		// }
+
 		int count = 0;
 
 		for (count = 0; count < this.cargoItems.length - 2; count++) {
@@ -183,6 +191,11 @@ public abstract class EntitySatelliteAutoRocket extends EntitySpaceshipBase impl
 				return EnumCargoLoadingState.SUCCESS;
 			}
 		}
+
+		// if (this.autoLaunchSetting == EnumAutoLaunch.CARGO_IS_FULL) {
+		// this.autoLaunch();
+		// }
+
 		return EnumCargoLoadingState.FULL;
 	}
 
