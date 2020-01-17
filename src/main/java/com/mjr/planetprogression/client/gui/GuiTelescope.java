@@ -106,9 +106,10 @@ public class GuiTelescope extends GuiContainerGC {
 		String displayString = this.tileEntity.getName();
 		this.fontRendererObj.drawString(displayString, this.xSize / 2 - this.fontRendererObj.getStringWidth(displayString) / 2, 5, 4210752);
 
-		this.fontRendererObj.drawString(TranslateUtilities.translate("container.inventory"), 8, 135, 4210752);
-		this.fontRendererObj.drawString("Progress: " + ((this.tileEntity.processTicks / Config.telescopeTimeModifier) / 2) + " %", 5, 20, 4210752);
-		this.fontRendererObj.drawString("Player: " + ((this.tileEntity.owner != "" && this.tileEntity.ownerOnline) ? this.tileEntity.ownerUsername : "Player is not online!"), 5, 45, 4210752);
+		this.fontRenderer.drawString(TranslateUtilities.translate("container.inventory"), 8, 135, 4210752);
+		this.fontRenderer.drawString("Progress: " + ((this.tileEntity.processTicks / Config.telescopeTimeModifier) / 2) + " %", 5, 20, 4210752);
+		this.fontRenderer.drawString("Player: " + ((this.tileEntity.owner != "" && this.tileEntity.ownerOnline) ? this.tileEntity.ownerUsername : TranslateUtilities.translate("gui.telescope.no_player")), 5, 55, 4210752);
+		this.fontRenderer.drawString("Status: " + ((this.tileEntity.alreadyResearchedInput) ?  TranslateUtilities.translate("gui.telescope.status.already_researched"): TranslateUtilities.translate("gui.telescope.status.normal")), 5, 30, 4210752);
 	}
 
 	@Override
