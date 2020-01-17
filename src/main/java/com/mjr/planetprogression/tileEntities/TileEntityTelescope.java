@@ -148,7 +148,31 @@ public class TileEntityTelescope extends TileBaseElectricBlockWithInventory impl
 		if (this.getDisabled(0))
 			return false;
 		if (this.containingItems[1] != null && this.containingItems[1].getItem() instanceof ResearchPaper) {
-			return true;
+			IStatsCapability stats = null;
+
+			EntityPlayerMP player = PlayerUtilties.getPlayerFromUUID(this.owner);
+			if (player != null) {
+				stats = player.getCapability(CapabilityStatsHandler.PP_STATS_CAPABILITY, null);
+			}
+			boolean found = false;
+			for (Planet planet : GalaxyRegistry.getRegisteredPlanets().values()) {
+				if (((ResearchPaper) this.containingItems[1].getItem()).getBodyName().equalsIgnoreCase(planet.getUnlocalizedName())) {
+					if (stats.getUnlockedPlanets().contains(planet))
+						return false;
+					else
+						return true;
+				}
+			}
+			if (found == false) {
+				for (Moon moon : GalaxyRegistry.getRegisteredMoons().values()) {
+					if (((ResearchPaper) this.containingItems[1].getItem()).getBodyName().equalsIgnoreCase(moon.getUnlocalizedName())) {
+						if (stats.getUnlockedPlanets().contains(moon))
+							return false;
+						else
+							return true;
+					}
+				}
+			}
 		}
 		return false;
 	}
