@@ -286,7 +286,7 @@ public class EntitySatelliteRocket extends EntitySatelliteAutoRocket {
 			PlanetProgression.packetPipeline.sendTo(new PacketSimplePP(EnumSimplePacket.C_OPEN_SATELLITE_ROCKET_GUI, GCCoreUtil.getDimensionID(playerMP.worldObj), new Object[] { windowId, this.getEntityId() }), playerMP);
 			player.openContainer = new ContainerRocketInventory(playerMP.inventory, this, this.rocketType, playerMP);
 			player.openContainer.windowId = windowId;
-			player.openContainer.detectAndSendChanges();
+			player.openContainer.onCraftGuiOpened(playerMP);
 		}
 
 		return false;
