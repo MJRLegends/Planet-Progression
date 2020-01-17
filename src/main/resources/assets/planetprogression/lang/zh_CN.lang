@@ -41,5 +41,9 @@ satellite.builder.use.desc=用以制造卫星
 satellite.controller.use.desc=用以控制卫星并利用
 satellite.controller.use.2.desc=卫星来进行研究
 telescope.use.desc=用以发现研究报告中的天体
+telescope.use.unlocked=Research Completed! You have discovered  ##NEEDS TRANSLATE##
+research.discovered=You have discovered   ##NEEDS TRANSLATE##
+research.discovered.earth=You have discovered Earth!  ##NEEDS TRANSLATE##
+research.howto=Obtain Research Papers to start discovering!  ##NEEDS TRANSLATE##
 
 itemGroup.PlanetProgressionTab=Planet Progression##NEEDS TRANSLATE##

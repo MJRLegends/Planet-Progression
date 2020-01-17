@@ -41,5 +41,9 @@ satellite.builder.use.desc=Sirve para contruir Satélites
 satellite.controller.use.desc=Sirve para controlar Satélites y
 satellite.controller.use.2.desc=usarlos para Investigación
 telescope.use.desc=Sirve para descubrir objetos espaciales de los Papeles de Investigación
+telescope.use.unlocked=Research Completed! You have discovered  ##NEEDS TRANSLATE##
+research.discovered=You have discovered   ##NEEDS TRANSLATE##
+research.discovered.earth=You have discovered Earth!  ##NEEDS TRANSLATE##
+research.howto=Obtain Research Papers to start discovering!  ##NEEDS TRANSLATE##
 
 itemGroup.PlanetProgressionTab=Progreso de Planetas

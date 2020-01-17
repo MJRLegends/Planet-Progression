@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.google.common.collect.Lists;
+import com.mjr.mjrlegendslib.util.TranslateUtilities;
 import com.mjr.planetprogression.Config;
 import com.mjr.planetprogression.Constants;
 import com.mjr.planetprogression.PlanetProgression;
@@ -125,16 +126,16 @@ public class MainHandlerServer {
 				CelestialBody temp = GalaxyRegistry.getCelestialBodyFromDimensionID(event.getEntityLiving().worldObj.provider.getDimension());
 				if (temp != null && !stats.getUnlockedPlanets().contains(temp)) {
 					stats.addUnlockedPlanets(temp);
-					player.addChatMessage(new TextComponentString("You have discovered " + temp.getLocalizedName() + "!"));
-					player.addChatMessage(new TextComponentString("Obtain Research Papers to start discovering!"));
+					player.addChatMessage(new TextComponentString(TranslateUtilities.translate("research.discovered") + temp.getLocalizedName() + "!"));
+					player.addChatMessage(new TextComponentString(TranslateUtilities.translate("research.howto")));
 				}
 			}
 			else {
 				if (!stats.getUnlockedPlanets().contains(GalacticraftCore.planetOverworld)) {
 					stats.addUnlockedPlanets(GalacticraftCore.planetOverworld);
 					if(Config.showOverworldSpawnMessage) {
-						player.addChatMessage(new TextComponentString("You have discovered Earth!"));
-						player.addChatMessage(new TextComponentString("Obtain Research Papers to start discovering!"));
+						player.addChatMessage(new TextComponentString(TranslateUtilities.translate("research.discovered.earth")));
+						player.addChatMessage(new TextComponentString(TranslateUtilities.translate("research.howto")));
 					}
 				}
 			}

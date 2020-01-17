@@ -41,5 +41,9 @@ satellite.builder.use.desc=Used to Build Satellites
 satellite.controller.use.desc=Used to Control Satellites &
 satellite.controller.use.2.desc=to use them for research
 telescope.use.desc=Used to discover space objects from Research Papers
+telescope.use.unlocked=Research Completed! You have discovered 
+research.discovered=You have discovered 
+research.discovered.earth=You have discovered Earth!
+research.howto=Obtain Research Papers to start discovering!
 
 itemGroup.PlanetProgressionTab=Planet Progression
