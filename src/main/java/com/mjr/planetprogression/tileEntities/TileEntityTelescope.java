@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.mjr.mjrlegendslib.util.PlayerUtilties;
+import com.mjr.mjrlegendslib.util.TranslateUtilities;
 import com.mjr.planetprogression.Config;
 import com.mjr.planetprogression.PlanetProgression;
 import com.mjr.planetprogression.blocks.BlockTelescopeFake;
@@ -116,7 +117,7 @@ public class TileEntityTelescope extends TileBaseElectricBlockWithInventory impl
 				if (((ResearchPaper) this.stacks.get(1).getItem()).getBodyName().equalsIgnoreCase(planet.getUnlocalizedName())) {
 					if (!stats.getUnlockedPlanets().contains(planet)) {
 						stats.addUnlockedPlanets(planet);
-						player.sendMessage(new TextComponentString("Research Completed! You have discovered " + planet.getLocalizedName()));
+						player.sendMessage(new TextComponentString(TranslateUtilities.translate("telescope.use.unlocked") + planet.getLocalizedName()));
 						if (this.stacks.get(1).getCount() != 1)
 							this.stacks.get(1).setCount(this.stacks.get(1).getCount() - 1);
 						else
@@ -131,7 +132,7 @@ public class TileEntityTelescope extends TileBaseElectricBlockWithInventory impl
 					if (((ResearchPaper) this.stacks.get(1).getItem()).getBodyName().equalsIgnoreCase(moon.getUnlocalizedName())) {
 						if (!stats.getUnlockedPlanets().contains(moon)) {
 							stats.addUnlockedPlanets(moon);
-							player.sendMessage(new TextComponentString("Research Completed! You have discovered " + moon.getLocalizedName()));
+							player.sendMessage(new TextComponentString(TranslateUtilities.translate("telescope.use.unlocked") + moon.getLocalizedName()));
 							if (this.stacks.get(1).getCount() != 1)
 								this.stacks.get(1).setCount(this.stacks.get(1).getCount() - 1);
 							else
