@@ -3,19 +3,6 @@ package com.mjr.planetprogression.client.gui;
 import java.util.ArrayList;
 import java.util.List;
 
-import micdoodle8.mods.galacticraft.core.GalacticraftCore;
-import micdoodle8.mods.galacticraft.core.client.gui.container.GuiContainerGC;
-import micdoodle8.mods.galacticraft.core.client.gui.element.GuiElementInfoRegion;
-import micdoodle8.mods.galacticraft.core.energy.EnergyDisplayHelper;
-import micdoodle8.mods.galacticraft.core.network.PacketSimple;
-import micdoodle8.mods.galacticraft.core.network.PacketSimple.EnumSimplePacket;
-import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraftforge.fml.client.FMLClientHandler;
-
 import org.lwjgl.opengl.GL11;
 
 import com.mjr.mjrlegendslib.util.TranslateUtilities;
@@ -26,6 +13,18 @@ import com.mjr.planetprogression.inventory.ContainerSatelliteController;
 import com.mjr.planetprogression.item.ResearchPaper;
 import com.mjr.planetprogression.network.PacketSimplePP;
 import com.mjr.planetprogression.tileEntities.TileEntitySatelliteController;
+
+import micdoodle8.mods.galacticraft.core.GalacticraftCore;
+import micdoodle8.mods.galacticraft.core.client.gui.container.GuiContainerGC;
+import micdoodle8.mods.galacticraft.core.client.gui.element.GuiElementInfoRegion;
+import micdoodle8.mods.galacticraft.core.energy.EnergyDisplayHelper;
+import micdoodle8.mods.galacticraft.core.network.PacketSimple;
+import micdoodle8.mods.galacticraft.core.network.PacketSimple.EnumSimplePacket;
+import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.client.FMLClientHandler;
 
 public class GuiSatelliteController extends GuiContainerGC {
 	private static final ResourceLocation gui = new ResourceLocation(Constants.ASSET_PREFIX, "textures/gui/satellite_controller.png");
@@ -108,17 +107,13 @@ public class GuiSatelliteController extends GuiContainerGC {
 	protected void drawGuiContainerForegroundLayer(int par1, int par2) {
 		String displayString = this.tileEntity.getName();
 		this.fontRenderer.drawString(displayString, this.xSize / 2 - this.fontRenderer.getStringWidth(displayString) / 2, 5, 4210752);
-
 		this.fontRenderer.drawString(TranslateUtilities.translate("container.inventory"), 8, 135, 4210752);
-		this.fontRenderer.drawString(TranslateUtilities.translate("gui.satellite.satellite.id") + ": ", 5, 20, 4210752);
-		if(this.tileEntity.hasDishConnected)
-			this.fontRenderer.drawString(this.tileEntity.currentSatelliteID, 30, 30, 4210752);
-		else
-			this.fontRenderer.drawString(TextFormatting.DARK_RED + "Needs an Adjacent Communication Dish!", 30, 30, 4210752);
-		this.fontRenderer.drawString(TranslateUtilities.translate("gui.satellite.player") + ": " + ((this.tileEntity.owner != "" && this.tileEntity.ownerOnline) ? this.tileEntity.ownerUsername : TranslateUtilities.translate("gui.satellite.player.online")), 5, 45, 4210752);
-		this.fontRenderer.drawString(TranslateUtilities.translate("gui.satellite.research.progress") + ": "
+		this.fontRenderer.drawString(TranslateUtilities.translate("gui.satellite.satellite.id.name") + ": ", 5, 20, 4210752);
+		this.fontRenderer.drawString(this.tileEntity.currentSatelliteID, 30, 30, 4210752);
+		this.fontRenderer.drawString(TranslateUtilities.translate("gui.satellite.player.name") + ": " + ((this.tileEntity.owner != "" && this.tileEntity.ownerOnline) ? this.tileEntity.ownerUsername : TranslateUtilities.translate("gui.satellite.player.online.name")), 5, 45, 4210752);
+		this.fontRenderer.drawString(TranslateUtilities.translate("gui.satellite.research.progress.name") + ": "
 				+ (int) ((100 - (this.tileEntity.processTicks / Config.satelliteControllerModifier) / 2 / 100) == 100 ? 0 : (100 - (this.tileEntity.processTicks / Config.satelliteControllerModifier) / 2 / 100)) + " %", 5, 55, 4210752);
-		this.fontRenderer.drawString(TranslateUtilities.translate("gui.satellite.research") + ": " + TranslateUtilities.translate(ResearchPaper.convertBodyNameForLocalization(this.tileEntity.currentSatelliteResearchBody)), 5, 65, 4210752);
+		this.fontRenderer.drawString(TranslateUtilities.translate("gui.satellite.research.name") + ": " + TranslateUtilities.translate(ResearchPaper.convertBodyNameForLocalization(this.tileEntity.currentSatelliteResearchBody)), 5, 65, 4210752);
 	}
 
 	@Override

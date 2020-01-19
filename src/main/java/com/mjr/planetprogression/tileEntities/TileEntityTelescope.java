@@ -124,7 +124,7 @@ public class TileEntityTelescope extends TileBaseElectricBlockWithInventory impl
 				if (((ResearchPaper) this.getInventory().get(1).getItem()).getBodyName().equalsIgnoreCase(planet.getUnlocalizedName())) {
 					if (!stats.getUnlockedPlanets().contains(planet)) {
 						stats.addUnlockedPlanets(planet);
-						player.sendMessage(new TextComponentString(TranslateUtilities.translate("telescope.use.unlocked") + planet.getLocalizedName()));
+						player.sendMessage(new TextComponentString(TranslateUtilities.translate("telescope.use.unlocked.name") + planet.getLocalizedName()));
 						if (this.getInventory().get(1).getCount() != 1)
 							this.getInventory().get(1).setCount(this.getInventory().get(1).getCount() - 1);
 						else
@@ -139,7 +139,7 @@ public class TileEntityTelescope extends TileBaseElectricBlockWithInventory impl
 					if (((ResearchPaper) this.getInventory().get(1).getItem()).getBodyName().equalsIgnoreCase(moon.getUnlocalizedName())) {
 						if (!stats.getUnlockedPlanets().contains(moon)) {
 							stats.addUnlockedPlanets(moon);
-							player.sendMessage(new TextComponentString(TranslateUtilities.translate("telescope.use.unlocked") + moon.getLocalizedName()));
+							player.sendMessage(new TextComponentString(TranslateUtilities.translate("telescope.use.unlocked.name") + moon.getLocalizedName()));
 							if (this.getInventory().get(1).getCount() != 1)
 								this.getInventory().get(1).setCount(this.getInventory().get(1).getCount() - 1);
 							else
