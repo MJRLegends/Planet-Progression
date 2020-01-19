@@ -19,6 +19,7 @@ import micdoodle8.mods.galacticraft.core.client.gui.element.GuiElementInfoRegion
 import micdoodle8.mods.galacticraft.core.energy.EnergyDisplayHelper;
 import micdoodle8.mods.galacticraft.core.network.PacketSimple;
 import micdoodle8.mods.galacticraft.core.network.PacketSimple.EnumSimplePacket;
+import micdoodle8.mods.galacticraft.core.util.EnumColor;
 import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -88,12 +89,12 @@ public class GuiTelescope extends GuiContainerGC {
 				GalacticraftCore.packetPipeline.sendToServer(new PacketSimple(EnumSimplePacket.S_UPDATE_DISABLEABLE_BUTTON, GCCoreUtil.getDimensionID(mc.world), new Object[] { this.tileEntity.getPos(), 0 }));
 				break;
 			case 1:
-				PlanetProgression.packetPipeline.sendToServer(new PacketSimplePP(com.mjr.planetprogression.network.PacketSimplePP.EnumSimplePacket.S_UPDATE_ROTATION, GCCoreUtil.getDimensionID(mc.world),
-						new Object[] { this.tileEntity.getPos(), 0.0F }));
+				PlanetProgression.packetPipeline
+						.sendToServer(new PacketSimplePP(com.mjr.planetprogression.network.PacketSimplePP.EnumSimplePacket.S_UPDATE_ROTATION, GCCoreUtil.getDimensionID(mc.world), new Object[] { this.tileEntity.getPos(), 0.0F }));
 				break;
 			case 2:
-				PlanetProgression.packetPipeline.sendToServer(new PacketSimplePP(com.mjr.planetprogression.network.PacketSimplePP.EnumSimplePacket.S_UPDATE_ROTATION, GCCoreUtil.getDimensionID(mc.world),
-						new Object[] { this.tileEntity.getPos(), 1.0F }));
+				PlanetProgression.packetPipeline
+						.sendToServer(new PacketSimplePP(com.mjr.planetprogression.network.PacketSimplePP.EnumSimplePacket.S_UPDATE_ROTATION, GCCoreUtil.getDimensionID(mc.world), new Object[] { this.tileEntity.getPos(), 1.0F }));
 				break;
 			default:
 				break;
@@ -107,9 +108,16 @@ public class GuiTelescope extends GuiContainerGC {
 		this.fontRenderer.drawString(displayString, this.xSize / 2 - this.fontRenderer.getStringWidth(displayString) / 2, 5, 4210752);
 
 		this.fontRenderer.drawString(TranslateUtilities.translate("container.inventory"), 8, 135, 4210752);
-		this.fontRenderer.drawString("Progress: " + (int)(((this.tileEntity.processTicks / Config.telescopeTimeModifier) / 2) * (1 + this.tileEntity.poweredByTierGC)) / 2 + " %", 5, 20, 4210752);
+		this.fontRenderer.drawString("Progress: " + (int) (((this.tileEntity.processTicks / Config.telescopeTimeModifier) / 2) * (1 + this.tileEntity.poweredByTierGC)) / 2 + " %", 5, 20, 4210752);
 		this.fontRenderer.drawString("Player: " + ((this.tileEntity.owner != "" && this.tileEntity.ownerOnline) ? this.tileEntity.ownerUsername : TranslateUtilities.translate("gui.telescope.no_player")), 5, 55, 4210752);
-		this.fontRenderer.drawString("Status: " + ((this.tileEntity.alreadyResearchedInput) ?  TranslateUtilities.translate("gui.telescope.status.already_researched"): TranslateUtilities.translate("gui.telescope.status.normal")), 5, 30, 4210752);
+		String displayText = null;
+		if (!this.tileEntity.hasInputs()) {
+			displayText = EnumColor.RED + TranslateUtilities.translate("telescope.status.missing.paper.name");
+		} else if (!this.tileEntity.hasEnoughEnergyToRun) {
+			displayText = EnumColor.RED + TranslateUtilities.translate("gui.status.missing.power.name");
+		}
+		this.fontRenderer.drawString("Status: " + displayText == null ? ((this.tileEntity.alreadyResearchedInput) ? TranslateUtilities.translate("gui.telescope.status.already_researched") : TranslateUtilities.translate("gui.telescope.status.normal"))
+				: TranslateUtilities.translate(displayText), 5, 30, 4210752);
 	}
 
 	@Override
