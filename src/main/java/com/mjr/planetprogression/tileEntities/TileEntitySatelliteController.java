@@ -59,7 +59,12 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 			if (this.owner != "") {
 				if (ownerOnline)
 					this.ownerUsername = PlayerUtilties.getUsernameFromUUID(this.owner);
-				this.ownerOnline = PlayerUtilties.isPlayerOnlineByUUID(this.owner);
+				try {
+					if(this.owner != "")
+						this.ownerOnline = PlayerUtilties.isPlayerOnlineByUUID(this.owner);
+				} catch (Exception e) {
+					this.ownerOnline = false;
+				}
 				IStatsCapability stats = null;
 				if (ownerOnline && PlayerUtilties.getPlayerFromUUID(this.owner) != null) {
 					stats = PlayerUtilties.getPlayerFromUUID(this.owner).getCapability(CapabilityStatsHandler.PP_STATS_CAPABILITY, null);
