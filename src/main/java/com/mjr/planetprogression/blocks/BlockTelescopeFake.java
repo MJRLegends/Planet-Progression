@@ -140,7 +140,7 @@ public class BlockTelescopeFake extends BlockAdvancedTile implements ITileEntity
 		TileEntity tileEntity = world.getTileEntity(pos);
 		if (tileEntity instanceof TileEntityTelescopeFake) {
 			BlockPos mainBlockPosition = ((TileEntityTelescopeFake) tileEntity).mainBlockPosition;
-	
+
 			if (mainBlockPosition != null) {
 				return world.getBlockState(pos).getBlock().getBedDirection(world.getBlockState(mainBlockPosition), world, mainBlockPosition);
 			}
@@ -153,7 +153,7 @@ public class BlockTelescopeFake extends BlockAdvancedTile implements ITileEntity
 		TileEntity tileEntity = world.getTileEntity(pos);
 		if (tileEntity instanceof TileEntityTelescopeFake) {
 			BlockPos mainBlockPosition = ((TileEntityTelescopeFake) tileEntity).mainBlockPosition;
-	
+
 			if (mainBlockPosition != null) {
 				return world.getBlockState(pos).getBlock().isBed(world.getBlockState(mainBlockPosition), world, mainBlockPosition, player);
 			}

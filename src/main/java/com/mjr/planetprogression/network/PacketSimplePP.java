@@ -46,14 +46,14 @@ import micdoodle8.mods.galacticraft.core.util.PlayerUtil;
 public class PacketSimplePP extends PacketSimpleBase {
 	public enum EnumSimplePacket {
 		// SERVER
-		S_UPDATE_ROTATION(Side.SERVER, BlockPos.class, Float.class), 
-		S_UPDATE_CONTROLLER_SATLLITE_CHANGE(Side.SERVER, BlockPos.class, Float.class), 
+		S_UPDATE_ROTATION(Side.SERVER, BlockPos.class, Float.class),
+		S_UPDATE_CONTROLLER_SATLLITE_CHANGE(Side.SERVER, BlockPos.class, Float.class),
 		S_UPDATE_SATELLITE_LAUNCHER_GUI(Side.SERVER, Integer.class, BlockPos.class, Integer.class),
 		S_UPDATE_SATELLITE_ROCKET_STATUS(Side.SERVER, Integer.class, Integer.class),
 
 		// CLIENT
-		C_UPDATE_UNLOCKED_PLANET_LIST(Side.CLIENT, String[].class), 
-		C_UPDATE_SATELLITE_LIST(Side.CLIENT, Integer.class, String.class, Integer.class, String.class), 
+		C_UPDATE_UNLOCKED_PLANET_LIST(Side.CLIENT, String[].class),
+		C_UPDATE_SATELLITE_LIST(Side.CLIENT, Integer.class, String.class, Integer.class, String.class),
 		C_OPEN_SATELLITE_ROCKET_GUI(Side.CLIENT, Integer.class, Integer.class);
 
 		private Side targetSide;
