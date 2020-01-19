@@ -48,6 +48,7 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 	public boolean ownerOnline = false;
 	@NetworkedField(targetSide = Side.CLIENT)
 	public String ownerUsername = "";
+	public String lastReseached = "";
 
 	public ItemStack producingStack = null;
 
@@ -97,9 +98,12 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 						this.currentSatelliteID = (this.currentSatellite != null ? this.currentSatellite.getUuid() : "No Satellites Found!");
 
 						// Update Current Research Body for Client Side
-						if (this.currentSatelliteResearchBody.equals("") || this.currentSatelliteResearchBody.equals("Nothing!")) {
+						if (this.currentSatelliteResearchBody.equals("") || this.currentSatelliteResearchBody.equals("Nothing!") || this.currentSatelliteResearchBody.equals("Completed All!")) {
 							if (this.currentSatellite.getCurrentResearchItem() == null || this.currentSatellite.getCurrentResearchItem().getItem() == null)
-								this.currentSatelliteResearchBody = "Nothing!";
+								if (stats.getUnlockedPlanets().size() == PlanetProgression_Items.researchPapers.size())
+									this.currentSatelliteResearchBody = "Completed All!";
+								else
+									this.currentSatelliteResearchBody = "Nothing!";
 							else
 								this.currentSatelliteResearchBody = ((ResearchPaper) this.currentSatellite.getCurrentResearchItem().getItem()).getBodyName();
 						}
@@ -118,6 +122,7 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 							if (this.processTicks == 0) {
 								this.processTicks = TileEntitySatelliteController.PROCESS_TIME_REQUIRED;
 							} else {
+								this.processTicks = this.processTicks - 50;
 								if (--this.processTicks <= 0) {
 									this.smeltItem();
 									this.processTicks = this.canProcess() ? TileEntitySatelliteController.PROCESS_TIME_REQUIRED : 0;
@@ -133,6 +138,14 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 	}
 
 	public boolean canProcess() {
+		if (this.currentSatelliteResearchBody.equalsIgnoreCase("Nothing"))
+			return false;
+		if (this.lastReseached.equalsIgnoreCase(this.currentSatelliteResearchBody)) {
+			this.currentSatelliteResearchBody = "Nothing";
+			if (currentSatellite != null)
+				this.currentSatellite.setCurrentResearchItem(null);
+			return false;
+		}
 		return !this.getDisabled(0);
 	}
 
@@ -169,6 +182,7 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 					this.stacks.get(1).grow(resultItemStack.getCount());
 				}
 			}
+			this.lastReseached = this.currentSatelliteResearchBody;
 			this.producingStack = null;
 			this.currentSatelliteResearchBody = "";
 
@@ -199,7 +213,7 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 
 		// Add Moons that Planets hasnt been Researched yet
 		for (Moon moon : GalaxyRegistry.getRegisteredMoons().values()) {
-			if(!temp.contains(moon.getParentPlanet().getUnlocalizedName()))
+			if (!temp.contains(moon.getParentPlanet().getUnlocalizedName()))
 				temp.add(moon.getUnlocalizedName());
 		}
 
@@ -254,6 +268,7 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 		this.ownerUsername = nbt.getString("ownerUsername");
 		this.stacks = this.readStandardItemsFromNBT(nbt);
 		this.ownerOnline = nbt.getBoolean("ownerOnline");
+		this.lastReseached = nbt.getString("lastReseached");
 	}
 
 	@Override
@@ -268,6 +283,7 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 		nbt.setString("owner", this.getOwner());
 		nbt.setString("ownerUsername", this.ownerUsername);
 		nbt.setBoolean("ownerOnline", false); // False to trigger for Update on Load
+		nbt.setString("lastReseached", this.lastReseached);
 		return nbt;
 	}
 
