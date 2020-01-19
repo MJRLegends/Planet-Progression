@@ -4,16 +4,17 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-import micdoodle8.mods.galacticraft.core.util.EnumColor;
+import com.mjr.mjrlegendslib.item.BasicItem;
+import com.mjr.mjrlegendslib.util.TranslateUtilities;
+import com.mjr.planetprogression.PlanetProgression;
+
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import com.mjr.mjrlegendslib.item.BasicItem;
-import com.mjr.mjrlegendslib.util.TranslateUtilities;
-import com.mjr.planetprogression.PlanetProgression;
+import micdoodle8.mods.galacticraft.core.util.EnumColor;
 
 public class ItemSatellite extends BasicItem {
 

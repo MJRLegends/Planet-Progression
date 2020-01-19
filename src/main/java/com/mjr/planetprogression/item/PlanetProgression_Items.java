@@ -11,12 +11,13 @@ import com.google.common.collect.Lists;
 import com.mjr.planetprogression.Config;
 import com.mjr.planetprogression.PlanetProgression;
 
+import net.minecraft.item.Item;
+
 import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
 import micdoodle8.mods.galacticraft.api.galaxies.GalaxyRegistry;
 import micdoodle8.mods.galacticraft.api.galaxies.Moon;
 import micdoodle8.mods.galacticraft.api.galaxies.Planet;
 import micdoodle8.mods.galacticraft.core.GalacticraftCore;
-import net.minecraft.item.Item;
 
 public class PlanetProgression_Items {
 	public static List<Item> researchPapers = new ArrayList<>();
@@ -100,7 +101,7 @@ public class PlanetProgression_Items {
 
 		// Sort Research Paper order by Rocket Tier
         Collections.sort(reachablePlanetsMoons, SortType.getTypeFromID(1));
-        
+
         //Reverse list to get it in the correct order
         reachablePlanetsMoons = Lists.reverse(reachablePlanetsMoons);
 
@@ -109,7 +110,7 @@ public class PlanetProgression_Items {
         researchPapers.add(new ResearchPaper("planet.mars", temp++));
         researchPapers.add(new ResearchPaper("planet.venus", temp++));
         researchPapers.add(new ResearchPaper("planet.asteroids", temp++));
-        
+
         //Create Research Papers for Sorted Addon Planets/Moons
         for(CelestialBody body : reachablePlanetsMoons) {
     		researchPapers.add(new ResearchPaper(body.getUnlocalizedName(), temp++));
@@ -117,7 +118,7 @@ public class PlanetProgression_Items {
         for(CelestialBody body : unReachableResearchPapers) {
         	researchPapers.add(new ResearchPaper(body.getUnlocalizedName(), temp++));
         }
-        
+
         // Add Planet Extras that GC adds if they dont exist from a addon
 		List<String> bodiesExtra = new ArrayList<String>();
 		bodiesExtra.add("planet.mercury");

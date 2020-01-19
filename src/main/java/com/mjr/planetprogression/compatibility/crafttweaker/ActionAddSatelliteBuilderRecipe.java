@@ -2,11 +2,12 @@ package com.mjr.planetprogression.compatibility.crafttweaker;
 
 import com.mjr.planetprogression.recipes.MachineRecipeManager;
 
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
+
 import crafttweaker.IAction;
 import crafttweaker.api.item.IItemStack;
 import crafttweaker.api.minecraft.CraftTweakerMC;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
 
 public class ActionAddSatelliteBuilderRecipe implements IAction {
 

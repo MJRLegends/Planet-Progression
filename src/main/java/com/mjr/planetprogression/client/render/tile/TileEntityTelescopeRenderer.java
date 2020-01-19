@@ -1,5 +1,12 @@
 package com.mjr.planetprogression.client.render.tile;
 
+import org.lwjgl.opengl.GL11;
+
+import com.google.common.collect.ImmutableList;
+import com.mjr.mjrlegendslib.util.ModelUtilities;
+import com.mjr.planetprogression.Constants;
+import com.mjr.planetprogression.tileEntities.TileEntityTelescope;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
@@ -9,13 +16,6 @@ import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import org.lwjgl.opengl.GL11;
-
-import com.google.common.collect.ImmutableList;
-import com.mjr.mjrlegendslib.util.ModelUtilities;
-import com.mjr.planetprogression.Constants;
-import com.mjr.planetprogression.tileEntities.TileEntityTelescope;
 
 @SideOnly(Side.CLIENT)
 public class TileEntityTelescopeRenderer extends TileEntitySpecialRenderer<TileEntityTelescope> {

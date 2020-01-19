@@ -101,7 +101,7 @@ public class ClientProxy extends CommonProxy {
 	public void registerItemJsons() {
 		if (Config.researchMode == 2)
 			ClientUtilities.registerItemJson(Constants.TEXTURE_PREFIX, PlanetProgression_Items.satelliteBasicModule);
-		
+
 		for (Item item : PlanetProgression_Items.researchPapers) {
 			ClientUtilities.registerItemJson(Constants.TEXTURE_PREFIX, item, "research_paper");
 		}

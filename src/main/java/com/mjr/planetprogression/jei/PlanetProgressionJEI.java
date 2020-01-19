@@ -2,19 +2,21 @@ package com.mjr.planetprogression.jei;
 
 import javax.annotation.Nonnull;
 
+import com.mjr.planetprogression.blocks.PlanetProgression_Blocks;
+import com.mjr.planetprogression.jei.satelliteBuilder.SatelliteBuilderRecipeCategory;
+import com.mjr.planetprogression.jei.satelliteBuilder.SatelliteBuilderRecipeMaker;
+import com.mjr.planetprogression.jei.satelliteBuilder.SatelliteBuilderRecipeWrapper;
+
+import net.minecraft.item.ItemStack;
+
+import micdoodle8.mods.galacticraft.api.recipe.INasaWorkbenchRecipe;
+import micdoodle8.mods.galacticraft.core.GCBlocks;
+
 import mezz.jei.api.BlankModPlugin;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.IModRegistry;
 import mezz.jei.api.JEIPlugin;
 import mezz.jei.api.recipe.IRecipeCategoryRegistration;
-import micdoodle8.mods.galacticraft.api.recipe.INasaWorkbenchRecipe;
-import micdoodle8.mods.galacticraft.core.GCBlocks;
-import net.minecraft.item.ItemStack;
-
-import com.mjr.planetprogression.blocks.PlanetProgression_Blocks;
-import com.mjr.planetprogression.jei.satelliteBuilder.SatelliteBuilderRecipeCategory;
-import com.mjr.planetprogression.jei.satelliteBuilder.SatelliteBuilderRecipeMaker;
-import com.mjr.planetprogression.jei.satelliteBuilder.SatelliteBuilderRecipeWrapper;
 
 @JEIPlugin
 public class PlanetProgressionJEI extends BlankModPlugin {

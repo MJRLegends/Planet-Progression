@@ -1,18 +1,19 @@
 package com.mjr.planetprogression.recipes;
 
-import micdoodle8.mods.galacticraft.core.GCItems;
+import com.mjr.planetprogression.Config;
+import com.mjr.planetprogression.item.PlanetProgression_Items;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 
-import com.mjr.planetprogression.Config;
-import com.mjr.planetprogression.item.PlanetProgression_Items;
+import micdoodle8.mods.galacticraft.core.GCItems;
 
 public class PlanetProgression_Recipes {
 
 	public static void init() {
 		registerRecipes();
 	}
-	
+
 	public static void initRocketRecipes() {
 		if (Config.researchMode == 2 || Config.researchMode == 3)
 			SatelliteRocketRecipes.registerRocketCraftingRecipe();

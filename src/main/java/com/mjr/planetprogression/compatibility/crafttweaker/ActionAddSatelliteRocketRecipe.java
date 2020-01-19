@@ -5,15 +5,17 @@ import java.util.HashMap;
 import com.mjr.planetprogression.item.PlanetProgression_Items;
 import com.mjr.planetprogression.recipes.SatelliteRocketRecipes;
 
-import crafttweaker.IAction;
-import crafttweaker.api.item.IItemStack;
-import crafttweaker.api.minecraft.CraftTweakerMC;
-import micdoodle8.mods.galacticraft.core.recipe.NasaWorkbenchRecipe;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 
+import micdoodle8.mods.galacticraft.core.recipe.NasaWorkbenchRecipe;
+
+import crafttweaker.IAction;
+import crafttweaker.api.item.IItemStack;
+import crafttweaker.api.minecraft.CraftTweakerMC;
+
 public class ActionAddSatelliteRocketRecipe implements IAction {
-	
+
 	private final IItemStack input1;
 	private final IItemStack input2;
 	private final IItemStack input3;
@@ -44,7 +46,7 @@ public class ActionAddSatelliteRocketRecipe implements IAction {
 	private final IItemStack input28;
 	private final IItemStack input29;
 	private final IItemStack input30;
-	
+
 	public ActionAddSatelliteRocketRecipe(IItemStack input1, IItemStack input2, IItemStack input3, IItemStack input4, IItemStack input5, IItemStack input6, IItemStack input7, IItemStack input8, IItemStack input9, IItemStack input10,
 			IItemStack input11, IItemStack input12, IItemStack input13, IItemStack input14, IItemStack input15, IItemStack input16, IItemStack input17, IItemStack input18, IItemStack input19, IItemStack input20, IItemStack input21,
 			IItemStack input22, IItemStack input23, IItemStack input24, IItemStack input25, IItemStack input26, IItemStack input27, IItemStack input28, IItemStack input29, IItemStack input30) {

@@ -4,8 +4,13 @@ import java.util.List;
 
 import org.apache.logging.log4j.core.util.Loader;
 
-import micdoodle8.mods.galacticraft.core.client.gui.screen.GuiCelestialSelection;
-import micdoodle8.mods.galacticraft.core.util.EnumColor;
+import com.google.common.collect.Lists;
+import com.mjr.mjrlegendslib.util.MessageUtilities;
+import com.mjr.mjrlegendslib.util.TranslateUtilities;
+import com.mjr.planetprogression.blocks.PlanetProgression_Blocks;
+import com.mjr.planetprogression.client.gui.screen.CustomGuiCelestialSelection;
+import com.mjr.planetprogression.network.PlanetProgressionPacketHandler;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.settings.GameSettings;
@@ -21,12 +26,8 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import com.google.common.collect.Lists;
-import com.mjr.mjrlegendslib.util.MessageUtilities;
-import com.mjr.mjrlegendslib.util.TranslateUtilities;
-import com.mjr.planetprogression.blocks.PlanetProgression_Blocks;
-import com.mjr.planetprogression.client.gui.screen.CustomGuiCelestialSelection;
-import com.mjr.planetprogression.network.PlanetProgressionPacketHandler;
+import micdoodle8.mods.galacticraft.core.client.gui.screen.GuiCelestialSelection;
+import micdoodle8.mods.galacticraft.core.util.EnumColor;
 
 public class MainHandlerClient {
 	private static List<PlanetProgressionPacketHandler> packetHandlers = Lists.newCopyOnWriteArrayList();
