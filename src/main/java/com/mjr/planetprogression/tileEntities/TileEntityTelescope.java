@@ -187,9 +187,9 @@ public class TileEntityTelescope extends TileBaseElectricBlockWithInventory impl
 	}
 
 	public boolean hasInputs() {
-		if (this.getInventory().get(1).isEmpty())
+		if (this.containingItems[1] == null)
 			return false;
-		if (!(this.getInventory().get(1).getItem() instanceof ResearchPaper))
+		if (!(this.containingItems[1].getItem() instanceof ResearchPaper))
 			return false;
 		return true;
 	}
