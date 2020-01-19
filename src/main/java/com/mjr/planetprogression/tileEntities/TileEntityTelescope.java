@@ -77,7 +77,12 @@ public class TileEntityTelescope extends TileBaseElectricBlockWithInventory impl
 			if (this.owner != "") {
 				if (ownerOnline)
 					this.ownerUsername = PlayerUtilties.getUsernameFromUUID(this.owner);
-				this.ownerOnline = PlayerUtilties.isPlayerOnlineByUUID(this.owner);
+				try {
+					if(this.owner != "")
+						this.ownerOnline = PlayerUtilties.isPlayerOnlineByUUID(this.owner);
+				} catch (Exception e) {
+					this.ownerOnline = false;
+				}
 				if (this.hasEnoughEnergyToRun) {
 					if (ownerOnline) {
 						if (this.canResearch()) {
