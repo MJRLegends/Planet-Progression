@@ -111,8 +111,6 @@ public class PlanetProgression {
 		// Register GUI Handler
 		NetworkUtilities.registerGuiHandler(PlanetProgression.instance, new GuiHandler());
 
-		PlanetProgression_Recipes.init();
-
 		SchematicRegistry.registerSchematicRecipe(new SchematicSatelliteRocket());
 
 		if (Config.generateResearchPaperInStructure)
@@ -152,6 +150,7 @@ public class PlanetProgression {
 
 		@SubscribeEvent(priority = EventPriority.LOWEST)
 		public static void registerRecipesEvent(RegistryEvent.Register<IRecipe> event) {
+			PlanetProgression_Recipes.init();
 		}
 	}
 
