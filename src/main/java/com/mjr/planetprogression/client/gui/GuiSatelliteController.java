@@ -22,6 +22,7 @@ import com.mjr.planetprogression.Config;
 import com.mjr.planetprogression.Constants;
 import com.mjr.planetprogression.PlanetProgression;
 import com.mjr.planetprogression.inventory.ContainerSatelliteController;
+import com.mjr.planetprogression.item.ResearchPaper;
 import com.mjr.planetprogression.network.PacketSimplePP;
 import com.mjr.planetprogression.tileEntities.TileEntitySatelliteController;
 
@@ -113,7 +114,7 @@ public class GuiSatelliteController extends GuiContainerGC {
 		this.fontRendererObj.drawString("Player: " + ((this.tileEntity.owner != "" && this.tileEntity.ownerOnline) ? this.tileEntity.ownerUsername : "Player is not online!"), 5, 45, 4210752);
 		this.fontRendererObj.drawString("Research Progress: "
 				+ (int) ((100 - (this.tileEntity.processTicks / Config.satelliteControllerModifier) / 2 / 100) == 100 ? 0 : (100 - (this.tileEntity.processTicks / Config.satelliteControllerModifier) / 2 / 100)) + " %", 5, 55, 4210752);
-		this.fontRendererObj.drawString("Researching : " + TranslateUtilities.translate(this.tileEntity.currentSatelliteResearchBody), 5, 65, 4210752);
+		this.fontRendererObj.drawString("Researching : " + TranslateUtilities.translate(ResearchPaper.convertBodyNameForLocalization(this.tileEntity.currentSatelliteResearchBody)), 5, 65, 4210752);
 	}
 
 	@Override
