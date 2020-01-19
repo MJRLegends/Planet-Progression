@@ -71,7 +71,7 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 						this.ownerOnline = false;
 					}
 				}
-				
+
 				IStatsCapability stats = null;
 				if (ownerOnline && PlayerUtilties.getPlayerFromUUID(this.owner) != null) {
 					stats = PlayerUtilties.getPlayerFromUUID(this.owner).getCapability(CapabilityStatsHandler.PP_STATS_CAPABILITY, null);

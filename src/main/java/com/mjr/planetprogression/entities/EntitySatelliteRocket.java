@@ -49,7 +49,7 @@ public class EntitySatelliteRocket extends EntitySatelliteAutoRocket {
 		super(world);
 		this.setSize(3.0F, 16.0F);
 	}
-	
+
 	public EntitySatelliteRocket(World world, double x, double y, double z, IRocketType.EnumRocketType type) {
 		super(world, x, y, z);
 		this.rocketType = type;

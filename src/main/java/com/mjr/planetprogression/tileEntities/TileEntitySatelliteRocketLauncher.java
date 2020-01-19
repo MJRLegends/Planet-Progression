@@ -69,7 +69,7 @@ public class TileEntitySatelliteRocketLauncher extends TileBaseElectricBlockWith
 			}
 		}
 	}
-	
+
 	@Override
 	public boolean shouldUseEnergy() {
 		return this.canRun();
