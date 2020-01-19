@@ -4,6 +4,7 @@ item.item_satellite_rocket.rocket.name=卫星运载火箭
 item.satellite_module_basic.name=基础卫星模块
 item.satellite_basic.name=基础卫星
 satellite.use.desc=需放入卫星运载火箭的货仓内
+satellite.use.desc.rename=Use within an Anvil to get a custom name ##NEEDS TRANSLATE##
 research.paper.loot.desc=可从地牢战利品中获得
 research.paper.woldgen.desc=可从世界生成结构中获得
 research.paper.satellite.controller.desc=可通过卫星控制器获得

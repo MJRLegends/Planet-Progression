@@ -35,5 +35,6 @@ public class ItemSatellite extends BasicItem {
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack par1ItemStack, EntityPlayer player, List<String> par2List, boolean b) {
 		par2List.add(EnumColor.AQUA + TranslateUtilities.translate("satellite.use.desc"));
+		par2List.add(EnumColor.AQUA + TranslateUtilities.translate("satellite.use.desc.rename"));
 	}
 }
