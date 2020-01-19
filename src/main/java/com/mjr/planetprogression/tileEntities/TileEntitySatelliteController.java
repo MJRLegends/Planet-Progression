@@ -232,6 +232,7 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 							this.producingStack = newItem;
 							this.currentSatellite.setCurrentResearchItem(this.producingStack);
 							this.currentSatellite.setDataAmount(0);
+							markForSatelliteUpdate = true;
 							return;
 						}
 					}
