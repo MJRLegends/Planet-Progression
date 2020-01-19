@@ -31,7 +31,7 @@ import micdoodle8.mods.galacticraft.core.util.EnumSortCategoryBlock;
 public class BlockSatelliteBuilder extends BlockAdvancedTile implements ISortableBlock {
 	public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
 	private final Random rand = new Random();
-	
+
 	public BlockSatelliteBuilder(String assetName) {
 		super(Material.rock);
 		this.setHardness(1.0F);

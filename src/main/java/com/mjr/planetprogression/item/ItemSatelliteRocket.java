@@ -102,7 +102,7 @@ public class ItemSatelliteRocket extends Item implements IHoldableItem {
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void addInformation(ItemStack par1ItemStack, EntityPlayer player, List<String> par2List, boolean b) {		
+	public void addInformation(ItemStack par1ItemStack, EntityPlayer player, List<String> par2List, boolean b) {
 		EnumRocketType type;
 
 		if (par1ItemStack.getItemDamage() < 10) {
