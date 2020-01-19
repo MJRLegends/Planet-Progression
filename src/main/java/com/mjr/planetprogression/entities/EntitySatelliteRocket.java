@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import io.netty.buffer.ByteBuf;
+
 import com.mjr.mjrlegendslib.util.PlayerUtilties;
 import com.mjr.mjrlegendslib.util.TranslateUtilities;
 import com.mjr.planetprogression.PlanetProgression;
@@ -16,16 +18,6 @@ import com.mjr.planetprogression.network.PacketSimplePP;
 import com.mjr.planetprogression.network.PacketSimplePP.EnumSimplePacket;
 import com.mjr.planetprogression.tileEntities.TileEntitySatelliteLandingPad;
 
-import io.netty.buffer.ByteBuf;
-import micdoodle8.mods.galacticraft.api.entity.IRocketType;
-import micdoodle8.mods.galacticraft.api.tile.IFuelDock;
-import micdoodle8.mods.galacticraft.api.vector.Vector3;
-import micdoodle8.mods.galacticraft.api.world.IGalacticraftWorldProvider;
-import micdoodle8.mods.galacticraft.core.GalacticraftCore;
-import micdoodle8.mods.galacticraft.core.inventory.ContainerRocketInventory;
-import micdoodle8.mods.galacticraft.core.util.ConfigManagerCore;
-import micdoodle8.mods.galacticraft.core.util.EnumColor;
-import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -36,6 +28,16 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
+
+import micdoodle8.mods.galacticraft.api.entity.IRocketType;
+import micdoodle8.mods.galacticraft.api.tile.IFuelDock;
+import micdoodle8.mods.galacticraft.api.vector.Vector3;
+import micdoodle8.mods.galacticraft.api.world.IGalacticraftWorldProvider;
+import micdoodle8.mods.galacticraft.core.GalacticraftCore;
+import micdoodle8.mods.galacticraft.core.inventory.ContainerRocketInventory;
+import micdoodle8.mods.galacticraft.core.util.ConfigManagerCore;
+import micdoodle8.mods.galacticraft.core.util.EnumColor;
+import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 
 public class EntitySatelliteRocket extends EntitySatelliteAutoRocket {
 

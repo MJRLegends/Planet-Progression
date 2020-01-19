@@ -1,13 +1,13 @@
 package com.mjr.planetprogression.client.handlers.capabilities;
 
+import com.mjr.planetprogression.Constants;
+
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.CapabilityManager;
-
-import com.mjr.planetprogression.Constants;
 
 public class CapabilityStatsClientHandler {
 	@CapabilityInject(IStatsClientCapability.class)

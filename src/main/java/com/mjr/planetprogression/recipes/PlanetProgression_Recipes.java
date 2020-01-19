@@ -1,15 +1,16 @@
 package com.mjr.planetprogression.recipes;
 
-import micdoodle8.mods.galacticraft.core.GCBlocks;
-import micdoodle8.mods.galacticraft.core.GCItems;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
-
 import com.mjr.mjrlegendslib.util.RecipeUtilities;
 import com.mjr.planetprogression.Config;
 import com.mjr.planetprogression.blocks.PlanetProgression_Blocks;
 import com.mjr.planetprogression.item.PlanetProgression_Items;
+
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
+
+import micdoodle8.mods.galacticraft.core.GCBlocks;
+import micdoodle8.mods.galacticraft.core.GCItems;
 
 public class PlanetProgression_Recipes {
 

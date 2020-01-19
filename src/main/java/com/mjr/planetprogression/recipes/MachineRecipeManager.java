@@ -6,9 +6,9 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import net.minecraft.item.ItemStack;
-
 import com.google.common.collect.ImmutableMap;
+
+import net.minecraft.item.ItemStack;
 
 public class MachineRecipeManager {
 	private static HashMap<ItemStack[], ItemStack> satelliteBuilderRecipes = new HashMap<ItemStack[], ItemStack>();

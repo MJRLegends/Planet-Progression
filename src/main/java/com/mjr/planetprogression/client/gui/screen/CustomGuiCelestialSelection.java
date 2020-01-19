@@ -9,17 +9,13 @@ import com.google.common.collect.Lists;
 import com.mjr.planetprogression.client.handlers.capabilities.CapabilityStatsClientHandler;
 import com.mjr.planetprogression.client.handlers.capabilities.IStatsClientCapability;
 
-import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
-import micdoodle8.mods.galacticraft.api.galaxies.GalaxyRegistry;
-import micdoodle8.mods.galacticraft.api.galaxies.Moon;
-import micdoodle8.mods.galacticraft.api.galaxies.Planet;
-import micdoodle8.mods.galacticraft.api.galaxies.Satellite;
-import micdoodle8.mods.galacticraft.api.galaxies.SolarSystem;
-import micdoodle8.mods.galacticraft.core.client.gui.screen.GuiCelestialSelection;
-import micdoodle8.mods.galacticraft.core.util.PlayerUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraftforge.fml.client.FMLClientHandler;
+
+import micdoodle8.mods.galacticraft.api.galaxies.*;
+import micdoodle8.mods.galacticraft.core.client.gui.screen.GuiCelestialSelection;
+import micdoodle8.mods.galacticraft.core.util.PlayerUtil;
 
 public class CustomGuiCelestialSelection extends GuiCelestialSelection {
 

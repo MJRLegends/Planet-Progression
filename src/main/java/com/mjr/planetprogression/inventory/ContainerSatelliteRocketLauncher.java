@@ -2,14 +2,15 @@ package com.mjr.planetprogression.inventory;
 
 import com.mjr.planetprogression.tileEntities.TileEntitySatelliteRocketLauncher;
 
-import micdoodle8.mods.galacticraft.api.item.IItemElectric;
-import micdoodle8.mods.galacticraft.core.energy.EnergyUtil;
-import micdoodle8.mods.galacticraft.core.inventory.SlotSpecific;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+
+import micdoodle8.mods.galacticraft.api.item.IItemElectric;
+import micdoodle8.mods.galacticraft.core.energy.EnergyUtil;
+import micdoodle8.mods.galacticraft.core.inventory.SlotSpecific;
 
 public class ContainerSatelliteRocketLauncher extends Container
 {

@@ -1,7 +1,8 @@
 package com.mjr.planetprogression.item;
 
-import micdoodle8.mods.galacticraft.api.recipe.ISchematicPage;
-import micdoodle8.mods.galacticraft.core.items.ItemSchematic;
+import com.mjr.planetprogression.client.gui.GuiSchematicSatelliteRocket;
+import com.mjr.planetprogression.inventory.ContainerSchematicSatelliteRocket;
+
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
@@ -10,8 +11,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import com.mjr.planetprogression.client.gui.GuiSchematicSatelliteRocket;
-import com.mjr.planetprogression.inventory.ContainerSchematicSatelliteRocket;
+import micdoodle8.mods.galacticraft.api.recipe.ISchematicPage;
+import micdoodle8.mods.galacticraft.core.items.ItemSchematic;
 
 public class SchematicSatelliteRocket extends ItemSchematic implements ISchematicPage {
 

@@ -2,9 +2,10 @@ package com.mjr.planetprogression.jei;
 
 import javax.annotation.Nonnull;
 
+import micdoodle8.mods.galacticraft.core.util.GCLog;
+
 import mezz.jei.api.recipe.IRecipeHandler;
 import mezz.jei.api.recipe.IRecipeWrapper;
-import micdoodle8.mods.galacticraft.core.util.GCLog;
 
 public class SatelliteRocketRecipeHandler implements IRecipeHandler<SatelliteRocketRecipeWrapper> {
 	@Nonnull

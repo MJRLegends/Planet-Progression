@@ -3,8 +3,12 @@ package com.mjr.planetprogression.command;
 import java.util.ArrayList;
 import java.util.List;
 
-import micdoodle8.mods.galacticraft.core.util.EnumColor;
-import micdoodle8.mods.galacticraft.core.util.PlayerUtil;
+import com.mjr.mjrlegendslib.util.PlayerUtilties;
+import com.mjr.planetprogression.data.SatelliteData;
+import com.mjr.planetprogression.handlers.capabilities.CapabilityStatsHandler;
+import com.mjr.planetprogression.handlers.capabilities.IStatsCapability;
+import com.mojang.authlib.GameProfile;
+
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
@@ -13,11 +17,8 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 
-import com.mjr.mjrlegendslib.util.PlayerUtilties;
-import com.mjr.planetprogression.data.SatelliteData;
-import com.mjr.planetprogression.handlers.capabilities.CapabilityStatsHandler;
-import com.mjr.planetprogression.handlers.capabilities.IStatsCapability;
-import com.mojang.authlib.GameProfile;
+import micdoodle8.mods.galacticraft.core.util.EnumColor;
+import micdoodle8.mods.galacticraft.core.util.PlayerUtil;
 
 public class CommandRemoveAllSatellites extends CommandBase {
 

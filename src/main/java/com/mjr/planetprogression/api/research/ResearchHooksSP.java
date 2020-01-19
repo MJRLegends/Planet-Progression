@@ -3,10 +3,11 @@ package com.mjr.planetprogression.api.research;
 import com.mjr.planetprogression.client.handlers.capabilities.CapabilityStatsClientHandler;
 import com.mjr.planetprogression.client.handlers.capabilities.IStatsClientCapability;
 
-import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
 
 @SideOnly(Side.CLIENT)
 public class ResearchHooksSP {
