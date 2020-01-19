@@ -49,7 +49,7 @@ public class GUISatelliteRocketLauncher extends GuiContainerGC implements IDropb
 		final int yTop = (this.height - this.ySize) / 2;
 		this.dropdownTest = new GuiElementDropdown(0, this, xLeft + 92, yTop + 62, EnumAutoLaunch.INSTANT.getTitle(), EnumAutoLaunch.TIME_10_SECONDS.getTitle(), EnumAutoLaunch.TIME_30_SECONDS.getTitle(), EnumAutoLaunch.TIME_1_MINUTE.getTitle());
 		this.launchButton = new GuiButton(1, xLeft - 145 + 158, yTop + 35, 150, 20,
-				this.launchController.launchEnabled ? TranslateUtilities.translate("gui.satellite_launcher.auto_disable") : TranslateUtilities.translate("gui.satellite_launcher.auto_enable"));
+				this.launchController.launchEnabled ? TranslateUtilities.translate("gui.satellite_launcher.auto_disable.name") : TranslateUtilities.translate("gui.satellite_launcher.auto_enable.name"));
 		this.buttonList.add(this.dropdownTest);
 		this.buttonList.add(this.launchButton);
 		List<String> batterySlotDesc = new ArrayList<String>();
