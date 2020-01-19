@@ -1,33 +1,12 @@
 package com.mjr.planetprogression;
 
-import micdoodle8.mods.galacticraft.api.recipe.SchematicRegistry;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.WeightedRandomChestContent;
-import net.minecraftforge.common.ChestGenHooks;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.EventHandler;
-import net.minecraftforge.fml.common.Mod.Instance;
-import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.event.FMLFingerprintViolationEvent;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
-
 import com.mjr.mjrlegendslib.util.MessageUtilities;
 import com.mjr.mjrlegendslib.util.NetworkUtilities;
 import com.mjr.mjrlegendslib.util.RegisterUtilities;
 import com.mjr.planetprogression.blocks.PlanetProgression_Blocks;
 import com.mjr.planetprogression.client.gui.GuiHandler;
 import com.mjr.planetprogression.client.handlers.capabilities.CapabilityStatsClientHandler;
-import com.mjr.planetprogression.command.CommandAddSatellite;
-import com.mjr.planetprogression.command.CommandRemoveAllSatellites;
-import com.mjr.planetprogression.command.CommandRemoveAllUnlockedCelestialBody;
-import com.mjr.planetprogression.command.CommandRemoveUnlockedCelestialBody;
-import com.mjr.planetprogression.command.CommandUnlockAllCelestialBody;
-import com.mjr.planetprogression.command.CommandUnlockCelestialBody;
+import com.mjr.planetprogression.command.*;
 import com.mjr.planetprogression.entities.EntitySatelliteRocket;
 import com.mjr.planetprogression.handlers.MainHandlerServer;
 import com.mjr.planetprogression.handlers.capabilities.CapabilityStatsHandler;
@@ -37,6 +16,19 @@ import com.mjr.planetprogression.network.PlanetProgressionChannelHandler;
 import com.mjr.planetprogression.proxy.CommonProxy;
 import com.mjr.planetprogression.recipes.PlanetProgression_Recipes;
 import com.mjr.planetprogression.world.WorldGenerater;
+
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.WeightedRandomChestContent;
+import net.minecraftforge.common.ChestGenHooks;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod.EventHandler;
+import net.minecraftforge.fml.common.Mod.Instance;
+import net.minecraftforge.fml.common.SidedProxy;
+import net.minecraftforge.fml.common.event.*;
+
+import micdoodle8.mods.galacticraft.api.recipe.SchematicRegistry;
 
 @Mod(modid = Constants.modID, name = Constants.modName, version = Constants.modVersion, dependencies = Constants.DEPENDENCIES_FORGE + Constants.DEPENDENCIES_MODS, certificateFingerprint = Constants.CERTIFICATEFINGERPRINT)
 public class PlanetProgression {

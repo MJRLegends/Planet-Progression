@@ -2,14 +2,14 @@ package com.mjr.planetprogression.jei;
 
 import javax.annotation.Nonnull;
 
+import com.mjr.planetprogression.jei.satelliteBuilder.SatelliteBuilderRecipeCategory;
+import com.mjr.planetprogression.jei.satelliteBuilder.SatelliteBuilderRecipeHandler;
+import com.mjr.planetprogression.jei.satelliteBuilder.SatelliteBuilderRecipeMaker;
+
 import mezz.jei.api.BlankModPlugin;
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.IModRegistry;
 import mezz.jei.api.JEIPlugin;
-
-import com.mjr.planetprogression.jei.satelliteBuilder.SatelliteBuilderRecipeCategory;
-import com.mjr.planetprogression.jei.satelliteBuilder.SatelliteBuilderRecipeHandler;
-import com.mjr.planetprogression.jei.satelliteBuilder.SatelliteBuilderRecipeMaker;
 
 @JEIPlugin
 public class PlanetProgressionJEI extends BlankModPlugin {

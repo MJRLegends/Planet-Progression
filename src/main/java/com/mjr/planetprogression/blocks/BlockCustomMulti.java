@@ -3,10 +3,6 @@ package com.mjr.planetprogression.blocks;
 import java.util.Collection;
 import java.util.Random;
 
-import micdoodle8.mods.galacticraft.api.block.IPartialSealableBlock;
-import micdoodle8.mods.galacticraft.core.GCBlocks;
-import micdoodle8.mods.galacticraft.core.blocks.BlockAdvanced;
-import micdoodle8.mods.galacticraft.core.tile.TileEntityMulti;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.properties.PropertyEnum;
@@ -18,14 +14,15 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.IStringSerializable;
-import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.*;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+
+import micdoodle8.mods.galacticraft.api.block.IPartialSealableBlock;
+import micdoodle8.mods.galacticraft.core.GCBlocks;
+import micdoodle8.mods.galacticraft.core.blocks.BlockAdvanced;
+import micdoodle8.mods.galacticraft.core.tile.TileEntityMulti;
 
 public class BlockCustomMulti extends BlockAdvanced implements IPartialSealableBlock, ITileEntityProvider {
 	public static final PropertyEnum<EnumBlockMultiType> MULTI_TYPE = PropertyEnum.create("type", EnumBlockMultiType.class);

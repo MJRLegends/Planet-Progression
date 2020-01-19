@@ -1,18 +1,19 @@
 package com.mjr.planetprogression.client.gui;
 
-import micdoodle8.mods.galacticraft.api.recipe.ISchematicResultPage;
-import micdoodle8.mods.galacticraft.api.recipe.SchematicRegistry;
-import micdoodle8.mods.galacticraft.core.client.gui.container.GuiPositionedContainer;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.ResourceLocation;
-
 import org.lwjgl.opengl.GL11;
 
 import com.mjr.mjrlegendslib.util.TranslateUtilities;
 import com.mjr.planetprogression.Constants;
 import com.mjr.planetprogression.inventory.ContainerSchematicSatelliteRocket;
+
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.ResourceLocation;
+
+import micdoodle8.mods.galacticraft.api.recipe.ISchematicResultPage;
+import micdoodle8.mods.galacticraft.api.recipe.SchematicRegistry;
+import micdoodle8.mods.galacticraft.core.client.gui.container.GuiPositionedContainer;
 
 public class GuiSchematicSatelliteRocket extends GuiPositionedContainer implements ISchematicResultPage {
 	private static final ResourceLocation rocketBenchTexture = new ResourceLocation(Constants.ASSET_PREFIX, "textures/gui/schematic_rocket.png");

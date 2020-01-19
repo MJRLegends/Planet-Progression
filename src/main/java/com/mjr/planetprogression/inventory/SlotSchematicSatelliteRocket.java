@@ -2,10 +2,8 @@ package com.mjr.planetprogression.inventory;
 
 import java.util.List;
 
-import micdoodle8.mods.galacticraft.api.recipe.INasaWorkbenchRecipe;
-import micdoodle8.mods.galacticraft.core.network.PacketSimple;
-import micdoodle8.mods.galacticraft.core.network.PacketSimple.EnumSimplePacket;
-import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
+import com.mjr.planetprogression.recipes.SatelliteRocketRecipes;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.IInventory;
@@ -13,7 +11,10 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockPos;
 
-import com.mjr.planetprogression.recipes.SatelliteRocketRecipes;
+import micdoodle8.mods.galacticraft.api.recipe.INasaWorkbenchRecipe;
+import micdoodle8.mods.galacticraft.core.network.PacketSimple;
+import micdoodle8.mods.galacticraft.core.network.PacketSimple.EnumSimplePacket;
+import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 
 public class SlotSchematicSatelliteRocket extends Slot {
 	private final int index;

@@ -1,20 +1,12 @@
 package com.mjr.planetprogression.network;
 
-import io.netty.channel.ChannelHandler.Sharable;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.SimpleChannelInboundHandler;
-
 import java.util.Map;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentHashMap;
 
-import micdoodle8.mods.galacticraft.core.GalacticraftCore;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.network.INetHandler;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.common.network.NetworkRegistry;
-import net.minecraftforge.fml.relauncher.Side;
+import io.netty.channel.ChannelHandler.Sharable;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.SimpleChannelInboundHandler;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
@@ -22,6 +14,15 @@ import com.google.common.collect.Queues;
 import com.mjr.mjrlegendslib.network.IPacket;
 import com.mjr.planetprogression.client.handlers.MainHandlerClient;
 import com.mjr.planetprogression.handlers.MainHandlerServer;
+
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.network.INetHandler;
+import net.minecraft.world.World;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+
+import micdoodle8.mods.galacticraft.core.GalacticraftCore;
 
 @Sharable
 public class PlanetProgressionPacketHandler extends SimpleChannelInboundHandler<IPacket> {

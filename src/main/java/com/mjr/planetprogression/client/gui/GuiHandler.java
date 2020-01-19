@@ -9,7 +9,6 @@ import com.mjr.planetprogression.tileEntities.TileEntitySatelliteController;
 import com.mjr.planetprogression.tileEntities.TileEntitySatelliteRocketLauncher;
 import com.mjr.planetprogression.tileEntities.TileEntityTelescope;
 
-import micdoodle8.mods.galacticraft.core.util.PlayerUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.tileentity.TileEntity;
@@ -20,6 +19,8 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.IGuiHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import micdoodle8.mods.galacticraft.core.util.PlayerUtil;
 
 public class GuiHandler implements IGuiHandler {
 	@Override

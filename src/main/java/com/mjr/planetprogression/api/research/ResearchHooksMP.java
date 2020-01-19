@@ -3,8 +3,9 @@ package com.mjr.planetprogression.api.research;
 import com.mjr.planetprogression.handlers.capabilities.CapabilityStatsHandler;
 import com.mjr.planetprogression.handlers.capabilities.IStatsCapability;
 
-import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
 import net.minecraft.entity.player.EntityPlayerMP;
+
+import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
 
 public class ResearchHooksMP {
 

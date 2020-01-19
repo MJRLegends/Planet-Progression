@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import io.netty.buffer.ByteBuf;
+
 import com.mjr.mjrlegendslib.network.PacketSimpleBase;
 import com.mjr.mjrlegendslib.util.ItemUtilities;
 import com.mjr.mjrlegendslib.util.MCUtilities;
@@ -20,15 +22,6 @@ import com.mjr.planetprogression.tileEntities.TileEntitySatelliteController;
 import com.mjr.planetprogression.tileEntities.TileEntitySatelliteRocketLauncher;
 import com.mjr.planetprogression.tileEntities.TileEntityTelescope;
 
-import io.netty.buffer.ByteBuf;
-import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
-import micdoodle8.mods.galacticraft.api.galaxies.GalaxyRegistry;
-import micdoodle8.mods.galacticraft.api.galaxies.Moon;
-import micdoodle8.mods.galacticraft.api.galaxies.Planet;
-import micdoodle8.mods.galacticraft.core.entities.player.GCPlayerStats;
-import micdoodle8.mods.galacticraft.core.network.NetworkUtil;
-import micdoodle8.mods.galacticraft.core.util.GCLog;
-import micdoodle8.mods.galacticraft.core.util.PlayerUtil;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -40,6 +33,15 @@ import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
+import micdoodle8.mods.galacticraft.api.galaxies.GalaxyRegistry;
+import micdoodle8.mods.galacticraft.api.galaxies.Moon;
+import micdoodle8.mods.galacticraft.api.galaxies.Planet;
+import micdoodle8.mods.galacticraft.core.entities.player.GCPlayerStats;
+import micdoodle8.mods.galacticraft.core.network.NetworkUtil;
+import micdoodle8.mods.galacticraft.core.util.GCLog;
+import micdoodle8.mods.galacticraft.core.util.PlayerUtil;
 
 public class PacketSimplePP extends PacketSimpleBase {
 	public enum EnumSimplePacket {

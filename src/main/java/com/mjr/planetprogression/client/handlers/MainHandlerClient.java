@@ -8,8 +8,6 @@ import com.mjr.planetprogression.blocks.PlanetProgression_Blocks;
 import com.mjr.planetprogression.client.gui.screen.CustomGuiCelestialSelection;
 import com.mjr.planetprogression.network.PlanetProgressionPacketHandler;
 
-import micdoodle8.mods.galacticraft.core.client.gui.screen.GuiCelestialSelection;
-import micdoodle8.mods.galacticraft.core.util.EnumColor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.settings.GameSettings;
@@ -23,6 +21,9 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import micdoodle8.mods.galacticraft.core.client.gui.screen.GuiCelestialSelection;
+import micdoodle8.mods.galacticraft.core.util.EnumColor;
 
 public class MainHandlerClient {
 	private static List<PlanetProgressionPacketHandler> packetHandlers = Lists.newCopyOnWriteArrayList();

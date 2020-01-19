@@ -5,8 +5,6 @@ import java.util.Random;
 
 import com.mjr.planetprogression.tileEntities.TileEntityTelescopeFake;
 
-import micdoodle8.mods.galacticraft.core.GCBlocks;
-import micdoodle8.mods.galacticraft.core.blocks.BlockAdvancedTile;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDirectional;
 import net.minecraft.block.ITileEntityProvider;
@@ -19,16 +17,15 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.*;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import micdoodle8.mods.galacticraft.core.GCBlocks;
+import micdoodle8.mods.galacticraft.core.blocks.BlockAdvancedTile;
 
 public class BlockTelescopeFake extends BlockAdvancedTile implements ITileEntityProvider {
 	public static final PropertyBool TOP = PropertyBool.create("top");

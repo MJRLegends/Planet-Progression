@@ -8,10 +8,6 @@ import com.mjr.planetprogression.blocks.PlanetProgression_Blocks;
 import com.mjr.planetprogression.entities.EntitySatelliteRocket;
 import com.mjr.planetprogression.tileEntities.TileEntitySatelliteLandingPad;
 
-import micdoodle8.mods.galacticraft.api.entity.IRocketType.EnumRocketType;
-import micdoodle8.mods.galacticraft.api.item.IHoldableItem;
-import micdoodle8.mods.galacticraft.core.GCFluids;
-import micdoodle8.mods.galacticraft.core.util.EnumColor;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
@@ -26,6 +22,11 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import micdoodle8.mods.galacticraft.api.entity.IRocketType.EnumRocketType;
+import micdoodle8.mods.galacticraft.api.item.IHoldableItem;
+import micdoodle8.mods.galacticraft.core.GCFluids;
+import micdoodle8.mods.galacticraft.core.util.EnumColor;
 
 public class ItemSatelliteRocket extends Item implements IHoldableItem {
 	public ItemSatelliteRocket(String assetName) {

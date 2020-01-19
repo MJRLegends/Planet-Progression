@@ -4,9 +4,6 @@ import java.util.Random;
 
 import com.mjr.planetprogression.tileEntities.TileEntitySatelliteLandingPad;
 
-import micdoodle8.mods.galacticraft.api.block.IPartialSealableBlock;
-import micdoodle8.mods.galacticraft.core.blocks.BlockAdvancedTile;
-import micdoodle8.mods.galacticraft.core.tile.IMultiBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
@@ -16,15 +13,15 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.IStringSerializable;
-import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.*;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import micdoodle8.mods.galacticraft.api.block.IPartialSealableBlock;
+import micdoodle8.mods.galacticraft.core.blocks.BlockAdvancedTile;
+import micdoodle8.mods.galacticraft.core.tile.IMultiBlock;
 
 public class BlockCustomLandingPadFull extends BlockAdvancedTile implements IPartialSealableBlock {
 	public static final PropertyEnum<EnumLandingPadFullType> PAD_TYPE = PropertyEnum.create("type", EnumLandingPadFullType.class);

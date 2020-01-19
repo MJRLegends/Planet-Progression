@@ -4,9 +4,31 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+import io.netty.buffer.ByteBuf;
+
 import com.mjr.planetprogression.client.sounds.SoundUpdaterSatelliteRocket;
 
-import io.netty.buffer.ByteBuf;
+import net.minecraft.block.Block;
+import net.minecraft.client.audio.ISound;
+import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.*;
+import net.minecraft.world.World;
+import net.minecraft.world.chunk.Chunk;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fml.client.FMLClientHandler;
+import net.minecraftforge.fml.common.network.ByteBufUtils;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
 import micdoodle8.mods.galacticraft.api.entity.IDockable;
 import micdoodle8.mods.galacticraft.api.entity.IEntityNoisy;
 import micdoodle8.mods.galacticraft.api.entity.ILandable;
@@ -32,31 +54,6 @@ import micdoodle8.mods.galacticraft.core.util.ConfigManagerCore;
 import micdoodle8.mods.galacticraft.core.util.FluidUtil;
 import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 import micdoodle8.mods.galacticraft.core.util.WorldUtil;
-import net.minecraft.block.Block;
-import net.minecraft.client.audio.ISound;
-import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.ClassInheritanceMultiMap;
-import net.minecraft.util.ITickable;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.StatCollector;
-import net.minecraft.world.World;
-import net.minecraft.world.chunk.Chunk;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fml.client.FMLClientHandler;
-import net.minecraftforge.fml.common.network.ByteBufUtils;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 /**
  * Custom/Edited Version of EntityAutoRocket class from Galacticraft

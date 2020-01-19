@@ -2,11 +2,11 @@ package com.mjr.planetprogression.blocks;
 
 import java.util.List;
 
-import micdoodle8.mods.galacticraft.core.blocks.BlockTileGC;
-import micdoodle8.mods.galacticraft.core.blocks.ISortableBlock;
-import micdoodle8.mods.galacticraft.core.tile.IMultiBlock;
-import micdoodle8.mods.galacticraft.core.util.EnumColor;
-import micdoodle8.mods.galacticraft.core.util.EnumSortCategoryBlock;
+import com.mjr.mjrlegendslib.util.PlayerUtilties;
+import com.mjr.mjrlegendslib.util.TranslateUtilities;
+import com.mjr.planetprogression.PlanetProgression;
+import com.mjr.planetprogression.tileEntities.TileEntityTelescope;
+
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.IBlockState;
@@ -16,20 +16,17 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.*;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import com.mjr.mjrlegendslib.util.PlayerUtilties;
-import com.mjr.mjrlegendslib.util.TranslateUtilities;
-import com.mjr.planetprogression.PlanetProgression;
-import com.mjr.planetprogression.tileEntities.TileEntityTelescope;
+import micdoodle8.mods.galacticraft.core.blocks.BlockTileGC;
+import micdoodle8.mods.galacticraft.core.blocks.ISortableBlock;
+import micdoodle8.mods.galacticraft.core.tile.IMultiBlock;
+import micdoodle8.mods.galacticraft.core.util.EnumColor;
+import micdoodle8.mods.galacticraft.core.util.EnumSortCategoryBlock;
 
 public class BlockTelescope extends BlockTileGC implements ISortableBlock {
 

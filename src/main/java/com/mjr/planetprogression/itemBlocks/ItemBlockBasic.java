@@ -2,12 +2,13 @@ package com.mjr.planetprogression.itemBlocks;
 
 import java.util.List;
 
-import micdoodle8.mods.galacticraft.core.items.ItemBlockDesc;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import micdoodle8.mods.galacticraft.core.items.ItemBlockDesc;
 
 public class ItemBlockBasic extends ItemBlockDesc {
 	public ItemBlockBasic(Block block) {

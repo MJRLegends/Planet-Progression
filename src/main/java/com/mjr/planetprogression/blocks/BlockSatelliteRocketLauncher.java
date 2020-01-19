@@ -3,10 +3,6 @@ package com.mjr.planetprogression.blocks;
 import com.mjr.planetprogression.PlanetProgression;
 import com.mjr.planetprogression.tileEntities.TileEntitySatelliteRocketLauncher;
 
-import micdoodle8.mods.galacticraft.core.blocks.BlockAdvancedTile;
-import micdoodle8.mods.galacticraft.core.blocks.ISortableBlock;
-import micdoodle8.mods.galacticraft.core.energy.tile.TileBaseUniversalElectrical;
-import micdoodle8.mods.galacticraft.core.util.EnumSortCategoryBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockState;
@@ -19,6 +15,11 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
+
+import micdoodle8.mods.galacticraft.core.blocks.BlockAdvancedTile;
+import micdoodle8.mods.galacticraft.core.blocks.ISortableBlock;
+import micdoodle8.mods.galacticraft.core.energy.tile.TileBaseUniversalElectrical;
+import micdoodle8.mods.galacticraft.core.util.EnumSortCategoryBlock;
 
 public class BlockSatelliteRocketLauncher extends BlockAdvancedTile implements ISortableBlock {
 	public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);

@@ -3,23 +3,24 @@ package com.mjr.planetprogression.client.gui;
 import java.util.ArrayList;
 import java.util.List;
 
-import micdoodle8.mods.galacticraft.core.client.gui.container.GuiContainerGC;
-import micdoodle8.mods.galacticraft.core.client.gui.element.GuiElementInfoRegion;
-import micdoodle8.mods.galacticraft.core.energy.EnergyDisplayHelper;
-import micdoodle8.mods.galacticraft.core.util.EnumColor;
-import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
-import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.client.FMLClientHandler;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-
 import org.lwjgl.opengl.GL11;
 
 import com.mjr.mjrlegendslib.util.TranslateUtilities;
 import com.mjr.planetprogression.Constants;
 import com.mjr.planetprogression.inventory.ContainerSatelliteBuilder;
 import com.mjr.planetprogression.tileEntities.TileEntitySatelliteBuilder;
+
+import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.client.FMLClientHandler;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
+import micdoodle8.mods.galacticraft.core.client.gui.container.GuiContainerGC;
+import micdoodle8.mods.galacticraft.core.client.gui.element.GuiElementInfoRegion;
+import micdoodle8.mods.galacticraft.core.energy.EnergyDisplayHelper;
+import micdoodle8.mods.galacticraft.core.util.EnumColor;
+import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 
 @SideOnly(Side.CLIENT)
 public class GuiSatelliteBuilder extends GuiContainerGC {
