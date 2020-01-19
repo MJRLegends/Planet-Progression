@@ -42,7 +42,6 @@ public class Config {
 
 		if (researchMode == 2) {
 			generateResearchPaperInStructure = false;
-			generateResearchPaperInLoot = false;
 		}
 
 	}
