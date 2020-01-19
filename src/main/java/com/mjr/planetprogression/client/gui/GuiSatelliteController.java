@@ -109,12 +109,12 @@ public class GuiSatelliteController extends GuiContainerGC {
 		this.fontRendererObj.drawString(displayString, this.xSize / 2 - this.fontRendererObj.getStringWidth(displayString) / 2, 5, 4210752);
 
 		this.fontRendererObj.drawString(TranslateUtilities.translate("container.inventory"), 8, 135, 4210752);
-		this.fontRendererObj.drawString(TranslateUtilities.translate("gui.satellite.satellite.id") + ": ", 5, 20, 4210752);
+		this.fontRendererObj.drawString(TranslateUtilities.translate("gui.satellite.satellite.id.name") + ": ", 5, 20, 4210752);
 		this.fontRendererObj.drawString(this.tileEntity.currentSatelliteID, 30, 30, 4210752);
-		this.fontRendererObj.drawString(TranslateUtilities.translate("gui.satellite.player") + ": " + ((this.tileEntity.owner != "" && this.tileEntity.ownerOnline) ? this.tileEntity.ownerUsername : TranslateUtilities.translate("gui.satellite.player.online")), 5, 45, 4210752);
-		this.fontRendererObj.drawString(TranslateUtilities.translate("gui.satellite.research.progress") + ": "
+		this.fontRendererObj.drawString(TranslateUtilities.translate("gui.satellite.player.name") + ": " + ((this.tileEntity.owner != "" && this.tileEntity.ownerOnline) ? this.tileEntity.ownerUsername : TranslateUtilities.translate("gui.satellite.player.online.name")), 5, 45, 4210752);
+		this.fontRendererObj.drawString(TranslateUtilities.translate("gui.satellite.research.progress.name") + ": "
 				+ (int) ((100 - (this.tileEntity.processTicks / Config.satelliteControllerModifier) / 2 / 100) == 100 ? 0 : (100 - (this.tileEntity.processTicks / Config.satelliteControllerModifier) / 2 / 100)) + " %", 5, 55, 4210752);
-		this.fontRendererObj.drawString(TranslateUtilities.translate("gui.satellite.research") + ": " + TranslateUtilities.translate(ResearchPaper.convertBodyNameForLocalization(this.tileEntity.currentSatelliteResearchBody)), 5, 65, 4210752);
+		this.fontRendererObj.drawString(TranslateUtilities.translate("gui.satellite.research.name") + ": " + TranslateUtilities.translate(ResearchPaper.convertBodyNameForLocalization(this.tileEntity.currentSatelliteResearchBody)), 5, 65, 4210752);
 	}
 
 	@Override
