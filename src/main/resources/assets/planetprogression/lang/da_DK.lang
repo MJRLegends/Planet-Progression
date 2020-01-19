@@ -4,6 +4,7 @@ item.item_satellite_rocket.rocket.name=Satellit Raket
 item.satellite_module_basic.name=Basal Satellit Modul
 item.satellite_basic.name=Basal Satellit 
 satellite.use.desc=Placeres i Lastrummet af en Satellit raket
+satellite.use.desc.rename=Use within an Anvil to get a custom name ##NEEDS TRANSLATE##
 research.paper.loot.desc=Kan fås fra Dungeon Loot
 research.paper.woldgen.desc=Kan fås fra  World Gen Bygninger
 research.paper.satellite.controller.desc=Kan fås fra Satellit Kontrolenhed 
