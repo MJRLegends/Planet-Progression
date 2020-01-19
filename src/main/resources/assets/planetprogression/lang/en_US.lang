@@ -4,6 +4,7 @@ item.item_satellite_rocket.rocket.name=Satellite Rocket
 item.satellite_module_basic.name=Basic Satellite Module
 item.satellite_basic.name=Basic Satellite
 satellite.use.desc=Place in Cargo of Satellite Rocket
+satellite.use.desc.rename=Use within an Anvil to get a custom name
 research.paper.loot.desc=Obtainable from Dungeon Loot
 research.paper.woldgen.desc=Obtainable from a World Gen Structure
 research.paper.satellite.controller.desc=Obtainable from Satellite Controller

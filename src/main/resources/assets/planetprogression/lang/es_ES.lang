@@ -4,6 +4,7 @@ item.item_satellite_rocket.rocket.name=Cohete de Satélite
 item.satellite_module_basic.name=Módulo Básico de Satélite
 item.satellite_basic.name=Satélite
 satellite.use.desc=Colocar en el Cargo de un Cohete de Satélite
+satellite.use.desc.rename=Use within an Anvil to get a custom name ##NEEDS TRANSLATE##
 research.paper.loot.desc=Obtenible del botín de Mazmorra
 research.paper.woldgen.desc=Obtenible en una estructura generada en el mundo
 research.paper.satellite.controller.desc=Obtenible de Controlador de Satélite

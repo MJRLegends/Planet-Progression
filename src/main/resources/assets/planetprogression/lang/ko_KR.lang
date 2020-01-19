@@ -4,6 +4,7 @@ item.item_satellite_rocket.rocket.name=위성 로켓
 item.satellite_module_basic.name=기본 위성 모듈
 item.satellite_basic.name=기본 위성
 satellite.use.desc=위성 로켓의 화물칸에 넣어주세요
+satellite.use.desc.rename=Use within an Anvil to get a custom name ##NEEDS TRANSLATE##
 research.paper.loot.desc=던전 루트로부터 얻을 수 있습니다
 research.paper.woldgen.desc=세계 구조에서 얻을 수 있습니다
 research.paper.satellite.controller.desc=위성 조절기로부터 얻을 수 있습니다

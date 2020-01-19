@@ -136,7 +136,12 @@ public class EntitySatelliteRocket extends EntitySatelliteAutoRocket {
 							if (player != null) {
 								stats = player.getCapability(CapabilityStatsHandler.PP_STATS_CAPABILITY, null);
 							}
-							String id = UUID.randomUUID().toString();
+							String id;
+							String itemName = item.getDisplayName();
+							if (!itemName.equalsIgnoreCase(item.getDisplayName()))
+								id = UUID.randomUUID().toString();
+							else
+								id = itemName;
 							stats.addSatellites(new SatelliteData(((ItemSatellite) item.getItem()).getType(), id, 0, null));
 							player.sendMessage(new TextComponentString(EnumColor.RED + "Satellite: " + id + " has been launched in to space!"));
 						}

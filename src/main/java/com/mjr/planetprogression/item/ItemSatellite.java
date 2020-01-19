@@ -38,5 +38,6 @@ public class ItemSatellite extends BasicItem {
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack itemStack, @Nullable World worldIn, List<String> par2List, ITooltipFlag flagIn) {
 		par2List.add(EnumColor.AQUA + TranslateUtilities.translate("satellite.use.desc"));
+		par2List.add(EnumColor.AQUA + TranslateUtilities.translate("satellite.use.desc.rename"));
 	}
 }
