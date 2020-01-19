@@ -5,10 +5,12 @@ public class Constants {
 	public static final String modName = "Planet Progression";
 
 	public static final int LOCALMAJVERSION = 0;
-	public static final int LOCALMINVERSION = 3;
-	public static final int LOCALBUILDVERSION = 9;
+	public static final int LOCALMINVERSION = 4;
+	public static final int LOCALBUILDVERSION = 0;
+	
+	public static final boolean isDevVersion = false;
 
-	public static final String modVersion = "1.12.2" + "-" + LOCALMAJVERSION + "." + LOCALMINVERSION + "." + LOCALBUILDVERSION;
+	public static final String modVersion = "1.12.2" + "-" + LOCALMAJVERSION + "." + LOCALMINVERSION + "." + LOCALBUILDVERSION + (isDevVersion ? "-DEV" : "");
 
 	public static final String MCVERSION = "[1.12.2]";
 	public static final String DEPENDENCIES_FORGE = "required-after:forge@[13.20.1.2513,); "; // Keep the space at the end!

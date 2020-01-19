@@ -5,6 +5,24 @@
 
 
 ===========================================Released Updates===========================================
+v0.4.0
+*Fixed issue #52
+*Added Status GUI text to the Telescope to know when a paper is already researched
+*Moved some hard coded strings to lang files
+*Fixed crash when owner is empty for a telescope or satellite controller
+*Fixed satellite controller not updating correctly when switching a satellite to its next research body
+*Fixed CraftTweaker support issues with Satellite Builder methods
+*Added comments to both Satellite Controller and Telescope modifier config options
+*Fixed issue #53 - Should hopefully be fixed
+*Removed forcing of disabling dungeon loot spawning when in research mode 2
+*Added ability to have custom satellite names #54
+*Made it so planets have to be researched/unlocked first before its moons can be researched #57
+*Fixed issues when all research was completed or no available bodies left to assign within satellite controller
+*Improvement on update tick time for Satellite Controller & Telescope
+*Fixed issue #58
+*Added more status for Telescope
+*Fixed some lang localisation not containing .name
+
 v0.3.9
 *Updated es_ES.Lang (Thanks to Yataro-Ibuza)
 *Tweaks to research paper code to reflect full use of the paper
