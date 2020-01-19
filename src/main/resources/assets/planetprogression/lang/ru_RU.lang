@@ -4,6 +4,7 @@ item.item_satellite_rocket.rocket.name=Ракета со спутником
 item.satellite_module_basic.name=Базовый модуль спутника
 item.satellite_basic.name=Базовый спутник
 satellite.use.desc=Поместите в грузовой отсек ракеты-носителя
+satellite.use.desc.rename=Use within an Anvil to get a custom name ##NEEDS TRANSLATE##
 research.paper.loot.desc=Можно найти в сокровищнице
 research.paper.woldgen.desc=Можно найти в специально генерируемой структуре
 research.paper.satellite.controller.desc=Доступен в Станции слежения за спутниками
