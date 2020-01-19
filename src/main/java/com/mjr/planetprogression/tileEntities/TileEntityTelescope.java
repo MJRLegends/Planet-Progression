@@ -186,6 +186,14 @@ public class TileEntityTelescope extends TileBaseElectricBlockWithInventory impl
 		return false;
 	}
 
+	public boolean hasInputs() {
+		if (this.getInventory().get(1).isEmpty())
+			return false;
+		if (!(this.getInventory().get(1).getItem() instanceof ResearchPaper))
+			return false;
+		return true;
+	}
+
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
 		super.readFromNBT(nbt);
