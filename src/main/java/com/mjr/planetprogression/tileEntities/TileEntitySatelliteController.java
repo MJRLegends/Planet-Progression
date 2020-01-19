@@ -15,6 +15,7 @@ import com.mjr.planetprogression.item.ResearchPaper;
 import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
 import micdoodle8.mods.galacticraft.api.galaxies.GalaxyRegistry;
 import micdoodle8.mods.galacticraft.api.galaxies.Moon;
+import micdoodle8.mods.galacticraft.core.blocks.BlockDish;
 import micdoodle8.mods.galacticraft.core.energy.item.ItemElectricBase;
 import micdoodle8.mods.galacticraft.core.energy.tile.TileBaseElectricBlockWithInventory;
 import micdoodle8.mods.miccore.Annotations.NetworkedField;
@@ -46,6 +47,8 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 	public boolean ownerOnline = false;
 	@NetworkedField(targetSide = Side.CLIENT)
 	public String ownerUsername = "";
+	@NetworkedField(targetSide = Side.CLIENT)
+	public boolean hasDishConnected = false;
 	public String lastReseached = "";
 
 	public ItemStack producingStack = null;
@@ -55,12 +58,28 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 		this.inventory = NonNullList.withSize(2, ItemStack.EMPTY);
 	}
 
+	public boolean hasDish() {
+		if (this.getWorld().getBlockState(this.pos.offset(EnumFacing.EAST)).getBlock() instanceof BlockDish)
+			return true;
+		if (this.getWorld().getBlockState(this.pos.offset(EnumFacing.SOUTH)).getBlock() instanceof BlockDish)
+			return true;
+		if (this.getWorld().getBlockState(this.pos.offset(EnumFacing.NORTH)).getBlock() instanceof BlockDish)
+			return true;
+		if (this.getWorld().getBlockState(this.pos.offset(EnumFacing.WEST)).getBlock() instanceof BlockDish)
+			return true;
+		return false;
+	}
+
+	public void updateDishStatus() {
+		this.hasDishConnected = hasDish();
+	}
+
 	@Override
 	public void update() {
 		super.update();
 		if (!this.world.isRemote) {
 			if (this.owner != "") {
-				if(this.ticks % 50 == 0) {
+				if (this.ticks % 50 == 0) {
 					try {
 						if (this.owner != "")
 							this.ownerOnline = PlayerUtilties.isPlayerOnlineByUUID(this.owner);
@@ -69,17 +88,18 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 					} catch (Exception e) {
 						this.ownerOnline = false;
 					}
+					updateDishStatus(); // Move to use onneighbor block changed?
 				}
-				
+
 				IStatsCapability stats = null;
 				if (ownerOnline && PlayerUtilties.getPlayerFromUUID(this.owner) != null) {
 					stats = PlayerUtilties.getPlayerFromUUID(this.owner).getCapability(CapabilityStatsHandler.PP_STATS_CAPABILITY, null);
 				}
-
 				// Check player is online
 				if (ownerOnline && stats != null) {
 					// Update Controller for new Satellite (Triggers: onBlockPlaced, onWorldLoad, onDisplayedSatelliteChanged)
 					if (this.markForSatelliteUpdate) {
+						updateDishStatus();
 						if (this.currentSatellite != null)
 							this.currentSatellite.setDataAmount(this.currentSatellite.getDataAmount());
 						int size = stats.getSatellites().size() == 0 ? 0 : (stats.getSatellites().size() - 1);
@@ -94,7 +114,7 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 					}
 
 					// Check Satellite does exist
-					if (this.currentSatellite != null) {
+					if (this.hasDishConnected && this.currentSatellite != null) {
 						this.currentSatellite.setDataAmount(this.processTicks);
 
 						// Update Satellite ID for ClientSide
@@ -140,6 +160,8 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 	}
 
 	public boolean canProcess() {
+		if (this.hasDishConnected == false)
+			return false;
 		if (this.currentSatelliteResearchBody.equalsIgnoreCase("Nothing"))
 			return false;
 		if (this.lastReseached.equalsIgnoreCase(this.currentSatelliteResearchBody)) {

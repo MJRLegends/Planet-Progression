@@ -13,6 +13,7 @@ import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.client.FMLClientHandler;
 
 import org.lwjgl.opengl.GL11;
@@ -109,7 +110,10 @@ public class GuiSatelliteController extends GuiContainerGC {
 
 		this.fontRenderer.drawString(TranslateUtilities.translate("container.inventory"), 8, 135, 4210752);
 		this.fontRenderer.drawString("Satellite ID: ", 5, 20, 4210752);
-		this.fontRenderer.drawString(this.tileEntity.currentSatelliteID, 30, 30, 4210752);
+		if(this.tileEntity.hasDishConnected)
+			this.fontRenderer.drawString(this.tileEntity.currentSatelliteID, 30, 30, 4210752);
+		else
+			this.fontRenderer.drawString(TextFormatting.DARK_RED + "Needs an Adjacent Communication Dish!", 30, 30, 4210752);
 		this.fontRenderer.drawString("Player: " + ((this.tileEntity.owner != "" && this.tileEntity.ownerOnline) ? this.tileEntity.ownerUsername : "Player is not online!"), 5, 45, 4210752);
 		this.fontRenderer.drawString("Research Progress: "
 				+ (int) ((100 - (this.tileEntity.processTicks / Config.satelliteControllerModifier) / 2 / 100) == 100 ? 0 : (100 - (this.tileEntity.processTicks / Config.satelliteControllerModifier) / 2 / 100)) + " %", 5, 55, 4210752);
