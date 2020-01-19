@@ -48,7 +48,7 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 	@NetworkedField(targetSide = Side.CLIENT)
 	public String ownerUsername = "";
 	@NetworkedField(targetSide = Side.CLIENT)
-	public boolean hasDishConnected = false;
+	public boolean hasDishConnected = true;
 	public String lastReseached = "";
 
 	public ItemStack producingStack = null;
@@ -88,7 +88,7 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 					} catch (Exception e) {
 						this.ownerOnline = false;
 					}
-					updateDishStatus(); // Move to use onneighbor block changed?
+					//updateDishStatus(); // Move to use onneighbor block changed?
 				}
 
 				IStatsCapability stats = null;
@@ -99,7 +99,7 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 				if (ownerOnline && stats != null) {
 					// Update Controller for new Satellite (Triggers: onBlockPlaced, onWorldLoad, onDisplayedSatelliteChanged)
 					if (this.markForSatelliteUpdate) {
-						updateDishStatus();
+						//updateDishStatus();
 						if (this.currentSatellite != null)
 							this.currentSatellite.setDataAmount(this.currentSatellite.getDataAmount());
 						int size = stats.getSatellites().size() == 0 ? 0 : (stats.getSatellites().size() - 1);
