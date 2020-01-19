@@ -2,13 +2,15 @@ package com.mjr.planetprogression.jei;
 
 import javax.annotation.Nonnull;
 
+import com.google.common.collect.Lists;
+
+import net.minecraft.item.ItemStack;
+
+import micdoodle8.mods.galacticraft.api.recipe.INasaWorkbenchRecipe;
+
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.BlankRecipeWrapper;
 import mezz.jei.api.recipe.wrapper.ICraftingRecipeWrapper;
-import micdoodle8.mods.galacticraft.api.recipe.INasaWorkbenchRecipe;
-import net.minecraft.item.ItemStack;
-
-import com.google.common.collect.Lists;
 
 @SuppressWarnings("deprecation")
 public class SatelliteRocketRecipeWrapper extends BlankRecipeWrapper implements ICraftingRecipeWrapper {

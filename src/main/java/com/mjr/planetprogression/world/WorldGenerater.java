@@ -3,15 +3,15 @@ package com.mjr.planetprogression.world;
 import java.util.Arrays;
 import java.util.Random;
 
+import com.mjr.mjrlegendslib.util.WorldGenUtilities;
+import com.mjr.planetprogression.Config;
+import com.mjr.planetprogression.world.features.WorldGenStructure;
+
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkGenerator;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraftforge.fml.common.IWorldGenerator;
-
-import com.mjr.mjrlegendslib.util.WorldGenUtilities;
-import com.mjr.planetprogression.Config;
-import com.mjr.planetprogression.world.features.WorldGenStructure;
 
 public class WorldGenerater implements IWorldGenerator {
 

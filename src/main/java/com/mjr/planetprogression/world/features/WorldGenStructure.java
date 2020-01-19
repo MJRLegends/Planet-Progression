@@ -9,13 +9,14 @@ import com.mjr.planetprogression.Config;
 import com.mjr.planetprogression.item.PlanetProgression_Items;
 import com.mjr.planetprogression.item.ResearchPaper;
 
-import micdoodle8.mods.galacticraft.core.GCBlocks;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
+
+import micdoodle8.mods.galacticraft.core.GCBlocks;
 
 public class WorldGenStructure extends WorldGenerator {
 

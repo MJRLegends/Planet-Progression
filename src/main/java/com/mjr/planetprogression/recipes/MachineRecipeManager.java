@@ -5,10 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 
+import com.google.common.collect.ImmutableMap;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
-
-import com.google.common.collect.ImmutableMap;
 
 public class MachineRecipeManager {
 	private static HashMap<NonNullList<ItemStack>, ItemStack> satelliteBuilderRecipes = new HashMap<>();

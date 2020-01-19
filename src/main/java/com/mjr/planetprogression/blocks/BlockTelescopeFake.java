@@ -2,8 +2,8 @@ package com.mjr.planetprogression.blocks;
 
 import java.util.Random;
 
-import micdoodle8.mods.galacticraft.core.GCBlocks;
-import micdoodle8.mods.galacticraft.core.blocks.BlockAdvancedTile;
+import com.mjr.planetprogression.tileEntities.TileEntityTelescopeFake;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDirectional;
 import net.minecraft.block.ITileEntityProvider;
@@ -29,7 +29,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import com.mjr.planetprogression.tileEntities.TileEntityTelescopeFake;
+import micdoodle8.mods.galacticraft.core.GCBlocks;
+import micdoodle8.mods.galacticraft.core.blocks.BlockAdvancedTile;
 
 public class BlockTelescopeFake extends BlockAdvancedTile implements ITileEntityProvider {
 	public static final PropertyBool TOP = PropertyBool.create("top");

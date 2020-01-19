@@ -2,6 +2,12 @@ package com.mjr.planetprogression.jei.satelliteBuilder;
 
 import javax.annotation.Nonnull;
 
+import com.mjr.mjrlegendslib.util.TranslateUtilities;
+import com.mjr.planetprogression.Constants;
+import com.mjr.planetprogression.jei.RecipeCategories;
+
+import net.minecraft.util.ResourceLocation;
+
 import mezz.jei.api.IGuiHelper;
 import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.gui.IGuiItemStackGroup;
@@ -9,11 +15,6 @@ import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.BlankRecipeCategory;
 import mezz.jei.api.recipe.IRecipeWrapper;
-import net.minecraft.util.ResourceLocation;
-
-import com.mjr.mjrlegendslib.util.TranslateUtilities;
-import com.mjr.planetprogression.Constants;
-import com.mjr.planetprogression.jei.RecipeCategories;
 
 public class SatelliteBuilderRecipeCategory extends BlankRecipeCategory<IRecipeWrapper> {
 	private static final ResourceLocation guiTexture = new ResourceLocation(Constants.ASSET_PREFIX, "textures/gui/satellite_builder.png");

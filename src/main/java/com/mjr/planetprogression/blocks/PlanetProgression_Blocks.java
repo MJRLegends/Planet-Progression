@@ -1,26 +1,16 @@
 package com.mjr.planetprogression.blocks;
 
-import java.lang.reflect.Constructor;
-
-import com.google.common.collect.ObjectArrays;
 import com.mjr.mjrlegendslib.itemBlock.ItemBlockDefault;
 import com.mjr.mjrlegendslib.util.RegisterUtilities;
 import com.mjr.planetprogression.Config;
 import com.mjr.planetprogression.Constants;
-import com.mjr.planetprogression.PlanetProgression;
 import com.mjr.planetprogression.itemBlocks.ItemBlockBasic;
 import com.mjr.planetprogression.itemBlocks.ItemBlockCustomLandingPad;
-import com.mjr.planetprogression.tileEntities.TileEntitySatelliteBuilder;
-import com.mjr.planetprogression.tileEntities.TileEntitySatelliteController;
-import com.mjr.planetprogression.tileEntities.TileEntitySatelliteLandingPad;
-import com.mjr.planetprogression.tileEntities.TileEntitySatelliteLandingPadSingle;
-import com.mjr.planetprogression.tileEntities.TileEntitySatelliteRocketLauncher;
-import com.mjr.planetprogression.tileEntities.TileEntityTelescope;
-import com.mjr.planetprogression.tileEntities.TileEntityTelescopeFake;
+import com.mjr.planetprogression.tileEntities.*;
+
+import net.minecraft.block.Block;
 
 import micdoodle8.mods.galacticraft.core.items.ItemBlockDummy;
-import net.minecraft.block.Block;
-import net.minecraft.item.ItemBlock;
 
 public class PlanetProgression_Blocks {
 

@@ -11,12 +11,13 @@ import com.google.common.collect.Lists;
 import com.mjr.mjrlegendslib.util.RegisterUtilities;
 import com.mjr.planetprogression.Config;
 
+import net.minecraft.item.Item;
+
 import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
 import micdoodle8.mods.galacticraft.api.galaxies.GalaxyRegistry;
 import micdoodle8.mods.galacticraft.api.galaxies.Moon;
 import micdoodle8.mods.galacticraft.api.galaxies.Planet;
 import micdoodle8.mods.galacticraft.core.GalacticraftCore;
-import net.minecraft.item.Item;
 
 public class PlanetProgression_Items {
 	public static List<Item> researchPapers = new ArrayList<>();

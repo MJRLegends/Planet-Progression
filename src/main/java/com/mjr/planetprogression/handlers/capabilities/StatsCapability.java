@@ -4,15 +4,16 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.UUID;
 
-import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
-import micdoodle8.mods.galacticraft.api.galaxies.GalaxyRegistry;
-import micdoodle8.mods.galacticraft.core.util.GCLog;
+import com.mjr.planetprogression.data.SatelliteData;
+
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 
-import com.mjr.planetprogression.data.SatelliteData;
+import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
+import micdoodle8.mods.galacticraft.api.galaxies.GalaxyRegistry;
+import micdoodle8.mods.galacticraft.core.util.GCLog;
 
 public class StatsCapability implements IStatsCapability {
 	public WeakReference<EntityPlayerMP> player;

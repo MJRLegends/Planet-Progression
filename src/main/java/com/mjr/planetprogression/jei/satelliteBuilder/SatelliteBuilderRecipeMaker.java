@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
 
+import com.mjr.planetprogression.recipes.MachineRecipeManager;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
-
-import com.mjr.planetprogression.recipes.MachineRecipeManager;
 
 public class SatelliteBuilderRecipeMaker {
 	public static List<SatelliteBuilderRecipeWrapper> getRecipesList() {

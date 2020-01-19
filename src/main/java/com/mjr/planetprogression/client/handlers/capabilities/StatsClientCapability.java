@@ -2,9 +2,9 @@ package com.mjr.planetprogression.client.handlers.capabilities;
 
 import java.util.ArrayList;
 
-import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
-
 import com.mjr.planetprogression.data.SatelliteData;
+
+import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
 
 public class StatsClientCapability implements IStatsClientCapability {
 	private ArrayList<CelestialBody> unlockedPlanets = new ArrayList<CelestialBody>();

@@ -2,17 +2,18 @@ package com.mjr.planetprogression.item;
 
 import java.util.List;
 
-import micdoodle8.mods.galacticraft.core.util.EnumColor;
+import com.mjr.mjrlegendslib.item.BasicItem;
+import com.mjr.mjrlegendslib.util.TranslateUtilities;
+import com.mjr.planetprogression.Config;
+import com.mjr.planetprogression.PlanetProgression;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import com.mjr.mjrlegendslib.item.BasicItem;
-import com.mjr.mjrlegendslib.util.TranslateUtilities;
-import com.mjr.planetprogression.Config;
-import com.mjr.planetprogression.PlanetProgression;
+import micdoodle8.mods.galacticraft.core.util.EnumColor;
 
 public class ResearchPaper extends BasicItem {
 
