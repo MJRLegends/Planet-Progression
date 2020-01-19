@@ -46,6 +46,8 @@ public class ResearchPaper extends BasicItem {
 			input = "planet.Ceres";
 		else if (input.contains("kuiperbelt"))
 			input = "planet.kuiperBelt";
+		else if (input.endsWith("ep"))
+			input = input.substring(0, input.lastIndexOf("ep"));
 		return input;
 	}
 
