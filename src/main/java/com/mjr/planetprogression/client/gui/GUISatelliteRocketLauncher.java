@@ -75,11 +75,11 @@ public class GUISatelliteRocketLauncher extends GuiContainerGC implements IDropb
 			switch (button.id) {
 			case 1:
 				if (this.launchController.launchEnabled) {
-					this.launchButton.displayString = TranslateUtilities.translate("gui.satellite_launcher.auto_enable");
+					this.launchButton.displayString = TranslateUtilities.translate("gui.satellite_launcher.auto_enable.name");
 					this.launchController.launchEnabled = false;
 					PlanetProgression.packetPipeline.sendToServer(new PacketSimplePP(EnumSimplePacket.S_UPDATE_SATELLITE_LAUNCHER_GUI, GCCoreUtil.getDimensionID(mc.world), new Object[] { 2, this.launchController.getPos(), 0 }));
 				} else {
-					this.launchButton.displayString = TranslateUtilities.translate("gui.satellite_launcher.auto_disable");
+					this.launchButton.displayString = TranslateUtilities.translate("gui.satellite_launcher.auto_disable.name");
 					this.launchController.launchEnabled = true;
 					PlanetProgression.packetPipeline.sendToServer(new PacketSimplePP(EnumSimplePacket.S_UPDATE_SATELLITE_LAUNCHER_GUI, GCCoreUtil.getDimensionID(mc.world), new Object[] { 2, this.launchController.getPos(), 1 }));
 				}
@@ -95,7 +95,7 @@ public class GUISatelliteRocketLauncher extends GuiContainerGC implements IDropb
 		String displayString = this.launchController.getName();
 		this.fontRendererObj.drawString(displayString, this.xSize / 2 - this.fontRendererObj.getStringWidth(displayString) / 2, 5, 4210752);
 		this.fontRendererObj.drawString(TranslateUtilities.translate("container.inventory"), 8, 115, 4210752);
-		this.fontRendererObj.drawString(TranslateUtilities.translate("gui.satellite_launcher.delay_type"), 8, 65, 4210752);
+		this.fontRendererObj.drawString(TranslateUtilities.translate("gui.satellite_launcher.delay_type.name"), 8, 65, 4210752);
 	}
 
 	@Override

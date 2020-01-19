@@ -108,14 +108,14 @@ public class GuiTelescope extends GuiContainerGC {
 		this.fontRendererObj.drawString(displayString, this.xSize / 2 - this.fontRendererObj.getStringWidth(displayString) / 2, 5, 4210752);
 		this.fontRendererObj.drawString(TranslateUtilities.translate("container.inventory"), 8, 135, 4210752);
 		this.fontRendererObj.drawString("Progress: " + (int) (((this.tileEntity.processTicks / Config.telescopeTimeModifier) / 2) * (1 + this.tileEntity.poweredByTierGC)) / 2 + " %", 5, 20, 4210752);
-		this.fontRendererObj.drawString("Player: " + ((this.tileEntity.owner != "" && this.tileEntity.ownerOnline) ? this.tileEntity.ownerUsername : TranslateUtilities.translate("gui.telescope.no_player")), 5, 55, 4210752);
+		this.fontRendererObj.drawString("Player: " + ((this.tileEntity.owner != "" && this.tileEntity.ownerOnline) ? this.tileEntity.ownerUsername : TranslateUtilities.translate("gui.telescope.no_player.name")), 5, 55, 4210752);
 		String displayText = null;
 		if (!this.tileEntity.hasInputs()) {
 			displayText = EnumColor.RED + TranslateUtilities.translate("telescope.status.missing.paper.name");
 		} else if (!this.tileEntity.hasEnoughEnergyToRun) {
 			displayText = EnumColor.RED + TranslateUtilities.translate("gui.status.missing.power.name");
 		}
-		this.fontRendererObj.drawString("Status: " + displayText == null ? ((this.tileEntity.alreadyResearchedInput) ? TranslateUtilities.translate("gui.telescope.status.already_researched") : TranslateUtilities.translate("gui.telescope.status.normal"))
+		this.fontRendererObj.drawString("Status: " + displayText == null ? ((this.tileEntity.alreadyResearchedInput) ? TranslateUtilities.translate("gui.telescope.status.already_researched.name") : TranslateUtilities.translate("gui.telescope.status.normal.name"))
 				: TranslateUtilities.translate(displayText), 5, 30, 4210752);
 	}
 
