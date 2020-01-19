@@ -28,8 +28,8 @@ public class Config {
 		generateResearchPaperInStructure = config
 				.get(Constants.CONFIG_CATEGORY_GENERAL_SETTINGS, "Add Research Papers to Custom WorldGen Structure", false, "Will add the Research Papers to spawn in Custom WorldGen Structure, Note will disable structure if set to false")
 				.getBoolean(false);
-		telescopeTimeModifier = config.get(Constants.CONFIG_CATEGORY_GENERAL_SETTINGS, "Telescope Research Time Modifier", 1.0, "Default: 1.0F").getDouble(1.0);
-		satelliteControllerModifier = config.get(Constants.CONFIG_CATEGORY_GENERAL_SETTINGS, "Satellite Controller Research Time Modifier", 1.0, "Default: 1.0F").getDouble(1.0);
+		telescopeTimeModifier = config.get(Constants.CONFIG_CATEGORY_GENERAL_SETTINGS, "Telescope Research Time Modifier", 1.0, "Will increase the unlocking time for each paper in the telescope Default: 1.0F").getDouble(1.0);
+		satelliteControllerModifier = config.get(Constants.CONFIG_CATEGORY_GENERAL_SETTINGS, "Satellite Controller Research Time Modifier", 1.0, "Will increase the research time for each paper for the satellite Default: 1.0F").getDouble(1.0);
 		worldgenStructureWorldWhitelist = config.getStringList("Whitelist for World Gen Structure", Constants.CONFIG_CATEGORY_GENERAL_SETTINGS, new String[] { "0" }, "Default: 0 | Format: 'planet.NAME' OR 'moon.NAME' | Example: 'planet.venus'");
 		worldgenStructurePaperBlacklist = config.getStringList("Blacklist for Research Papers in World Gen Structure", Constants.CONFIG_CATEGORY_GENERAL_SETTINGS, new String[] {}, "Format: 'planet.NAME' OR 'moon.NAME' | Example: 'planet.venus'");
 		dungeonPaperBlacklist = config.getStringList("Blacklist for Research Papers in Dungeon Loot", Constants.CONFIG_CATEGORY_GENERAL_SETTINGS, new String[] {}, "Format: 'planet.NAME' OR 'moon.NAME' | Example: 'planet.venus'");
