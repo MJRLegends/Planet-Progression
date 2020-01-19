@@ -12,7 +12,6 @@ import com.mjr.planetprogression.PlanetProgression;
 import micdoodle8.mods.galacticraft.core.util.EnumColor;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -33,16 +32,20 @@ public class ResearchPaper extends BasicItem {
 	}
 
 	public String getRealBodyName() {
-		String name = getBodyName();
-		if (body.contains("eris"))
-			name = "planet.Eris";
-		else if (body.contains("pluto"))
-			name = "planet.Pluto";
-		else if (body.contains("ceres"))
-			name = "planet.Ceres";
-		else if (body.contains("kuiperbelt"))
-			name = "planet.kuiperBelt";
-		return TranslateUtilities.translate(name);
+
+		return TranslateUtilities.translate(convertBodyNameForLocalization(getBodyName()));
+	}
+
+	public static String convertBodyNameForLocalization(String input) {
+		if (input.contains("eris"))
+			input = "planet.Eris";
+		else if (input.contains("pluto"))
+			input = "planet.Pluto";
+		else if (input.contains("ceres"))
+			input = "planet.Ceres";
+		else if (input.contains("kuiperbelt"))
+			input = "planet.kuiperBelt";
+		return input;
 	}
 
 	@Override
