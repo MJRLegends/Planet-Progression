@@ -13,6 +13,8 @@ import com.mjr.planetprogression.item.PlanetProgression_Items;
 import com.mjr.planetprogression.item.ResearchPaper;
 
 import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
+import micdoodle8.mods.galacticraft.api.galaxies.GalaxyRegistry;
+import micdoodle8.mods.galacticraft.api.galaxies.Moon;
 import micdoodle8.mods.galacticraft.core.energy.item.ItemElectricBase;
 import micdoodle8.mods.galacticraft.core.energy.tile.TileBaseElectricBlockWithInventory;
 import micdoodle8.mods.miccore.Annotations.NetworkedField;
@@ -60,7 +62,7 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 				if (ownerOnline)
 					this.ownerUsername = PlayerUtilties.getUsernameFromUUID(this.owner);
 				try {
-					if(this.owner != "")
+					if (this.owner != "")
 						this.ownerOnline = PlayerUtilties.isPlayerOnlineByUUID(this.owner);
 				} catch (Exception e) {
 					this.ownerOnline = false;
@@ -108,36 +110,7 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 
 						// Assign satellite without a research item with a item
 						else if (this.currentSatellite.getCurrentResearchItem() == null) {
-							List<String> temp = new ArrayList<String>();
-							for (SatelliteData sat : stats.getSatellites()) {
-								if (sat.getCurrentResearchItem() != null)
-									temp.add(((ResearchPaper) sat.getCurrentResearchItem().getItem()).getBodyName());
-							}
-							for (CelestialBody body : stats.getUnlockedPlanets()) {
-								temp.add(body.getUnlocalizedName());
-							}
-							if (temp.size() != PlanetProgression_Items.researchPapers.size()) {
-								boolean skip = false;
-								for (int i = 0; i < PlanetProgression_Items.researchPapers.size(); i++) {
-									skip = false;
-									ItemStack newItem = new ItemStack(PlanetProgression_Items.researchPapers.get(i), 1, 0);
-									if (temp.size() == 0) {
-										this.producingStack = newItem;
-										this.currentSatellite.setCurrentResearchItem(this.producingStack);
-										return;
-									} else {
-										String newName = ((ResearchPaper) newItem.getItem()).getBodyName();
-										if (temp.contains(newName))
-											skip = true;
-										if (!skip) {
-											this.producingStack = newItem;
-											this.currentSatellite.setCurrentResearchItem(this.producingStack);
-											this.currentSatellite.setDataAmount(0);
-											return;
-										}
-									}
-								}
-							}
+							setupNewResearch(stats, null);
 						}
 
 						// Processing Code
@@ -206,23 +179,50 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 
 			// Change Research Item when completed the the last one
 			ItemStack oldItem = this.currentSatellite.getCurrentResearchItem();
-			List<String> temp = new ArrayList<String>();
-			for (SatelliteData sat : stats.getSatellites()) {
-				if (sat.getCurrentResearchItem() != null)
-					temp.add(((ResearchPaper) sat.getCurrentResearchItem().getItem()).getBodyName());
-			}
-			for (CelestialBody body : stats.getUnlockedPlanets()) {
-				temp.add(body.getUnlocalizedName());
-			}
-			if (temp.size() != PlanetProgression_Items.researchPapers.size()) {
-				boolean skip = false;
-				for (int i = 0; i < PlanetProgression_Items.researchPapers.size(); i++) {
-					skip = false;
-					ItemStack newItem = new ItemStack(PlanetProgression_Items.researchPapers.get(i), 1, 0);
-					if (temp.size() == 0) {
-						this.producingStack = newItem;
-						this.currentSatellite.setCurrentResearchItem(this.producingStack);
-						return;
+			setupNewResearch(stats, oldItem);
+		}
+	}
+
+	public void setupNewResearch(IStatsCapability stats, ItemStack oldItem) {
+		List<String> temp = new ArrayList<String>();
+
+		// Add Already Researching Bodies
+		for (SatelliteData sat : stats.getSatellites()) {
+			if (sat.getCurrentResearchItem() != null)
+				temp.add(((ResearchPaper) sat.getCurrentResearchItem().getItem()).getBodyName());
+		}
+
+		// Add Already Researched Bodies
+		for (CelestialBody body : stats.getUnlockedPlanets()) {
+			temp.add(body.getUnlocalizedName());
+		}
+
+		// Add Moons that Planets hasnt been Researched yet
+		for (Moon moon : GalaxyRegistry.getRegisteredMoons().values()) {
+			if(!temp.contains(moon.getParentPlanet().getUnlocalizedName()))
+				temp.add(moon.getUnlocalizedName());
+		}
+
+		if (temp.size() != PlanetProgression_Items.researchPapers.size()) {
+			boolean skip = false;
+			for (int i = 0; i < PlanetProgression_Items.researchPapers.size(); i++) {
+				skip = false;
+				ItemStack newItem = new ItemStack(PlanetProgression_Items.researchPapers.get(i), 1, 0);
+				if (temp.size() == 0) {
+					this.producingStack = newItem;
+					this.currentSatellite.setCurrentResearchItem(this.producingStack);
+					return;
+				} else {
+					if (oldItem == null) {
+						String newName = ((ResearchPaper) newItem.getItem()).getBodyName();
+						if (temp.contains(newName))
+							skip = true;
+						if (!skip) {
+							this.producingStack = newItem;
+							this.currentSatellite.setCurrentResearchItem(this.producingStack);
+							this.currentSatellite.setDataAmount(0);
+							return;
+						}
 					} else {
 						String oldName = ((ResearchPaper) oldItem.getItem()).getBodyName();
 						String newName = ((ResearchPaper) newItem.getItem()).getBodyName();
