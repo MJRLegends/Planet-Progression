@@ -20,6 +20,7 @@ public class ContainerSatelliteController extends Container {
 
 		this.addSlotToContainer(new SlotSpecific(tileEntity, 0, 151, 104, IItemElectric.class));
 		this.addSlotToContainer(new Slot(tileEntity, 1, 151, 66));
+		this.addSlotToContainer(new Slot(tileEntity, 2, 151, 42));
 
 		int var6;
 		int var7;

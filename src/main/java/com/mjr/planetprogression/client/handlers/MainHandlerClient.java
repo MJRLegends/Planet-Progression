@@ -75,6 +75,7 @@ public class MainHandlerClient {
 		else if (event.itemStack.getItem().equals(Item.getItemFromBlock(PlanetProgression_Blocks.SATTLLITE_CONTROLLER))) {
 			event.toolTip.add(EnumColor.AQUA + TranslateUtilities.translate("satellite.controller.use.desc"));
 			event.toolTip.add(EnumColor.AQUA + TranslateUtilities.translate("satellite.controller.use.2.desc"));
+			event.toolTip.add(EnumColor.BRIGHT_GREEN + TranslateUtilities.translate("satellite.controller.use.keycard.desc"));
 		} else if (event.itemStack.getItem().equals(Item.getItemFromBlock(PlanetProgression_Blocks.TELESCOPE)))
 			event.toolTip.add(EnumColor.AQUA + TranslateUtilities.translate("telescope.use.desc"));
 	}

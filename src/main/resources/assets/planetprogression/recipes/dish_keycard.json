@@ -1,0 +1,29 @@
+{
+  "result": {
+    "item": "planetprogression:dish_keycard",
+    "count": 1
+  },
+  "pattern": [
+    "YYY",
+    "ZZZ",
+    "XXX"
+  ],
+  "conditions": [
+    {
+      "type": "planetprogression:recipe_enabled",
+      "value": "research_mode_2"
+    }
+  ],
+  "type": "forge:ore_shaped",
+  "key": {
+    "X": {
+      "item": "#BLOCKIRON"
+    },
+	"Y": {
+      "item": "#COMPRESSEDIRON"
+    },
+    "Z": {
+      "item": "galacticraftcore:dishbase"
+    }
+  }
+}
