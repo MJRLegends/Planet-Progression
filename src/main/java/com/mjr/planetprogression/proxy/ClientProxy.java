@@ -99,9 +99,12 @@ public class ClientProxy extends CommonProxy {
 
 	@Override
 	public void registerItemJsons() {
-		if (Config.researchMode == 2)
+		if (Config.researchMode == 2 || Config.researchMode == 3) {
+			ClientUtilities.registerItemJson(Constants.TEXTURE_PREFIX, PlanetProgression_Items.DISH_KEYCARD);
+		}
+		if (Config.researchMode == 2) {
 			ClientUtilities.registerItemJson(Constants.TEXTURE_PREFIX, PlanetProgression_Items.satelliteBasicModule);
-
+		}
 		for (Item item : PlanetProgression_Items.researchPapers) {
 			ClientUtilities.registerItemJson(Constants.TEXTURE_PREFIX, item, "research_paper");
 		}

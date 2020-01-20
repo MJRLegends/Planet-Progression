@@ -111,10 +111,12 @@ public class GuiSatelliteController extends GuiContainerGC {
 		this.fontRenderer.drawString(displayString, this.xSize / 2 - this.fontRenderer.getStringWidth(displayString) / 2, 5, 4210752);
 		this.fontRenderer.drawString(TranslateUtilities.translate("container.inventory"), 8, 135, 4210752);
 		this.fontRenderer.drawString(TranslateUtilities.translate("gui.satellite.satellite.id.name") + ": ", 5, 20, 4210752);
-	    if (this.tileEntity.hasDishConnected)
-	    	this.fontRenderer.drawString(this.tileEntity.currentSatelliteID, 30, 30, 4210752);
+	    if (!this.tileEntity.hasKeyCard())
+	    	this.fontRenderer.drawString(TextFormatting.DARK_RED + TranslateUtilities.translate("gui.satellite.missing.keycard.name"), 5, 30, 4210752);
+	    else if (!this.tileEntity.doesDishExist())
+	    	this.fontRenderer.drawString(TextFormatting.DARK_RED + TranslateUtilities.translate("gui.satellite.missing.dish.name"), 5, 30, 4210752);
 	    else
-	    	this.fontRenderer.drawString(TextFormatting.DARK_RED + "Needs an Adjacent Communication Dish!", 30, 30, 4210752);
+	    	this.fontRenderer.drawString(this.tileEntity.currentSatelliteID, 30, 30, 4210752);
 		this.fontRenderer.drawString(TranslateUtilities.translate("gui.satellite.player.name") + ": " + ((this.tileEntity.owner != "" && this.tileEntity.ownerOnline) ? this.tileEntity.ownerUsername : TranslateUtilities.translate("gui.satellite.player.online.name")), 5, 45, 4210752);
 		this.fontRenderer.drawString(TranslateUtilities.translate("gui.satellite.research.progress.name") + ": "
 				+ (int) ((100 - (this.tileEntity.processTicks / Config.satelliteControllerModifier) / 2 / 100) == 100 ? 0 : (100 - (this.tileEntity.processTicks / Config.satelliteControllerModifier) / 2 / 100)) + " %", 5, 55, 4210752);

@@ -29,6 +29,7 @@ public class PlanetProgression_RecipeGeneration {
 
 		RecipeDumper.addShapedRecipeWithCondition(Constants.modID, "recipe_enabled", "research_mode_2", new ItemStack(PlanetProgression_Blocks.SATTLLITE_LAUNCHER, 1, 0), new Object[] { "ZVZ", "YXY", "ZWZ", 'V', new ItemStack(GCItems.basicItem, 1, 19), 'W', new ItemStack(GCBlocks.aluminumWire, 1, 0), 'X', new ItemStack(GCItems.basicItem, 1, 14), 'Y', new ItemStack(GCItems.basicItem, 1, 9), 'Z', new ItemStack(GCItems.basicItem, 1, 9) });
 		RecipeDumper.addShapedRecipeWithCondition(Constants.modID, "recipe_enabled", "research_mode_2", new ItemStack(PlanetProgression_Blocks.ADVANCED_LAUCHPAD, 9, 0), new Object[] { "YYY", "YYY", "XXX", 'X', "blockIron", 'Y', "compressedIron" });
+		RecipeDumper.addShapedRecipeWithCondition(Constants.modID, "recipe_enabled", "research_mode_2", new ItemStack(PlanetProgression_Items.DISH_KEYCARD, 1, 0), new Object[] { "YYY", "ZZZ", "XXX", 'X', "blockIron", 'Y', "compressedIron", 'Z', new ItemStack(GCBlocks.radioTelescope, 1, 0) });
 
 	}
 }

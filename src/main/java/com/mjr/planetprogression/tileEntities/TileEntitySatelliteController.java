@@ -9,6 +9,7 @@ import com.mjr.planetprogression.blocks.BlockSatelliteController;
 import com.mjr.planetprogression.data.SatelliteData;
 import com.mjr.planetprogression.handlers.capabilities.CapabilityStatsHandler;
 import com.mjr.planetprogression.handlers.capabilities.IStatsCapability;
+import com.mjr.planetprogression.item.ItemDishKeycard;
 import com.mjr.planetprogression.item.PlanetProgression_Items;
 import com.mjr.planetprogression.item.ResearchPaper;
 
@@ -19,6 +20,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
 
 import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
@@ -48,31 +50,13 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 	public boolean ownerOnline = false;
 	@NetworkedField(targetSide = Side.CLIENT)
 	public String ownerUsername = "";
-	@NetworkedField(targetSide = Side.CLIENT)
-	public boolean hasDishConnected = true;
 	public String lastReseached = "";
 
 	public ItemStack producingStack = null;
 
 	public TileEntitySatelliteController() {
 		super("container.satellite.controller.name");
-		this.inventory = NonNullList.withSize(2, ItemStack.EMPTY);
-	}
-
-	public boolean hasDish() {
-		if (this.getWorld().getBlockState(this.pos.offset(EnumFacing.EAST)).getBlock() instanceof BlockDish)
-			return true;
-		if (this.getWorld().getBlockState(this.pos.offset(EnumFacing.SOUTH)).getBlock() instanceof BlockDish)
-			return true;
-		if (this.getWorld().getBlockState(this.pos.offset(EnumFacing.NORTH)).getBlock() instanceof BlockDish)
-			return true;
-		if (this.getWorld().getBlockState(this.pos.offset(EnumFacing.WEST)).getBlock() instanceof BlockDish)
-			return true;
-		return false;
-	}
-
-	public void updateDishStatus() {
-		this.hasDishConnected = hasDish();
+		this.inventory = NonNullList.withSize(3, ItemStack.EMPTY);
 	}
 
 	@Override
@@ -89,7 +73,6 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 					} catch (Exception e) {
 						this.ownerOnline = false;
 					}
-					//updateDishStatus(); // Move to use onneighbor block changed?
 				}
 
 				IStatsCapability stats = null;
@@ -100,7 +83,6 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 				if (ownerOnline && stats != null) {
 					// Update Controller for new Satellite (Triggers: onBlockPlaced, onWorldLoad, onDisplayedSatelliteChanged)
 					if (this.markForSatelliteUpdate) {
-						//updateDishStatus();
 						if (this.currentSatellite != null)
 							this.currentSatellite.setDataAmount(this.currentSatellite.getDataAmount());
 						int size = stats.getSatellites().size() == 0 ? 0 : (stats.getSatellites().size() - 1);
@@ -115,7 +97,7 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 					}
 
 					// Check Satellite does exist
-					if (this.hasDishConnected && this.currentSatellite != null) {
+					if (this.currentSatellite != null) {
 						this.currentSatellite.setDataAmount(this.processTicks);
 
 						// Update Satellite ID for ClientSide
@@ -160,8 +142,33 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 		}
 	}
 
+	public boolean hasKeyCard() {
+		ItemStack stack = this.getInventory().get(2);
+		if (stack.isEmpty())
+			return false;
+		if (stack.getItem() instanceof ItemDishKeycard) {
+			if (!stack.hasTagCompound())
+				return false;
+			NBTTagCompound nbt = stack.getTagCompound();
+			if (nbt.hasKey("x") && nbt.hasKey("y") && nbt.hasKey("z"))
+				return true;
+		}
+		return false;
+	}
+
+	public boolean doesDishExist() {
+		ItemStack stack = this.getInventory().get(2);
+		NBTTagCompound nbt = stack.getTagCompound();
+		if (nbt.hasKey("x") && nbt.hasKey("y") && nbt.hasKey("z"))
+			if (this.world.getBlockState(new BlockPos(nbt.getInteger("x"), nbt.getInteger("y"), nbt.getInteger("z"))).getBlock() instanceof BlockDish)
+				return true;
+		return false;
+	}
+
 	public boolean canProcess() {
-		if (this.hasDishConnected == false)
+		if (!hasKeyCard())
+			return false;
+		if (!doesDishExist())
 			return false;
 		if (this.currentSatelliteResearchBody.equalsIgnoreCase("Nothing"))
 			return false;

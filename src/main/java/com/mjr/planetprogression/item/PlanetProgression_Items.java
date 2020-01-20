@@ -31,6 +31,8 @@ public class PlanetProgression_Items {
 	public static Item satelliteAtmosphere;
 
 	public static Item SATELLITE_ROCKET;
+	
+	public static Item DISH_KEYCARD;
 
 	public static void init() {
 		initItems();
@@ -150,8 +152,10 @@ public class PlanetProgression_Items {
 	}
 
 	public static void initItems() {
-		if (Config.researchMode == 2 || Config.researchMode == 3)
+		if (Config.researchMode == 2 || Config.researchMode == 3) {
 			SATELLITE_ROCKET = new ItemSatelliteRocket("item_satellite_rocket");
+			DISH_KEYCARD = new ItemDishKeycard("dish_keycard");
+		}
 		if (Config.researchMode == 2) {
 			satelliteBasicModule = new SatelliteModuleBasic("satellite_module_basic");
 			satelliteBasic = new ItemSatellite("satellite_basic", 0);
@@ -171,8 +175,10 @@ public class PlanetProgression_Items {
 	}
 
 	public static void registerItems() {
-		if (Config.researchMode == 2 || Config.researchMode == 3)
+		if (Config.researchMode == 2 || Config.researchMode == 3) {
 			registerItem(SATELLITE_ROCKET, SATELLITE_ROCKET.getUnlocalizedName().substring(5));
+			registerItem(DISH_KEYCARD, DISH_KEYCARD.getUnlocalizedName().substring(5));
+		}
 		if (Config.researchMode == 2) {
 			registerItem(satelliteBasicModule, satelliteBasicModule.getUnlocalizedName().substring(5));
 			registerItem(satelliteBasic, satelliteBasic.getUnlocalizedName().substring(5));
