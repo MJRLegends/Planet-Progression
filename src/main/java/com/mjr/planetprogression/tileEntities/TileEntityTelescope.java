@@ -93,7 +93,7 @@ public class TileEntityTelescope extends TileBaseElectricBlockWithInventory impl
 						if (this.canResearch()) {
 							++this.processTicks;
 
-							this.processTimeRequired = TileEntityTelescope.PROCESS_TIME_REQUIRED_BASE * 2 / (1 + this.poweredByTierGC);
+							this.processTimeRequired = TileEntityTelescope.PROCESS_TIME_REQUIRED_BASE * 2 / 4;
 
 							if (this.processTicks >= this.processTimeRequired) {
 								this.worldObj.playSound(null, this.getPos(), SoundEvents.BLOCK_ANVIL_LAND, SoundCategory.BLOCKS, 0.3F, this.worldObj.rand.nextFloat() * 0.1F + 0.9F);
