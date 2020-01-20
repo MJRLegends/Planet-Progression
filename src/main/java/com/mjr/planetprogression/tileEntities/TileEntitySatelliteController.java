@@ -10,6 +10,7 @@ import com.mjr.planetprogression.blocks.BlockSatelliteController;
 import com.mjr.planetprogression.data.SatelliteData;
 import com.mjr.planetprogression.handlers.capabilities.CapabilityStatsHandler;
 import com.mjr.planetprogression.handlers.capabilities.IStatsCapability;
+import com.mjr.planetprogression.item.ItemDishKeycard;
 import com.mjr.planetprogression.item.PlanetProgression_Items;
 import com.mjr.planetprogression.item.ResearchPaper;
 
@@ -19,11 +20,13 @@ import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
 
 import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
 import micdoodle8.mods.galacticraft.api.galaxies.GalaxyRegistry;
 import micdoodle8.mods.galacticraft.api.galaxies.Moon;
+import micdoodle8.mods.galacticraft.core.blocks.BlockDish;
 import micdoodle8.mods.galacticraft.core.energy.item.ItemElectricBase;
 import micdoodle8.mods.galacticraft.core.energy.tile.TileBaseElectricBlockWithInventory;
 import micdoodle8.mods.miccore.Annotations.NetworkedField;
@@ -53,6 +56,7 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 	public ItemStack producingStack = null;
 
 	public TileEntitySatelliteController() {
+
 	}
 
 	@Override
@@ -60,7 +64,7 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 		super.update();
 		if (!this.worldObj.isRemote) {
 			if (this.owner != "") {
-				if(this.ticks % 50 == 0) {
+				if (this.ticks % 50 == 0) {
 					try {
 						if (this.owner != "")
 							this.ownerOnline = PlayerUtilties.isPlayerOnlineByUUID(this.owner);
@@ -139,7 +143,34 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 		}
 	}
 
+	public boolean hasKeyCard() {
+		ItemStack stack = this.containingItems[2];
+		if (stack == null)
+			return false;
+		if (stack.getItem() instanceof ItemDishKeycard) {
+			if (!stack.hasTagCompound())
+				return false;
+			NBTTagCompound nbt = stack.getTagCompound();
+			if (nbt.hasKey("x") && nbt.hasKey("y") && nbt.hasKey("z"))
+				return true;
+		}
+		return false;
+	}
+
+	public boolean doesDishExist() {
+		ItemStack stack = this.containingItems[2];
+		NBTTagCompound nbt = stack.getTagCompound();
+		if (nbt.hasKey("x") && nbt.hasKey("y") && nbt.hasKey("z"))
+			if (this.worldObj.getBlockState(new BlockPos(nbt.getInteger("x"), nbt.getInteger("y"), nbt.getInteger("z"))).getBlock() instanceof BlockDish)
+				return true;
+		return false;
+	}
+
 	public boolean canProcess() {
+		if (!hasKeyCard())
+			return false;
+		if (!doesDishExist())
+			return false;
 		if (this.currentSatelliteResearchBody.equalsIgnoreCase("Nothing"))
 			return false;
 		if (this.lastReseached.equalsIgnoreCase(this.currentSatelliteResearchBody)) {
