@@ -40,6 +40,7 @@ public class PlanetProgression_Recipes {
 					new ItemStack(GCBlocks.aluminumWire, 1, 1), 'T', new ItemStack(PlanetProgression_Items.satelliteBasic, 1) });
 			RecipeUtilities.addShapedRecipe(new ItemStack(PlanetProgression_Blocks.SATTLLITE_LAUNCHER, 1, 0), new Object[] { "ZVZ", "YXY", "ZWZ", 'V', new ItemStack(GCItems.basicItem, 1, 19), 'W', new ItemStack(GCBlocks.aluminumWire, 1, 0), 'X', new ItemStack(GCItems.basicItem, 1, 14), 'Y', new ItemStack(GCItems.basicItem, 1, 9), 'Z', new ItemStack(GCItems.basicItem, 1, 9) });
 			RecipeUtilities.addOreRecipe(new ItemStack(PlanetProgression_Blocks.ADVANCED_LAUCHPAD, 9, 0), new Object[] { "YYY", "YYY", "XXX", 'X', "blockIron", 'Y', "compressedIron" });
+			RecipeUtilities.addOreRecipe(new ItemStack(PlanetProgression_Items.DISH_KEYCARD, 9, 0), new Object[] { "YYY", "ZZZ", "XXX", 'X', "blockIron", 'Y', "compressedIron", 'Z', new ItemStack(GCBlocks.radioTelescope, 1, 0) });
 		}
 		if (Config.researchMode == 3) {
 			NonNullList<ItemStack> input1 = NonNullList.create();

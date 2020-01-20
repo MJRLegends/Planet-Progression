@@ -25,6 +25,7 @@ import micdoodle8.mods.galacticraft.core.client.gui.element.GuiElementInfoRegion
 import micdoodle8.mods.galacticraft.core.energy.EnergyDisplayHelper;
 import micdoodle8.mods.galacticraft.core.network.PacketSimple;
 import micdoodle8.mods.galacticraft.core.network.PacketSimple.EnumSimplePacket;
+import micdoodle8.mods.galacticraft.core.util.EnumColor;
 import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
 
 public class GuiSatelliteController extends GuiContainerGC {
@@ -110,7 +111,12 @@ public class GuiSatelliteController extends GuiContainerGC {
 		this.fontRendererObj.drawString(displayString, this.xSize / 2 - this.fontRendererObj.getStringWidth(displayString) / 2, 5, 4210752);
 		this.fontRendererObj.drawString(TranslateUtilities.translate("container.inventory"), 8, 135, 4210752);
 		this.fontRendererObj.drawString(TranslateUtilities.translate("gui.satellite.satellite.id.name") + ": ", 5, 20, 4210752);
-		this.fontRendererObj.drawString(this.tileEntity.currentSatelliteID, 30, 30, 4210752);
+	    if (!this.tileEntity.hasKeyCard())
+	    	this.fontRendererObj.drawString(EnumColor.DARK_RED + TranslateUtilities.translate("gui.satellite.missing.keycard.name"), 5, 30, 4210752);
+	    else if (!this.tileEntity.doesDishExist())
+	    	this.fontRendererObj.drawString(EnumColor.DARK_RED + TranslateUtilities.translate("gui.satellite.missing.dish.name"), 5, 30, 4210752);
+	    else
+	    	this.fontRendererObj.drawString(this.tileEntity.currentSatelliteID, 30, 30, 4210752);
 		this.fontRendererObj.drawString(TranslateUtilities.translate("gui.satellite.player.name") + ": " + ((this.tileEntity.owner != "" && this.tileEntity.ownerOnline) ? this.tileEntity.ownerUsername : TranslateUtilities.translate("gui.satellite.player.online.name")), 5, 45, 4210752);
 		this.fontRendererObj.drawString(TranslateUtilities.translate("gui.satellite.research.progress.name") + ": "
 				+ (int) ((100 - (this.tileEntity.processTicks / Config.satelliteControllerModifier) / 2 / 100) == 100 ? 0 : (100 - (this.tileEntity.processTicks / Config.satelliteControllerModifier) / 2 / 100)) + " %", 5, 55, 4210752);
