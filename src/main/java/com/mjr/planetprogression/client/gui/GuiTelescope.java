@@ -108,7 +108,7 @@ public class GuiTelescope extends GuiContainerGC {
 		String displayString = this.tileEntity.getName();
 		this.fontRenderer.drawString(displayString, this.xSize / 2 - this.fontRenderer.getStringWidth(displayString) / 2, 5, 4210752);
 		this.fontRenderer.drawString(TranslateUtilities.translate("container.inventory"), 8, 135, 4210752);
-		this.fontRenderer.drawString("Progress: " + (int) (((this.tileEntity.processTicks / Config.telescopeTimeModifier) / 2) * (1 + this.tileEntity.poweredByTierGC)) / 2 + " %", 5, 20, 4210752);
+		this.fontRenderer.drawString("Progress: " + (int) (((this.tileEntity.processTicks / Config.telescopeTimeModifier) / 2) * 4) / 2 + " %", 5, 20, 4210752);
 		this.fontRenderer.drawString("Player: " + ((this.tileEntity.owner != "" && this.tileEntity.ownerOnline) ? this.tileEntity.ownerUsername : TranslateUtilities.translate("gui.telescope.no_player.name")), 5, 55, 4210752);
 		String displayText = "Unknown";
 		if (!this.tileEntity.hasInputs()) {
