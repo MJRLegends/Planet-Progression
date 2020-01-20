@@ -5,6 +5,15 @@
 
 
 ===========================================Released Updates===========================================
+v0.3.8
+*Cleaned up Imports & Small amount of code cleanup
+*Fixed Satellite Rocket Launch Module enabled text not being localised 
+*Fixed issue #59
+*Added Communication Dish Keycard
+*Added Communication Dish requirement for Satellite Controller using a Linked Keycard System
+*Added Communication Dish Keycard requirement tool tip to Satellite Controller
+*Fixed Satellite Progress for researching getting reset in Satellite Controller
+
 v0.3.7
 *Fixed issue #52
 *Added Status GUI text to the Telescope to know when a paper is already researched
