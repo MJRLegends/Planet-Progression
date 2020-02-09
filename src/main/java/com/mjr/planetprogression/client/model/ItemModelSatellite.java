@@ -122,13 +122,13 @@ public class ItemModelSatellite extends ModelTransformWrapper {
 			ret.setIdentity();
 			Matrix4f mul = new Matrix4f();
 			mul.setIdentity();
-			mul.setScale(1.25F);
+			mul.setScale(0.025F);
 			ret.mul(mul);
 			mul.setIdentity();
 			mul.rotY(1.575F);
 			ret.mul(mul);
 			mul.setIdentity();
-			mul.setTranslation(new Vector3f(0.1F, -0.1F, 0.05F));
+			mul.setTranslation(new Vector3f(0.1F, -16F, 0.05F));
 			ret.mul(mul);
 			return ret;
 		}
