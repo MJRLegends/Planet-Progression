@@ -6,6 +6,7 @@ import java.util.Random;
 import com.mjr.mjrlegendslib.util.ItemUtilities;
 import com.mjr.mjrlegendslib.util.WorldGenUtilities;
 import com.mjr.planetprogression.Config;
+import com.mjr.planetprogression.PlanetProgression;
 import com.mjr.planetprogression.item.PlanetProgression_Items;
 import com.mjr.planetprogression.item.ResearchPaper;
 
@@ -1661,7 +1662,7 @@ public class WorldGenStructure extends WorldGenerator {
 				do {
 					item = ItemUtilities.getRandomItemStackFromItemList(PlanetProgression_Items.researchPapers);
 				}
-				while(Arrays.asList(Config.dungeonPaperBlacklist).contains(((ResearchPaper) item.getItem()).getBodyName().toLowerCase().replaceAll("ep", "")));
+				while(Arrays.asList(Config.dungeonPaperBlacklist).contains(PlanetProgression.getBodyName(((ResearchPaper) item.getItem()).getBodyName())));
 				chest.setInventorySlotContents(0, item);
 			}
 		}
