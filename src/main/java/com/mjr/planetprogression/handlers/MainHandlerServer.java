@@ -1,5 +1,6 @@
 package com.mjr.planetprogression.handlers;
 
+import java.util.Arrays;
 import java.util.List;
 
 import com.google.common.collect.Lists;
@@ -37,6 +38,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
 import micdoodle8.mods.galacticraft.api.galaxies.GalaxyRegistry;
+import micdoodle8.mods.galacticraft.api.galaxies.Moon;
+import micdoodle8.mods.galacticraft.api.galaxies.Planet;
 import micdoodle8.mods.galacticraft.api.recipe.SchematicRegistry;
 import micdoodle8.mods.galacticraft.api.world.IGalacticraftWorldProvider;
 import micdoodle8.mods.galacticraft.core.GalacticraftCore;
@@ -128,6 +131,23 @@ public class MainHandlerServer {
 						player.addChatMessage(new ChatComponentText(TranslateUtilities.translate("research.discovered.earth.name")));
 						player.addChatMessage(new ChatComponentText(TranslateUtilities.translate("research.howto.name")));
 					}
+				}
+			}
+
+			List<String> list = Arrays.asList(Config.preReseachedBodies);
+
+			for (Planet planet : GalaxyRegistry.getRegisteredPlanets().values()) {
+				if (list.contains(planet.getUnlocalizedName().toLowerCase().replaceAll("ep", ""))) {
+					stats.addUnlockedPlanets(planet);
+					player.addChatMessage(new ChatComponentText(TranslateUtilities.translate("research.discovered.name") + planet.getLocalizedName() + "!"));
+					player.addChatMessage(new ChatComponentText(TranslateUtilities.translate("research.howto.name")));
+				}
+			}
+			for (Moon moon : GalaxyRegistry.getRegisteredMoons().values()) {
+				if (list.contains(moon.getUnlocalizedName().toLowerCase().replaceAll("ep", ""))) {
+					stats.addUnlockedPlanets(moon);
+					player.addChatMessage(new ChatComponentText(TranslateUtilities.translate("research.discovered.name") + moon.getLocalizedName() + "!"));
+					player.addChatMessage(new ChatComponentText(TranslateUtilities.translate("research.howto.name")));
 				}
 			}
 		}
