@@ -145,17 +145,21 @@ public class MainHandlerServer {
 			List<String> list = Arrays.asList(Config.preReseachedBodies);
 
 			for (Planet planet : GalaxyRegistry.getRegisteredPlanets().values()) {
-				if (list.contains(planet.getUnlocalizedName().toLowerCase().replaceAll("ep", ""))) {
-					stats.addUnlockedPlanets(planet);
-					player.addChatMessage(new TextComponentString(TranslateUtilities.translate("research.discovered.name") + planet.getLocalizedName() + "!"));
-					player.addChatMessage(new TextComponentString(TranslateUtilities.translate("research.howto.name")));
+				if (list.contains(PlanetProgression.getBodyName(planet.getUnlocalizedName()))) {
+					if (planet != null && !stats.getUnlockedPlanets().contains(planet)) {
+						stats.addUnlockedPlanets(planet);
+						player.addChatMessage(new TextComponentString(TranslateUtilities.translate("research.discovered.name") + planet.getLocalizedName() + "!"));
+						player.addChatMessage(new TextComponentString(TranslateUtilities.translate("research.howto.name")));
+					}
 				}
 			}
 			for (Moon moon : GalaxyRegistry.getRegisteredMoons().values()) {
-				if (list.contains(moon.getUnlocalizedName().toLowerCase().replaceAll("ep", ""))) {
-					stats.addUnlockedPlanets(moon);
-					player.addChatMessage(new TextComponentString(TranslateUtilities.translate("research.discovered.name") + moon.getLocalizedName() + "!"));
-					player.addChatMessage(new TextComponentString(TranslateUtilities.translate("research.howto.name")));
+				if (list.contains(PlanetProgression.getBodyName(moon.getUnlocalizedName()))) {
+					if (moon != null && !stats.getUnlockedPlanets().contains(moon)) {
+						stats.addUnlockedPlanets(moon);
+						player.addChatMessage(new TextComponentString(TranslateUtilities.translate("research.discovered.name") + moon.getLocalizedName() + "!"));
+						player.addChatMessage(new TextComponentString(TranslateUtilities.translate("research.howto.name")));
+					}
 				}
 			}
 		}
@@ -194,7 +198,7 @@ public class MainHandlerServer {
 		if (event.getName().toString().equals("minecraft:chests/simple_dungeon")) {
 			if (Config.generateResearchPaperInLoot)
 				for (Item item : PlanetProgression_Items.researchPapers)
-					if (!Arrays.asList(Config.dungeonPaperBlacklist).contains(((ResearchPaper) item).getBodyName().toLowerCase().replaceAll("ep", "")))
+					if (!Arrays.asList(Config.dungeonPaperBlacklist).contains(PlanetProgression.getBodyName(((ResearchPaper) item).getBodyName())))
 						event.getTable().getPool("main").addEntry(new LootEntryItem(item, 50, 1, new LootFunction[0], new LootCondition[0], item.getUnlocalizedName() + "_" + ((ResearchPaper) item).getBodyName()));
 		}
 	}
