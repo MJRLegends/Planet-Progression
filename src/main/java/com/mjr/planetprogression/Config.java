@@ -15,6 +15,7 @@ public class Config {
 	public static String[] worldgenStructureWorldWhitelist;
 	public static String[] worldgenStructurePaperBlacklist;
 	public static String[] dungeonPaperBlacklist;
+	public static String[] preReseachedBodies;
 
 	public static boolean showOverworldSpawnMessage;
 
@@ -36,11 +37,17 @@ public class Config {
 		showOverworldSpawnMessage = config.get(Constants.CONFIG_CATEGORY_GENERAL_SETTINGS, "Show Overworld As been Discovered Message on first joining world/server", true,
 				"Setting to false will disable the 'You have discovered Earth' message you get in chat when first joining a world/server").getBoolean(true);
 
+		preReseachedBodies = config.getStringList("List of Pre-Researched Bodies", Constants.CONFIG_CATEGORY_GENERAL_SETTINGS, new String[] {}, "Format: 'planet.NAME' OR 'moon.NAME' | Example: 'planet.venus'");
+
 		for (int i = 0; i < worldgenStructurePaperBlacklist.length; i++)
 			worldgenStructurePaperBlacklist[i] = worldgenStructurePaperBlacklist[i].toLowerCase();
 
 		for (int i = 0; i < dungeonPaperBlacklist.length; i++)
 			dungeonPaperBlacklist[i] = dungeonPaperBlacklist[i].toLowerCase();
+
+		for (int i = 0; i < preReseachedBodies.length; i++)
+			preReseachedBodies[i] = preReseachedBodies[i].toLowerCase();
+
 		config.save();
 		if (researchMode != 1 && researchMode != 2)
 			researchMode = 2;

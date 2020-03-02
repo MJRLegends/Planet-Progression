@@ -46,6 +46,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
 import micdoodle8.mods.galacticraft.api.galaxies.GalaxyRegistry;
+import micdoodle8.mods.galacticraft.api.galaxies.Moon;
+import micdoodle8.mods.galacticraft.api.galaxies.Planet;
 import micdoodle8.mods.galacticraft.api.recipe.SchematicRegistry;
 import micdoodle8.mods.galacticraft.api.world.IGalacticraftWorldProvider;
 import micdoodle8.mods.galacticraft.core.GalacticraftCore;
@@ -123,21 +125,37 @@ public class MainHandlerServer {
 				MainHandlerServer.sendSatellitePacket(player, stats);
 				SchematicRegistry.addUnlockedPage(player, SchematicRegistry.getMatchingRecipeForID(2535));
 			}
-			if(event.getEntityLiving().world.provider instanceof IGalacticraftWorldProvider) {
+			if (event.getEntityLiving().world.provider instanceof IGalacticraftWorldProvider) {
 				CelestialBody temp = GalaxyRegistry.getCelestialBodyFromDimensionID(event.getEntityLiving().world.provider.getDimension());
 				if (temp != null && !stats.getUnlockedPlanets().contains(temp)) {
 					stats.addUnlockedPlanets(temp);
 					player.sendMessage(new TextComponentString(TranslateUtilities.translate("research.discovered.name") + temp.getLocalizedName() + "!"));
 					player.sendMessage(new TextComponentString(TranslateUtilities.translate("research.howto.name")));
 				}
-			}
-			else {
+			} else {
 				if (!stats.getUnlockedPlanets().contains(GalacticraftCore.planetOverworld)) {
 					stats.addUnlockedPlanets(GalacticraftCore.planetOverworld);
-					if(Config.showOverworldSpawnMessage) {
+					if (Config.showOverworldSpawnMessage) {
 						player.sendMessage(new TextComponentString(TranslateUtilities.translate("research.discovered.earth.name")));
 						player.sendMessage(new TextComponentString(TranslateUtilities.translate("research.howto.name")));
 					}
+				}
+			}
+
+			List<String> list = Arrays.asList(Config.preReseachedBodies);
+
+			for (Planet planet : GalaxyRegistry.getRegisteredPlanets().values()) {
+				if (list.contains(planet.getUnlocalizedName().toLowerCase().replaceAll("ep", ""))) {
+					stats.addUnlockedPlanets(planet);
+					player.sendMessage(new TextComponentString(TranslateUtilities.translate("research.discovered.name") + planet.getLocalizedName() + "!"));
+					player.sendMessage(new TextComponentString(TranslateUtilities.translate("research.howto.name")));
+				}
+			}
+			for (Moon moon : GalaxyRegistry.getRegisteredMoons().values()) {
+				if (list.contains(moon.getUnlocalizedName().toLowerCase().replaceAll("ep", ""))) {
+					stats.addUnlockedPlanets(moon);
+					player.sendMessage(new TextComponentString(TranslateUtilities.translate("research.discovered.name") + moon.getLocalizedName() + "!"));
+					player.sendMessage(new TextComponentString(TranslateUtilities.translate("research.howto.name")));
 				}
 			}
 		}
