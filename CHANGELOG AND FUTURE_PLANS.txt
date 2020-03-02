@@ -5,6 +5,15 @@
 
 
 ===========================================Released Updates===========================================
+v0.3.9
+*Fixed Basic Satellite item rendering in item frames
+*Fixed Satellite Rocket rendering in item frames
+*Fixed case sensitive issue causing issue #64 which made satellite controller not select ExtraPlanets planets/moons correctly
+*Fixed case sensitive issues with two config options ("Blacklist for Research Papers in Dungeon Loot" & "Blacklist for Research Papers in World Gen Structure")
+*Added a new config option to define Pre-Researched Bodies
+*Fixed Whitelist for World Gen Structure config option having the wrong comment 
+*Updated zh_CH lang (Thanks to GuanCangHai6)
+
 v0.3.8
 *Cleaned up Imports & Small amount of code cleanup
 *Fixed Satellite Rocket Launch Module enabled text not being localised 
