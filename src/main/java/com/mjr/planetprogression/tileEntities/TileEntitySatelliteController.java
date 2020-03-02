@@ -234,18 +234,18 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 		// Add Already Researching Bodies
 		for (SatelliteData sat : stats.getSatellites()) {
 			if (sat.getCurrentResearchItem() != null)
-				temp.add(((ResearchPaper) sat.getCurrentResearchItem().getItem()).getBodyName());
+				temp.add(((ResearchPaper) sat.getCurrentResearchItem().getItem()).getBodyName().toLowerCase());
 		}
 
 		// Add Already Researched Bodies
 		for (CelestialBody body : stats.getUnlockedPlanets()) {
-			temp.add(body.getUnlocalizedName());
+			temp.add(body.getUnlocalizedName().toLowerCase());
 		}
 
 		// Add Moons that Planets hasnt been Researched yet
 		for (Moon moon : GalaxyRegistry.getRegisteredMoons().values()) {
 			if (!temp.contains(moon.getParentPlanet().getUnlocalizedName()))
-				temp.add(moon.getUnlocalizedName());
+				temp.add(moon.getUnlocalizedName().toLowerCase());
 		}
 
 		if (temp.size() != PlanetProgression_Items.researchPapers.size()) {
@@ -259,7 +259,7 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 					return;
 				} else {
 					if (oldItem == null) {
-						String newName = ((ResearchPaper) newItem.getItem()).getBodyName();
+						String newName = ((ResearchPaper) newItem.getItem()).getBodyName().toLowerCase();
 						if (temp.contains(newName))
 							skip = true;
 						if (!skip) {
@@ -269,8 +269,8 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 							return;
 						}
 					} else {
-						String oldName = ((ResearchPaper) oldItem.getItem()).getBodyName();
-						String newName = ((ResearchPaper) newItem.getItem()).getBodyName();
+						String oldName = ((ResearchPaper) oldItem.getItem()).getBodyName().toLowerCase();
+						String newName = ((ResearchPaper) newItem.getItem()).getBodyName().toLowerCase();
 						if (temp.contains(newName) || oldName.equalsIgnoreCase(newName))
 							skip = true;
 						if (!skip) {
