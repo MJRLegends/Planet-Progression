@@ -36,6 +36,11 @@ public class Config {
 		showOverworldSpawnMessage = config.get(Constants.CONFIG_CATEGORY_GENERAL_SETTINGS, "Show Overworld As been Discovered Message on first joining world/server", true,
 				"Setting to false will disable the 'You have discovered Earth' message you get in chat when first joining a world/server").getBoolean(true);
 
+		for (int i = 0; i < worldgenStructurePaperBlacklist.length; i++)
+			worldgenStructurePaperBlacklist[i] = worldgenStructurePaperBlacklist[i].toLowerCase();
+
+		for (int i = 0; i < dungeonPaperBlacklist.length; i++)
+			dungeonPaperBlacklist[i] = dungeonPaperBlacklist[i].toLowerCase();
 		config.save();
 		if (researchMode != 1 && researchMode != 2)
 			researchMode = 2;
