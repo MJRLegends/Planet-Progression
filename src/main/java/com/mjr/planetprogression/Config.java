@@ -31,7 +31,7 @@ public class Config {
 				.getBoolean(false);
 		telescopeTimeModifier = config.get(Constants.CONFIG_CATEGORY_GENERAL_SETTINGS, "Telescope Research Time Modifier", 1.0, "Will increase the unlocking time for each paper in the telescope Default: 1.0F").getDouble(1.0);
 		satelliteControllerModifier = config.get(Constants.CONFIG_CATEGORY_GENERAL_SETTINGS, "Satellite Controller Research Time Modifier", 1.0, "Will increase the research time for each paper for the satellite Default: 1.0F").getDouble(1.0);
-		worldgenStructureWorldWhitelist = config.getStringList("Whitelist for World Gen Structure", Constants.CONFIG_CATEGORY_GENERAL_SETTINGS, new String[] { "0" }, "Default: 0 | Format: 'planet.NAME' OR 'moon.NAME' | Example: 'planet.venus'");
+		worldgenStructureWorldWhitelist = config.getStringList("Whitelist for World Gen Structure", Constants.CONFIG_CATEGORY_GENERAL_SETTINGS, new String[] { "0" }, "Default: 0 | Format: dimensionID | Example: '-1 - For nether'");
 		worldgenStructurePaperBlacklist = config.getStringList("Blacklist for Research Papers in World Gen Structure", Constants.CONFIG_CATEGORY_GENERAL_SETTINGS, new String[] {}, "Format: 'planet.NAME' OR 'moon.NAME' | Example: 'planet.venus'");
 		dungeonPaperBlacklist = config.getStringList("Blacklist for Research Papers in Dungeon Loot", Constants.CONFIG_CATEGORY_GENERAL_SETTINGS, new String[] {}, "Format: 'planet.NAME' OR 'moon.NAME' | Example: 'planet.venus'");
 		showOverworldSpawnMessage = config.get(Constants.CONFIG_CATEGORY_GENERAL_SETTINGS, "Show Overworld As been Discovered Message on first joining world/server", true,
