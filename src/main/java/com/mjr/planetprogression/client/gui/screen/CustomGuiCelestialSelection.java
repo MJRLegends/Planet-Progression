@@ -6,6 +6,7 @@ import java.util.List;
 import org.lwjgl.util.vector.Vector3f;
 
 import com.google.common.collect.Lists;
+import com.mjr.extraplanets.client.gui.screen.CustomCelestialSelection;
 import com.mjr.planetprogression.client.handlers.capabilities.CapabilityStatsClientHandler;
 import com.mjr.planetprogression.client.handlers.capabilities.IStatsClientCapability;
 
@@ -15,6 +16,7 @@ import net.minecraftforge.fml.client.FMLClientHandler;
 
 import micdoodle8.mods.galacticraft.api.galaxies.*;
 import micdoodle8.mods.galacticraft.core.client.gui.screen.GuiCelestialSelection;
+import micdoodle8.mods.galacticraft.core.util.ColorUtil;
 import micdoodle8.mods.galacticraft.core.util.PlayerUtil;
 
 public class CustomGuiCelestialSelection extends GuiCelestialSelection {
@@ -112,5 +114,13 @@ public class CustomGuiCelestialSelection extends GuiCelestialSelection {
 		if (this.celestialBodyTicks.get(cBody) == null)
 			this.initGui();
 		return super.getCelestialBodyPosition(cBody);
+	}
+
+	@Override
+	public void drawButtons(int mousePosX, int mousePosY) {
+		super.drawButtons(mousePosX, mousePosY);
+		final int LHS = GuiCelestialSelection.BORDER_SIZE + GuiCelestialSelection.BORDER_EDGE_SIZE;
+		CustomCelestialSelection.drawRect(LHS + 1, height - 19, LHS + 500, height - 35, ColorUtil.to32BitColor(255, 0, 0, 0));
+		this.fontRenderer.drawString("Important: Want to unlock/see more celestial bodies? Research them via PlanetProgressions Mod", LHS + 5, height - 30, RED);
 	}
 }
