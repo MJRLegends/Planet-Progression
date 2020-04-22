@@ -38,29 +38,22 @@ public class CustomGuiCelestialSelection extends GuiCelestialSelection {
 		if (player != null) {
 			stats = playerBaseClient.getCapability(CapabilityStatsClientHandler.PP_STATS_CLIENT_CAPABILITY, null);
 		}
-		this.celestialBodyTicks.clear();
 		this.bodiesToRender.clear();
-		for (SolarSystem star : GalaxyRegistry.getRegisteredSolarSystems().values()) {
-			this.celestialBodyTicks.put(star.getMainStar(), 0);
-		}
 
 		for (Planet planet : GalaxyRegistry.getRegisteredPlanets().values()) {
 			if (stats.getUnlockedPlanets().contains(planet)) {
-				this.celestialBodyTicks.put(planet, 0);
 				this.bodiesToRender.add(planet);
 			}
 		}
 
 		for (Moon moon : GalaxyRegistry.getRegisteredMoons().values()) {
 			if (stats.getUnlockedPlanets().contains(moon.getParentPlanet()) && stats.getUnlockedPlanets().contains(moon)) {
-				this.celestialBodyTicks.put(moon, 0);
 				this.bodiesToRender.add(moon);
 			}
 		}
 
 		for (Satellite satellite : GalaxyRegistry.getRegisteredSatellites().values()) {
 			if (stats.getUnlockedPlanets().contains(satellite.getParentPlanet())) {
-				this.celestialBodyTicks.put(satellite, 0);
 				this.bodiesToRender.add(satellite);
 			}
 		}
@@ -111,8 +104,7 @@ public class CustomGuiCelestialSelection extends GuiCelestialSelection {
 	 */
 	@Override
 	protected Vector3f getCelestialBodyPosition(CelestialBody cBody) {
-		if (this.celestialBodyTicks.get(cBody) == null)
-			this.initGui();
+		this.initGui();
 		return super.getCelestialBodyPosition(cBody);
 	}
 
@@ -120,7 +112,7 @@ public class CustomGuiCelestialSelection extends GuiCelestialSelection {
 	public void drawButtons(int mousePosX, int mousePosY) {
 		super.drawButtons(mousePosX, mousePosY);
 		final int LHS = GuiCelestialSelection.BORDER_SIZE + GuiCelestialSelection.BORDER_EDGE_SIZE;
-		CustomCelestialSelection.drawRect(LHS + 1, (height - LHS) - 5, LHS + 500, (height - LHS)- 20, ColorUtil.to32BitColor(255, 0, 0, 0));
+		CustomCelestialSelection.drawRect(LHS + 1, (height - LHS) - 5, LHS + 500, (height - LHS) - 20, ColorUtil.to32BitColor(255, 0, 0, 0));
 		this.fontRenderer.drawString("Important: Want to unlock/see more celestial bodies? Research them via PlanetProgressions Mod", LHS + 5, (height - LHS) - 15, RED);
 	}
 }
