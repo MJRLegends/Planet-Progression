@@ -71,7 +71,7 @@ public class BlockTelescopeFake extends BlockAdvancedTile implements ITileEntity
 			BlockPos mainBlockPosition = ((TileEntityTelescopeFake) tileEntity).mainBlockPosition;
 
 			if (mainBlockPosition != null) {
-				return world.getBlockState(mainBlockPosition).getBlock().getBlockHardness(world.getBlockState(mainBlockPosition), world, mainBlockPosition);
+				return world.getBlockState(mainBlockPosition).getBlock().getBlockHardness(blockState, world, mainBlockPosition);
 			}
 		}
 
