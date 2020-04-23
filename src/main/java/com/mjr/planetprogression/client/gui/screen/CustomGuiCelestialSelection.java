@@ -3,7 +3,6 @@ package com.mjr.planetprogression.client.gui.screen;
 import java.util.Collections;
 import java.util.List;
 
-import org.lwjgl.util.vector.Vector3f;
 
 import com.google.common.collect.Lists;
 import com.mjr.extraplanets.client.gui.screen.CustomCelestialSelection;
@@ -97,15 +96,6 @@ public class CustomGuiCelestialSelection extends GuiCelestialSelection {
 		Collections.sort(bodyList);
 
 		return bodyList;
-	}
-
-	/*
-	 * Overriding for the purpose of to fix possible init issues due to network packets delay
-	 */
-	@Override
-	protected Vector3f getCelestialBodyPosition(CelestialBody cBody) {
-		this.initGui();
-		return super.getCelestialBodyPosition(cBody);
 	}
 
 	@Override
