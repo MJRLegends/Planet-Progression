@@ -15,6 +15,7 @@ import net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformT
 import net.minecraft.client.resources.model.IBakedModel;
 import net.minecraftforge.client.model.TRSRTransformation;
 
+@SuppressWarnings("deprecation")
 public class ItemModelTelescope extends ModelTransformWrapper {
 	public ItemModelTelescope(IBakedModel modelToWrap) {
 		super(modelToWrap);

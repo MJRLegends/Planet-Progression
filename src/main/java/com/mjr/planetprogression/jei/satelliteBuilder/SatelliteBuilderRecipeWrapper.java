@@ -12,7 +12,6 @@ import net.minecraft.item.ItemStack;
 import mezz.jei.api.recipe.BlankRecipeWrapper;
 import mezz.jei.api.recipe.wrapper.ICraftingRecipeWrapper;
 
-@SuppressWarnings("deprecation")
 public class SatelliteBuilderRecipeWrapper extends BlankRecipeWrapper implements ICraftingRecipeWrapper {
 	@Nonnull
 	private final ItemStack[] input;

@@ -110,8 +110,6 @@ public class ContainerSchematicSatelliteRocket extends Container {
 		if (var3 != null && var3.getHasStack()) {
 			final ItemStack var4 = var3.getStack();
 			var2 = var4.copy();
-
-			boolean done = false;
 			if (par1 <= 33) {
 				if (!this.mergeItemStack(var4, 22 + 12, 58 + 12, false)) {
 					return null;

@@ -18,6 +18,7 @@ import net.minecraftforge.client.model.TRSRTransformation;
 
 import micdoodle8.mods.galacticraft.core.util.ClientUtil;
 
+@SuppressWarnings("deprecation")
 public class ItemModelSatelliteRocket extends ModelTransformWrapper {
 	public ItemModelSatelliteRocket(IBakedModel modelToWrap) {
 		super(modelToWrap);

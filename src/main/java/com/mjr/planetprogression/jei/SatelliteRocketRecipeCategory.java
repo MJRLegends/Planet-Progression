@@ -49,7 +49,6 @@ public class SatelliteRocketRecipeCategory extends BlankRecipeCategory {
 		return this.background;
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public void setRecipe(@Nonnull IRecipeLayout recipeLayout, @Nonnull IRecipeWrapper recipeWrapper) {
 		IGuiItemStackGroup itemstacks = recipeLayout.getItemStacks();

@@ -13,7 +13,6 @@ import micdoodle8.mods.galacticraft.api.recipe.INasaWorkbenchRecipe;
 import mezz.jei.api.recipe.BlankRecipeWrapper;
 import mezz.jei.api.recipe.wrapper.ICraftingRecipeWrapper;
 
-@SuppressWarnings("deprecation")
 public class SatelliteRocketRecipeWrapper extends BlankRecipeWrapper implements ICraftingRecipeWrapper {
 	@Nonnull
 	private final INasaWorkbenchRecipe recipe;
