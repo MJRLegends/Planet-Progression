@@ -99,6 +99,7 @@ public class PlanetProgressionPacketHandler extends SimpleChannelInboundHandler<
 		PlanetProgressionPacketHandler.livePacketCount = livePacketCount;
 	}
 
+	@SuppressWarnings("unused")
 	private final class PacketPlayerPair {
 		private IPacket packet;
 		private EntityPlayer player;
@@ -112,7 +113,6 @@ public class PlanetProgressionPacketHandler extends SimpleChannelInboundHandler<
 			return packet;
 		}
 
-		@SuppressWarnings("unused")
 		public void setPacket(IPacket packet) {
 			this.packet = packet;
 		}
@@ -121,7 +121,6 @@ public class PlanetProgressionPacketHandler extends SimpleChannelInboundHandler<
 			return player;
 		}
 
-		@SuppressWarnings("unused")
 		public void setPlayer(EntityPlayer player) {
 			this.player = player;
 		}

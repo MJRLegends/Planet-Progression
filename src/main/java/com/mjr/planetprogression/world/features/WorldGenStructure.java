@@ -32,6 +32,7 @@ public class WorldGenStructure extends WorldGenerator {
 		return true;
 	}
 
+	@SuppressWarnings("deprecation")
 	public boolean generateStructure(World world, Random rand, BlockPos position) {
 		int x = position.getX();
 		int y = position.getY() - 1;
