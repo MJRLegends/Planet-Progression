@@ -5,6 +5,16 @@
 
 
 ===========================================Released Updates===========================================
+v0.4.3
+*Added Important message to Custom Celestial Selection screen
+*Removed not needed imports
+*Updated custom celestial selection screen with GC changes in build 255
+*Changed Galacticraft minimum version to Build 255
+*Updated Item Model to use GC new method of getClientTimeTotal and not getMilliseconds
+*Removed a bunch of not needed code
+*Fixed crash with Cargo Unloader when using with a Satellite Launch Pad
+*Added the ability to unload cargo from Satellite Rocket using Cargo Unloader from GC
+
 v0.4.2
 *Fixed Basic Satellite item rendering in item frames
 *Fixed Satellite Rocket rendering in item frames
