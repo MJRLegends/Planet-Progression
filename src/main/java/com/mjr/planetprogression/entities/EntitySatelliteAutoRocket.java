@@ -791,27 +791,23 @@ public abstract class EntitySatelliteAutoRocket extends EntitySpaceshipBase impl
 
 	@Override
 	public RemovalResult removeCargo(boolean doRemove) {
-		// for (int i = 0; i < this.stacks.size() - 2; i++) {
-		// ItemStack stackAt = this.stacks.get(i);
-		//
-		// if (!stackAt.isEmpty()) {
-		// ItemStack resultStack = stackAt.copy();
-		// resultStack.setCount(1);
-		//
-		// if (doRemove) {
-		// stackAt.shrink(1);
-		// }
-		//
-		// if (doRemove) {
-		// this.markDirty();
-		// }
-		// return new RemovalResult(EnumCargoLoadingState.SUCCESS, resultStack);
-		// }
-		// }
-		//
-		// if (this.autoLaunchSetting == EnumAutoLaunch.CARGO_IS_UNLOADED) {
-		// this.autoLaunch();
-		// }
+		for (int i = 0; i < this.stacks.size() - 2; i++) {
+			ItemStack stackAt = this.stacks.get(i);
+
+			if (!stackAt.isEmpty()) {
+				ItemStack resultStack = stackAt.copy();
+				resultStack.setCount(1);
+
+				if (doRemove) {
+					stackAt.shrink(1);
+				}
+
+				if (doRemove) {
+					this.markDirty();
+				}
+				return new RemovalResult(EnumCargoLoadingState.SUCCESS, resultStack);
+			}
+		}
 
 		return new RemovalResult(EnumCargoLoadingState.EMPTY, null);
 	}
