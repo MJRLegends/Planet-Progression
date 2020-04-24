@@ -791,15 +791,15 @@ public abstract class EntitySatelliteAutoRocket extends EntitySpaceshipBase impl
 
 	@Override
 	public RemovalResult removeCargo(boolean doRemove) {
-		for (int i = 0; i < this.stacks.size() - 2; i++) {
-			ItemStack stackAt = this.stacks.get(i);
+		for (int i = 0; i < this.cargoItems.length - 2; i++) {
+			ItemStack stackAt = this.cargoItems[i];
 
-			if (!stackAt.isEmpty()) {
+			if (stackAt != null) {
 				ItemStack resultStack = stackAt.copy();
-				resultStack.setCount(1);
+				resultStack.stackSize = 1;
 
-				if (doRemove) {
-					stackAt.shrink(1);
+				if (doRemove && --stackAt.stackSize <= 0) {
+					this.cargoItems[i] = null;
 				}
 
 				if (doRemove) {
