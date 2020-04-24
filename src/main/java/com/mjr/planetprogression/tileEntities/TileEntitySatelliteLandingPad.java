@@ -205,7 +205,7 @@ public class TileEntitySatelliteLandingPad extends TileEntityMulti implements IM
 			return this.dockedEntity.removeCargo(doRemove);
 		}
 
-		return new RemovalResult(EnumCargoLoadingState.NOTARGET, ItemStack.EMPTY);
+		return new RemovalResult(EnumCargoLoadingState.NOTARGET, null);
 	}
 
 	@Override
