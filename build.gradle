@@ -3,6 +3,7 @@ def jei_version="4.8.5.144"
 def version_minetweaker="4.0.8.277"
 def version_mjrlegendslib="1.12.2-1.1.6"
 def version_galacticraft="1.12.2-4.0.2.255"
+def version_extraplanets="1.12.2-0.6.4"
 
 buildscript {
     repositories {
@@ -54,6 +55,7 @@ dependencies {
     deobfCompile "CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-${version_minetweaker}"
     compile "mezz.jei:jei_${minecraft_version}:${jei_version}:api"
 	deobfCompile "com.mjr.mjrlegendslib:MJRLegendsLib:${version_mjrlegendslib}:dev"
+	deobfCompile "com.mjr.extraplanets:ExtraPlanets:${version_extraplanets}:dev"
 	compile files (
 		"Galacticraft-API-${version_galacticraft}.jar",
 		"GalacticraftCore-Dev-${version_galacticraft}.jar",
