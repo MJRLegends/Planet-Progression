@@ -5,7 +5,6 @@ import java.util.List;
 
 
 import com.google.common.collect.Lists;
-import com.mjr.extraplanets.client.gui.screen.CustomCelestialSelection;
 import com.mjr.planetprogression.client.handlers.capabilities.CapabilityStatsClientHandler;
 import com.mjr.planetprogression.client.handlers.capabilities.IStatsClientCapability;
 
@@ -102,7 +101,7 @@ public class CustomGuiCelestialSelection extends GuiCelestialSelection {
 	public void drawButtons(int mousePosX, int mousePosY) {
 		super.drawButtons(mousePosX, mousePosY);
 		final int LHS = GuiCelestialSelection.BORDER_SIZE + GuiCelestialSelection.BORDER_EDGE_SIZE;
-		CustomCelestialSelection.drawRect(LHS + 1, (height - LHS) - 5, LHS + 500, (height - LHS) - 20, ColorUtil.to32BitColor(255, 0, 0, 0));
+		CustomGuiCelestialSelection.drawRect(LHS + 1, (height - LHS) - 5, LHS + 500, (height - LHS) - 20, ColorUtil.to32BitColor(255, 0, 0, 0));
 		this.fontRenderer.drawString("Important: Want to unlock/see more celestial bodies? Research them via PlanetProgressions Mod", LHS + 5, (height - LHS) - 15, RED);
 	}
 }
