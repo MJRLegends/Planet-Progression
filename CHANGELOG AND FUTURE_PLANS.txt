@@ -5,6 +5,9 @@
 
 
 ===========================================Released Updates===========================================
+v0.4.4
+*Fixed issue #68
+
 v0.4.3
 *Added Important message to Custom Celestial Selection screen
 *Removed not needed imports
