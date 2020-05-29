@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.mjr.mjrlegendslib.item.BasicItem;
 import com.mjr.mjrlegendslib.util.TranslateUtilities;
+import com.mjr.planetprogression.PlanetProgression;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -22,6 +23,7 @@ public class ItemDishKeycard extends BasicItem {
 
 	public ItemDishKeycard(String name) {
 		super(name);
+		this.setCreativeTab(PlanetProgression.tab);
 	}
 
 	@Override
