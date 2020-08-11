@@ -5,6 +5,13 @@
 
 
 ===========================================Released Updates===========================================
+v0.4.5
+*Updated ru_RU.lang (Thanks to kellixon)
+*Fixed Communications Keycard missing from creative tab
+*Fixed Galaxyspace related crash not happening
+*Added a config option to disable Pre-Researched Bodies unlocked chat message
+*Added api method to check if any bodies have been unlocked in a solar system
+
 v0.4.4
 *Fixed issue #68
 
