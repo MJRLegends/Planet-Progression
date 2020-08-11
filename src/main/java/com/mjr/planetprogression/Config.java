@@ -18,6 +18,7 @@ public class Config {
 	public static String[] preReseachedBodies;
 
 	public static boolean showOverworldSpawnMessage;
+	public static boolean showPreResearchedMessage;
 
 	public static void load() {
 		Configuration config = new Configuration(new File(Constants.CONFIG_FILE));
@@ -36,6 +37,8 @@ public class Config {
 		dungeonPaperBlacklist = config.getStringList("Blacklist for Research Papers in Dungeon Loot", Constants.CONFIG_CATEGORY_GENERAL_SETTINGS, new String[] {}, "Format: 'planet.NAME' OR 'moon.NAME' | Example: 'planet.venus'");
 		showOverworldSpawnMessage = config.get(Constants.CONFIG_CATEGORY_GENERAL_SETTINGS, "Show Overworld As been Discovered Message on first joining world/server", true,
 				"Setting to false will disable the 'You have discovered Earth' message you get in chat when first joining a world/server").getBoolean(true);
+		showPreResearchedMessage = config.get(Constants.CONFIG_CATEGORY_GENERAL_SETTINGS, "Show Planets/Moon As been Discovered Message on first joining world/server which have been added to the List of Pre-Researched Bodies list", true,
+				"Setting to false will disable the 'You have discovered Earth' message you get in chat when first joining a world/server for bodies in List of Pre-Researched Bodies").getBoolean(true);
 
 		preReseachedBodies = config.getStringList("List of Pre-Researched Bodies", Constants.CONFIG_CATEGORY_GENERAL_SETTINGS, new String[] {}, "Format: 'planet.NAME' OR 'moon.NAME' | Example: 'planet.venus'");
 

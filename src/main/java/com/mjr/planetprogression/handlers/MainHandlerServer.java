@@ -140,8 +140,8 @@ public class MainHandlerServer {
 				if (list.contains(PlanetProgression.getBodyName(planet.getUnlocalizedName()))) {
 					if (planet != null && !stats.getUnlockedPlanets().contains(planet)) {
 						stats.addUnlockedPlanets(planet);
-						player.addChatMessage(new ChatComponentText(TranslateUtilities.translate("research.discovered.name") + planet.getLocalizedName() + "!"));
-						player.addChatMessage(new ChatComponentText(TranslateUtilities.translate("research.howto.name")));
+						if (Config.showPreResearchedMessage)
+							player.addChatMessage(new ChatComponentText(TranslateUtilities.translate("research.discovered.name") + planet.getLocalizedName() + "!"));
 					}
 				}
 			}
@@ -149,8 +149,8 @@ public class MainHandlerServer {
 				if (list.contains(PlanetProgression.getBodyName(moon.getUnlocalizedName()))) {
 					if (moon != null && !stats.getUnlockedPlanets().contains(moon)) {
 						stats.addUnlockedPlanets(moon);
-						player.addChatMessage(new ChatComponentText(TranslateUtilities.translate("research.discovered.name") + moon.getLocalizedName() + "!"));
-						player.addChatMessage(new ChatComponentText(TranslateUtilities.translate("research.howto.name")));
+						if (Config.showPreResearchedMessage)
+							player.addChatMessage(new ChatComponentText(TranslateUtilities.translate("research.discovered.name") + moon.getLocalizedName() + "!"));
 					}
 				}
 			}
