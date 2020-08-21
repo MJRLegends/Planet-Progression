@@ -46,6 +46,7 @@ import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.WorldTickEvent;
 import net.minecraftforge.fml.relauncher.Side;
@@ -96,6 +97,12 @@ public class MainHandlerServer {
 	private void onAttachCapabilityClient(AttachCapabilitiesEvent<Entity> event) {
 		if (event.getObject() instanceof EntityPlayerSP)
 			event.addCapability(CapabilityStatsClientHandler.PP_PLAYER_CLIENT_PROP, new CapabilityProviderStatsClient((EntityPlayerSP) event.getObject()));
+	}
+	
+	@SubscribeEvent
+	public void onPlayerLoggedInEvent(PlayerLoggedInEvent event) {
+		IStatsCapability stats = event.player.getCapability(CapabilityStatsHandler.PP_STATS_CAPABILITY, null);
+		this.sendUnlockedPlanetsPacket((EntityPlayerMP) event.player, stats);
 	}
 
 	@SubscribeEvent
