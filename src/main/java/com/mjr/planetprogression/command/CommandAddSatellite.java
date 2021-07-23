@@ -7,7 +7,6 @@ import com.mjr.mjrlegendslib.util.PlayerUtilties;
 import com.mjr.planetprogression.data.SatelliteData;
 import com.mjr.planetprogression.handlers.capabilities.CapabilityStatsHandler;
 import com.mjr.planetprogression.handlers.capabilities.IStatsCapability;
-import com.mojang.authlib.GameProfile;
 
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -39,16 +38,18 @@ public class CommandAddSatellite extends CommandBase {
 
 	@Override
 	public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-		String var3 = null;
 		EntityPlayerMP playerBase = PlayerUtil.getPlayerBaseServerFromPlayerUsername(sender.getName(), true);
 		if (playerBase == null) {
 			return;
 		}
-		if (args.length > 0) {
-			var3 = args[0];
-			GameProfile gameprofile = server.getPlayerProfileCache().getGameProfileForUsername(var3);
-
-			EntityPlayerMP playerToAddFor = PlayerUtilties.getPlayerFromUUID(gameprofile.getId());
+		if (args.length == 1) {
+			String username = args[0];
+			EntityPlayerMP playerToAddFor;
+			
+			if(args[0].startsWith("@"))
+				playerToAddFor = getPlayer(server, sender, args[0]);
+			else
+				 playerToAddFor = PlayerUtilties.getPlayerFromUUID(server.getPlayerProfileCache().getGameProfileForUsername(username).getId());
 			try {
 				IStatsCapability stats = null;
 				if (playerToAddFor != null) {
@@ -57,7 +58,7 @@ public class CommandAddSatellite extends CommandBase {
 				String id = UUID.randomUUID().toString();
 				stats.addSatellites(new SatelliteData(0, id, 0, null));
 				playerToAddFor.addChatMessage(new TextComponentString(EnumColor.RED + "Satellite: " + id + " has been launched in to space!"));
-				playerBase.addChatMessage(new TextComponentString(EnumColor.AQUA + "You have launched a satellite in to space! for: " + gameprofile.getName() + " with id: " + id));
+				playerBase.addChatMessage(new TextComponentString(EnumColor.AQUA + "You have launched a satellite in to space! for: " + playerToAddFor.getName() + " with id: " + id));
 			} catch (final Exception var6) {
 				throw new CommandException(var6.getMessage(), new Object[0]);
 			}
