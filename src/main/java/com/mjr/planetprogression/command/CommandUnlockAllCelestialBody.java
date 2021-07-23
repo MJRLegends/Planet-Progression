@@ -43,6 +43,8 @@ public class CommandUnlockAllCelestialBody extends CommandBase {
 		if (playerBase == null) {
 			return;
 		}
+		if(args.length == 0)
+			args = new String[] {sender.getName()};
 		if (args.length == 1) {
 			String username = args[0];
 			EntityPlayerMP playerToAddFor;
