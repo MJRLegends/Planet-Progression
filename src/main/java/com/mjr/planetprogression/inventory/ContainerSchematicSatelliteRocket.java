@@ -58,9 +58,7 @@ public class ContainerSchematicSatelliteRocket extends Container {
 		this.addSlotToContainer(new SlotSchematicSatelliteRocket(this.craftMatrix, 30, 77, 64 + change, pos, par1InventoryPlayer.player));
 
 		// Addons
-		for (int var8 = 0; var8 < 3; var8++) {
-			this.addSlotToContainer(new SlotSchematicSatelliteRocket(this.craftMatrix, 31 + var8, 93 + var8 * 26, -15 + change, pos, par1InventoryPlayer.player));
-		}
+		this.addSlotToContainer(new SlotSchematicSatelliteRocket(this.craftMatrix, 31, 93, -15 + change, pos, par1InventoryPlayer.player));
 
 		// Player inv:
 
