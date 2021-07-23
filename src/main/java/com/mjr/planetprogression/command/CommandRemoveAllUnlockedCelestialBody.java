@@ -6,7 +6,6 @@ import java.util.List;
 import com.mjr.mjrlegendslib.util.PlayerUtilties;
 import com.mjr.planetprogression.handlers.capabilities.CapabilityStatsHandler;
 import com.mjr.planetprogression.handlers.capabilities.IStatsCapability;
-import com.mojang.authlib.GameProfile;
 
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -39,16 +38,18 @@ public class CommandRemoveAllUnlockedCelestialBody extends CommandBase {
 
 	@Override
 	public void processCommand(ICommandSender sender, String[] args) throws CommandException {
-		String var3 = null;
 		EntityPlayerMP playerBase = PlayerUtil.getPlayerBaseServerFromPlayerUsername(sender.getName(), true);
 		if (playerBase == null) {
 			return;
 		}
-		if (args.length > 0) {
-			var3 = args[0];
-			GameProfile gameprofile = MinecraftServer.getServer().getPlayerProfileCache().getGameProfileForUsername(var3);
-
-			EntityPlayerMP playerToAddFor = PlayerUtilties.getPlayerFromUUID(gameprofile.getId());
+		if (args.length == 1) {
+			String username = args[0];
+			EntityPlayerMP playerToAddFor;
+			
+			if(args[0].startsWith("@"))
+				playerToAddFor = getPlayer(server, sender, args[0]);
+			else
+				 playerToAddFor = PlayerUtilties.getPlayerFromUUID(server.getPlayerProfileCache().getGameProfileForUsername(username).getId());
 			try {
 				IStatsCapability stats = null;
 				if (playerToAddFor != null) {
@@ -56,7 +57,7 @@ public class CommandRemoveAllUnlockedCelestialBody extends CommandBase {
 				}
 				stats.setUnlockedPlanets(new ArrayList<CelestialBody>());
 				playerToAddFor.addChatMessage(new ChatComponentText("All your all Planets & Moons have been removed from your discovered list!"));
-				playerBase.addChatMessage(new ChatComponentText(EnumColor.AQUA + "You have removed all Planets & Moons! from the discovered list for: " + gameprofile.getName()));
+				playerBase.addChatMessage(new ChatComponentText(EnumColor.AQUA + "You have removed all Planets & Moons! from the discovered list for: " + playerToAddFor.getName()));
 
 			} catch (final Exception var6) {
 				throw new CommandException(var6.getMessage(), new Object[0]);
