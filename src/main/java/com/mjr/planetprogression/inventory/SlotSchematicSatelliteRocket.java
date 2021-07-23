@@ -21,9 +21,9 @@ public class SlotSchematicSatelliteRocket extends Slot {
 	private final BlockPos pos;
 	private final EntityPlayer player;
 
-	public SlotSchematicSatelliteRocket(IInventory par2IInventory, int par3, int par4, int par5, BlockPos pos, EntityPlayer player) {
-		super(par2IInventory, par3, par4, par5);
-		this.index = par3;
+	public SlotSchematicSatelliteRocket(IInventory par2IInventory, int index, int xPosition, int yPosition, BlockPos pos, EntityPlayer player) {
+		super(par2IInventory, index, xPosition, yPosition);
+		this.index = index;
 		this.pos = pos;
 		this.player = player;
 	}
