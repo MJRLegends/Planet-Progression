@@ -49,7 +49,7 @@ public class CommandRemoveUnlockedCelestialBody extends CommandBase {
 			String body = args[1];
 			EntityPlayerMP playerToAddFor;
 			
-			if(args[0].startsWith("@"))
+			if(args[0].startsWith("@") || args[0].contains("-"))
 				playerToAddFor = getPlayer(sender, args[0]);
 			else
 				 playerToAddFor = PlayerUtilties.getPlayerFromUUID(MinecraftServer.getServer().getPlayerProfileCache().getGameProfileForUsername(username).getId());
