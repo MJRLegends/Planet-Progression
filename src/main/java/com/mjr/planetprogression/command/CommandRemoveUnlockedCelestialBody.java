@@ -7,7 +7,6 @@ import com.mjr.planetprogression.handlers.capabilities.CapabilityStatsHandler;
 import com.mjr.planetprogression.handlers.capabilities.IStatsCapability;
 import com.mjr.planetprogression.item.PlanetProgression_Items;
 import com.mjr.planetprogression.item.ResearchPaper;
-import com.mojang.authlib.GameProfile;
 
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -41,18 +40,19 @@ public class CommandRemoveUnlockedCelestialBody extends CommandBase {
 
 	@Override
 	public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-		String var3 = null;
-		String var4 = null;
 		EntityPlayerMP playerBase = PlayerUtil.getPlayerBaseServerFromPlayerUsername(sender.getName(), true);
 		if (playerBase == null) {
 			return;
 		}
-		if (args.length > 0) {
-			var3 = args[0];
-			var4 = args[1];
-			GameProfile gameprofile = server.getPlayerProfileCache().getGameProfileForUsername(var3);
-
-			EntityPlayerMP playerToAddFor = PlayerUtilties.getPlayerFromUUID(gameprofile.getId());
+		if (args.length == 1) {
+			String username = args[0];
+			String body = args[1];
+			EntityPlayerMP playerToAddFor;
+			
+			if(args[0].startsWith("@"))
+				playerToAddFor = getPlayer(server, sender, args[0]);
+			else
+				 playerToAddFor = PlayerUtilties.getPlayerFromUUID(server.getPlayerProfileCache().getGameProfileForUsername(username).getId());
 			try {
 				IStatsCapability stats = null;
 				if (playerToAddFor != null) {
@@ -60,10 +60,10 @@ public class CommandRemoveUnlockedCelestialBody extends CommandBase {
 				}
 
 				for (CelestialBody temp : stats.getUnlockedPlanets()) {
-					if (var4.equalsIgnoreCase(temp.getUnlocalizedName().substring(temp.getUnlocalizedName().indexOf('.') + 1))) {
+					if (body.equalsIgnoreCase(temp.getUnlocalizedName().substring(temp.getUnlocalizedName().indexOf('.') + 1))) {
 						stats.removeUnlockedPlanets(temp);
-						playerToAddFor.sendMessage(new TextComponentString(var4 + " has been removed from your discovered list!"));
-						playerBase.sendMessage(new TextComponentString(EnumColor.AQUA + "You have remove " + var4 + "! from the discovered list for: " + gameprofile.getName()));
+						playerToAddFor.sendMessage(new TextComponentString(temp.getLocalizedName() + " has been removed from your discovered list!"));
+						playerBase.sendMessage(new TextComponentString(EnumColor.AQUA + "You have remove " + temp.getLocalizedName() + "! from the discovered list for: " + playerToAddFor.getName()));
 					}
 				}
 
