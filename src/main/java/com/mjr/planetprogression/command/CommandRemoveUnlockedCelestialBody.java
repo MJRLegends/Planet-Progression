@@ -50,9 +50,9 @@ public class CommandRemoveUnlockedCelestialBody extends CommandBase {
 			EntityPlayerMP playerToAddFor;
 			
 			if(args[0].startsWith("@"))
-				playerToAddFor = getPlayer(server, sender, args[0]);
+				playerToAddFor = getPlayer(sender, args[0]);
 			else
-				 playerToAddFor = PlayerUtilties.getPlayerFromUUID(server.getPlayerProfileCache().getGameProfileForUsername(username).getId());
+				 playerToAddFor = PlayerUtilties.getPlayerFromUUID(MinecraftServer.getServer().getPlayerProfileCache().getGameProfileForUsername(username).getId());
 			try {
 				IStatsCapability stats = null;
 				if (playerToAddFor != null) {
