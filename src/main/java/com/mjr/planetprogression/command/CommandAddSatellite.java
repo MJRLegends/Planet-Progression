@@ -48,7 +48,7 @@ public class CommandAddSatellite extends CommandBase {
 			String username = args[0];
 			EntityPlayerMP playerToAddFor;
 			
-			if(args[0].startsWith("@"))
+			if(args[0].startsWith("@") || args[0].contains("-"))
 				playerToAddFor = getPlayer(server, sender, args[0]);
 			else
 				 playerToAddFor = PlayerUtilties.getPlayerFromUUID(server.getPlayerProfileCache().getGameProfileForUsername(username).getId());
