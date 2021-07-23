@@ -44,7 +44,7 @@ public class CommandRemoveUnlockedCelestialBody extends CommandBase {
 		if (playerBase == null) {
 			return;
 		}
-		if (args.length == 1) {
+		if (args.length == 2) {
 			String username = args[0];
 			String body = args[1];
 			EntityPlayerMP playerToAddFor;
