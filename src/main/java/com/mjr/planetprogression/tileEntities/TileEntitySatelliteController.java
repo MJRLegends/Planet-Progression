@@ -36,7 +36,7 @@ public class TileEntitySatelliteController extends TileBaseElectricBlockWithInve
 	public static final int PROCESS_TIME_REQUIRED = (int) (SatelliteData.getMAX_DATA() * Config.satelliteControllerModifier);
 	@NetworkedField(targetSide = Side.CLIENT)
 	public int processTicks = 0;
-	private NonNullList<ItemStack> stacks = NonNullList.withSize(2, ItemStack.EMPTY);
+	private NonNullList<ItemStack> stacks = NonNullList.withSize(3, ItemStack.EMPTY);
 	public SatelliteData currentSatellite = null;
 	public boolean markForSatelliteUpdate = true;
 
