@@ -4,8 +4,8 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
-import com.mjr.mjrlegendslib.Constants;
 import com.mjr.mjrlegendslib.util.TranslateUtilities;
+import com.mjr.planetprogression.Constants;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
