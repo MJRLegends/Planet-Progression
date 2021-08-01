@@ -10,6 +10,9 @@ v0.3.4
 *Fixed issue #77 - Crafting issue with Satellite Rocket when adding a chest to more than one slot
 *Added support for @p & @r & @s & @a & @e  target selectors for all commands
 *Added the ability to not enter a player name with all commands except ones that require a celestial body name, to apply the command to yourself
+*Fixed an issue with disabling output in Satellite Rocket JEI support
+*Fixed displaying of the gui texture in Satellite Rocket JEI support
+*Fixed crash when placing of Satellite Controller
 
 v0.3.3
 *Added Important message to Custom Celestial Selection screen
