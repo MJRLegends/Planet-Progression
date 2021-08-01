@@ -100,7 +100,7 @@ public class SatelliteRocketRecipeCategory extends BlankRecipeCategory<IRecipeWr
 					itemstacks.setFromRecipe(i, o);
 				}
 			}
-			itemstacks.setFromRecipe(21, rocketRecipeWrapper.getOutputs());
+			itemstacks.setFromRecipe(33, rocketRecipeWrapper.getOutputs());
 		}
 	}
 
