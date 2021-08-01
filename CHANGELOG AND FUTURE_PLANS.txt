@@ -5,6 +5,12 @@
 
 
 ===========================================Released Updates===========================================
+v0.4.2
+*Attempt to fix issue #76 - Planets and moons disappearing when we leaving world while we are on celestial screen
+*Fixed issue #77 - Crafting issue with Satellite Rocket when adding a chest to more than one slot
+*Added support for @p & @r & @s & @a & @e  target selectors for all commands
+*Added the ability to not enter a player name with all commands except ones that require a celestial body name, to apply the command to yourself
+
 v0.4.1
 *Added Important message to Custom Celestial Selection screen
 *Updated ru_RU.lang (Thanks to kellixon)
