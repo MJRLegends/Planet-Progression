@@ -2,10 +2,10 @@ package com.mjr.planetprogression.client.handlers;
 
 import java.util.List;
 
-import org.apache.logging.log4j.core.util.Loader;
-
 import com.google.common.collect.Lists;
+import com.mjr.mjrlegendslib.util.MessageUtilities;
 import com.mjr.mjrlegendslib.util.TranslateUtilities;
+import com.mjr.planetprogression.Constants;
 import com.mjr.planetprogression.blocks.PlanetProgression_Blocks;
 import com.mjr.planetprogression.client.gui.screen.CustomGuiCelestialSelection;
 import com.mjr.planetprogression.network.PlanetProgressionPacketHandler;
@@ -60,7 +60,7 @@ public class MainHandlerClient {
 	@SideOnly(Side.CLIENT)
 	public void onGuiOpenEvent(GuiOpenEvent event) {
 		if (((event.getGui() instanceof GuiCelestialSelection))) {
-			if (!Loader.isClassAvailable("com.mjr.extraplanets.compatibility.PlanetProgressionCompatibility") || !event.getGui().getClass().getName().equalsIgnoreCase("com.mjr.extraplanets.client.gui.screen.CustomCelestialSelection")) {
+			if (!isClassAvailable("com.mjr.extraplanets.compatibility.PlanetProgressionCompatibility") || !event.getGui().getClass().getName().equalsIgnoreCase("com.mjr.extraplanets.client.gui.screen.CustomCelestialSelection")) {
 				if (!event.getGui().getClass().getName().equalsIgnoreCase("asmodeuscore.core.astronomy.gui.screen.NewGuiCelestialSelection")) {
 					if (GameSettings.isKeyDown(micdoodle8.mods.galacticraft.core.tick.KeyHandlerClient.galaxyMap)) {
 						event.setGui(new CustomGuiCelestialSelection(true, ((GuiCelestialSelection) event.getGui()).possibleBodies, ((GuiCelestialSelection) event.getGui()).canCreateStations));
@@ -71,6 +71,18 @@ public class MainHandlerClient {
 			}
 		}
 	}
+	
+	public static boolean isClassAvailable(final String className) {
+        try {
+            final Class<?> clazz = Class.forName(className);
+            return clazz != null;
+        } catch (final ClassNotFoundException e) {
+            return false;
+        } catch (final Throwable e) {
+            MessageUtilities.fatalErrorMessageToLog(Constants.modID, "Unknown error when checking for class existing");
+            return false;
+        }
+    }
 
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
