@@ -109,7 +109,7 @@ public class ContainerSchematicSatelliteRocket extends Container {
 			final ItemStack var4 = var3.getStack();
 			var2 = var4.copy();
 			if (par1 <= 33) {
-				if (!this.mergeItemStack(var4, 22 + 12, 58 + 12, false)) {
+				if (!this.mergeItemStack(var4, 22, 58, false)) {
 					return null;
 				}
 
@@ -130,18 +130,18 @@ public class ContainerSchematicSatelliteRocket extends Container {
 				} else {
 					if (var2.getItem() == Item.getItemFromBlock(Blocks.CHEST)) {
 						if (!this.mergeOneItemTestValid(var4, 31, 34, false)) {
-							return null;
+							return ItemStack.EMPTY;
 						}
 					} else if (par1 >= 22 + 12 && par1 < 49 + 12) {
 						if (!this.mergeItemStack(var4, 49 + 12, 58 + 12, false)) {
-							return null;
+							return ItemStack.EMPTY;
 						}
 					} else if (par1 >= 49 + 12 && par1 < 58 + 12) {
 						if (!this.mergeItemStack(var4, 22 + 12, 49 + 12, false)) {
-							return null;
+							return ItemStack.EMPTY;
 						}
 					} else if (!this.mergeItemStack(var4, 22 + 12, 58 + 12, false)) {
-						return null;
+						return ItemStack.EMPTY;
 					}
 				}
 			}
