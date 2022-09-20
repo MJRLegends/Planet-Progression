@@ -163,6 +163,8 @@ public class TileEntityTelescope extends TileBaseElectricBlockWithInventory impl
 			if (player != null) {
 				stats = player.getCapability(CapabilityStatsHandler.PP_STATS_CAPABILITY, null);
 			}
+			if(stats == null)
+				return false;
 			boolean found = false;
 			for (Planet planet : GalaxyRegistry.getRegisteredPlanets().values()) {
 				if (((ResearchPaper) this.containingItems[1].getItem()).getBodyName().equalsIgnoreCase(planet.getUnlocalizedName())) {
