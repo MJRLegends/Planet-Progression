@@ -1650,7 +1650,8 @@ public class WorldGenStructure extends WorldGenerator {
 		int x = position.getX();
 		int y = position.getY() - 1;
 		int z = position.getZ();
-		if (rand.nextInt(Config.worldgenStructureLootAmount) == 1) {
+		int chance = rand.nextInt(Config.worldgenStructureLootAmount);
+		if (chance == 1 || chance == 0) {
 			TileEntityChest chest;
 			chest = (TileEntityChest) world.getTileEntity(new BlockPos(x + 9, y + 1, z + 10));
 
