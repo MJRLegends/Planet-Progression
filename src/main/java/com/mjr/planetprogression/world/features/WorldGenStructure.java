@@ -1658,7 +1658,7 @@ public class WorldGenStructure extends WorldGenerator {
 
 			if (chest != null) {
 				for (int j = 0; j < chest.getSizeInventory(); j++) {
-					chest.setInventorySlotContents(j, null);
+					chest.setInventorySlotContents(j, ItemStack.EMPTY);
 				}
 				ItemStack item = null;
 				do {
