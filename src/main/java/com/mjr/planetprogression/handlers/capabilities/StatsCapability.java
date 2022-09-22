@@ -6,6 +6,8 @@ import java.util.UUID;
 
 import com.mjr.planetprogression.data.SatelliteData;
 import micdoodle8.mods.galacticraft.api.galaxies.GalaxyRegistry;
+import micdoodle8.mods.galacticraft.api.galaxies.Moon;
+import micdoodle8.mods.galacticraft.api.galaxies.Planet;
 
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
@@ -66,6 +68,27 @@ public class StatsCapability implements IStatsCapability {
 
 		nbt.setTag("Satellites", tagList);
 	}
+	
+	public static CelestialBody getCelestialBodyFromUnlocalizedName(String unlocalizedName)
+    {
+        for (Planet planet : GalaxyRegistry.getRegisteredPlanets().values())
+        {
+            if (planet.getUnlocalizedName().equalsIgnoreCase(unlocalizedName))
+            {
+                return planet;
+            }
+        }
+
+        for (Moon moon : GalaxyRegistry.getRegisteredMoons().values())
+        {
+            if (moon.getUnlocalizedName().equalsIgnoreCase(unlocalizedName))
+            {
+                return moon;
+            }
+        }
+
+        return null;
+    }
 
 	@Override
 	public void loadNBTData(NBTTagCompound nbt) {
@@ -75,7 +98,7 @@ public class StatsCapability implements IStatsCapability {
 
 			if (this.player.get() != null) {
 				for (int i = 0; i < nbt.getTagList("Planets", 10).tagCount(); ++i) {
-					this.unlockedPlanets.add(GalaxyRegistry.getCelestialBodyFromUnlocalizedName(nbt.getTagList("Planets", 10).getCompoundTagAt(i).getString("UnlockedPlanet").toLowerCase()));
+					this.unlockedPlanets.add(getCelestialBodyFromUnlocalizedName(nbt.getTagList("Planets", 10).getCompoundTagAt(i).getString("UnlockedPlanet").toLowerCase()));
 				}
 				for (int i = 0; i < nbt.getTagList("Satellites", 10).tagCount(); ++i) {
 					final NBTTagCompound nbttagcompound = nbt.getTagList("Satellites", 10).getCompoundTagAt(i);
