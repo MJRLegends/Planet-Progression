@@ -130,18 +130,18 @@ public class ContainerSchematicSatelliteRocket extends Container {
 				} else {
 					if (var2.getItem() == Item.getItemFromBlock(Blocks.chest)) {
 						if (!this.mergeOneItemTestValid(var4, 31, 34, false)) {
-							return ItemStack.EMPTY;
+							return null;
 						}
 					} else if (par1 >= 22 + 12 && par1 < 49 + 12) {
 						if (!this.mergeItemStack(var4, 49 + 12, 58 + 12, false)) {
-							return ItemStack.EMPTY;
+							return null;
 						}
 					} else if (par1 >= 49 + 12 && par1 < 58 + 12) {
 						if (!this.mergeItemStack(var4, 22 + 12, 49 + 12, false)) {
-							return ItemStack.EMPTY;
+							return null;
 						}
 					} else if (!this.mergeItemStack(var4, 22 + 12, 58 + 12, false)) {
-						return ItemStack.EMPTY;
+						return null;
 					}
 				}
 			}
