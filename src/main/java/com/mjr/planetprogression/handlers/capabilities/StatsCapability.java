@@ -44,7 +44,7 @@ public class StatsCapability implements IStatsCapability {
 		for (CelestialBody planet : this.unlockedPlanets) {
 			if (planet != null) {
 				final NBTTagCompound nbttagcompound = new NBTTagCompound();
-				nbttagcompound.setString("UnlockedPlanet", planet.getUnlocalizedName());
+				nbttagcompound.setString("UnlockedPlanet", planet.getUnlocalizedName().toLowerCase());
 				tagList.appendTag(nbttagcompound);
 			}
 		}
@@ -75,7 +75,7 @@ public class StatsCapability implements IStatsCapability {
 
 			if (this.player.get() != null) {
 				for (int i = 0; i < nbt.getTagList("Planets", 10).tagCount(); ++i) {
-					this.unlockedPlanets.add(GalaxyRegistry.getCelestialBodyFromUnlocalizedName(nbt.getTagList("Planets", 10).getCompoundTagAt(i).getString("UnlockedPlanet")));
+					this.unlockedPlanets.add(GalaxyRegistry.getCelestialBodyFromUnlocalizedName(nbt.getTagList("Planets", 10).getCompoundTagAt(i).getString("UnlockedPlanet").toLowerCase()));
 				}
 				for (int i = 0; i < nbt.getTagList("Satellites", 10).tagCount(); ++i) {
 					final NBTTagCompound nbttagcompound = nbt.getTagList("Satellites", 10).getCompoundTagAt(i);
