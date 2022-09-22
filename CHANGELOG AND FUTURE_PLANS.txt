@@ -5,6 +5,16 @@
 
 
 ===========================================Released Updates===========================================
+v0.4.8
+*Fixed a bunch of issues when shift clicking items in to Workbench for Satellite Rocket Crafting (Issue #84)
+*Fixed a crash issue when a player leaves the server during researching in the telescope (Issue #81)
+*Fixed an issue with 4.0.3 & above of Galacticraft that caused some planets/moons to show as not unlocked if already unlocked them before updating Galacticraft
+
+v0.4.7
+*Small changes with Galaxy Map detection
+*Fixed chance of spawning chest loot being incorrect for lower values such as 1 or 2 for the custom structure
+*Fixed an error when clearing the chest for the custom loot in the custom structure
+
 v0.4.6
 *Attempt to fix issue #76 - Planets and moons disappearing when we leaving world while we are on celestial screen
 *Fixed issue #77 - Crafting issue with Satellite Rocket when adding a chest to more than one slot
